@@ -1,4 +1,4 @@
-# waves-crypto  [![npm version](https://badge.fury.io/js/waves-transactions.svg)](https://www.npmjs.com/package/waves-transactions)
+# waves-transactions  [![npm version](https://badge.fury.io/js/waves-transactions.svg)](https://www.npmjs.com/package/waves-transactions)
 
 Using this library you can easily create and sign transactions for Waves blockchain.
 It also allows you to multi-sign existing transactions.
