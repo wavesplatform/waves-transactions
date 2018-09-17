@@ -29,6 +29,8 @@ async function build() {
   await copy(p('../tsconfig.json'), p('tmp/tsconfig.json'))
   await run('ts-node usage/index.ts', p('tmp'))
   await run('tsc', p('tmp'))
+  await copy(p('package.json'), p('tmp/dist/package.json'))
+  await copy(p('../README.md'), p('tmp/dist/README.md'))
   await copy(p('tmp/dist'), p('../dist'))
   await remove(p('tmp'))
 }
