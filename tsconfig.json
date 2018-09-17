@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "es6"
+    ],
+    //"sourceMap": true,
+    "declaration": true,
+    "module": "commonjs",
+    "outDir": "dist",
+    "alwaysStrict": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false
+  },
+  "jsdoc": "dist/jsdoc",
+  "include": [
+    "./src/**/*"
+    //"./declarations/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "typedocOptions": {
+    "mode": "file",
+    "out": "docs",
+    "exclude": "test",
+    "theme": "minimal",
+    "ignoreCompilerErrors": true,
+    "excludePrivate": true,
+    "excludeNotExported": true,
+    "target": "ES5",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "stripInternal": true,
+    "suppressExcessPropertyErrors": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs"
+  }
+}

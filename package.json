@@ -1,0 +1,28 @@
+{
+  "name": "waves-transactions",
+  "version": "1.0.1",
+  "description": "Build and sign(multisign) transactions for Waves blockchain.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "webpack --config webpack.config.js --env",
+    "deploy": "cd dist; npm version patch; npm publish;"
+  },
+  "author": "Yuriy Naydenov",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.9.4",
+    "copy-webpack-plugin": "^4.5.2",
+    "jsdoc-to-markdown": "^4.0.1",
+    "preprocess": "^3.1.0",
+    "ts-jsdoc": "^3.0.1",
+    "ts-loader": "^5.1.0",
+    "typescript": "^3.0.3",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "waves-crypto": "^1.0.24"
+  }
+}
