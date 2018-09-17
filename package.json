@@ -1,7 +1,7 @@
 {
   "name": "waves-transactions",
   "version": "1.0.1",
-  "description": "Build and sign(multisign) transactions for Waves blockchain.",
+  "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
