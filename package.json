@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "webpack --config webpack.config.js --env",
+    "build": "ts-node build/build.ts",
     "deploy": "cd dist; npm version patch; npm publish;"
   },
   "author": "Yuriy Naydenov",
@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "ncp": "^2.0.0",
+    "rimraf": "^2.6.2",
     "waves-crypto": "^1.0.24"
   }
 }

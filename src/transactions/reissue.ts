@@ -10,53 +10,7 @@ export interface ReissueParams {
   chainId?: string
 }
 
-/**
- * Creates and signs [[ReissueTransaction]].
- *
- * You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
- * Also you can use already signed [[ReissueTransaction]] as a second agrument.
- * 
- * ### Usage
- * ```js
- * const { reissue } = require('waves-transactions')
- * 
- * const seed = 'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'
- * 
- * const params = {
- *   quantity: 10000,
- *   assetId: '3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx',
- *   reissuable: false,
- *   //timestamp: Date.now(),
- *   //fee: 100000000,
- *   //chainId: 'W'
- * }
- * 
- * const signedReissueTx = reissue(seed, params)
- * ```
- * ### Output
- * ```json
- * {
- *   "id": "Ha6jftgUWQJUd8skC1yoVjVf1Y8eN7asrBQMhUstTHNF",
- *   "type": 5,
- *   "version": 2,
- *   "assetId": "3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx",
- *   "quantity": 10000,
- *   "chainId": "W",
- *   "reissuable": false,
- *   "fee": 100000000,
- *   "senderPublicKey": "G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj",
- *   "timestamp": 1537176019270,
- *   "proofs": [
- *     "4SwRP6huyvi2WN6rMrMJa3tyHDC8dA5z8A6mVra8Fg6mRckRx6b5cxe1VguAFUieUwYw8Da9L6WGE7EfTkA58oiG"
- *   ]
- * }
- * ```
- *
- * @param seed
- * @param paramsOrTx
- * @returns
- *
- */
+/* @echo DOCS */
 export function reissue(seed: string | string[], paramsOrTx: ReissueParams | ReissueTransaction): ReissueTransaction {
   const _seed = typeof seed == 'string' ? seed : seed[0]
   const { assetId, quantity, chainId, reissuable, fee, timestamp } = paramsOrTx

@@ -12,57 +12,7 @@ export interface IssueParams {
   chainId?: string
 }
 
-/**
- * Creates and signs [[IssueTransaction]].
- *
- * You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
- * Also you can use already signed [[IssueTransaction]] as a second agrument.
- * 
- * ### Usage
- * ```js
- * const { issue } = require('waves-transactions')
- * 
- * const seed = 'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'
- * 
- * const params = {
- *   name: 'SCAM TOKEN',
- *   description: 'Awesome token that will tokenize tokenization tokenized',
- *   quantity: 1000000,
- *   //reissuable: false
- *   //decimals: 8
- *   //timestamp: Date.now(),
- *   //fee: 100000,
- *   //chainId: 'W'
- * }
- * 
- * const signedIssueTx = issue(seed, params)
- * ```
- * ### Output
- * ```json
- * {
- *   "id": "CTBXhJZLFDgky4EZj7LHKPWDx5BxdoYBZCQ92ppvSC7R",
- *   "type": 3,
- *   "version": 2,
- *   "name": "SCAM TOKEN",
- *   "description": "Awesome token that will tokenize tokenization tokenized",
- *   "decimals": 8,
- *   "quantity": 1000000,
- *   "reissuable": false,
- *   "fee": 100000000,
- *   "senderPublicKey": "G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj",
- *   "timestamp": 1537176019214,
- *   "chainId": "W",
- *   "proofs": [
- *     "64xxGNn2NEoKMpYxBkgmye9RcjeoJEMtKHZUZ4FffE4wtVjXj2ZbNTLEdN9LaC1WvCNRsRNwvDzrhfMUTgQYkwAX"
- *   ]
- * }
- * ```
- *
- * @param seed
- * @param paramsOrTx
- * @returns
- *
- */
+/* @echo DOCS */
 export function issue(seed: string | string[], paramsOrTx: IssueParams | IssueTransaction): IssueTransaction {
   const _seed = typeof seed == 'string' ? seed : seed[0]
   const { name, description, decimals, quantity, reissuable, fee, timestamp, chainId } = paramsOrTx

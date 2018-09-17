@@ -12,73 +12,7 @@ export interface DataParams {
   timestamp?: number
 }
 
-/**
- * Creates and signs [[DataTransaction]].
- *
- * You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
- * Also you can use already signed [[DataTransaction]] as a second agrument.
- * 
- * ### Usage
- * ```js
- * const { data } = require('waves-transactions')
- * 
- * const seed = 'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'
- * 
- * const params = {
- *   data: [
- *     { key: 'integerVal', value: 1 },
- *     { key: 'booleanVal', value: true },
- *     { key: 'stringVal', value: 'hello' },
- *     { key: 'binaryVal', value: [1, 2, 3, 4] },
- *   ]
- *   //timestamp: Date.now(),
- *   //fee: 100000 + bytes.length * 100000
- * }
- * 
- * const signedDataTx = data(seed, params)
- * ```
- * ### Output
- * ```json
- * {
- *   "id": "E35imFdb9igi9bk2YexYbDuK7y84hgbDLMKkG3c9HmVY",
- *   "type": 12,
- *   "version": 1,
- *   "senderPublicKey": "G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj",
- *   "fee": 100000,
- *   "timestamp": 1537176019199,
- *   "data": [
- *     {
- *       "type": "integer",
- *       "key": "integerVal",
- *       "value": 1
- *     },
- *     {
- *       "type": "boolean",
- *       "key": "booleanVal",
- *       "value": true
- *     },
- *     {
- *       "type": "string",
- *       "key": "stringVal",
- *       "value": "hello"
- *     },
- *     {
- *       "type": "binary",
- *       "key": "binaryVal",
- *       "value": "base64:AQIDBA=="
- *     }
- *   ],
- *   "proofs": [
- *     "nrjBkBJLB8ehRVaTHH4QF6jqF3PBm3Ke9vKkJtLNsEJtMveoejfEoERLRkroBfqNdy5zsvxczzkFYuJGYhXTuza"
- *   ]
- * }
- * ```
- *
- * @param seed
- * @param paramsOrTx
- * @returns
- *
- */
+/* @echo DOCS */
 export function data(seed: string | string[], paramsOrTx: DataParams | DataTransaction): DataTransaction {
   const _seed = typeof seed == 'string' ? seed : seed[0]
   const { data: _data, fee, timestamp } = paramsOrTx
