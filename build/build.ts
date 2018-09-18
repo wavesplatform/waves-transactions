@@ -26,6 +26,8 @@ const files = (path: string, filter: (file: string) => boolean = (_) => true): P
 async function build() {
   try {
     await remove(p('tmp'))
+    await remove(p('../dist'))
+    await remove(p('../docs'))
     await create(p('tmp'))
     await create(p('tmp/src'))
     //  await run('npm pack waves-transactions', p('tmp'))

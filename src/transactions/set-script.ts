@@ -18,7 +18,7 @@ export function setScript(seed: string | string[], paramsOrTx: SetScriptParams |
     paramsOrTx as SetScriptTransaction : {
       type: TransactionType.SetScript,
       version: 2,
-      script,
+      script: 'base64:' + script,
       fee: fee | 100000,
       senderPublicKey: publicKey(_seed),
       timestamp: timestamp || Date.now(),
