@@ -6,3 +6,5 @@ export { cancelLease } from "./transactions/cancel-lease"
 export { data } from './transactions/data'
 export { issue } from './transactions/issue'
 export { transfer } from './transactions/transfer'
+export { alias } from './transactions/alias'
+export { setScript } from './transactions/set-script'

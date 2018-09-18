@@ -12,6 +12,8 @@ const txs = [
   { file: 'mass-transfer', interface: 'MassTransferTransaction' },
   { file: 'reissue', interface: 'ReissueTransaction' },
   { file: 'transfer', interface: 'TransferTransaction' },
+  { file: 'alias', interface: 'AliasTransaction' },
+  { file: 'set-script', interface: 'SetScriptTransaction' },
 ]
 
 const _DOCS = `/**

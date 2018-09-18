@@ -11,6 +11,8 @@ export const enum TransactionType {
   Alias = 10,
   MassTransfer = 11,
   Data = 12,
+  SetScript = 13,
+  SponsorFee = 14,
 }
 
 export interface Transaction {
@@ -33,7 +35,6 @@ export type Tx =
   | DataTransaction
 
 export interface WithSender {
-  sender?: string
   senderPublicKey: string
 }
 
@@ -44,6 +45,12 @@ export interface IssueTransaction extends Transaction, WithSender {
   decimals: number
   quantity: number
   reissuable: boolean
+  chainId: string
+}
+
+export interface SetScriptTransaction extends Transaction, WithSender {
+  type: TransactionType.SetScript
+  script: string //base64
   chainId: string
 }
 
@@ -86,6 +93,11 @@ export interface CancelLeaseTransaction extends Transaction, WithSender {
   type: TransactionType.CancelLease
   leaseId: string
   chainId: number
+}
+
+export interface AliasTransaction extends Transaction, WithSender {
+  type: TransactionType.Alias
+  alias: string
 }
 
 export interface MassTransferTransaction extends Transaction, WithSender {

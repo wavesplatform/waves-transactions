@@ -1,6 +1,6 @@
 {
   "name": "waves-transactions",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",

@@ -913,6 +913,12 @@ img { max-width: 100%; }
 			<a href="enums/transactiontype.html" class="tsd-kind-icon">Transaction<wbr>Type</a>
 		</li>
 		<li class=" tsd-kind-interface">
+			<a href="interfaces/aliasparams.html" class="tsd-kind-icon">Alias<wbr>Params</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/aliastransaction.html" class="tsd-kind-icon">Alias<wbr>Transaction</a>
+		</li>
+		<li class=" tsd-kind-interface">
 			<a href="interfaces/burnparams.html" class="tsd-kind-icon">Burn<wbr>Params</a>
 		</li>
 		<li class=" tsd-kind-interface">
@@ -958,6 +964,12 @@ img { max-width: 100%; }
 			<a href="interfaces/reissuetransaction.html" class="tsd-kind-icon">Reissue<wbr>Transaction</a>
 		</li>
 		<li class=" tsd-kind-interface">
+			<a href="interfaces/setscriptparams.html" class="tsd-kind-icon">Set<wbr>Script<wbr>Params</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/setscripttransaction.html" class="tsd-kind-icon">Set<wbr>Script<wbr>Transaction</a>
+		</li>
+		<li class=" tsd-kind-interface">
 			<a href="interfaces/transaction.html" class="tsd-kind-icon">Transaction</a>
 		</li>
 		<li class=" tsd-kind-interface">
@@ -974,6 +986,9 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#tx" class="tsd-kind-icon">Tx</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="globals.html#alias" class="tsd-kind-icon">alias</a>
 		</li>
 		<li class=" tsd-kind-function">
 			<a href="globals.html#burn" class="tsd-kind-icon">burn</a>
@@ -997,12 +1012,63 @@ img { max-width: 100%; }
 			<a href="globals.html#reissue" class="tsd-kind-icon">reissue</a>
 		</li>
 		<li class=" tsd-kind-function">
+			<a href="globals.html#setscript" class="tsd-kind-icon">set<wbr>Script</a>
+		</li>
+		<li class=" tsd-kind-function">
 			<a href="globals.html#transfer" class="tsd-kind-icon">transfer</a>
 		</li>
 	</ul>
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<div class="tsd-panel tsd-typography">
+			<h1 id="waves-transactions-npm-version">waves-transactions  <a href="https://www.npmjs.com/package/waves-transactions"><img src="https://badge.fury.io/js/waves-transactions.svg" alt="npm version"></a></h1>
+			<p>Using this library you can easily create and sign transactions for Waves blockchain.
+			It also allows you to multi-sign existing transactions.</p>
+			<p>Check full documentation on <a href="https://ebceu4.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
+			<h3 id="transfer">Transfer</h3>
+			<p>Transaction creation is really simple:</p>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4befd4beeb981b8c1ea6def4a'</span>
+<span class="hljs-keyword">const</span> signedTranserTx = transfer(seed, { <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span> })</code></pre>
+			<p>In return you have signed transfer transaction:</p>
+			<pre><code class="language-js">{
+  <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
+  <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">'6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>,
+  <span class="hljs-attr">proofs</span>: [
+    <span class="hljs-string">'25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'</span>
+  ]
+}</code></pre>
+			<p>Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:</p>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> otherPartySeed = <span class="hljs-string">'18f6edd4c8d647b4ba5ed366093ef5b8d0c4d8b3a6154a2b876f54773a678781'</span>
+<span class="hljs-keyword">const</span> transferSidnedWithTwoParties = transfer(seed, signedTranserTx <span class="hljs-comment">/*Tx from first example*/</span>)</code></pre>
+			<p>So now there are two proofs:</p>
+			<pre><code class="language-js">{
+  <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
+  <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">'6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>,
+  <span class="hljs-attr">proofs</span>: [
+    <span class="hljs-string">'25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'</span>,
+    <span class="hljs-string">'CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z'</span>
+  ]
+}</code></pre>
+		</div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
@@ -1016,6 +1082,8 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Interfaces</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-interface"><a href="interfaces/aliasparams.html" class="tsd-kind-icon">Alias<wbr>Params</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/aliastransaction.html" class="tsd-kind-icon">Alias<wbr>Transaction</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/burnparams.html" class="tsd-kind-icon">Burn<wbr>Params</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/burntransaction.html" class="tsd-kind-icon">Burn<wbr>Transaction</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/cancelleaseparams.html" class="tsd-kind-icon">Cancel<wbr>Lease<wbr>Params</a></li>
@@ -1031,6 +1099,8 @@ img { max-width: 100%; }
 							<li class="tsd-kind-interface"><a href="interfaces/masstransfertransaction.html" class="tsd-kind-icon">Mass<wbr>Transfer<wbr>Transaction</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/reissueparams.html" class="tsd-kind-icon">Reissue<wbr>Params</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/reissuetransaction.html" class="tsd-kind-icon">Reissue<wbr>Transaction</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/setscriptparams.html" class="tsd-kind-icon">Set<wbr>Script<wbr>Params</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/setscripttransaction.html" class="tsd-kind-icon">Set<wbr>Script<wbr>Transaction</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/transaction.html" class="tsd-kind-icon">Transaction</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/transfer.html" class="tsd-kind-icon">Transfer</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/transferparams.html" class="tsd-kind-icon">Transfer<wbr>Params</a></li>
@@ -1047,6 +1117,7 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-function"><a href="globals.html#alias" class="tsd-kind-icon">alias</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#burn" class="tsd-kind-icon">burn</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#cancellease" class="tsd-kind-icon">cancel<wbr>Lease</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#data" class="tsd-kind-icon">data</a></li>
@@ -1054,6 +1125,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-function"><a href="globals.html#lease" class="tsd-kind-icon">lease</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#masstransfer" class="tsd-kind-icon">mass<wbr>Transfer</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#reissue" class="tsd-kind-icon">reissue</a></li>
+							<li class="tsd-kind-function"><a href="globals.html#setscript" class="tsd-kind-icon">set<wbr>Script</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#transfer" class="tsd-kind-icon">transfer</a></li>
 						</ul>
 					</section>
@@ -1068,13 +1140,39 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Tx<span class="tsd-signature-symbol">:</span> <a href="interfaces/issuetransaction.html" class="tsd-signature-type">IssueTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/transfertransaction.html" class="tsd-signature-type">TransferTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/reissuetransaction.html" class="tsd-signature-type">ReissueTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/burntransaction.html" class="tsd-signature-type">BurnTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/leasetransaction.html" class="tsd-signature-type">LeaseTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/cancelleasetransaction.html" class="tsd-signature-type">CancelLeaseTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/masstransfertransaction.html" class="tsd-signature-type">MassTransferTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/datatransaction.html" class="tsd-signature-type">DataTransaction</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in transactions.ts:25</li>
+						<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions.ts#L27">transactions.ts:27</a></li>
 					</ul>
 				</aside>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="alias" class="tsd-anchor"></a>
+				<h3>alias</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">(</span>seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, paramsOrTx<span class="tsd-signature-symbol">: </span><a href="interfaces/aliasparams.html" class="tsd-signature-type">AliasParams</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/aliastransaction.html" class="tsd-signature-type">AliasTransaction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/aliastransaction.html" class="tsd-signature-type">AliasTransaction</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in transactions/alias.ts:12</li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>seed: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+							<li>
+								<h5>paramsOrTx: <a href="interfaces/aliasparams.html" class="tsd-signature-type">AliasParams</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/aliastransaction.html" class="tsd-signature-type">AliasTransaction</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="interfaces/aliastransaction.html" class="tsd-signature-type">AliasTransaction</a></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function">
 				<a name="burn" class="tsd-anchor"></a>
 				<h3>burn</h3>
@@ -1085,45 +1183,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/burn.ts:57</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/burn.ts#L13">transactions/burn.ts:13</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/burntransaction.html">BurnTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/burntransaction.html">BurnTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { burn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">assetId</span>: <span class="hljs-string">'4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC'</span>,
-  <span class="hljs-attr">quantity</span>: <span class="hljs-number">100</span>,
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000,</span>
-  <span class="hljs-comment">//chainId: 'W',</span>
-}
-
-<span class="hljs-keyword">const</span> signedBurnTx = burn(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"HF3Ca5J55hURUfdJ95SyFvR7bQ1nQJPtMLaYtD2RbGq2"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">6</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC"</span>,
-  <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">100</span>,
-  <span class="hljs-attr">"chainId"</span>: <span class="hljs-string">"W"</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176019163</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4kpYiTDHKJLMwMFu3ZcDfDoCMtysd5vsuf88oJqrcXrSz4ouWscQa6JeJ6sf5a8oU9auXncp5FbaZHT3gZww3ZYN"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1147,43 +1209,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/cancel-lease.ts:54</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/cancel-lease.ts#L12">transactions/cancel-lease.ts:12</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/cancelleasetransaction.html">CancelLeaseTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/cancelleasetransaction.html">CancelLeaseTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { cancelLease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">leaseId</span>: <span class="hljs-string">'2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg'</span>,
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000,</span>
-  <span class="hljs-comment">//chainId: 'W'</span>
-}
-
-<span class="hljs-keyword">const</span> signedCancelLeaseTx = cancelLease(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"EQBdvnUyu1hw7fXd7zP6dmLnUp3cQSzocf8sBQgj6wk"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">9</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"leaseId"</span>: <span class="hljs-string">"2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg"</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176837270</span>,
-  <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">117</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"w1FgYTASn8wzqqCX659dtnFEdp2vcVJposPkcNpKJ3FkEwu3jKQh2nRigRK3knZHkJDm5ABPnmrkLvhrWGZ6oYV"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1207,67 +1235,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/data.ts:82</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/data.ts#L16">transactions/data.ts:16</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/datatransaction.html">DataTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/datatransaction.html">DataTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { data } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">data</span>: [
-    { <span class="hljs-attr">key</span>: <span class="hljs-string">'integerVal'</span>, <span class="hljs-attr">value</span>: <span class="hljs-number">1</span> },
-    { <span class="hljs-attr">key</span>: <span class="hljs-string">'booleanVal'</span>, <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> },
-    { <span class="hljs-attr">key</span>: <span class="hljs-string">'stringVal'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'hello'</span> },
-    { <span class="hljs-attr">key</span>: <span class="hljs-string">'binaryVal'</span>, <span class="hljs-attr">value</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>] },
-  ]
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000 + bytes.length * 100000</span>
-}
-
-<span class="hljs-keyword">const</span> signedDataTx = data(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"E35imFdb9igi9bk2YexYbDuK7y84hgbDLMKkG3c9HmVY"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">12</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176019199</span>,
-  <span class="hljs-attr">"data"</span>: [
-    {
-      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"integer"</span>,
-      <span class="hljs-attr">"key"</span>: <span class="hljs-string">"integerVal"</span>,
-      <span class="hljs-attr">"value"</span>: <span class="hljs-number">1</span>
-    },
-    {
-      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"boolean"</span>,
-      <span class="hljs-attr">"key"</span>: <span class="hljs-string">"booleanVal"</span>,
-      <span class="hljs-attr">"value"</span>: <span class="hljs-literal">true</span>
-    },
-    {
-      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"string"</span>,
-      <span class="hljs-attr">"key"</span>: <span class="hljs-string">"stringVal"</span>,
-      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"hello"</span>
-    },
-    {
-      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"binary"</span>,
-      <span class="hljs-attr">"key"</span>: <span class="hljs-string">"binaryVal"</span>,
-      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"base64:AQIDBA=="</span>
-    }
-  ],
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"nrjBkBJLB8ehRVaTHH4QF6jqF3PBm3Ke9vKkJtLNsEJtMveoejfEoERLRkroBfqNdy5zsvxczzkFYuJGYhXTuza"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1291,51 +1261,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/issue.ts:66</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/issue.ts#L16">transactions/issue.ts:16</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/issuetransaction.html">IssueTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/issuetransaction.html">IssueTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { issue } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">name</span>: <span class="hljs-string">'SCAM TOKEN'</span>,
-  <span class="hljs-attr">description</span>: <span class="hljs-string">'Awesome token that will tokenize tokenization tokenized'</span>,
-  <span class="hljs-attr">quantity</span>: <span class="hljs-number">1000000</span>,
-  <span class="hljs-comment">//reissuable: false</span>
-  <span class="hljs-comment">//decimals: 8</span>
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000,</span>
-  <span class="hljs-comment">//chainId: 'W'</span>
-}
-
-<span class="hljs-keyword">const</span> signedIssueTx = issue(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"CTBXhJZLFDgky4EZj7LHKPWDx5BxdoYBZCQ92ppvSC7R"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">3</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"SCAM TOKEN"</span>,
-  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Awesome token that will tokenize tokenization tokenized"</span>,
-  <span class="hljs-attr">"decimals"</span>: <span class="hljs-number">8</span>,
-  <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">1000000</span>,
-  <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176019214</span>,
-  <span class="hljs-attr">"chainId"</span>: <span class="hljs-string">"W"</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"64xxGNn2NEoKMpYxBkgmye9RcjeoJEMtKHZUZ4FffE4wtVjXj2ZbNTLEdN9LaC1WvCNRsRNwvDzrhfMUTgQYkwAX"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1359,43 +1287,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/lease.ts:54</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/lease.ts#L12">transactions/lease.ts:12</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/leasetransaction.html">LeaseTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/leasetransaction.html">LeaseTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { lease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">amount</span>: <span class="hljs-number">100</span>,
-  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs'</span>,
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000,</span>
-}
-
-<span class="hljs-keyword">const</span> signedLeaseTx = lease(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9KrMhtm4G55sbErYmsRPiKp9arxxYaohHuhkZUzxxsEx"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">8</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
-  <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176019229</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2heCbAezodUBukQgZE4TWEWbXm5rW33u8br3Th7CE3oDarjGZPQbHLPqmY7oUM2Gms6XXvbkuvoiD4dV7bGxku6A"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1419,59 +1313,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/mass-transfer.ts:71</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/mass-transfer.ts#L13">transactions/mass-transfer.ts:13</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/masstransfertransaction.html">MassTransferTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/masstransfertransaction.html">MassTransferTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { massTransfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">transfers</span>: [
-    {
-      <span class="hljs-attr">amount</span>: <span class="hljs-number">100</span>,
-      <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs'</span>,
-    },
-    {
-      <span class="hljs-attr">amount</span>: <span class="hljs-number">200</span>,
-      <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3PPnqZznWJbPG2Z1Y35w8tZzskiq5AMfUXr'</span>,
-    }
-  ]
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000 + transfers.length * 50000,</span>
-}
-
-<span class="hljs-keyword">const</span> signedMassTransferTx = massTransfer(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"5WGyoTFG7hH2FBeRCnC1CEPGVnAZDSfP56C1MsajeBHP"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">11</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">"transfers"</span>: [
-    {
-      <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
-      <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>
-    },
-    {
-      <span class="hljs-attr">"amount"</span>: <span class="hljs-number">200</span>,
-      <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3PPnqZznWJbPG2Z1Y35w8tZzskiq5AMfUXr"</span>
-    }
-  ],
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">200000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176019240</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4SDkc7PW4hK4hQeeuToEgA34SG3LVxHrPKyuK877BxFsHHLdUhwCwMvzMp6y7J8X7QE6XSouR5KqvZkbvk4xwXBE"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1495,47 +1339,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/reissue.ts:60</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/reissue.ts#L14">transactions/reissue.ts:14</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/reissuetransaction.html">ReissueTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/reissuetransaction.html">ReissueTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { reissue } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">quantity</span>: <span class="hljs-number">10000</span>,
-  <span class="hljs-attr">assetId</span>: <span class="hljs-string">'3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx'</span>,
-  <span class="hljs-attr">reissuable</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000000,</span>
-  <span class="hljs-comment">//chainId: 'W'</span>
-}
-
-<span class="hljs-keyword">const</span> signedReissueTx = reissue(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"Ha6jftgUWQJUd8skC1yoVjVf1Y8eN7asrBQMhUstTHNF"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">5</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx"</span>,
-  <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">10000</span>,
-  <span class="hljs-attr">"chainId"</span>: <span class="hljs-string">"W"</span>,
-  <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537176019270</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4SwRP6huyvi2WN6rMrMJa3tyHDC8dA5z8A6mVra8Fg6mRckRx6b5cxe1VguAFUieUwYw8Da9L6WGE7EfTkA58oiG"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1550,6 +1356,32 @@ img { max-width: 100%; }
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="setscript" class="tsd-anchor"></a>
+				<h3>set<wbr>Script</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">set<wbr>Script<span class="tsd-signature-symbol">(</span>seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, paramsOrTx<span class="tsd-signature-symbol">: </span><a href="interfaces/setscriptparams.html" class="tsd-signature-type">SetScriptParams</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/setscripttransaction.html" class="tsd-signature-type">SetScriptTransaction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/setscripttransaction.html" class="tsd-signature-type">SetScriptTransaction</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in transactions/set-script.ts:12</li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>seed: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+							<li>
+								<h5>paramsOrTx: <a href="interfaces/setscriptparams.html" class="tsd-signature-type">SetScriptParams</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/setscripttransaction.html" class="tsd-signature-type">SetScriptTransaction</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="interfaces/setscripttransaction.html" class="tsd-signature-type">SetScriptTransaction</a></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function">
 				<a name="transfer" class="tsd-anchor"></a>
 				<h3>transfer</h3>
 				<ul class="tsd-signatures tsd-kind-function">
@@ -1559,47 +1391,9 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in transactions/transfer.ts:61</li>
+								<li>Defined in <a href="https://github.com/ebceu4/waves-transactions/blob/b79e583/src/transactions/transfer.ts#L15">transactions/transfer.ts:15</a></li>
 							</ul>
 						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Creates and signs <a href="interfaces/transfertransaction.html">TransferTransaction</a>.</p>
-							</div>
-							<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-							Also you can use already signed <a href="interfaces/transfertransaction.html">TransferTransaction</a> as a second agrument.</p>
-							<h3 id="usage">Usage</h3>
-							<pre><code class="language-js"><span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
-
-<span class="hljs-comment">//Transfering 100 WAVES</span>
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">amount</span>: <span class="hljs-number">100</span>,
-  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs'</span>,
-  <span class="hljs-comment">//feeAssetId: undefined</span>
-  <span class="hljs-comment">//assetId: undefined</span>
-  <span class="hljs-comment">//attachment: undefined</span>
-  <span class="hljs-comment">//timestamp: Date.now(),</span>
-  <span class="hljs-comment">//fee: 100000,</span>
-}
-
-<span class="hljs-keyword">const</span> signedTransferTx = transfer(seed, params)</code></pre>
-							<h3 id="output">Output</h3>
-							<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DKrTsnpDGevgv6CnDJCJ149uJAdEBPQnWzVPX6AjTNch"</span>,
-  <span class="hljs-attr">"type"</span>: <span class="hljs-number">4</span>,
-  <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
-  <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
-  <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537177250555</span>,
-  <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2NkdseiK13AaTGHYctdfwWwV9wynKg8DFTwAFA5JwtD761hUBAJSpVBSYuvwermXuZ3tHgfHxsd7YM9vVfPsNPNC"</span>
-  ]
-}</code></pre>
-						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
