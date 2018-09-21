@@ -30,17 +30,17 @@ async function build() {
     await remove(p('../docs'))
     await create(p('tmp'))
     await create(p('tmp/src'))
-    //  await run('npm pack waves-transactions', p('tmp'))
-    //  const tgz = (await files(p('tmp'), f => f.startsWith('waves-transactions-')))[0]
-    //  await run(`tar zxvf ${tgz}`, p('tmp'))
-    //  await create(p('tmp/node_modules'))
-    //  await copy(p('tmp/package'), p('tmp/node_modules/waves-transactions'))
+
+    await run('npm pack typedoc-clarity-theme', p('tmp'))
+    const tgz = (await files(p('tmp'), f => f.startsWith('typedoc-clarity-theme-')))[0]
+    await run(`tar zxvf ${tgz}`, p('tmp'))
+    await create(p('tmp/node_modules'))
+    await copy(p('tmp/package'), p('tmp/node_modules/typedoc-clarity-theme'))
 
     await copy(p('../src'), p('tmp/src'))
     await copy(p('../usage'), p('tmp/usage'))
     await copy(p('../tsconfig.json'), p('tmp/tsconfig.json'))
     await run('tsc', p('tmp'))
-    await create(p('tmp/node_modules'))
     await copy(p('tmp/dist'), p('tmp/node_modules/waves-transactions'))
     await copy(p('package.json'), p('tmp/node_modules/waves-transactions/package.json'))
     await remove(p('tmp/dist'))

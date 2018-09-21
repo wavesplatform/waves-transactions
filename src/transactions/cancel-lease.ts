@@ -1,7 +1,8 @@
 import { TransactionType, CancelLeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
-export interface CancelLeaseParams {
+export interface CancelLeaseParams extends Params {
   leaseId: string
   fee?: number
   timestamp?: number
@@ -9,9 +10,9 @@ export interface CancelLeaseParams {
 }
 
 /* @echo DOCS */
-export function cancelLease(seed: string | string[], paramsOrTx: CancelLeaseParams | CancelLeaseTransaction): CancelLeaseTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { leaseId, fee, timestamp, chainId: chain } = paramsOrTx
+export function cancelLease(seed: SeedTypes, paramsOrTx: CancelLeaseParams | CancelLeaseTransaction): CancelLeaseTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { leaseId, fee, timestamp, chainId: chain, senderPublicKey } = paramsOrTx
   const cId = chain || 'W'
   const chainId = typeof cId == 'string' ? cId : new String(cId)
 
@@ -22,7 +23,7 @@ export function cancelLease(seed: string | string[], paramsOrTx: CancelLeasePara
       version: 2,
       leaseId,
       fee: fee | 100000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       chainId: (chainId || 'W').charCodeAt(0),
       proofs: [],
@@ -37,13 +38,7 @@ export function cancelLease(seed: string | string[], paramsOrTx: CancelLeasePara
     BASE58_STRING(tx.leaseId)
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return cancelLease(rest, tx)
-  }
-
-  return tx
+  return newSeed ? cancelLease(newSeed, tx) : tx
 }

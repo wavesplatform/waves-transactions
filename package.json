@@ -14,9 +14,11 @@
     "@types/node": "^10.9.4",
     "copy-webpack-plugin": "^4.5.2",
     "jsdoc-to-markdown": "^4.0.1",
+    "nativescript-typedoc-theme": "0.0.7",
     "preprocess": "^3.1.0",
     "ts-jsdoc": "^3.0.1",
     "ts-loader": "^5.1.0",
+    "typedoc-clarity-theme": "^1.1.0",
     "typescript": "^3.0.3",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0"

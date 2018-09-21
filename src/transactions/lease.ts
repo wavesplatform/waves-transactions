@@ -1,7 +1,8 @@
 import { TransactionType, LeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
-export interface LeaseParams {
+export interface LeaseParams extends Params {
   recipient: string
   amount: number
   fee?: number
@@ -9,9 +10,9 @@ export interface LeaseParams {
 }
 
 /* @echo DOCS */
-export function lease(seed: string | string[], paramsOrTx: LeaseParams | LeaseTransaction): LeaseTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { recipient, amount, fee, timestamp } = paramsOrTx
+export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransaction): LeaseTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { recipient, amount, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: LeaseTransaction = proofs && proofs.length > 0 ?
@@ -21,7 +22,7 @@ export function lease(seed: string | string[], paramsOrTx: LeaseParams | LeaseTr
       recipient,
       amount,
       fee: fee | 100000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       proofs: [],
       id: ''
@@ -36,13 +37,7 @@ export function lease(seed: string | string[], paramsOrTx: LeaseParams | LeaseTr
     LONG(tx.timestamp),
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return lease(rest, tx)
-  }
-
-  return tx
+  return newSeed ? lease(newSeed, tx) : tx
 }

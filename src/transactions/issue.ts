@@ -1,7 +1,8 @@
 import { IssueTransaction, TransactionType } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
-export interface IssueParams {
+export interface IssueParams extends Params {
   name: string
   description: string
   decimals?: number
@@ -13,9 +14,9 @@ export interface IssueParams {
 }
 
 /* @echo DOCS */
-export function issue(seed: string | string[], paramsOrTx: IssueParams | IssueTransaction): IssueTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { name, description, decimals, quantity, reissuable, fee, timestamp, chainId } = paramsOrTx
+export function issue(seed: SeedTypes, paramsOrTx: IssueParams | IssueTransaction): IssueTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { name, description, decimals, quantity, reissuable, fee, timestamp, chainId, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: IssueTransaction = proofs && proofs.length > 0 ?
@@ -28,7 +29,7 @@ export function issue(seed: string | string[], paramsOrTx: IssueParams | IssueTr
       quantity,
       reissuable: reissuable || false,
       fee: fee | 100000000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       chainId: chainId || 'W',
       proofs: [],
@@ -48,13 +49,7 @@ export function issue(seed: string | string[], paramsOrTx: IssueParams | IssueTr
     [0] //Script
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return issue(rest, tx)
-  }
-
-  return tx
+  return newSeed ? issue(newSeed, tx) : tx
 }

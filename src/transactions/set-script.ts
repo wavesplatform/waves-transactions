@@ -1,7 +1,8 @@
 import { TransactionType, SetScriptTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BASE64_STRING, OPTION } from "waves-crypto"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
-export interface SetScriptParams {
+export interface SetScriptParams extends Params {
   script?: string //base64
   fee?: number
   timestamp?: number
@@ -9,9 +10,9 @@ export interface SetScriptParams {
 }
 
 /* @echo DOCS */
-export function setScript(seed: string | string[], paramsOrTx: SetScriptParams | SetScriptTransaction): SetScriptTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { script, fee, timestamp, chainId } = paramsOrTx
+export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScriptTransaction): SetScriptTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { script, fee, timestamp, chainId, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: SetScriptTransaction = proofs && proofs.length > 0 ?
@@ -20,7 +21,7 @@ export function setScript(seed: string | string[], paramsOrTx: SetScriptParams |
       version: 2,
       script: 'base64:' + script,
       fee: fee | 100000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       chainId: chainId || 'W',
       proofs: [],
@@ -35,13 +36,7 @@ export function setScript(seed: string | string[], paramsOrTx: SetScriptParams |
     LONG(tx.timestamp),
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return setScript(rest, tx)
-  }
-
-  return tx
+  return newSeed ? setScript(newSeed, tx) : tx
 }

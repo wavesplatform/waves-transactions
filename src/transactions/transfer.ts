@@ -1,7 +1,8 @@
 import { TransactionType, TransferTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
-export interface TransferParams {
+export interface TransferParams extends Params {
   recipient: string
   amount: number
   attachment?: string
@@ -12,9 +13,9 @@ export interface TransferParams {
 }
 
 /* @echo DOCS */
-export function transfer(seed: string | string[], paramsOrTx: TransferParams | TransferTransaction): TransferTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp } = paramsOrTx
+export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferTransaction): TransferTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: TransferTransaction = proofs && proofs.length > 0 ?
@@ -27,7 +28,7 @@ export function transfer(seed: string | string[], paramsOrTx: TransferParams | T
       assetId,
       amount,
       fee: fee | 100000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       proofs: [],
       id: ''
@@ -46,13 +47,7 @@ export function transfer(seed: string | string[], paramsOrTx: TransferParams | T
     LEN(SHORT)(STRING)(tx.attachment),
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return transfer(rest, tx)
-  }
-
-  return tx
+  return newSeed ? transfer(newSeed, tx) : tx
 }

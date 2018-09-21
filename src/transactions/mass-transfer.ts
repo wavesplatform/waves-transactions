@@ -1,7 +1,8 @@
 import { TransactionType, MassTransferTransaction, Transfer } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION, empty, COUNT } from "waves-crypto"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
-export interface MassTransferParams {
+export interface MassTransferParams extends Params {
   transfers: Transfer[]
   attachment?: string
   assetId?: string
@@ -10,9 +11,9 @@ export interface MassTransferParams {
 }
 
 /* @echo DOCS */
-export function massTransfer(seed: string | string[], paramsOrTx: MassTransferParams | MassTransferTransaction): MassTransferTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { assetId, transfers, attachment, fee, timestamp } = paramsOrTx
+export function massTransfer(seed: SeedTypes, paramsOrTx: MassTransferParams | MassTransferTransaction): MassTransferTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { assetId, transfers, attachment, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: MassTransferTransaction = proofs && proofs.length > 0 ?
@@ -23,7 +24,7 @@ export function massTransfer(seed: string | string[], paramsOrTx: MassTransferPa
       attachment,
       assetId,
       fee: fee | (100000 + Math.ceil(0.5 * transfers.length) * 100000),
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       proofs: [],
       id: ''
@@ -40,13 +41,7 @@ export function massTransfer(seed: string | string[], paramsOrTx: MassTransferPa
     LEN(SHORT)(STRING)(tx.attachment),
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return massTransfer(rest, tx)
-  }
-
-  return tx
+  return newSeed ? massTransfer(newSeed, tx) : tx
 }

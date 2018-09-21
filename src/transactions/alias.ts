@@ -1,7 +1,8 @@
 import { TransactionType, AliasTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
+import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
+import { Params, addProof, pullSeedAndIndex, SeedTypes } from "../generic"
 
-export interface AliasParams {
+export interface AliasParams extends Params {
   alias: string
   fee?: number
   timestamp?: number
@@ -9,9 +10,9 @@ export interface AliasParams {
 }
 
 /* @echo DOCS */
-export function alias(seed: string | string[], paramsOrTx: AliasParams | AliasTransaction): AliasTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { alias: _alias, fee, timestamp } = paramsOrTx
+export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransaction): AliasTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { alias: _alias, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: AliasTransaction = proofs && proofs.length > 0 ?
@@ -20,7 +21,7 @@ export function alias(seed: string | string[], paramsOrTx: AliasParams | AliasTr
       version: 2,
       alias: _alias,
       fee: fee | 100000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       proofs: [],
       id: ''
@@ -34,13 +35,7 @@ export function alias(seed: string | string[], paramsOrTx: AliasParams | AliasTr
     LONG(tx.timestamp)
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return alias(rest, tx)
-  }
-
-  return tx
+  return newSeed ? alias(newSeed, tx) : tx
 }

@@ -1,7 +1,8 @@
 import { TransactionType, BurnTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
+import { Params, pullSeedAndIndex, addProof, SeedTypes } from "../generic"
 
-export interface BurnParams {
+export interface BurnParams extends Params {
   assetId: string
   quantity: number
   fee?: number
@@ -10,9 +11,9 @@ export interface BurnParams {
 }
 
 /* @echo DOCS */
-export function burn(seed: string | string[], paramsOrTx: BurnParams | BurnTransaction): BurnTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { assetId, quantity, chainId, fee, timestamp } = paramsOrTx
+export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction): BurnTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { assetId, quantity, chainId, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
   const tx: BurnTransaction = proofs && proofs.length > 0 ?
@@ -23,7 +24,7 @@ export function burn(seed: string | string[], paramsOrTx: BurnParams | BurnTrans
       quantity,
       chainId: chainId || 'W',
       fee: fee | 100000,
-      senderPublicKey: publicKey(_seed),
+      senderPublicKey: senderPublicKey || publicKey(_seed),
       timestamp: timestamp || Date.now(),
       proofs: [],
       id: ''
@@ -38,13 +39,7 @@ export function burn(seed: string | string[], paramsOrTx: BurnParams | BurnTrans
     LONG(tx.timestamp)
   )
 
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return burn(rest, tx)
-  }
-
-  return tx
+  return newSeed ? burn(newSeed, tx) : tx
 }

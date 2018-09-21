@@ -25,7 +25,7 @@
     "mode": "file",
     "out": "docs",
     "exclude": "test",
-    "theme": "minimal",
+    "theme": "./node_modules/typedoc-clarity-theme",
     "ignoreCompilerErrors": true,
     "excludePrivate": true,
     "excludeNotExported": true,

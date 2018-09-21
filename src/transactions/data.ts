@@ -1,21 +1,22 @@
 import { publicKey, LEN, LONG, BYTE, SHORT, BYTES, STRING, concat, BASE58_STRING, COUNT, signBytes, hashBytes } from "waves-crypto"
 import { DataTransaction, TransactionType } from "../transactions"
+import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
 
 export interface DataEntry {
   key: string
   value: string | number | boolean | Buffer | Uint8Array | number[]
 }
 
-export interface DataParams {
+export interface DataParams extends Params {
   data: DataEntry[]
   fee?: number,
   timestamp?: number
 }
 
 /* @echo DOCS */
-export function data(seed: string | string[], paramsOrTx: DataParams | DataTransaction): DataTransaction {
-  const _seed = typeof seed == 'string' ? seed : seed[0]
-  const { data: _data, fee, timestamp } = paramsOrTx
+export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction): DataTransaction {
+  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { data: _data, fee, timestamp, senderPublicKey: spk } = paramsOrTx
 
   const typeMap = {
     number: ['integer', 0, LONG],
@@ -26,7 +27,7 @@ export function data(seed: string | string[], paramsOrTx: DataParams | DataTrans
 
   const mapType = (value) => typeMap[typeof value] || typeMap['_']
 
-  const senderPublicKey = publicKey(_seed)
+  const senderPublicKey = spk || publicKey(_seed)
   const _timestamp = timestamp || Date.now()
 
   let bytes = concat(
@@ -62,15 +63,7 @@ export function data(seed: string | string[], paramsOrTx: DataParams | DataTrans
       id: ''
     }
 
-  bytes = concat(bytes, LONG(tx.fee))
-
-  tx.proofs = [...tx.proofs, signBytes(bytes, _seed)]
+  addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
-
-  if (typeof seed != 'string' && seed.length > 1) {
-    const [, ...rest] = seed
-    return data(rest, tx)
-  }
-
-  return tx
+  return newSeed ? data(newSeed, tx) : tx
 } 
