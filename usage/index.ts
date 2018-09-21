@@ -1,5 +1,5 @@
-import { readFileSync } from "fs";
-import { runInNewContext } from "vm";
+import { readFileSync } from "fs"
+import { runInNewContext } from "vm"
 
 const pp = require('preprocess')
 

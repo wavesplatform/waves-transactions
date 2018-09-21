@@ -15,5 +15,3 @@ const params = {
 
 const signedTransferTx = transfer(seed, params)
 console.log(signedTransferTx)
-
-transfer('', params)
