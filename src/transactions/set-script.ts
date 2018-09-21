@@ -18,7 +18,7 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
   const tx: SetScriptTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as SetScriptTransaction : {
       type: TransactionType.SetScript,
-      version: 2,
+      version: 1,
       script: 'base64:' + script,
       fee: fee | 100000,
       senderPublicKey: senderPublicKey || publicKey(_seed),
