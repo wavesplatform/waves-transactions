@@ -63,6 +63,7 @@ export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction):
       id: ''
     }
 
+  bytes = concat(bytes, LONG(tx.fee))
   addProof(tx, signBytes(bytes, _seed), index)
   tx.id = hashBytes(bytes)
   return newSeed ? data(newSeed, tx) : tx
