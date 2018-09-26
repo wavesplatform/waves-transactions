@@ -1,6 +1,6 @@
 import { publicKey, LEN, LONG, BYTE, SHORT, BYTES, STRING, concat, BASE58_STRING, COUNT, signBytes, hashBytes } from "waves-crypto"
 import { DataTransaction, TransactionType } from "../transactions"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface DataEntry {
   key: string
@@ -28,7 +28,7 @@ export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction):
   const mapType = (value) => typeMap[typeof value] || typeMap['_']
 
   const senderPublicKey = spk || publicKey(_seed)
-  const _timestamp = timestamp || Date.now()
+  const _timestamp = valOrDef(timestamp, Date.now())
 
   let bytes = concat(
     BYTE(TransactionType.Data),
@@ -40,7 +40,7 @@ export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction):
 
   const computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
 
-  const _fee = fee || computedFee
+  const _fee = valOrDef(fee, computedFee)
 
   const proofs = paramsOrTx['proofs']
   const tx: DataTransaction = proofs && proofs.length > 0 ?

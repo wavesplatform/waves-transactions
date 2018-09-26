@@ -27,6 +27,8 @@ export function addProof(tx: Transaction, proof: string, index?: number) {
   return tx
 }
 
+export const valOrDef = <T>(val: T, def: T): T => val != undefined ? val : def
+
 export type SeedTypes = string | string[] | SeedsAndIndexes
 
 export const isSeedsAndIndexes = (seed: SeedTypes): seed is SeedsAndIndexes =>

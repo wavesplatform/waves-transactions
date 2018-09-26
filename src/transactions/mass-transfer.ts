@@ -1,6 +1,6 @@
 import { TransactionType, MassTransferTransaction, Transfer } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION, empty, COUNT } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface MassTransferParams extends Params {
   transfers: Transfer[]
@@ -23,9 +23,9 @@ export function massTransfer(seed: SeedTypes, paramsOrTx: MassTransferParams | M
       transfers,
       attachment,
       assetId,
-      fee: fee | (100000 + Math.ceil(0.5 * transfers.length) * 100000),
+      fee: valOrDef(fee, (100000 + Math.ceil(0.5 * transfers.length) * 100000)),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
     }

@@ -1,6 +1,6 @@
 import { TransactionType, CancelLeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface CancelLeaseParams extends Params {
   leaseId: string
@@ -22,9 +22,9 @@ export function cancelLease(seed: SeedTypes, paramsOrTx: CancelLeaseParams | Can
       type: TransactionType.CancelLease,
       version: 2,
       leaseId,
-      fee: fee | 100000,
+      fee: valOrDef(fee,100000),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       chainId: (chainId || 'W').charCodeAt(0),
       proofs: [],
       id: ''

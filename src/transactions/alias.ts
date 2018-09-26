@@ -1,6 +1,6 @@
 import { TransactionType, AliasTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, addProof, pullSeedAndIndex, SeedTypes } from "../generic"
+import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef } from "../generic"
 
 export interface AliasParams extends Params {
   alias: string
@@ -20,9 +20,9 @@ export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransactio
       type: TransactionType.Alias,
       version: 2,
       alias: _alias,
-      fee: fee | 100000,
+      fee: valOrDef(fee, 100000),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
     }

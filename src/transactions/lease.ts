@@ -1,6 +1,6 @@
 import { TransactionType, LeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -21,9 +21,9 @@ export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransactio
       version: 2,
       recipient,
       amount,
-      fee: fee | 100000,
+      fee: valOrDef(fee, 100000),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
     }

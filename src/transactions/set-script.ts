@@ -1,6 +1,6 @@
 import { TransactionType, SetScriptTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BASE64_STRING, OPTION, LEN, SHORT } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface SetScriptParams extends Params {
   script?: string //base64
@@ -20,9 +20,9 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
       type: TransactionType.SetScript,
       version: 1,
       script: script ? 'base64:' + script : undefined,
-      fee: fee | 1000000,
+      fee: valOrDef(fee, 1000000),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       chainId: chainId || 'W',
       proofs: [],
       id: ''

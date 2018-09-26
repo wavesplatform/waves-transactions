@@ -1,6 +1,6 @@
 import { IssueTransaction, TransactionType } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface IssueParams extends Params {
   name: string
@@ -25,12 +25,12 @@ export function issue(seed: SeedTypes, paramsOrTx: IssueParams | IssueTransactio
       version: 2,
       name,
       description,
-      decimals: decimals || 8,
+      decimals: valOrDef(decimals, 8),
       quantity,
       reissuable: reissuable || false,
-      fee: fee | 100000000,
+      fee: valOrDef(fee, 100000000),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       chainId: chainId || 'W',
       proofs: [],
       id: ''

@@ -1,6 +1,6 @@
 import { TransactionType, TransferTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
 
 export interface TransferParams extends Params {
   recipient: string
@@ -27,9 +27,9 @@ export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferT
       feeAssetId,
       assetId,
       amount,
-      fee: fee | 100000,
+      fee: valOrDef(fee, 100000),
       senderPublicKey: senderPublicKey || publicKey(_seed),
-      timestamp: timestamp || Date.now(),
+      timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
     }
