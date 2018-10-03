@@ -14,6 +14,8 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
   const { nextSeed } = pullSeedAndIndex(seed)
   const { script, fee, timestamp, chainId, senderPublicKey } = paramsOrTx
 
+  if (script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
+
   const proofs = paramsOrTx['proofs']
   const tx: SetScriptTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as SetScriptTransaction : {
