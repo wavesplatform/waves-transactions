@@ -1,6 +1,6 @@
 import { TransactionType, BurnTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, addProof, SeedTypes, valOrDef } from "../generic"
+import { Params, pullSeedAndIndex, addProof, SeedTypes, valOrDef, mapSeed } from "../generic"
 
 export interface BurnParams extends Params {
   assetId: string
@@ -12,7 +12,7 @@ export interface BurnParams extends Params {
 
 /* @echo DOCS */
 export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction): BurnTransaction {
-  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { nextSeed } = pullSeedAndIndex(seed)
   const { assetId, quantity, chainId, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
@@ -24,7 +24,7 @@ export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction):
       quantity,
       chainId: chainId || 'W',
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || publicKey(_seed),
+      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -39,7 +39,7 @@ export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction):
     LONG(tx.timestamp)
   )
 
-  addProof(tx, signBytes(bytes, _seed), index)
+  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return newSeed ? burn(newSeed, tx) : tx
+  return nextSeed ? burn(nextSeed, tx) : tx
 }

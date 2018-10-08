@@ -1,6 +1,6 @@
 import { TransactionType, TransferTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
 
 export interface TransferParams extends Params {
   recipient: string
@@ -14,7 +14,7 @@ export interface TransferParams extends Params {
 
 /* @echo DOCS */
 export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferTransaction): TransferTransaction {
-  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { nextSeed } = pullSeedAndIndex(seed)
   const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
@@ -28,7 +28,7 @@ export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferT
       assetId,
       amount,
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || publicKey(_seed),
+      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -47,7 +47,7 @@ export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferT
     LEN(SHORT)(STRING)(tx.attachment),
   )
 
-  addProof(tx, signBytes(bytes, _seed), index)
+  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return newSeed ? transfer(newSeed, tx) : tx
+  return nextSeed ? transfer(nextSeed, tx) : tx
 }

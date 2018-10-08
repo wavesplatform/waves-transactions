@@ -1,6 +1,6 @@
 import { TransactionType, AliasTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef } from "../generic"
+import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef, mapSeed } from "../generic"
 
 export interface AliasParams extends Params {
   alias: string
@@ -11,7 +11,7 @@ export interface AliasParams extends Params {
 
 /* @echo DOCS */
 export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransaction): AliasTransaction {
-  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { nextSeed } = pullSeedAndIndex(seed)
   const { alias: _alias, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
@@ -21,9 +21,8 @@ export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransactio
       version: 2,
       alias: _alias,
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || publicKey(_seed),
+      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
-      proofs: [],
       id: ''
     }
 
@@ -35,7 +34,7 @@ export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransactio
     LONG(tx.timestamp)
   )
 
-  addProof(tx, signBytes(bytes, _seed), index)
+  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return newSeed ? alias(newSeed, tx) : tx
+  return nextSeed ? alias(nextSeed, tx) : tx
 }

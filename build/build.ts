@@ -1,27 +1,4 @@
-import { mkdir, readdir } from "fs"
-import { exec } from "child_process"
-import { resolve } from "path"
-const ncp = require('ncp').ncp
-const rimraf = require('rimraf')
-
-type error = string
-
-const p = (...path: string[]) => resolve(__dirname, ...path)
-
-const remove = (path: string): Promise<void | error> =>
-  new Promise((resolve, reject) => rimraf(path, (err) => err ? reject(err) : resolve()))
-
-const copy = (src: string, dst: string): Promise<void | error> =>
-  new Promise((resolve, reject) => ncp(src, dst, (err) => err ? reject(err) : resolve()))
-
-const create = (path: string): Promise<void | error> =>
-  new Promise((resolve, reject) => mkdir(path, (err) => err ? reject(err) : resolve()))
-
-const run = (cmd: string, cwd?: string): Promise<void | error> =>
-  new Promise((resolve, reject) => exec(cmd, { cwd }, (err) => err ? reject(err) : resolve()))
-
-const files = (path: string, filter: (file: string) => boolean = (_) => true): Promise<string[] | Error> =>
-  new Promise((resolve, reject) => readdir(path, (err, files) => err ? reject(err) : resolve(files.filter(filter))))
+import { remove, p, run, files, copy, create } from "./utils";
 
 async function build() {
   try {

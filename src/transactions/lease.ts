@@ -1,6 +1,6 @@
 import { TransactionType, LeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -11,7 +11,7 @@ export interface LeaseParams extends Params {
 
 /* @echo DOCS */
 export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransaction): LeaseTransaction {
-  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { nextSeed } = pullSeedAndIndex(seed)
   const { recipient, amount, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
@@ -22,7 +22,7 @@ export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransactio
       recipient,
       amount,
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || publicKey(_seed),
+      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -37,7 +37,7 @@ export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransactio
     LONG(tx.timestamp),
   )
 
-  addProof(tx, signBytes(bytes, _seed), index)
+  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return newSeed ? lease(newSeed, tx) : tx
+  return nextSeed ? lease(nextSeed, tx) : tx
 }

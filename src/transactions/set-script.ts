@@ -1,6 +1,6 @@
 import { TransactionType, SetScriptTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BASE64_STRING, OPTION, LEN, SHORT } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
 
 export interface SetScriptParams extends Params {
   script?: string //base64
@@ -11,7 +11,7 @@ export interface SetScriptParams extends Params {
 
 /* @echo DOCS */
 export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScriptTransaction): SetScriptTransaction {
-  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { nextSeed } = pullSeedAndIndex(seed)
   const { script, fee, timestamp, chainId, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
@@ -21,7 +21,7 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
       version: 1,
       script: script ? 'base64:' + script : undefined,
       fee: valOrDef(fee, 1000000),
-      senderPublicKey: senderPublicKey || publicKey(_seed),
+      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
       chainId: chainId || 'W',
       proofs: [],
@@ -36,7 +36,7 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
     LONG(tx.timestamp),
   )
 
-  addProof(tx, signBytes(bytes, _seed), index)
+  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return newSeed ? setScript(newSeed, tx) : tx
+  return nextSeed ? setScript(nextSeed, tx) : tx
 }

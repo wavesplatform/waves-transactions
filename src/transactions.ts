@@ -20,7 +20,7 @@ export interface Transaction {
   type: number
   timestamp: number
   fee: number
-  proofs: string[]
+  proofs?: string[]
   version: number
 }
 

@@ -1,6 +1,6 @@
 import { TransactionType, ReissueTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
 
 export interface ReissueParams extends Params {
   assetId: string
@@ -13,7 +13,7 @@ export interface ReissueParams extends Params {
 
 /* @echo DOCS */
 export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTransaction): ReissueTransaction {
-  const { seed: _seed, index, newSeed } = pullSeedAndIndex(seed)
+  const { nextSeed } = pullSeedAndIndex(seed)
   const { assetId, quantity, chainId, reissuable, fee, timestamp, senderPublicKey } = paramsOrTx
 
   const proofs = paramsOrTx['proofs']
@@ -26,7 +26,7 @@ export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTran
       chainId: chainId || 'W',
       reissuable,
       fee: valOrDef(fee, 100000000),
-      senderPublicKey: senderPublicKey || publicKey(_seed),
+      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -42,7 +42,7 @@ export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTran
     LONG(tx.timestamp)
   )
 
-  addProof(tx, signBytes(bytes, _seed), index)
+  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return newSeed ? reissue(newSeed, tx) : tx
+  return nextSeed ? reissue(nextSeed, tx) : tx
 }

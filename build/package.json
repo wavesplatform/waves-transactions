@@ -1,6 +1,6 @@
 {
   "name": "waves-transactions",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -18,7 +18,7 @@
     "name": "Yuriy Naydenov",
     "email": "ebceu44@gmail.com"
   },
-  "repository": {
+  "repositaory": {
     "type": "git",
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
