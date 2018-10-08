@@ -22,6 +22,8 @@ Check full documentation on [GitHub Pages](https://ebceu4.github.io/waves-transa
 The idea is really simple - you create transaction and sign it from a minimal set of required params.
 If you want to create [Transfer transaction](https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html) the minimum you need to provide is *amount* and *recipient*:
 ```js
+
+const { transfer } = require('waves-transactions')
 const seed = '19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'
 const signedTranserTx = transfer(seed,
 { 
@@ -34,6 +36,7 @@ const signedTranserTx = transfer(seed,
   //feeAssetId: undefined
 })
 ```
+[RUN on Repl.it](https://repl.it/@ebceu4/minimal-transfer-example?lite=true)
 
 Output will be a signed transfer transaction:
 ```js
