@@ -12,7 +12,6 @@
     "strictNullChecks": false,
     "noImplicitAny": false
   },
-  "jsdoc": "dist/jsdoc",
   "include": [
     "./src/**/*"
     //"./declarations/**/*"
@@ -22,11 +21,12 @@
     "dist"
   ],
   "typedocOptions": {
+    "name": "waves-transactions",
     "mode": "file",
     "out": "docs",
-    "exclude": "test",
     "theme": "./node_modules/typedoc-clarity-theme",
     "ignoreCompilerErrors": true,
+    "exclude": "**/*+(generic|index).ts",
     "excludePrivate": true,
     "excludeNotExported": true,
     "target": "ES6",
