@@ -64,13 +64,36 @@
 			<div class="tsd-panel tsd-typography">
 				<h1 id="waves-transactions-npm-version">waves-transactions  <a href="https://www.npmjs.com/package/waves-transactions"><img src="https://badge.fury.io/js/waves-transactions.svg" alt="npm version"></a></h1>
 				<p>Using this library you can easily create and sign transactions for Waves blockchain.
-				It also allows you to multi-sign existing transactions.</p>
+				It also allows you to multi-sign existing transactions or create them without signature at all.</p>
+				<p>This library is a set of transaction constructing functions:</p>
+				<ul>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#alias">Alias</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#issue">Issue</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#reissue">Reissue</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#burn">Burn</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#lease">Lease</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#cancellease">Cancel lease</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#transfer">Transfer</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#masstransfer">Mass transfer</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#setscript">Set script</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#data">Data</a></li>
+				</ul>
 				<p>Check full documentation on <a href="https://ebceu4.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
-				<h3 id="transfer">Transfer</h3>
-				<p>Transaction creation is really simple:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4befd4beeb981b8c1ea6def4a'</span>
-<span class="hljs-keyword">const</span> signedTranserTx = transfer(seed, { <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span> })</code></pre>
-				<p>In return you have signed transfer transaction:</p>
+				<h3 id="transactions">Transactions</h3>
+				<p>The idea is really simple - you create transaction and sign it from a minimal set of required params.
+				If you want to create <a href="https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html">Transfer transaction</a> the minimum you need to provide is <em>amount</em> and <em>recipient</em>:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'</span>
+<span class="hljs-keyword">const</span> signedTranserTx = transfer(seed,
+{ 
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>, <span class="hljs-comment">//Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now()</span>
+
+  <span class="hljs-comment">//Every function from the list above has a set of required and optional params </span>
+  <span class="hljs-comment">//fee: 100000 //Fee is always optional, in case fee is not provided, it will be calculated for you</span>
+  <span class="hljs-comment">//feeAssetId: undefined</span>
+})</code></pre>
+				<p>Output will be a signed transfer transaction:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
   <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,

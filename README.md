@@ -1,19 +1,41 @@
 # waves-transactions  [![npm version](https://badge.fury.io/js/waves-transactions.svg)](https://www.npmjs.com/package/waves-transactions)
 
 Using this library you can easily create and sign transactions for Waves blockchain.
-It also allows you to multi-sign existing transactions.
+It also allows you to multi-sign existing transactions or create them without signature at all.
+
+This library is a set of transaction constructing functions:
+* [Alias](https://ebceu4.github.io/waves-transactions/globals.html#alias)
+* [Issue](https://ebceu4.github.io/waves-transactions/globals.html#issue)
+* [Reissue](https://ebceu4.github.io/waves-transactions/globals.html#reissue)
+* [Burn](https://ebceu4.github.io/waves-transactions/globals.html#burn)
+* [Lease](https://ebceu4.github.io/waves-transactions/globals.html#lease)
+* [Cancel lease](https://ebceu4.github.io/waves-transactions/globals.html#cancellease)
+* [Transfer](https://ebceu4.github.io/waves-transactions/globals.html#transfer)
+* [Mass transfer](https://ebceu4.github.io/waves-transactions/globals.html#masstransfer)
+* [Set script](https://ebceu4.github.io/waves-transactions/globals.html#setscript)
+* [Data](https://ebceu4.github.io/waves-transactions/globals.html#data)
 
 Check full documentation on [GitHub Pages](https://ebceu4.github.io/waves-transactions/index.html).
 
-### Transfer
+### Transactions
 
-Transaction creation is really simple:
+The idea is really simple - you create transaction and sign it from a minimal set of required params.
+If you want to create [Transfer transaction](https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html) the minimum you need to provide is *amount* and *recipient*:
 ```js
-const seed = '19875c31fa594035bd9a2473c2c33d3ff468c0f4befd4beeb981b8c1ea6def4a'
-const signedTranserTx = transfer(seed, { amount: 1, recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2' })
+const seed = '19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'
+const signedTranserTx = transfer(seed,
+{ 
+  amount: 1,
+  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  timestamp: 1536917842558, //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now()
+
+  //Every function from the list above has a set of required and optional params 
+  //fee: 100000 //Fee is always optional, in case fee is not provided, it will be calculated for you
+  //feeAssetId: undefined
+})
 ```
 
-In return you have signed transfer transaction:
+Output will be a signed transfer transaction:
 ```js
 {
   id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
