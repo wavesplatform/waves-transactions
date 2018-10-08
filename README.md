@@ -20,7 +20,7 @@ Check full documentation on [GitHub Pages](https://ebceu4.github.io/waves-transa
 ### Transactions
 
 The idea is really simple - you create transaction and sign it from a minimal set of required params.
-If you want to create [Transfer transaction](https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html) the minimum you need to provide is *amount* and *recipient*:
+If you want to create [Transfer transaction](https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html) the minimum you need to provide is **amount** and **recipient**:
 ```js
 
 const { transfer } = require('waves-transactions')

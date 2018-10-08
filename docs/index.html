@@ -81,8 +81,10 @@
 				<p>Check full documentation on <a href="https://ebceu4.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
 				<h3 id="transactions">Transactions</h3>
 				<p>The idea is really simple - you create transaction and sign it from a minimal set of required params.
-				If you want to create <a href="https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html">Transfer transaction</a> the minimum you need to provide is <em>amount</em> and <em>recipient</em>:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'</span>
+				If you want to create <a href="https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html">Transfer transaction</a> the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong>:</p>
+				<pre><code class="language-js">
+<span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'</span>
 <span class="hljs-keyword">const</span> signedTranserTx = transfer(seed,
 { 
   <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
@@ -93,6 +95,7 @@
   <span class="hljs-comment">//fee: 100000 //Fee is always optional, in case fee is not provided, it will be calculated for you</span>
   <span class="hljs-comment">//feeAssetId: undefined</span>
 })</code></pre>
+				<p><a href="https://repl.it/@ebceu4/minimal-transfer-example?lite=true">RUN on Repl.it</a></p>
 				<p>Output will be a signed transfer transaction:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
