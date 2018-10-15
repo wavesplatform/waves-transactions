@@ -1,7 +1,6 @@
 import {describe, it} from 'mocha';
 import {expect} from 'chai';
-import * as sg from '@waves/signature-generator'
-import {BASE58_STRING, BASE64_STRING, BYTES, concat, LEN, LONG, OPTION, SHORT} from "waves-crypto";
+import {BASE58_STRING, BASE64_STRING, BYTES, concat, LEN, LONG, OPTION, SHORT, verifySignature} from "waves-crypto";
 import {setScript} from '../src';
 import {SetScriptTransaction} from "../src/transactions";
 
@@ -37,5 +36,5 @@ function validateSetScriptTx(tx: SetScriptTransaction, proofNumber = 0): boolean
         LONG(tx.fee),
         LONG(tx.timestamp),
     )
-    return sg.utils.crypto.isValidSignature(bytes, tx.proofs[proofNumber], tx.senderPublicKey)
+    return verifySignature(tx.senderPublicKey, bytes, tx.proofs[proofNumber])
 }
