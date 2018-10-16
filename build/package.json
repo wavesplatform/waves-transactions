@@ -23,6 +23,6 @@
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
   "dependencies": {
-    "waves-crypto": "^1.0.24"
+    "waves-crypto": "^1.0.30"
   }
 }
