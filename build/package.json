@@ -1,6 +1,6 @@
 {
   "name": "waves-transactions",
-  "version": "1.0.24",
+  "version": "1.0.30",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -23,6 +23,6 @@
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
   "dependencies": {
-    "waves-crypto": "^1.0.24"
+    "waves-crypto": "^1.0.30"
   }
 }

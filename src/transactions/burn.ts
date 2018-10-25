@@ -1,6 +1,6 @@
 import { TransactionType, BurnTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, addProof, SeedTypes, valOrDef, mapSeed } from "../generic"
+import { Params, pullSeedAndIndex, addProof, SeedTypes, valOrDef, mapSeed, validateParams } from "../generic"
 
 export interface BurnParams extends Params {
   assetId: string
@@ -14,6 +14,8 @@ export interface BurnParams extends Params {
 export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction): BurnTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
   const { assetId, quantity, chainId, fee, timestamp, senderPublicKey } = paramsOrTx
+
+  validateParams(seed, paramsOrTx)
 
   const proofs = paramsOrTx['proofs']
   const tx: BurnTransaction = proofs && proofs.length > 0 ?

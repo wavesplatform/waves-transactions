@@ -1,6 +1,6 @@
 import { TransactionType, AliasTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef, mapSeed } from "../generic"
+import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef, mapSeed, validateParams } from "../generic"
 
 export interface AliasParams extends Params {
   alias: string
@@ -14,6 +14,8 @@ export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransactio
   const { nextSeed } = pullSeedAndIndex(seed)
   const { alias: _alias, fee, timestamp, senderPublicKey } = paramsOrTx
 
+  validateParams(seed, paramsOrTx)
+
   const proofs = paramsOrTx['proofs']
   const tx: AliasTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as AliasTransaction : {
@@ -25,6 +27,7 @@ export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransactio
       timestamp: valOrDef(timestamp, Date.now()),
       id: ''
     }
+
 
   const bytes = concat(
     BYTES([TransactionType.Alias, tx.version]),

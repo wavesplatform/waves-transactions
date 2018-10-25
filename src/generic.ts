@@ -2,6 +2,14 @@ import { Transaction } from "./transactions";
 
 export interface Params {
   senderPublicKey?: string
+  timestamp?: number
+}
+
+export function validateParams(seed: SeedTypes, params: Params) {
+  const { seed: s } = pullSeedAndIndex(seed)
+
+  if (s == undefined && params.senderPublicKey == undefined)
+    throw 'Please provide either seed or senderPublicKey'
 }
 
 export interface SeedsAndIndexes {
@@ -45,11 +53,16 @@ export const mapSeed = <T>(seed: SeedTypes, map: (seed: string, index?: number) 
 }
 
 export const pullSeedAndIndex = (seed: SeedTypes): { seed: string, index?: number, nextSeed?: SeedTypes } => {
-  if (seed == undefined || seed == null || seed == '') {
-    return { seed: undefined, index: undefined, nextSeed: undefined }
-  }
+  const empty = { seed: undefined, index: undefined, nextSeed: undefined }
+  if (seed == undefined || seed == null || seed == '')
+    return empty
+
   if (isSeedsAndIndexes(seed)) {
     const keys = Object.keys(seed).map(k => parseInt(k))
+
+    if (keys == undefined || keys.length == 0)
+      return empty
+
     const index = keys[0]
     const newSeed = { ...<Object>seed }
     delete newSeed[index]
@@ -62,7 +75,7 @@ export const pullSeedAndIndex = (seed: SeedTypes): { seed: string, index?: numbe
     if (seed.length > 0)
       return { seed: seed[0], nextSeed: newSeed.length > 0 ? newSeed : undefined }
 
-    return undefined
+    return empty
   }
 
   return { seed: <string>seed }

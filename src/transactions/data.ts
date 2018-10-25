@@ -1,6 +1,6 @@
 import { publicKey, LEN, LONG, BYTE, SHORT, BYTES, STRING, concat, BASE58_STRING, COUNT, signBytes, hashBytes } from "waves-crypto"
 import { DataTransaction, TransactionType } from "../transactions"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
 
 export interface DataEntry {
   key: string
@@ -17,6 +17,8 @@ export interface DataParams extends Params {
 export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction): DataTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
   const { data: _data, fee, timestamp, senderPublicKey: spk } = paramsOrTx
+
+  validateParams(seed, paramsOrTx)
 
   const typeMap = {
     number: ['integer', 0, LONG],

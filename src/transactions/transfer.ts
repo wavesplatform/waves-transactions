@@ -1,6 +1,6 @@
 import { TransactionType, TransferTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
 
 export interface TransferParams extends Params {
   recipient: string
@@ -16,6 +16,8 @@ export interface TransferParams extends Params {
 export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferTransaction): TransferTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
   const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp, senderPublicKey } = paramsOrTx
+
+  validateParams(seed, paramsOrTx)
 
   const proofs = paramsOrTx['proofs']
   const tx: TransferTransaction = proofs && proofs.length > 0 ?

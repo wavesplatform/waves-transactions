@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DataParams | waves-transactions</title>
+	<title>OrderParams | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="dataparams.html">DataParams</a>
+					<a href="orderparams.html">OrderParams</a>
 				</li>
 			</ul>
-			<h1>Interface DataParams</h1>
+			<h1>Interface OrderParams</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 						<a href="params.html" class="tsd-signature-type">Params</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">DataParams</span>
+								<span class="target">OrderParams</span>
 							</li>
 						</ul>
 					</li>
@@ -84,10 +84,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="dataparams.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="dataparams.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="dataparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="dataparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#amountasset" class="tsd-kind-icon">amount<wbr>Asset</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#expiration" class="tsd-kind-icon">expiration</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#matcherfee" class="tsd-kind-icon">matcher<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#matcherpublickey" class="tsd-kind-icon">matcher<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#ordertype" class="tsd-kind-icon">order<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#price" class="tsd-kind-icon">price</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="orderparams.html#priceasset" class="tsd-kind-icon">price<wbr>Asset</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="orderparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="orderparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,33 +102,93 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="data" class="tsd-anchor"></a>
-					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="dataentry.html" class="tsd-signature-type">DataEntry</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="amount" class="tsd-anchor"></a>
+					<h3>amount</h3>
+					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions/data.ts:11</li>
+							<li>Defined in transactions/order.ts:7</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="fee" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee</h3>
-					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="amountasset" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> amount<wbr>Asset</h3>
+					<div class="tsd-signature tsd-kind-icon">amount<wbr>Asset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions/data.ts:12</li>
+							<li>Defined in transactions/order.ts:9</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="expiration" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> expiration</h3>
+					<div class="tsd-signature tsd-kind-icon">expiration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions/order.ts:14</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="matcherfee" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> matcher<wbr>Fee</h3>
+					<div class="tsd-signature tsd-kind-icon">matcher<wbr>Fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions/order.ts:12</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="matcherpublickey" class="tsd-anchor"></a>
+					<h3>matcher<wbr>Public<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">matcher<wbr>Public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions/order.ts:5</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="ordertype" class="tsd-anchor"></a>
+					<h3>order<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">order<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"buy"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sell"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions/order.ts:8</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="price" class="tsd-anchor"></a>
+					<h3>price</h3>
+					<div class="tsd-signature tsd-kind-icon">price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions/order.ts:6</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="priceasset" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> price<wbr>Asset</h3>
+					<div class="tsd-signature tsd-kind-icon">price<wbr>Asset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions/order.ts:10</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="senderpublickey" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sender<wbr>Public<wbr>Key</h3>
 					<div class="tsd-signature tsd-kind-icon">sender<wbr>Public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="params.html">Params</a>.<a href="params.html#senderpublickey">senderPublicKey</a></p>
+						<p>Overrides <a href="params.html">Params</a>.<a href="params.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in generic.ts:4</li>
+							<li>Defined in transactions/order.ts:11</li>
 						</ul>
 					</aside>
 				</section>
@@ -133,7 +199,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="params.html">Params</a>.<a href="params.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions/data.ts:13</li>
+							<li>Defined in transactions/order.ts:13</li>
 						</ul>
 					</aside>
 				</section>
@@ -152,19 +218,37 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="dataparams.html" class="tsd-kind-icon">Data<wbr>Params</a>
+						<a href="orderparams.html" class="tsd-kind-icon">Order<wbr>Params</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="dataparams.html#data" class="tsd-kind-icon">data</a>
+								<a href="orderparams.html#amount" class="tsd-kind-icon">amount</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="dataparams.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="orderparams.html#amountasset" class="tsd-kind-icon">amount<wbr>Asset</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="dataparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="orderparams.html#expiration" class="tsd-kind-icon">expiration</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="orderparams.html#matcherfee" class="tsd-kind-icon">matcher<wbr>Fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="orderparams.html#matcherpublickey" class="tsd-kind-icon">matcher<wbr>Public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="orderparams.html#ordertype" class="tsd-kind-icon">order<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="orderparams.html#price" class="tsd-kind-icon">price</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="orderparams.html#priceasset" class="tsd-kind-icon">price<wbr>Asset</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="dataparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="orderparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="orderparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 						</ul>
 					</li>

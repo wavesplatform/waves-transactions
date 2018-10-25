@@ -1,6 +1,6 @@
 import { TransactionType, LeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -14,6 +14,8 @@ export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransactio
   const { nextSeed } = pullSeedAndIndex(seed)
   const { recipient, amount, fee, timestamp, senderPublicKey } = paramsOrTx
 
+  validateParams(seed, paramsOrTx)
+  
   const proofs = paramsOrTx['proofs']
   const tx: LeaseTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as LeaseTransaction : {
