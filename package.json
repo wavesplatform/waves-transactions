@@ -11,13 +11,21 @@
   "author": "Yuriy Naydenov",
   "license": "MIT",
   "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
     "@types/node": "^10.9.4",
+    "chai": "^4.2.0",
     "copy-webpack-plugin": "^4.5.2",
     "jsdoc-to-markdown": "^4.0.1",
+    "mocha": "^5.2.0",
     "nativescript-typedoc-theme": "0.0.7",
+    "ncp": "^2.0.0",
     "preprocess": "^3.1.0",
+    "rimraf": "^2.6.2",
     "ts-jsdoc": "^3.0.1",
     "ts-loader": "^5.1.0",
+    "ts-node": "^7.0.1",
+    "typedoc": "^0.13.0",
     "typedoc-clarity-theme": "^1.1.0",
     "typescript": "^3.0.3",
     "webpack": "^4.17.2",
@@ -28,9 +36,6 @@
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "ncp": "^2.0.0",
-    "rimraf": "^2.6.2",
-    "waves-crypto": "^1.0.26"
+    "waves-crypto": "^1.0.30"
   }
 }
