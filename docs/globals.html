@@ -153,7 +153,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="tx" class="tsd-anchor"></a>
 					<h3>Tx</h3>
-					<div class="tsd-signature tsd-kind-icon">Tx<span class="tsd-signature-symbol">:</span> <a href="interfaces/issuetransaction.html" class="tsd-signature-type">IssueTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/transfertransaction.html" class="tsd-signature-type">TransferTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/reissuetransaction.html" class="tsd-signature-type">ReissueTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/burntransaction.html" class="tsd-signature-type">BurnTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/leasetransaction.html" class="tsd-signature-type">LeaseTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/cancelleasetransaction.html" class="tsd-signature-type">CancelLeaseTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/masstransfertransaction.html" class="tsd-signature-type">MassTransferTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/datatransaction.html" class="tsd-signature-type">DataTransaction</a></div>
+					<div class="tsd-signature tsd-kind-icon">Tx<span class="tsd-signature-symbol">:</span> <a href="interfaces/aliastransaction.html" class="tsd-signature-type">AliasTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/issuetransaction.html" class="tsd-signature-type">IssueTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/transfertransaction.html" class="tsd-signature-type">TransferTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/reissuetransaction.html" class="tsd-signature-type">ReissueTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/burntransaction.html" class="tsd-signature-type">BurnTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/leasetransaction.html" class="tsd-signature-type">LeaseTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/cancelleasetransaction.html" class="tsd-signature-type">CancelLeaseTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/masstransfertransaction.html" class="tsd-signature-type">MassTransferTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/setscripttransaction.html" class="tsd-signature-type">SetScriptTransaction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/datatransaction.html" class="tsd-signature-type">DataTransaction</a></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in transactions.ts:30</li>
@@ -226,15 +226,15 @@
 <span class="hljs-keyword">const</span> signedAliasTx = alias(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"8HffxsrnTmy97GxNDhHWzNaYC4xGwjGqwt2QPLyGzdoZ"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"dL7miF3BDM71P4sDHjCaPci7VUuwHwnS6jjRNPc1rhg"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">10</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"alias"</span>: <span class="hljs-string">"MyNewAlias"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223801</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274750</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5zwt3GB1eQXsY1fGHLgWXcXqaL46tXAnWTLu4esW97Myg4iG9KgHQCL2ujaeAHKdsML3Jz4iytZiaYkjFvHS6QpA"</span>
+    <span class="hljs-string">"3cbYWaeDuHjHGZQpMsJTJ5MD2oAM8B2DFdkNmVDsD64WgyeMQvz8w69owZfh5idmxPiSmCScJJ1EV9XBDMhuBY2c"</span>
   ]
 }</code></pre>
 							</div>
@@ -286,7 +286,7 @@
 <span class="hljs-keyword">const</span> signedBurnTx = burn(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"89jLGZnCWA3bWtKZysSdaFhf6Sag6kXi87MuM9x6CUwv"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DJ7Qgsn1AbpqaZkTMmDByWF9iEkaBMc172o8XpTmgxa8"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">6</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC"</span>,
@@ -294,9 +294,9 @@
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-string">"W"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223633</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274570</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3iWFqdcMRtNeTuYMToif7xD4T21KTHEfatyMtbS516wVknFj1ck9RGgNxZMbafomszy5zJ3hpJh4Pt3XNafGH55a"</span>
+    <span class="hljs-string">"4qBsCtcF1MaQRGeEPaZzJckiDBZvrDj3MTLW5RrdNijc5ZCPGhr9dZXy1rc67uRcFWVdL8hzHCZVDxxVG1LWVDnU"</span>
   ]
 }</code></pre>
 							</div>
@@ -347,16 +347,16 @@
 <span class="hljs-keyword">const</span> signedCancelLeaseTx = cancelLease(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DjngmBBgue1JsPFLMP41xwW7MtZ64TracarCXDp9Xvb"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"B6Cg7fym2AhntgdCwfySh6tsuxhTHZ8xFkr2NGbYVeiA"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">9</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"leaseId"</span>: <span class="hljs-string">"2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223660</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274600</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"F7YoUMcAxjxYSXGnUEU5N8jwTERBRz1ZyJ9cFLTrCyRqoeKYcxvnoEXk4NgRW4c3jcD4nFQeyv6mmAZ5o9mk4rF"</span>
+    <span class="hljs-string">"2YfyMeAJadtbghQ72ByiaK51jtP41PECEneiGXivxR2JBuTEhZhmt3i7ihAw4qNyL4nqqnAdSpngDaXXFr6KszdG"</span>
   ]
 }</code></pre>
 							</div>
@@ -411,12 +411,12 @@
 <span class="hljs-keyword">const</span> signedDataTx = data(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"Hqv719F8X5LT3RQHcLjfDDbanqxYfacd3EyyGFXevTVR"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"k284XQ46EJrRhqK5Ku7WcAV6k7tn2AwQkDiLtzqk5PN"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">12</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223694</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274633</span>,
   <span class="hljs-attr">"data"</span>: [
     {
       <span class="hljs-attr">"type"</span>: <span class="hljs-string">"integer"</span>,
@@ -440,7 +440,7 @@
     }
   ],
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"24yoXSgY7eQBhRpEGfECQf5zRJCd7oCPyCfwT6ri15KSb7oARH94PuaSsHeGqNNocfsLdUM4pNweASShmbEXvygC"</span>
+    <span class="hljs-string">"2Cd1npKuUhcSpBQNmcmmyymWoFZFXmTTkhLcGK2u7Diqn5eSfJ14cmXy7F1xb4Qi2ytpx9gyXbpeTxDeEMN31qmQ"</span>
   ]
 }</code></pre>
 							</div>
@@ -541,7 +541,7 @@
 <span class="hljs-keyword">const</span> signedIssueTx = issue(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4W5Sfk7V1C1a8DAChUzjgj9avvDpfgns4PeL5aDwwN91"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"8umAN7tTEvoEi7aazWLi31aivfD1VVi6YyAYA2rimGGL"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">3</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"SCAM TOKEN"</span>,
@@ -551,10 +551,10 @@
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223714</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274655</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-string">"W"</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4dAFDCRK3znCPFYz14kpNrqmGt4nN2Ei8RdQPdKV2nii6fecJHQBnUajFh1EgcRc8i4j1P7Hbys1UcsH5F3CUcz4"</span>
+    <span class="hljs-string">"ChSFRDmyxfGpVdJZwAGMpLZftgDUZyuXNRzjQQmK1ecWSXpNEUwTLf3vqW1L2fns7MZ7iUTUmNNP6XyeDmdhftU"</span>
   ]
 }</code></pre>
 							</div>
@@ -605,16 +605,16 @@
 <span class="hljs-keyword">const</span> signedLeaseTx = lease(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"79BTgJeHHcNT4UVLUr1wVjfQtdHwXZYfrB2tdHackDa2"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GiVni29DVaH1HgG41whZ79WPzGzTiGPCXkZYpXfTimwA"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223734</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274679</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3XUYKJNt2szBcua1spnBsAmFX5jDbkPhwFqzzbYg2jJoxvgXDgGvUSuh3CLDBYRbBsvk6DRD3HMa6NsCeqxmEbzj"</span>
+    <span class="hljs-string">"D8p5U1zxLfWr7UmBygDJpXizDz43g3B3FDXT8T1nSCM7hBRGExQoM5Lz82xz8qBTXojCaQ9U67GJRzoZaV75F8t"</span>
   ]
 }</code></pre>
 							</div>
@@ -726,7 +726,7 @@
 <span class="hljs-keyword">const</span> signedMassTransferTx = massTransfer(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DZSD6eUp4MSjjJLmZ2xc7ydyXq18zBysujT58yNKVoie"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"5GMSxKxM8sqqZHgm2rZzttS2k67pxqm1NqiZBU1jr7fY"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">11</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"transfers"</span>: [
@@ -741,9 +741,9 @@
   ],
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">200000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223748</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274696</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4rSnWyJkqEFYbbsGCUVUHfz9STNUkcumt5k3ZJxR7E3brhR9NJ36iCoLBYwW4yhyr1cyriSHCxSLXwrwMKo5XYqQ"</span>
+    <span class="hljs-string">"62Ed43z1NHXQbjDq1gTrZnMMqJoXdGDzoCtWcTkd5372YnHEFwM6chYG1b7uqD9nRHrDjVYMHH7mrzn35mwKtx5E"</span>
   ]
 }</code></pre>
 							</div>
@@ -887,7 +887,7 @@
 <span class="hljs-keyword">const</span> signedReissueTx = reissue(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"BpxaZnrvLuSpSN8nn1HA7JWQP5uSjnGqZSYFgmgvuMBM"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"FAkrLTfrL4oQM3edw6yNywoYxEg8ZdHsRYtx61rpQZbi"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">5</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx"</span>,
@@ -896,9 +896,9 @@
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223776</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274725</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4QNb8FfocSkatbP7ALDg6x58LawsLifzhkjL31ePQzPgnskcVHGjHtKJ7rtXRNf3X64AZJFysQUbzSJyWhYrEiDR"</span>
+    <span class="hljs-string">"5U5cVYEwtGmewoF6o5fpFpjErTNHtjcfMcoyyAgAiMgvc2XnAwLVQqviuTLwMgMaFEVDKCkwyAAhRPW5PRy1N5WP"</span>
   ]
 }</code></pre>
 							</div>
@@ -949,16 +949,16 @@
 <span class="hljs-keyword">const</span> signedSetScriptTx = setScript(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"12GFerGSpN8av8ZsLFvpYMgPFXKgv4NTZbEuqN74ASK5"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GET7bF2u47zCD5kZjesK1ggCRPSWhFKsSrNd8Qn25W59"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">13</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"script"</span>: <span class="hljs-string">"base64:AQa3b8tH"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">1000000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223811</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274764</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-string">"W"</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4UqqN5rD9KTryMykVpnTDxZZPnCw9u6dA5cyTkPzmiKS5K1UmTDwdVEUL87iBejNmvKdFFvAYR4UkHHaAoZmj8Q7"</span>
+    <span class="hljs-string">"8SwcrHTZGeAryJGoYJBe6sUcHEEECo5sPBFUiYkRjWrFkEmXjAfDxcyvV6h9A9mz7UYKpV5vFZsL3RokKCCvyu9"</span>
   ]
 }</code></pre>
 							</div>
@@ -1013,16 +1013,16 @@
 <span class="hljs-keyword">const</span> signedTransferTx = transfer(seed, params)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"6D7uRedoBaKSmqQCFruxkw8YnNS1wFyKRQAYieoHV8GV"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"8dVAAVEghNqEJjfLyZpY4cVY5jBzSYPexxKFWvoV7k8A"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540899223789</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1540913274737</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"wB3L1Xz5yyLSKpRWBM5PQSihFXA3ZwzX2zZgWF64yJMePrGRErfUa6sPhqTnT3Fk1gi7TKMCbXQPNu8H7m5nHcK"</span>
+    <span class="hljs-string">"gfk1aPrcTNrg9JdQC8huvq1oxtAxbKvwhLJacUYDYC4Bg6PwvPr6X6XV4n8o3aVBfxZfgEzTfqdyaVabxFcfAaj"</span>
   ]
 }</code></pre>
 							</div>

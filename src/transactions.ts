@@ -28,6 +28,7 @@ export interface Transaction extends WithProofs {
 }
 
 export type Tx =
+  | AliasTransaction
   | IssueTransaction
   | TransferTransaction
   | ReissueTransaction
@@ -35,6 +36,7 @@ export type Tx =
   | LeaseTransaction
   | CancelLeaseTransaction
   | MassTransferTransaction
+  | SetScriptTransaction
   | DataTransaction
 
 export interface WithSender {
