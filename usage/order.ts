@@ -1,6 +1,6 @@
 import { order } from '../dist/index'
 
-const seed = `c5ef1d4d5cfe42e09b98d085228fd51b5ceb9e48091d4b8fb3888fda65e4fa50`
+const seed = `b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18`
 
 const params = {
   amount: 100000000, //1 waves
@@ -10,5 +10,5 @@ const params = {
   orderType: 'buy'
 }
 
-const signedOrder = order(seed, params)
+const signedOrder = order(seed, params as any)
 console.log(JSON.stringify(signedOrder))

@@ -1,4 +1,4 @@
-import { Transaction } from "./transactions";
+import { WithProofs } from "./transactions"
 
 export interface Params {
   senderPublicKey?: string
@@ -16,7 +16,7 @@ export interface SeedsAndIndexes {
   [index: number]: string
 }
 
-export function addProof(tx: Transaction, proof: string, index?: number) {
+export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (index == undefined) {
     tx.proofs = [...(tx.proofs || []), proof]
     return tx

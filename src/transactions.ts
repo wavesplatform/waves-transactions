@@ -15,12 +15,15 @@ export const enum TransactionType {
   SponsorFee = 14,
 }
 
-export interface Transaction {
+export interface WithProofs {
+  proofs: string[]
+}
+
+export interface Transaction extends WithProofs {
   id: string
   type: number
   timestamp: number
   fee: number
-  proofs?: string[]
   version: number
 }
 
@@ -110,4 +113,19 @@ export interface MassTransferTransaction extends Transaction, WithSender {
 export interface DataTransaction extends Transaction, WithSender {
   type: TransactionType.Data
   data: { key: string, type: string, value: string | number | boolean }[]
+}
+
+export interface Order extends WithSender, WithProofs {
+  id: string
+  orderType: "buy" | "sell"
+  assetPair: {
+    amountAsset: string
+    priceAsset: string
+  };
+  price: number
+  amount: number
+  timestamp: number
+  expiration: number
+  matcherFee: number
+  matcherPublicKey: string
 }

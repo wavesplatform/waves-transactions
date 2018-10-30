@@ -25,7 +25,8 @@ export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransactio
       fee: valOrDef(fee, 100000),
       senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
-      id: ''
+      id: '',
+      proofs: []
     }
 
 

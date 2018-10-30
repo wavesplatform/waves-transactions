@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AliasTransaction | waves-transactions</title>
+	<title>Order | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="aliastransaction.html">AliasTransaction</a>
+					<a href="order.html">Order</a>
 				</li>
 			</ul>
-			<h1>Interface AliasTransaction</h1>
+			<h1>Interface Order</h1>
 		</div>
 	</div>
 </header>
@@ -68,13 +68,13 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="transaction.html" class="tsd-signature-type">Transaction</a>
+						<a href="withsender.html" class="tsd-signature-type">WithSender</a>
 					</li>
 					<li>
-						<a href="withsender.html" class="tsd-signature-type">WithSender</a>
+						<a href="withproofs.html" class="tsd-signature-type">WithProofs</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">AliasTransaction</span>
+								<span class="target">Order</span>
 							</li>
 						</ul>
 					</li>
@@ -87,14 +87,17 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="aliastransaction.html#alias" class="tsd-kind-icon">alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="aliastransaction.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="aliastransaction.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="aliastransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="aliastransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="aliastransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="aliastransaction.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="aliastransaction.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#assetpair" class="tsd-kind-icon">asset<wbr>Pair</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#expiration" class="tsd-kind-icon">expiration</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#matcherfee" class="tsd-kind-icon">matcher<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#matcherpublickey" class="tsd-kind-icon">matcher<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#ordertype" class="tsd-kind-icon">order<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#price" class="tsd-kind-icon">price</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="order.html#proofs" class="tsd-kind-icon">proofs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="order.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="order.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,34 +106,87 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="alias" class="tsd-anchor"></a>
-					<h3>alias</h3>
-					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="amount" class="tsd-anchor"></a>
+					<h3>amount</h3>
+					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:103</li>
+							<li>Defined in transactions.ts:126</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="fee" class="tsd-anchor"></a>
-					<h3>fee</h3>
-					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="assetpair" class="tsd-anchor"></a>
+					<h3>asset<wbr>Pair</h3>
+					<div class="tsd-signature tsd-kind-icon">asset<wbr>Pair<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:26</li>
+							<li>Defined in transactions.ts:121</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="expiration" class="tsd-anchor"></a>
+					<h3>expiration</h3>
+					<div class="tsd-signature tsd-kind-icon">expiration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:128</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#id">id</a></p>
 						<ul>
-							<li>Defined in transactions.ts:23</li>
+							<li>Defined in transactions.ts:119</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="matcherfee" class="tsd-anchor"></a>
+					<h3>matcher<wbr>Fee</h3>
+					<div class="tsd-signature tsd-kind-icon">matcher<wbr>Fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:129</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="matcherpublickey" class="tsd-anchor"></a>
+					<h3>matcher<wbr>Public<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">matcher<wbr>Public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:130</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="ordertype" class="tsd-anchor"></a>
+					<h3>order<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">order<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"buy"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sell"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:120</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="price" class="tsd-anchor"></a>
+					<h3>price</h3>
+					<div class="tsd-signature tsd-kind-icon">price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:125</li>
 						</ul>
 					</aside>
 				</section>
@@ -156,36 +212,13 @@
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="timestamp" class="tsd-anchor"></a>
 					<h3>timestamp</h3>
 					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:25</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transactiontype.html#alias" class="tsd-signature-type">Alias</a></div>
-					<aside class="tsd-sources">
-						<p>Overrides <a href="transaction.html">Transaction</a>.<a href="transaction.html#type">type</a></p>
-						<ul>
-							<li>Defined in transactions.ts:102</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="version" class="tsd-anchor"></a>
-					<h3>version</h3>
-					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#version">version</a></p>
-						<ul>
-							<li>Defined in transactions.ts:27</li>
+							<li>Defined in transactions.ts:127</li>
 						</ul>
 					</aside>
 				</section>
@@ -204,31 +237,40 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="aliastransaction.html" class="tsd-kind-icon">Alias<wbr>Transaction</a>
+						<a href="order.html" class="tsd-kind-icon">Order</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="aliastransaction.html#alias" class="tsd-kind-icon">alias</a>
+								<a href="order.html#amount" class="tsd-kind-icon">amount</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#assetpair" class="tsd-kind-icon">asset<wbr>Pair</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#expiration" class="tsd-kind-icon">expiration</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#matcherfee" class="tsd-kind-icon">matcher<wbr>Fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#matcherpublickey" class="tsd-kind-icon">matcher<wbr>Public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#ordertype" class="tsd-kind-icon">order<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#price" class="tsd-kind-icon">price</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="aliastransaction.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="order.html#proofs" class="tsd-kind-icon">proofs</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="aliastransaction.html#id" class="tsd-kind-icon">id</a>
+								<a href="order.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="aliastransaction.html#proofs" class="tsd-kind-icon">proofs</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="aliastransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="aliastransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="aliastransaction.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="aliastransaction.html#version" class="tsd-kind-icon">version</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="order.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 						</ul>
 					</li>
