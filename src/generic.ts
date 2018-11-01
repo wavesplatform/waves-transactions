@@ -9,7 +9,7 @@ export function validateParams(seed: SeedTypes, params: Params) {
   const { seed: s } = pullSeedAndIndex(seed)
 
   if (s == undefined && params.senderPublicKey == undefined)
-    throw 'Please provide either seed or senderPublicKey'
+    throw new Error('Please provide either seed or senderPublicKey')
 }
 
 export interface SeedsAndIndexes {
@@ -23,7 +23,7 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
   }
 
   if (tx.proofs != undefined && tx.proofs[index] != undefined)
-    throw `Proof at index ${index} is already exists.`
+    throw new Error(`Proof at index ${index} is already exists.`)
 
   tx.proofs = tx.proofs || []
 
@@ -71,11 +71,12 @@ export const pullSeedAndIndex = (seed: SeedTypes): { seed: string, index?: numbe
       return { seed: seed[keys[0]], index, nextSeed: Object.keys(newSeed).length > 0 ? newSeed : undefined }
   }
   if (isArrayOfSeeds(seed)) {
-    const [, ...newSeed] = seed
-    if (seed.length > 0)
-      return { seed: seed[0], nextSeed: newSeed.length > 0 ? newSeed : undefined }
-
-    return empty
+    return pullSeedAndIndex(
+      Object.entries(seed).filter(([k, v]) => !!v).reduce((acc, next) => {
+        acc[next[0]] = next[1];
+        return acc
+      }, {})
+    )
   }
 
   return { seed: <string>seed }
