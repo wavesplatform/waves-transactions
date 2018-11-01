@@ -58,7 +58,7 @@ export const pullSeedAndIndex = (seed: SeedTypes): { seed: string, index?: numbe
     return empty
 
   if (isSeedsAndIndexes(seed)) {
-    const keys = Object.keys(seed).map(k => parseInt(k))
+    const keys = Object.keys(seed).map(k => parseInt(k)).filter(k => !isNaN(k))
 
     if (keys == undefined || keys.length == 0)
       return empty

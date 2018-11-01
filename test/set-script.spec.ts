@@ -64,6 +64,15 @@ describe('setScript', () => {
     const txParams = {};
     expect(() => setScript(seed, txParams)).to.throw('Script field cannot be undefined. Use null explicitly to remove script')
   });
+
+  it('Should handle incorrect keys in seedObject', () => {
+    const txParams = { script: compiledContract };
+    const signedTx = setScript({ 'asd1': seed, '2': seed2 }as any, txParams);
+
+    expect(signedTx.proofs[0]).to.be.null
+    expect(signedTx.proofs[1]).to.be.null
+    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).to.be.true
+  });
 })
 
 function validateSetScriptTx(tx: SetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
