@@ -28,7 +28,7 @@ describe('setScript', () => {
   });
 
   it('Should generate correct signed setScript transaction with multiple signers via array', () => {
-    const txParams = { script: compiledContract };
+    const txParams = { script: null };
     const signedTx = setScript([null, seed, seed2], txParams);
 
     expect(signedTx.proofs[0]).to.be.null

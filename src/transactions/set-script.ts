@@ -22,7 +22,7 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
     paramsOrTx as SetScriptTransaction : {
       type: TransactionType.SetScript,
       version: 1,
-      script: script ? 'base64:' + script : undefined,
+      script: script ? 'base64:' + script : null,
       fee: valOrDef(fee, 1000000),
       senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
@@ -34,7 +34,7 @@ export function setScript(seed: SeedTypes, paramsOrTx: SetScriptParams | SetScri
   const bytes = concat(
     BYTES([TransactionType.SetScript, tx.version, tx.chainId.charCodeAt(0)]),
     BASE58_STRING(tx.senderPublicKey),
-    OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : undefined),
+    OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
     LONG(tx.fee),
     LONG(tx.timestamp),
   )
