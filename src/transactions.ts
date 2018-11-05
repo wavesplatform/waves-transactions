@@ -1,3 +1,5 @@
+export type long = number | string
+
 export const enum TransactionType {
   Genesis = 1,
   Payment = 2,
@@ -23,7 +25,7 @@ export interface Transaction extends WithProofs {
   id: string
   type: number
   timestamp: number
-  fee: number
+  fee: long
   version: number
 }
 
@@ -48,7 +50,7 @@ export interface IssueTransaction extends Transaction, WithSender {
   name: string
   description: string
   decimals: number
-  quantity: number
+  quantity: long
   reissuable: boolean
   chainId: string
 }
@@ -62,7 +64,7 @@ export interface SetScriptTransaction extends Transaction, WithSender {
 export interface TransferTransaction extends Transaction, WithSender {
   type: TransactionType.Transfer
   recipient: string
-  amount: number
+  amount: long
   feeAssetId?: string
   assetId?: string
   attachment?: string
@@ -70,13 +72,13 @@ export interface TransferTransaction extends Transaction, WithSender {
 
 export interface Transfer {
   recipient: string
-  amount: number
+  amount: long
 }
 
 export interface ReissueTransaction extends Transaction, WithSender {
   type: TransactionType.Reissue
   assetId: string
-  quantity: number
+  quantity: long
   chainId: string
   reissuable: boolean
 }
@@ -84,13 +86,13 @@ export interface ReissueTransaction extends Transaction, WithSender {
 export interface BurnTransaction extends Transaction, WithSender {
   type: TransactionType.Burn
   assetId: string
-  quantity: number
+  quantity: long
   chainId: string
 }
 
 export interface LeaseTransaction extends Transaction, WithSender {
   type: TransactionType.Lease
-  amount: number
+  amount: long
   recipient: string
 }
 
@@ -124,8 +126,8 @@ export interface Order extends WithSender, WithProofs {
     amountAsset: string
     priceAsset: string
   };
-  price: number
-  amount: number
+  price: long
+  amount: long
   timestamp: number
   expiration: number
   matcherFee: number
