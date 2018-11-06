@@ -29,7 +29,7 @@ export function massTransfer(seed: SeedTypes, paramsOrTx: MassTransferParams | M
       senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
-      id: ''
+      id: '' //TODO: invalid id for masstransfer tx
     }
 
   const bytes = concat(
