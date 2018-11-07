@@ -2,13 +2,25 @@
   "name": "waves-transactions",
   "version": "1.0.1",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
+  "keywords": [
+    "waves",
+    "crypto",
+    "transactions",
+    "protocol",
+    "binary",
+    "cryptography",
+    "signature"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "ts-node build/build.ts",
     "deploy": "cd dist; npm version patch; npm publish;"
   },
-  "author": "Yuriy Naydenov",
+  "author": {
+    "name": "Yuriy Naydenov",
+    "email": "ebceu44@gmail.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.1.6",
