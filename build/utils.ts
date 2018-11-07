@@ -1,6 +1,7 @@
-import { mkdir, readdir } from "fs"
+import { mkdir, readdir, readFile, writeFile } from "fs"
 import { exec } from "child_process"
 import { resolve } from "path"
+
 const ncp = require('ncp').ncp
 const rimraf = require('rimraf')
 
@@ -20,3 +21,10 @@ export const run = (cmd: string, cwd?: string): Promise<string> =>
 
 export const files = (path: string, filter: (file: string) => boolean = (_) => true): Promise<string[]> =>
   new Promise((resolve, reject) => readdir(path, (err, files) => err ? reject(err) : resolve(files.filter(filter))))
+
+export const copyJson = (src: string, dst: string, rewriteFields?: { [key: string]: any }): Promise<void> =>
+  new Promise(((resolve, reject) => readFile(src, ((err, data) => {
+      if (err) reject(err)
+      const modified = { ...JSON.parse(data.toString()), ...rewriteFields };
+      writeFile(dst, JSON.stringify(modified, null, 2), err => err ? reject(err) : resolve())
+    }))));

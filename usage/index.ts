@@ -20,7 +20,7 @@ const _DOCS = `/**
  * Creates and signs [[<!-- @echo TRANSACTION_TYPE -->]].
  *
  * You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
- * Also you can use already signed [[<!-- @echo TRANSACTION_TYPE -->]] as a second agrument.
+ * Also you can use already signed [[<!-- @echo TRANSACTION_TYPE -->]] as a second argument.
  * 
  * ### Usage
  * \`\`\`js
