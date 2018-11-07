@@ -1,5 +1,5 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, publicKey, hashBytes } from "waves-crypto"
-import { SeedTypes, mapSeed, valOrDef, Params, validateParams, addProof, pullSeedAndIndex } from "../generic"
+import { SeedTypes, mapSeed, valOrDef, Params, addProof, pullSeedAndIndex } from "../generic"
 import { Order } from "../transactions"
 
 export interface OrderParams extends Params {
@@ -74,7 +74,7 @@ export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Orde
   const { senderPublicKey, matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
   const t = valOrDef(timestamp, Date.now())
 
-  validateParams(seed, paramsOrOrder)
+  //validateParams(seed, paramsOrOrder)
 
   const { nextSeed } = pullSeedAndIndex(seed)
 

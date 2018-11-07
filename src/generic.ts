@@ -5,16 +5,14 @@ export interface Params {
   timestamp?: number
 }
 
-export function validateParams(seed: SeedTypes, params: Params) {
-  const { seed: s } = pullSeedAndIndex(seed)
-
-  if (s == undefined && params.senderPublicKey == undefined)
-    throw new Error('Please provide either seed or senderPublicKey')
-}
-
 export interface SeedsAndIndexes {
   [index: number]: string
 }
+
+export type OneOrMany<T> = T | T[]
+
+export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isArray(oneOrMany)
+export const toMany = <T>(oneOrMany: OneOrMany<T>): T[] => isOne(oneOrMany) ? [oneOrMany] : oneOrMany
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (index == undefined) {
@@ -37,7 +35,7 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
 
 export const valOrDef = <T>(val: T, def: T): T => val != undefined ? val : def
 
-export type SeedTypes = string | string[] | SeedsAndIndexes | undefined
+export type SeedTypes = OneOrMany<string> | SeedsAndIndexes | undefined
 
 export const isSeedsAndIndexes = (seed: SeedTypes): seed is SeedsAndIndexes =>
   typeof seed != 'string' && typeof seed == 'object' && (<string[]>seed).length == undefined

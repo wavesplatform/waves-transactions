@@ -1,6 +1,6 @@
 import { TransactionType, ReissueTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed } from "../generic"
 
 export interface ReissueParams extends Params {
   assetId: string
@@ -16,7 +16,7 @@ export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTran
   const { nextSeed } = pullSeedAndIndex(seed)
   const { assetId, quantity, chainId, reissuable, fee, timestamp, senderPublicKey } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  //validateParams(seed, paramsOrTx)
 
   const proofs = paramsOrTx['proofs']
   const tx: ReissueTransaction = proofs && proofs.length > 0 ?
