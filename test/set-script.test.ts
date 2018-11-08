@@ -1,5 +1,3 @@
-import { describe, it } from 'mocha';
-import { expect } from 'chai';
 import {
   BASE58_STRING,
   BASE64_STRING,
@@ -16,6 +14,7 @@ import { setScript } from '../src';
 import { SetScriptTransaction } from "../src/transactions";
 
 describe('setScript', () => {
+
   const seed = 'test seed';
   const seed2 = 'test seed 2'
   const compiledContract = 'AQQAAAALYWxpY2VQdWJLZXkBAAAAID3+K0HJI42oXrHhtHFpHijU5PC4nn1fIFVsJp5UWrYABAAAAAlib2JQdWJLZXkBAAAAIBO1uieokBahePoeVqt4/usbhaXRq+i5EvtfsdBILNtuBAAAAAxjb29wZXJQdWJLZXkBAAAAIOfM/qkwkfi4pdngdn18n5yxNwCrBOBC3ihWaFg4gV4yBAAAAAthbGljZVNpZ25lZAMJAAH0AAAAAwgFAAAAAnR4AAAACWJvZHlCeXRlcwkAAZEAAAACCAUAAAACdHgAAAAGcHJvb2ZzAAAAAAAAAAAABQAAAAthbGljZVB1YktleQAAAAAAAAAAAQAAAAAAAAAAAAQAAAAJYm9iU2lnbmVkAwkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAEFAAAACWJvYlB1YktleQAAAAAAAAAAAQAAAAAAAAAAAAQAAAAMY29vcGVyU2lnbmVkAwkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAIFAAAADGNvb3BlclB1YktleQAAAAAAAAAAAQAAAAAAAAAAAAkAAGcAAAACCQAAZAAAAAIJAABkAAAAAgUAAAALYWxpY2VTaWduZWQFAAAACWJvYlNpZ25lZAUAAAAMY29vcGVyU2lnbmVkAAAAAAAAAAACVateHg=='
@@ -24,54 +23,54 @@ describe('setScript', () => {
     const txParams = { script: compiledContract };
     const signedTx = setScript(seed, txParams);
 
-    expect(validateSetScriptTx(signedTx)).to.be.true
+    expect(validateSetScriptTx(signedTx)).toBe(true)
   });
 
   it('Should generate correct signed setScript transaction with multiple signers via array', () => {
     const txParams = { script: null };
     const signedTx = setScript([null, seed, seed2], txParams);
 
-    expect(signedTx.proofs[0]).to.be.null
-    expect(validateSetScriptTx(signedTx, 1)).to.be.true
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).to.be.true
+    expect(signedTx.proofs[0]).toBeNull()
+    expect(validateSetScriptTx(signedTx, 1)).toBe(true)
+    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   });
 
   it('Should generate correct signed setScript transaction with multiple signers via object', () => {
     const txParams = { script: compiledContract };
     const signedTx = setScript({ '1': seed, '2': seed2 }, txParams);
 
-    expect(signedTx.proofs[0]).to.be.null
-    expect(validateSetScriptTx(signedTx, 1, publicKey(seed))).to.be.true
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).to.be.true
+    expect(signedTx.proofs[0]).toBeNull()
+    expect(validateSetScriptTx(signedTx, 1, publicKey(seed))).toBe(true)
+    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   });
 
   it('Should generate correct signed setScript transaction with null script', () => {
     const txParams = { script: null };
     const signedTx = setScript(seed, txParams);
 
-    expect(validateSetScriptTx(signedTx)).to.be.true
+    expect(validateSetScriptTx(signedTx)).toBe(true)
   });
 
   it('Should generate correct signed setScript transaction without seed', () => {
-    const txParams = { script: compiledContract, senderPublicKey: publicKey(seed) };
+    const txParams = { script: compiledContract, senderPublicKey: publicKey(seed) }
     const tx = setScript(null, txParams);
 
-    expect(tx.script).to.eql('base64:' + txParams.script);
-    expect(tx.senderPublicKey).to.eql(publicKey(seed));
+    expect(tx.script).toEqual('base64:' + txParams.script)
+    expect(tx.senderPublicKey).toEqual(publicKey(seed))
   });
 
   it('Should throw on undefined script', () => {
     const txParams = {};
-    expect(() => setScript(seed, txParams)).to.throw('Script field cannot be undefined. Use null explicitly to remove script')
+    expect(() => setScript(seed, txParams)).toThrow('Script field cannot be undefined. Use null explicitly to remove script')
   });
 
   it('Should handle incorrect keys in seedObject', () => {
     const txParams = { script: compiledContract };
-    const signedTx = setScript({ 'asd1': seed, '2': seed2 }as any, txParams);
+    const signedTx = setScript({ 'asd1': seed, '2': seed2 } as any, txParams);
 
-    expect(signedTx.proofs[0]).to.be.null
-    expect(signedTx.proofs[1]).to.be.null
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).to.be.true
+    expect(signedTx.proofs[0]).toBeNull()
+    expect(signedTx.proofs[1]).toBeNull()
+    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   });
 })
 

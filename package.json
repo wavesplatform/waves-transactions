@@ -15,7 +15,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "ts-node build/build.ts",
-    "deploy": "cd dist; npm version patch; npm publish;"
+    "deploy": "cd dist; npm version patch; npm publish",
+    "test": "jest"
   },
   "author": {
     "name": "Yuriy Naydenov",
@@ -23,17 +24,16 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/chai": "^4.1.6",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.9.4",
-    "chai": "^4.2.0",
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.12.3",
     "copy-webpack-plugin": "^4.5.2",
+    "jest": "^23.6.0",
     "jsdoc-to-markdown": "^4.0.1",
-    "mocha": "^5.2.0",
     "nativescript-typedoc-theme": "0.0.7",
     "ncp": "^2.0.0",
     "preprocess": "^3.1.0",
     "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.1",
     "ts-jsdoc": "^3.0.1",
     "ts-loader": "^5.1.0",
     "ts-node": "^7.0.1",
@@ -48,6 +48,7 @@
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
   "dependencies": {
-    "waves-crypto": "^1.0.30"
+    "npm": "^6.4.1",
+    "waves-crypto": "^1.0.36"
   }
 }
