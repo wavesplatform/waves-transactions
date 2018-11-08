@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>LeaseParams | waves-transactions</title>
+	<title>Params | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="leaseparams.html">LeaseParams</a>
+					<a href="params.html">Params</a>
 				</li>
 			</ul>
-			<h1>Interface LeaseParams</h1>
+			<h1>Interface Params</h1>
 		</div>
 	</div>
 </header>
@@ -66,10 +66,40 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="params.html" class="tsd-signature-type">Params</a>
+						<span class="target">Params</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">LeaseParams</span>
+								<a href="issueparams.html" class="tsd-signature-type">IssueParams</a>
+							</li>
+							<li>
+								<a href="transferparams.html" class="tsd-signature-type">TransferParams</a>
+							</li>
+							<li>
+								<a href="reissueparams.html" class="tsd-signature-type">ReissueParams</a>
+							</li>
+							<li>
+								<a href="burnparams.html" class="tsd-signature-type">BurnParams</a>
+							</li>
+							<li>
+								<a href="leaseparams.html" class="tsd-signature-type">LeaseParams</a>
+							</li>
+							<li>
+								<a href="cancelleaseparams.html" class="tsd-signature-type">CancelLeaseParams</a>
+							</li>
+							<li>
+								<a href="dataparams.html" class="tsd-signature-type">DataParams</a>
+							</li>
+							<li>
+								<a href="masstransferparams.html" class="tsd-signature-type">MassTransferParams</a>
+							</li>
+							<li>
+								<a href="aliasparams.html" class="tsd-signature-type">AliasParams</a>
+							</li>
+							<li>
+								<a href="setscriptparams.html" class="tsd-signature-type">SetScriptParams</a>
+							</li>
+							<li>
+								<a href="orderparams.html" class="tsd-signature-type">OrderParams</a>
 							</li>
 						</ul>
 					</li>
@@ -82,11 +112,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="leaseparams.html#amount" class="tsd-kind-icon">amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="leaseparams.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="leaseparams.html#recipient" class="tsd-kind-icon">recipient</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="leaseparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="leaseparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="params.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="params.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -95,54 +122,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="amount" class="tsd-anchor"></a>
-					<h3>amount</h3>
-					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in transactions/lease.ts:8</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="fee" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee</h3>
-					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in transactions/lease.ts:9</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="recipient" class="tsd-anchor"></a>
-					<h3>recipient</h3>
-					<div class="tsd-signature tsd-kind-icon">recipient<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in transactions/lease.ts:7</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="senderpublickey" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sender<wbr>Public<wbr>Key</h3>
 					<div class="tsd-signature tsd-kind-icon">sender<wbr>Public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="params.html">Params</a>.<a href="params.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
 							<li>Defined in types.ts:8</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="timestamp" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timestamp</h3>
 					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="params.html">Params</a>.<a href="params.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions/lease.ts:10</li>
+							<li>Defined in types.ts:9</li>
 						</ul>
 					</aside>
 				</section>
@@ -161,22 +156,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="leaseparams.html" class="tsd-kind-icon">Lease<wbr>Params</a>
+						<a href="params.html" class="tsd-kind-icon">Params</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="leaseparams.html#amount" class="tsd-kind-icon">amount</a>
+								<a href="params.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="leaseparams.html#fee" class="tsd-kind-icon">fee</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="leaseparams.html#recipient" class="tsd-kind-icon">recipient</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="leaseparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="leaseparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="params.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 						</ul>
 					</li>

@@ -1,5 +1,5 @@
 import { TransactionType, Tx } from './transactions'
-import { SeedTypes } from "./generic";
+import { SeedTypes } from "./types";
 import { issue } from "./transactions/issue";
 import { transfer } from "./transactions/transfer";
 import { reissue } from "./transactions/reissue";

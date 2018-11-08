@@ -1,6 +1,7 @@
 import { TransactionType, SetScriptTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BASE64_STRING, OPTION, LEN, SHORT } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { SeedTypes, Params} from "../types";
 
 export interface SetScriptParams extends Params {
   script?: string //base64

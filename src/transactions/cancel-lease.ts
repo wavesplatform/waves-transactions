@@ -1,6 +1,7 @@
 import { TransactionType, CancelLeaseTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { SeedTypes, Params} from "../types";
 
 export interface CancelLeaseParams extends Params {
   leaseId: string
@@ -14,7 +15,7 @@ export function cancelLease(seed: SeedTypes, paramsOrTx: CancelLeaseParams | Can
   const { nextSeed } = pullSeedAndIndex(seed)
   const { leaseId, fee, timestamp, chainId: chain, senderPublicKey } = paramsOrTx
   const cId = chain || 'W'
-  const chainId = typeof cId == 'string' ? cId : new String(cId)
+  const chainId = typeof cId === 'string' ? cId : String(cId)
 
   validateParams(seed, paramsOrTx)
 

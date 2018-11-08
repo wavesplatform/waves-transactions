@@ -1,6 +1,7 @@
 import { TransactionType, TransferTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { SeedTypes, Params} from "../types";
 
 export interface TransferParams extends Params {
   recipient: string

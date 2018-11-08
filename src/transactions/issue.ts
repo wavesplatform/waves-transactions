@@ -1,6 +1,7 @@
 import { IssueTransaction, TransactionType } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { SeedTypes, Params} from "../types";
 
 export interface IssueParams extends Params {
   name: string

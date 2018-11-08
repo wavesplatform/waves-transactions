@@ -1,6 +1,7 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, publicKey, hashBytes } from "waves-crypto"
-import { SeedTypes, mapSeed, valOrDef, Params, validateParams, addProof, pullSeedAndIndex } from "../generic"
+import { mapSeed, valOrDef, validateParams, addProof, pullSeedAndIndex } from "../generic"
 import { Order } from "../transactions"
+import { SeedTypes, Params} from "../types";
 
 export interface OrderParams extends Params {
   matcherPublicKey: string

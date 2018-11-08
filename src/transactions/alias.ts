@@ -1,6 +1,7 @@
 import { TransactionType, AliasTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef, mapSeed, validateParams } from "../generic"
+import { addProof, pullSeedAndIndex, valOrDef, mapSeed, validateParams } from "../generic"
+import { SeedTypes, Params} from "../types";
 
 export interface AliasParams extends Params {
   alias: string

@@ -1,28 +1,24 @@
 import { WithProofs } from "./transactions"
+import { SeedsAndIndexes, SeedTypes, Params } from "./types";
 
-export interface Params {
-  senderPublicKey?: string
-  timestamp?: number
-}
+
 
 export function validateParams(seed: SeedTypes, params: Params) {
   const { seed: s } = pullSeedAndIndex(seed)
 
-  if (s == undefined && params.senderPublicKey == undefined)
+  if (s == null && params.senderPublicKey == null)
     throw new Error('Please provide either seed or senderPublicKey')
 }
 
-export interface SeedsAndIndexes {
-  [index: number]: string
-}
+
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
-  if (index == undefined) {
+  if (index === undefined) {
     tx.proofs = [...(tx.proofs || []), proof]
     return tx
   }
 
-  if (tx.proofs != undefined && tx.proofs[index] != undefined)
+  if (tx.proofs !== undefined && tx.proofs[index] !== undefined)
     throw new Error(`Proof at index ${index} is already exists.`)
 
   tx.proofs = tx.proofs || []
@@ -35,32 +31,31 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
   return tx
 }
 
-export const valOrDef = <T>(val: T, def: T): T => val != undefined ? val : def
+export const valOrDef = <T>(val: T, def: T): T => val !== undefined ? val : def
 
-export type SeedTypes = string | string[] | SeedsAndIndexes | undefined
 
 export const isSeedsAndIndexes = (seed: SeedTypes): seed is SeedsAndIndexes =>
-  typeof seed != 'string' && typeof seed == 'object' && (<string[]>seed).length == undefined
+  typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length ===undefined
 
 export const isArrayOfSeeds = (seed: SeedTypes): seed is string[] =>
-  typeof seed != 'string' && typeof seed == 'object' && (<string[]>seed).length != undefined
+  typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length !== undefined
 
 export const mapSeed = <T>(seed: SeedTypes, map: (seed: string, index?: number) => T): T => {
   const { seed: _seed, index } = pullSeedAndIndex(seed)
-  if (_seed != undefined)
+  if (_seed != null)
     return map(_seed, index)
   return undefined
 }
 
 export const pullSeedAndIndex = (seed: SeedTypes): { seed: string, index?: number, nextSeed?: SeedTypes } => {
   const empty = { seed: undefined, index: undefined, nextSeed: undefined }
-  if (seed == undefined || seed == null || seed == '')
+  if (seed == null || seed === '')
     return empty
 
   if (isSeedsAndIndexes(seed)) {
     const keys = Object.keys(seed).map(k => parseInt(k)).filter(k => !isNaN(k))
 
-    if (keys == undefined || keys.length == 0)
+    if (keys == null || keys.length === 0)
       return empty
 
     const index = keys[0]
