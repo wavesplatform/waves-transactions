@@ -1,6 +1,6 @@
 import { TransactionType, MassTransferTransaction, Transfer } from "../transactions"
-import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION, empty, COUNT } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION, empty, COUNT } from "waves-crypto"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 export interface MassTransferParams extends Params {
@@ -12,13 +12,13 @@ export interface MassTransferParams extends Params {
 }
 
 /* @echo DOCS */
-export function massTransfer(seed: SeedTypes, paramsOrTx: MassTransferParams | MassTransferTransaction): MassTransferTransaction {
+export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransaction, seed?: SeedTypes): MassTransferTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { assetId, transfers, attachment, fee, timestamp, senderPublicKey } = paramsOrTx
+  const { assetId, transfers, attachment, fee, timestamp } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: MassTransferTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as MassTransferTransaction : {
       type: TransactionType.MassTransfer,
@@ -27,7 +27,7 @@ export function massTransfer(seed: SeedTypes, paramsOrTx: MassTransferParams | M
       attachment,
       assetId,
       fee: valOrDef(fee, (100000 + Math.ceil(0.5 * transfers.length) * 100000)),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+      senderPublicKey,
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -46,5 +46,5 @@ export function massTransfer(seed: SeedTypes, paramsOrTx: MassTransferParams | M
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? massTransfer(nextSeed, tx) : tx
+  return nextSeed ? massTransfer(tx, nextSeed) : tx
 }

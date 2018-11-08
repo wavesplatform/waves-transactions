@@ -1,6 +1,6 @@
 import { TransactionType, TransferTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 export interface TransferParams extends Params {
@@ -14,13 +14,13 @@ export interface TransferParams extends Params {
 }
 
 /* @echo DOCS */
-export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferTransaction): TransferTransaction {
+export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?: SeedTypes): TransferTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp, senderPublicKey } = paramsOrTx
+  const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: TransferTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as TransferTransaction : {
       type: TransactionType.Transfer,
@@ -31,7 +31,7 @@ export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferT
       assetId,
       amount,
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+      senderPublicKey,
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -52,5 +52,5 @@ export function transfer(seed: SeedTypes, paramsOrTx: TransferParams | TransferT
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? transfer(nextSeed, tx) : tx
+  return nextSeed ? transfer(tx, nextSeed) : tx
 }

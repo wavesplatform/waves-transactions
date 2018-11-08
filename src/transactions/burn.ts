@@ -1,6 +1,6 @@
 import { TransactionType, BurnTransaction } from "../transactions"
 import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 
@@ -13,13 +13,13 @@ export interface BurnParams extends Params {
 }
 
 /* @echo DOCS */
-export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction): BurnTransaction {
+export function burn(paramsOrTx: BurnParams | BurnTransaction, seed?: SeedTypes): BurnTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { assetId, quantity, chainId, fee, timestamp, senderPublicKey } = paramsOrTx
+  const { assetId, quantity, chainId, fee, timestamp } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: BurnTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as BurnTransaction : {
       type: TransactionType.Burn,
@@ -28,7 +28,7 @@ export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction):
       quantity,
       chainId: chainId || 'W',
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+      senderPublicKey,
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -45,5 +45,5 @@ export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction):
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? burn(nextSeed, tx) : tx
+  return nextSeed ? burn(tx, nextSeed) : tx
 }

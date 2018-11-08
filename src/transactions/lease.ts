@@ -1,6 +1,6 @@
 import { TransactionType, LeaseTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 export interface LeaseParams extends Params {
@@ -11,13 +11,13 @@ export interface LeaseParams extends Params {
 }
 
 /* @echo DOCS */
-export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransaction): LeaseTransaction {
+export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTypes): LeaseTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { recipient, amount, fee, timestamp, senderPublicKey } = paramsOrTx
+  const { recipient, amount, fee, timestamp } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
-  
-  const proofs = paramsOrTx['proofs']
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: LeaseTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as LeaseTransaction : {
       type: TransactionType.Lease,
@@ -25,7 +25,7 @@ export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransactio
       recipient,
       amount,
       fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+      senderPublicKey,
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -42,5 +42,5 @@ export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransactio
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? lease(nextSeed, tx) : tx
+  return nextSeed ? lease(tx, nextSeed) : tx
 }

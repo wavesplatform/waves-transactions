@@ -1,3 +1,5 @@
+import {Option} from "./types";
+
 export const enum TransactionType {
   Genesis = 1,
   Payment = 2,
@@ -16,7 +18,7 @@ export const enum TransactionType {
 }
 
 export interface WithProofs {
-  proofs: string[]
+  proofs: Option<string>[]
 }
 
 export interface Transaction extends WithProofs {

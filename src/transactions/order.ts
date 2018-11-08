@@ -1,5 +1,5 @@
-import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, publicKey, hashBytes } from "waves-crypto"
-import { mapSeed, valOrDef, validateParams, addProof, pullSeedAndIndex } from "../generic"
+import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from "waves-crypto"
+import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from "../generic"
 import { Order } from "../transactions"
 import { SeedTypes, Params} from "../types";
 
@@ -66,16 +66,16 @@ export interface OrderParams extends Params {
  * @returns
  *
  */
-export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Order {
+export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Order {
   const isOrder = (p: OrderParams | Order): p is Order => (<Order>p).assetPair !== undefined
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
 
-  const { senderPublicKey, matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
+  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
   const t = valOrDef(timestamp, Date.now())
 
-  validateParams(seed, paramsOrOrder)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrOrder)
 
   const { nextSeed } = pullSeedAndIndex(seed)
 
@@ -91,7 +91,7 @@ export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Orde
     expiration: valOrDef(expiration, t + 1728000000),
     matcherFee: valOrDef(matcherFee, 300000),
     matcherPublicKey,
-    senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+    senderPublicKey,
     proofs: [],
     id: ''
   }
@@ -101,7 +101,7 @@ export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Orde
     BASE58_STRING(ord.matcherPublicKey),
     OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
     OPTION(BASE58_STRING)(ord.assetPair.priceAsset),
-    BYTE(ord.orderType == 'sell' ? 1 : 0),
+    BYTE(ord.orderType === 'sell' ? 1 : 0),
     LONG(ord.price),
     LONG(ord.amount),
     LONG(ord.timestamp),
@@ -112,7 +112,7 @@ export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Orde
   mapSeed(seed, s => addProof(ord, signBytes(bytes, s)))
   ord.id = hashBytes(bytes)
 
-  return nextSeed ? order(nextSeed, ord) : ord
+  return nextSeed ? order(ord, nextSeed) : ord
 }
 
 

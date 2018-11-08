@@ -1,6 +1,6 @@
 import { publicKey, LEN, LONG, BYTE, SHORT, BYTES, STRING, concat, BASE58_STRING, COUNT, signBytes, hashBytes } from "waves-crypto"
 import { DataTransaction, TransactionType } from "../transactions"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 export interface DataEntry {
@@ -15,22 +15,21 @@ export interface DataParams extends Params {
 }
 
 /* @echo DOCS */
-export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction): DataTransaction {
+export function data( paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes): DataTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { data: _data, fee, timestamp, senderPublicKey: spk } = paramsOrTx
+  const { data: _data, fee, timestamp} = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const typeMap = {
+  const typeMap:any = {
     number: ['integer', 0, LONG],
     boolean: ['boolean', 1, BYTE],
     string: ['string', 3, LEN(SHORT)(STRING)],
     _: ['binary', 2, LEN(SHORT)(BYTES)],
   }
 
-  const mapType = (value) => typeMap[typeof value] || typeMap['_']
+  const mapType = (value: any) => typeMap[typeof value] || typeMap['_']
 
-  const senderPublicKey = spk || mapSeed(seed, s => publicKey(s))
   const _timestamp = valOrDef(timestamp, Date.now())
 
   let bytes = concat(
@@ -45,7 +44,7 @@ export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction):
 
   const _fee = valOrDef(fee, computedFee)
 
-  const proofs = paramsOrTx['proofs']
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: DataTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as DataTransaction : {
       type: 12,
@@ -58,7 +57,7 @@ export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction):
         const v = {
           type,
           key: x.key,
-          value: type == 'binary' ? 'base64:' + Buffer.from(x.value as any[]).toString('base64') : x.value as (string | number | boolean)
+          value: type === 'binary' ? 'base64:' + Buffer.from(x.value as any[]).toString('base64') : x.value as (string | number | boolean)
         }
         return v
       }),
@@ -69,5 +68,5 @@ export function data(seed: SeedTypes, paramsOrTx: DataParams | DataTransaction):
   bytes = concat(bytes, LONG(tx.fee))
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? data(nextSeed, tx) : tx
+  return nextSeed ? data(tx, nextSeed) : tx
 } 

@@ -1,6 +1,6 @@
 import { IssueTransaction, TransactionType } from "../transactions"
 import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 export interface IssueParams extends Params {
@@ -15,13 +15,13 @@ export interface IssueParams extends Params {
 }
 
 /* @echo DOCS */
-export function issue(seed: SeedTypes, paramsOrTx: IssueParams | IssueTransaction): IssueTransaction {
+export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTypes): IssueTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { name, description, decimals, quantity, reissuable, fee, timestamp, chainId, senderPublicKey } = paramsOrTx
+  const { name, description, decimals, quantity, reissuable, fee, timestamp, chainId } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: IssueTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as IssueTransaction : {
       type: TransactionType.Issue,
@@ -32,7 +32,7 @@ export function issue(seed: SeedTypes, paramsOrTx: IssueParams | IssueTransactio
       quantity,
       reissuable: reissuable || false,
       fee: valOrDef(fee, 100000000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+      senderPublicKey,
       timestamp: valOrDef(timestamp, Date.now()),
       chainId: chainId || 'W',
       proofs: [],
@@ -54,5 +54,5 @@ export function issue(seed: SeedTypes, paramsOrTx: IssueParams | IssueTransactio
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? issue(nextSeed, tx) : tx
+  return nextSeed ? issue(tx, nextSeed) : tx
 }

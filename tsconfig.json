@@ -10,8 +10,8 @@
     "module": "commonjs",
     "outDir": "dist",
     "alwaysStrict": false,
-    "strictNullChecks": false,
-    "noImplicitAny": false
+    "strictNullChecks": true,
+    "noImplicitAny": true
   },
   "include": [
     "./src/**/*"

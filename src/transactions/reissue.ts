@@ -1,6 +1,6 @@
 import { TransactionType, ReissueTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
+import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
 
 export interface ReissueParams extends Params {
@@ -13,13 +13,13 @@ export interface ReissueParams extends Params {
 }
 
 /* @echo DOCS */
-export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTransaction): ReissueTransaction {
+export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: SeedTypes): ReissueTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { assetId, quantity, chainId, reissuable, fee, timestamp, senderPublicKey } = paramsOrTx
+  const { assetId, quantity, chainId, reissuable, fee, timestamp } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
+  const proofs = (<any>paramsOrTx)['proofs']
   const tx: ReissueTransaction = proofs && proofs.length > 0 ?
     paramsOrTx as ReissueTransaction : {
       type: TransactionType.Reissue,
@@ -29,7 +29,7 @@ export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTran
       chainId: chainId || 'W',
       reissuable,
       fee: valOrDef(fee, 100000000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+      senderPublicKey,
       timestamp: valOrDef(timestamp, Date.now()),
       proofs: [],
       id: ''
@@ -47,5 +47,5 @@ export function reissue(seed: SeedTypes, paramsOrTx: ReissueParams | ReissueTran
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? reissue(nextSeed, tx) : tx
+  return nextSeed ? reissue(tx, nextSeed) : tx
 }
