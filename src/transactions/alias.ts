@@ -2,6 +2,8 @@ import { TransactionType, AliasTransaction } from "../transactions"
 import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
 import { addProof, pullSeedAndIndex, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
+import { generalValidation, raiseValidationErrors } from '../validation';
+import { ValidationResult, noError } from 'waves-crypto/validation';
 
 export interface AliasParams extends Params {
   alias: string
@@ -12,7 +14,7 @@ export interface AliasParams extends Params {
 
 export const aliasValidation = (paramsOrTx: AliasParams | AliasTransaction): ValidationResult => [
   paramsOrTx.fee < 100000 ? 'fee is lees than 100000' : noError,
-  !paramsOrTx.alias || paramsOrTx.alias.length == 0 ? `alias is empty or undefined` : noError,
+  !paramsOrTx.alias || paramsOrTx.alias.length === 0 ? `alias is empty or undefined` : noError,
 ]
 
 export const aliasToBytes = (tx: AliasTransaction): Uint8Array => concat(
@@ -33,7 +35,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
     version: 2,
     alias: _alias,
     fee: valOrDef(fee, 100000),
-    senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
+    senderPublicKey,
     timestamp: valOrDef(timestamp, Date.now()),
     id: '',
     proofs: [],
@@ -49,5 +51,5 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? alias(nextSeed, tx) : tx
+  return nextSeed ? alias(tx, nextSeed) : tx
 }
