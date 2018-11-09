@@ -7,10 +7,10 @@ const rimraf = require('rimraf')
 export const p = (...path: string[]) => resolve(__dirname, ...path)
 
 export const remove = (path: string): Promise<void> =>
-  new Promise((resolve, reject) => rimraf(path, (err) => err ? reject(err) : resolve()))
+  new Promise((resolve, reject) => rimraf(path, (err:any) => err ? reject(err) : resolve()))
 
 export const copy = (src: string, dst: string): Promise<void> =>
-  new Promise((resolve, reject) => ncp(src, dst, (err) => err ? reject(err) : resolve()))
+  new Promise((resolve, reject) => ncp(src, dst, (err:any) => err ? reject(err) : resolve()))
 
 export const exists = (path: string): Promise<boolean> =>
   new Promise((resolve, _) => ex(path, (exists) => resolve(exists)))
