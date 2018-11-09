@@ -11,7 +11,7 @@ export interface CancelLeaseParams extends Params {
 }
 
 /* @echo DOCS */
-export function cancelLease(seed: SeedTypes, paramsOrTx: CancelLeaseParams | CancelLeaseTransaction): CancelLeaseTransaction {
+export function cancelLease(paramsOrTx: CancelLeaseParams | CancelLeaseTransaction, seed?: SeedTypes): CancelLeaseTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
   const { leaseId, fee, timestamp, chainId: chain } = paramsOrTx
   const cId = chain || 'W'
@@ -43,5 +43,5 @@ export function cancelLease(seed: SeedTypes, paramsOrTx: CancelLeaseParams | Can
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? cancelLease(nextSeed, tx) : tx
+  return nextSeed ? cancelLease(tx, nextSeed) : tx
 }

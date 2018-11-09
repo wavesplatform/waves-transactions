@@ -49,6 +49,6 @@
   },
   "dependencies": {
     "npm": "^6.4.1",
-    "waves-crypto": "^1.0.37"
+    "waves-crypto": "^1.0.38"
   }
 }

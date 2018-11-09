@@ -20,7 +20,6 @@ export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isAr
 export const toMany = <T>(oneOrMany: OneOrMany<T>): T[] => isOne(oneOrMany) ? [oneOrMany] : oneOrMany
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
-  tx.proofs = tx.proofs || [];
   if (index == null) {
     tx.proofs = [...tx.proofs, proof];
     return tx;
@@ -29,7 +28,7 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
     throw new Error(`Proof at index ${index} is already exists.`);
   for (let i = tx.proofs.length; i < index; i++)
     tx.proofs.push(null);
-  tx.proofs[index] = (proof);
+  tx.proofs[index] = proof;
   return tx;
 }
 
@@ -41,7 +40,7 @@ export const valOrDef = <T, K extends T>(val: Option<T>, def: K): T => val != nu
 export const isSeedsAndIndexes = (seed: SeedTypes): seed is SeedsAndIndexes =>
   typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length === undefined
 
-export const isArrayOfSeeds = (seed: SeedTypes): seed is string[] =>
+export const isArrayOfSeeds = (seed: SeedTypes): seed is Option<string>[] =>
   typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length !== undefined
 
 export const mapSeed = <T>(seed: Option<SeedTypes>, map: (seed: string, index?: number) => T): Option<T> => {
@@ -69,11 +68,12 @@ export const pullSeedAndIndex = (seed: Option<SeedTypes>): { seed?: string, inde
   } else if (isArrayOfSeeds(seed)) {
 
     return pullSeedAndIndex(
-      Object.entries<string>(seed).filter(([k, v]) => !!v).reduce((acc, [k, v]) => {
+      Object.entries(seed).filter(([k, v]) => !!v).reduce((acc, [k, v]:[string,any]) => {
         acc[+k] = v;
         return acc
       }, {} as SeedsAndIndexes)
     )
-  } else
-    return { seed: seed }
+  }
+
+  return { seed: seed }
 }

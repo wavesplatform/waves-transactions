@@ -59,7 +59,7 @@ export interface IssueTransaction extends Transaction, WithSender {
 
 export interface SetScriptTransaction extends Transaction, WithSender {
   type: TransactionType.SetScript
-  script: string //base64
+  script: string | null //base64
   chainId: string
 }
 
@@ -125,8 +125,8 @@ export interface Order extends WithSender, WithProofs {
   id: string
   orderType: "buy" | "sell"
   assetPair: {
-    amountAsset: string
-    priceAsset: string
+    amountAsset?: string
+    priceAsset?: string
   };
   price: long
   amount: long

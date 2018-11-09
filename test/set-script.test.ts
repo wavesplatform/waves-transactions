@@ -51,9 +51,9 @@ describe('setScript', () => {
     expect(validateSetScriptTx(signedTx)).toBe(true)
   });
 
-  it('Should generate correct signed setScript transaction without seed', () => {
+  it('Should generate correct setScript transaction without seed', () => {
     const txParams = { script: compiledContract, senderPublicKey: publicKey(seed) }
-    const tx = setScript(txParams, null);
+    const tx = setScript(txParams, );
 
     expect(tx.script).toEqual('base64:' + txParams.script)
     expect(tx.senderPublicKey).toEqual(publicKey(seed))
@@ -61,7 +61,7 @@ describe('setScript', () => {
 
   it('Should throw on undefined script', () => {
     const txParams = {};
-    expect(() => setScript(txParams, seed)).toThrow('Script field cannot be undefined. Use null explicitly to remove script')
+    expect(() => setScript(txParams as any, seed)).toThrow('Script field cannot be undefined. Use null explicitly to remove script')
   });
 
   it('Should handle incorrect keys in seedObject', () => {

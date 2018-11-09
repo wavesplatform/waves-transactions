@@ -11,28 +11,29 @@ import { massTransfer } from "./transactions/mass-transfer";
 import { alias } from "./transactions/alias";
 import { setScript } from "./transactions/set-script";
 
-export function signTx(seed: SeedTypes, tx: Tx): Tx {
+export function signTx(tx: Tx, seed: SeedTypes): Tx {
+  if (seed == null) throw new Error("Seed is not provided");
   switch (tx.type) {
     case TransactionType.Issue:
-      return issue(seed, tx);
+      return issue(tx, seed);
     case TransactionType.Transfer:
-      return transfer(seed, tx);
+      return transfer(tx, seed);
     case TransactionType.Reissue:
-      return reissue(seed, tx);
+      return reissue(tx, seed);
     case TransactionType.Burn:
-      return burn(seed, tx);
+      return burn(tx, seed);
     case TransactionType.Lease:
-      return lease(seed, tx);
+      return lease(tx, seed);
     case TransactionType.CancelLease:
-      return cancelLease(seed, tx);
+      return cancelLease(tx, seed);
     case TransactionType.Alias:
-      return alias(seed, tx);
+      return alias(tx, seed);
     case TransactionType.MassTransfer:
-      return massTransfer(seed, tx);
+      return massTransfer(tx, seed);
     case TransactionType.Data:
-      return data(seed, tx);
+      return data(tx, seed);
     case TransactionType.SetScript:
-      return setScript(seed, tx);
+      return setScript(tx, seed);
     default:
       throw new Error(`Unknown tx type: ${tx!.type}`)
   }

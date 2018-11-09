@@ -4,7 +4,7 @@ import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } fro
 import { SeedTypes, Params} from "../types";
 
 export interface SetScriptParams extends Params {
-  script?: string //base64
+  script: string | null
   fee?: number
   timestamp?: number
   chainId?: string

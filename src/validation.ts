@@ -1,10 +1,11 @@
-import { SeedTypes, Params, pullSeedAndIndex } from './generic';
+import {  pullSeedAndIndex } from './generic';
 import { ValidationResult, noError } from 'waves-crypto/validation';
+import { Option, Params, SeedTypes } from "./types";
 
-export function generalValidation(seed: SeedTypes, params: Params): ValidationResult {
+export function generalValidation(seed: Option<SeedTypes>, params: Params): ValidationResult {
   const { seed: s } = pullSeedAndIndex(seed)
   return [
-    s == undefined && params.senderPublicKey == undefined ?
+    s == null && !params.senderPublicKey?
       'Please provide either seed or senderPublicKey' : noError
   ]
 }
