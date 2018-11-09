@@ -17,22 +17,17 @@ export interface SeedsAndIndexes {
 }
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
-  if (index == undefined) {
-    tx.proofs = [...(tx.proofs || []), proof]
-    return tx
+  tx.proofs = tx.proofs || [];
+  if (index == null) {
+    tx.proofs = [...tx.proofs, proof];
+    return tx;
   }
-
-  if (tx.proofs != undefined && tx.proofs[index] != undefined)
-    throw new Error(`Proof at index ${index} is already exists.`)
-
-  tx.proofs = tx.proofs || []
-
+  if (tx.proofs != null && !!tx.proofs[index])
+    throw new Error(`Proof at index ${index} is already exists.`);
   for (let i = tx.proofs.length; i < index; i++)
-    tx.proofs.push(null)
-
-  tx.proofs.push(proof)
-
-  return tx
+    tx.proofs.push(null);
+  tx.proofs[index] = (proof);
+  return tx;
 }
 
 export const valOrDef = <T>(val: T, def: T): T => val != undefined ? val : def
