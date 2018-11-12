@@ -44,8 +44,8 @@ describe('alias', () => {
     }
 
     const tx = () => alias({ ...aliasMinimalParams }, stringSeed)
-    expect(tx).toThrow('fee is lees than 100000\n' +
-      'alias is empty or undefined')
+    expect(tx).toThrow(`[fee is lees than 100000,
+alias is empty or undefined]`)
   })
 
   it('Should get correct signature', () => {

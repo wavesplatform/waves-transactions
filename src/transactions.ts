@@ -28,6 +28,14 @@ export interface WithProofs {
   proofs: Option<string>[]
 }
 
+export interface WithChainId {
+  /**
+   * Network byte
+   * @minLength 1
+   * @maxLength 1
+   */
+  chainId: string
+}
 export interface Transaction extends WithProofs {
   id: string
   type: number
@@ -62,10 +70,9 @@ export interface IssueTransaction extends Transaction, WithSender {
   chainId: string
 }
 
-export interface SetScriptTransaction extends Transaction, WithSender {
+export interface SetScriptTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.SetScript
   script: string | null //base64
-  chainId: string
 }
 
 export interface TransferTransaction extends Transaction, WithSender {
@@ -82,19 +89,17 @@ export interface Transfer {
   amount: long
 }
 
-export interface ReissueTransaction extends Transaction, WithSender {
+export interface ReissueTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.Reissue
   assetId: string
   quantity: long
-  chainId: string
   reissuable: boolean
 }
 
-export interface BurnTransaction extends Transaction, WithSender {
+export interface BurnTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.Burn
   assetId: string
   quantity: long
-  chainId: string
 }
 
 export interface LeaseTransaction extends Transaction, WithSender {
@@ -103,10 +108,9 @@ export interface LeaseTransaction extends Transaction, WithSender {
   recipient: string
 }
 
-export interface CancelLeaseTransaction extends Transaction, WithSender {
+export interface CancelLeaseTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.CancelLease
   leaseId: string
-  chainId: number
 }
 
 export interface AliasTransaction extends Transaction, WithSender {

@@ -15,5 +15,7 @@ export function raiseValidationErrors(...result: ValidationResult[]) {
   //console.log(result)
   const r = result.reduce((a, b) => [...a, ...b], []) as string[]
   const rr = r.filter(x => x.length > 0)
+  //debugger
+  //console.log(rr)
   if (rr.length > 0) throw new Error('[' + rr.join(',\n') + ']')
 }

@@ -257,9 +257,6 @@
             "number"
           ]
         },
-        "chainId": {
-          "type": "string"
-        },
         "reissuable": {
           "type": "boolean"
         },
@@ -291,6 +288,12 @@
           }
         },
         "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
           "type": "string"
         }
       },
@@ -329,9 +332,6 @@
             "number"
           ]
         },
-        "chainId": {
-          "type": "string"
-        },
         "id": {
           "type": "string"
         },
@@ -360,6 +360,12 @@
           }
         },
         "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
           "type": "string"
         }
       },
@@ -455,9 +461,6 @@
         "leaseId": {
           "type": "string"
         },
-        "chainId": {
-          "type": "number"
-        },
         "id": {
           "type": "string"
         },
@@ -486,6 +489,12 @@
           }
         },
         "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
           "type": "string"
         }
       },
@@ -603,9 +612,6 @@
             "string"
           ]
         },
-        "chainId": {
-          "type": "string"
-        },
         "id": {
           "type": "string"
         },
@@ -634,6 +640,12 @@
           }
         },
         "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
           "type": "string"
         }
       },
