@@ -4,6 +4,7 @@ import { addProof, pullSeedAndIndex, valOrDef, mapSeed, getSenderPublicKey } fro
 import { SeedTypes, Params} from "../types";
 import { generalValidation, raiseValidationErrors } from '../validation';
 import { ValidationResult, noError } from 'waves-crypto/validation';
+import {VALIDATOR_MAP} from "../schemas";
 
 export interface AliasParams extends Params {
   alias: string
@@ -35,7 +36,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
     version: 2,
     alias: _alias,
     fee: valOrDef(fee, 100000),
-    senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)) || "",
+    senderPublicKey,
     timestamp: valOrDef(timestamp, Date.now()),
     id: '',
     proofs: [],
@@ -43,7 +44,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
   }
 
   raiseValidationErrors(
-    generalValidation(seed, tx),
+    generalValidation(tx, VALIDATOR_MAP['AliasTransaction']),
     aliasValidation(tx)
   )
 

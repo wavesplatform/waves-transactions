@@ -1,4 +1,6 @@
+import { publicKey, verifySignature } from "waves-crypto";
 import { alias } from '../src';
+import { aliasToBytes } from "../src/transactions/alias";
 
 export const aliasMinimalParams = {
   alias: 'MyTestAlias'
@@ -13,4 +15,35 @@ describe('alias', () => {
     expect(tx).toMatchObject({ ...aliasMinimalParams })
   })
 
+  it('Should throw on schema validation', () => {
+    const aliasMinimalParams = {
+      alias: '',
+    }
+
+    const tx = () => alias({ ...aliasMinimalParams }, stringSeed)
+    expect(tx).toThrow('alias is empty or undefined')
+  })
+
+  it('Should throw 2 errors with fee validation', () => {
+    const aliasMinimalParams = {
+      alias: '',
+      fee: -1
+    }
+
+    const tx = () => alias({ ...aliasMinimalParams }, stringSeed)
+    expect(tx).toThrow('fee is lees than 100000\n' +
+      'alias is empty or undefined')
+  })
+
+  it('Should get correct signature', () => {
+    const tx = alias({ ...aliasMinimalParams }, stringSeed)
+    expect(verifySignature(publicKey(stringSeed), aliasToBytes(tx),tx.proofs[0]!)).toBeTruthy()
+  })
+
+  it('Should get correct multiSignature', () => {
+    const stringSeed2 = 'example seed 2'
+    const tx = alias({ ...aliasMinimalParams }, [null, stringSeed, null, stringSeed2])
+    expect(verifySignature(publicKey(stringSeed), aliasToBytes(tx),tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed2), aliasToBytes(tx),tx.proofs[3]!)).toBeTruthy()
+  })
 })

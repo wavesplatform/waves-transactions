@@ -3,7 +3,7 @@ import { writeFile} from "fs-extra";
 
 import * as TJS from "typescript-json-schema";
 
-const TYPES = [
+export const TYPES = [
   'Tx',
   'AliasTransaction',
   'IssueTransaction',
@@ -43,10 +43,17 @@ export function buildSchemas() {
     const fileContent = JSON.stringify(schema, null, 2)
     writeFile(filePath, fileContent, (err) => {
       if (err) throw err;
-
       console.log(`${type} schema has been written`);
     });
-    //console.log(schema)
+  })
+
+  const manifest = `${TYPES.map(type => `import ${type} from './${type}.json'`).join('\n')}
+export default {
+  ${TYPES.join(',\n  ')}
+}`
+  writeFile('src/schemas/manifest.ts', manifest, err1 => {
+    if (err1) throw err1
+    console.log(`Manifest has been written`);
   })
 }
 
