@@ -50,7 +50,6 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "required": [
     "assetId",
     "chainId",

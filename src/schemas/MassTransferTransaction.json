@@ -47,7 +47,6 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "required": [
     "fee",
     "id",
@@ -78,7 +77,6 @@
           ]
         }
       },
-      "additionalProperties": false,
       "required": [
         "amount",
         "recipient"

@@ -23,7 +23,7 @@ export function buildSchemas() {
     required: true,
     include: ['transactions.ts'],
     excludePrivate: true,
-    noExtraProps: true
+    noExtraProps: false
   };
 
 // optionally pass ts compiler options

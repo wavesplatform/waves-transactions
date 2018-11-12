@@ -15,13 +15,26 @@ describe('alias', () => {
     expect(tx).toMatchObject({ ...aliasMinimalParams })
   })
 
+  it('should build from minimal set of params with additional properties', () => {
+    const tx = alias({ ...aliasMinimalParams, a:10000 } as any, stringSeed)
+    expect(tx).toMatchObject({ ...aliasMinimalParams })
+  })
+
   it('Should throw on schema validation', () => {
     const aliasMinimalParams = {
-      alias: '',
+      alias: null,
     }
 
-    const tx = () => alias({ ...aliasMinimalParams }, stringSeed)
-    expect(tx).toThrow('alias is empty or undefined')
+    const tx = () => alias({ ...aliasMinimalParams } as any, stringSeed)
+    expect(tx).toThrow(`{
+  "keyword": "type",
+  "dataPath": ".alias",
+  "schemaPath": "#/properties/alias/type",
+  "params": {
+    "type": "string"
+  },
+  "message": "should be string"
+}`)
   })
 
   it('Should throw 2 errors with fee validation', () => {

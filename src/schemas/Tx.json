@@ -72,7 +72,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "alias",
         "fee",
@@ -148,7 +147,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "chainId",
         "decimals",
@@ -226,7 +224,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "amount",
         "fee",
@@ -297,7 +294,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "assetId",
         "chainId",
@@ -367,7 +363,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "assetId",
         "chainId",
@@ -433,7 +428,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "amount",
         "fee",
@@ -495,7 +489,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "chainId",
         "fee",
@@ -563,7 +556,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "fee",
         "id",
@@ -594,7 +586,6 @@
           ]
         }
       },
-      "additionalProperties": false,
       "required": [
         "amount",
         "recipient"
@@ -646,7 +637,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "chainId",
         "fee",
@@ -690,7 +680,6 @@
                 ]
               }
             },
-            "additionalProperties": false,
             "required": [
               "key",
               "type",
@@ -729,7 +718,6 @@
           "type": "string"
         }
       },
-      "additionalProperties": false,
       "required": [
         "data",
         "fee",

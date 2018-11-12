@@ -6,6 +6,7 @@
       "es2018"
     ],
     "sourceMap": true,
+    "inlineSourceMap": true,
     "declaration": true,
     "module": "commonjs",
     "outDir": "dist",
@@ -15,7 +16,6 @@
   },
   "include": [
     "./src/**/*"
-    //"./declarations/**/*"
   ],
   "exclude": [
     "node_modules",

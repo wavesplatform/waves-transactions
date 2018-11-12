@@ -1,10 +1,10 @@
 import { TransactionType, AliasTransaction } from "../transactions"
-import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, publicKey } from "waves-crypto"
-import { addProof, pullSeedAndIndex, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params} from "../types";
+import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
+import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from "../generic"
+import { SeedTypes, Params } from "../types";
 import { generalValidation, raiseValidationErrors } from '../validation';
 import { ValidationResult, noError } from 'waves-crypto/validation';
-import {VALIDATOR_MAP} from "../schemas";
+import { VALIDATOR_MAP } from "../schemas";
 
 export interface AliasParams extends Params {
   alias: string
@@ -29,15 +29,15 @@ export const aliasToBytes = (tx: AliasTransaction): Uint8Array => concat(
 /* @echo DOCS */
 export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTypes): AliasTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { alias: _alias, fee, timestamp } = paramsOrTx
+
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+
   const tx: AliasTransaction = {
     type: TransactionType.Alias,
     version: 2,
-    alias: _alias,
-    fee: valOrDef(fee, 100000),
+    fee: 100000,
     senderPublicKey,
-    timestamp: valOrDef(timestamp, Date.now()),
+    timestamp: Date.now(),
     id: '',
     proofs: [],
     ...paramsOrTx

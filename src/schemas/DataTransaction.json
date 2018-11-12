@@ -23,7 +23,6 @@
             ]
           }
         },
-        "additionalProperties": false,
         "required": [
           "key",
           "type",
@@ -62,7 +61,6 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "required": [
     "data",
     "fee",

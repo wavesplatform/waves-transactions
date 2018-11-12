@@ -44,7 +44,6 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "required": [
     "amount",
     "fee",
