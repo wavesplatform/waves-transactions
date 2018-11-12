@@ -1,4 +1,4 @@
-import {Option} from "./types";
+import { Option } from "./types";
 
 export type long = number | string
 
@@ -20,6 +20,11 @@ export const enum TransactionType {
 }
 
 export interface WithProofs {
+  /**
+   * Transaction signatures
+   * @minItems 0
+   * @maxItems 8
+   */
   proofs: Option<string>[]
 }
 

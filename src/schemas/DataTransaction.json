@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/DataTransaction.json#/definitions/TransactionType.Data"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "type",
+          "value"
+        ]
+      }
+    },
+    "id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "Transaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": [
+          "null",
+          "string"
+        ]
+      }
+    },
+    "senderPublicKey": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "data",
+    "fee",
+    "id",
+    "proofs",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TransactionType.Data": {
+      "type": "number",
+      "enum": [
+        12
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/DataTransaction.json"
+}
