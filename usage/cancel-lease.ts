@@ -9,5 +9,5 @@ const params = {
   //chainId: 'W'
 }
 
-const signedCancelLeaseTx = cancelLease(seed, params)
+const signedCancelLeaseTx = cancelLease(params, seed)
 console.log(signedCancelLeaseTx)

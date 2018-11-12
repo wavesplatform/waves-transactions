@@ -13,5 +13,5 @@ const params = {
   //chainId: 'W'
 }
 
-const signedIssueTx = issue(seed, params)
+const signedIssueTx = issue(params, seed)
 console.log(signedIssueTx)

@@ -10,5 +10,5 @@ const params = {
   orderType: 'buy'
 }
 
-const signedOrder = order(seed, params as any)
-console.log(JSON.stringify(signedOrder))
+const signedOrder = order(params as any, seed);
+console.log(JSON.stringify(signedOrder));

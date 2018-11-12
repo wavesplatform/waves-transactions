@@ -9,5 +9,5 @@ const params = {
   //chainId: 'W',
 }
 
-const signedAliasTx = alias(seed, params)
+const signedAliasTx = alias(params, seed)
 console.log(signedAliasTx)
