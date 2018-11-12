@@ -9,5 +9,5 @@ const params = {
   //fee: 100000,
 }
 
-const signedLeaseTx = lease(seed, params)
+const signedLeaseTx = lease(params, seed)
 console.log(signedLeaseTx)

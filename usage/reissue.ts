@@ -11,5 +11,5 @@ const params = {
   //chainId: 'W'
 }
 
-const signedReissueTx = reissue(seed, params)
+const signedReissueTx = reissue(params, seed)
 console.log(signedReissueTx)

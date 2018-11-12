@@ -68,10 +68,10 @@ export const pullSeedAndIndex = (seed: Option<SeedTypes>): { seed?: string, inde
   } else if (isArrayOfSeeds(seed)) {
 
     return pullSeedAndIndex(
-      Object.entries(seed).filter(([k, v]) => !!v).reduce((acc, [k, v]:[string,any]) => {
-        acc[+k] = v;
-        return acc
-      }, {} as SeedsAndIndexes)
+      Object.entries(seed).filter(([k, v]) => !!v).reduce((acc, [k, v]) => ({
+        ...acc,
+        [k]: v
+      }), {} as SeedsAndIndexes)
     )
   }
 

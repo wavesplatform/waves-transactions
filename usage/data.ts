@@ -13,5 +13,5 @@ const params = {
   //fee: 100000 + bytes.length * 100000
 }
 
-const signedDataTx = data(seed, params)
+const signedDataTx = data(params, seed)
 console.log(signedDataTx)

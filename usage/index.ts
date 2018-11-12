@@ -40,10 +40,10 @@ const _DOCS = `/**
 function use(filename: string) {
   const box: any = {
     output: undefined,
-    require: (r) =>
+    require: (r:any) =>
       require(r),
     console: {
-      log: (str) => {
+      log: (str:any) => {
         box.output = { id: str.id, ...str }
       }
     }
@@ -72,7 +72,7 @@ txs.forEach(t => {
     OUTPUT: x.output
   })
 
-  pp.preprocessFile(`./src/transactions/${t.file}.ts`, `./src/transactions/${t.file}.ts`, { DOCS }, (err) => {
+  pp.preprocessFile(`./src/transactions/${t.file}.ts`, `./src/transactions/${t.file}.ts`, { DOCS }, (err:any) => {
     console.log(err)
   })
 })

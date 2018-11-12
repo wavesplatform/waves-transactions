@@ -17,5 +17,5 @@ const params = {
   //fee: 100000 + transfers.length * 50000,
 }
 
-const signedMassTransferTx = massTransfer(seed, params)
+const signedMassTransferTx = massTransfer(params, seed)
 console.log(signedMassTransferTx)
