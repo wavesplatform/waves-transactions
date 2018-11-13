@@ -2,6 +2,9 @@ import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 
 import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from "../generic"
 import { Order } from "../transactions"
 import { SeedTypes, Params} from "../types";
+import { ValidationResult } from "waves-crypto/validation";
+import { generalValidation, raiseValidationErrors } from "../validation";
+import { VALIDATOR_MAP } from "../schemas";
 
 export interface OrderParams extends Params {
   matcherPublicKey: string
@@ -16,6 +19,20 @@ export interface OrderParams extends Params {
   expiration?: number
 }
 
+export const orderValidation = (ord: Order): ValidationResult => []
+
+export const orderToBytes = (ord: Order) => concat(
+  BASE58_STRING(ord.senderPublicKey),
+  BASE58_STRING(ord.matcherPublicKey),
+  OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
+  OPTION(BASE58_STRING)(ord.assetPair.priceAsset),
+  BYTE(ord.orderType === 'sell' ? 1 : 0),
+  LONG(ord.price),
+  LONG(ord.amount),
+  LONG(ord.timestamp),
+  LONG(ord.expiration),
+  LONG(ord.matcherFee),
+)
 
 /**
  * Creates and signs [[Order]].
@@ -71,6 +88,7 @@ export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Ord
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
+  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : []
 
   const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
   const t = valOrDef(timestamp, Date.now())
@@ -92,24 +110,18 @@ export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Ord
     matcherFee: valOrDef(matcherFee, 300000),
     matcherPublicKey,
     senderPublicKey,
-    proofs: [],
+    proofs,
     id: ''
   }
 
-  const bytes = concat(
-    BASE58_STRING(ord.senderPublicKey),
-    BASE58_STRING(ord.matcherPublicKey),
-    OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
-    OPTION(BASE58_STRING)(ord.assetPair.priceAsset),
-    BYTE(ord.orderType === 'sell' ? 1 : 0),
-    LONG(ord.price),
-    LONG(ord.amount),
-    LONG(ord.timestamp),
-    LONG(ord.expiration),
-    LONG(ord.matcherFee),
+  raiseValidationErrors(
+    generalValidation(ord, VALIDATOR_MAP['Order']),
+    orderValidation(ord)
   )
 
-  mapSeed(seed, s => addProof(ord, signBytes(bytes, s)))
+  const bytes = orderToBytes(ord)
+
+  mapSeed(seed, (s, i) => addProof(ord, signBytes(bytes, s), i))
   ord.id = hashBytes(bytes)
 
   return nextSeed ? order(ord, nextSeed) : ord

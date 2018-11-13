@@ -9,6 +9,7 @@ import CancelLeaseTransaction from './CancelLeaseTransaction.json'
 import MassTransferTransaction from './MassTransferTransaction.json'
 import SetScriptTransaction from './SetScriptTransaction.json'
 import DataTransaction from './DataTransaction.json'
+import Order from './Order.json'
 export default {
   Tx,
   AliasTransaction,
@@ -20,5 +21,6 @@ export default {
   CancelLeaseTransaction,
   MassTransferTransaction,
   SetScriptTransaction,
-  DataTransaction
+  DataTransaction,
+  Order
 }

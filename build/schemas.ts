@@ -15,6 +15,7 @@ export const TYPES = [
   'MassTransferTransaction',
   'SetScriptTransaction',
   'DataTransaction',
+  'Order'
 ]
 
 export function buildSchemas() {
