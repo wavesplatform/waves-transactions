@@ -19,6 +19,8 @@ export interface OrderParams extends Params {
   expiration?: number
 }
 
+export const isOrder = (p: any): p is Order => (<Order>p).assetPair !== undefined
+
 export const orderValidation = (ord: Order): ValidationResult => []
 
 export const orderToBytes = (ord: Order) => concat(
@@ -55,7 +57,7 @@ export const orderToBytes = (ord: Order) => concat(
  * }
  * 
  *
- * const signedOrder = burn(seed, params)
+ * const signedOrder = order(params, seed)
  * ```
  * ### Output
  * ```json
@@ -78,13 +80,12 @@ export const orderToBytes = (ord: Order) => concat(
  * }
  * ```
  *
- * @param seed
  * @param paramsOrOrder
+ * @param [seed]
  * @returns
  *
  */
 export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Order {
-  const isOrder = (p: OrderParams | Order): p is Order => (<Order>p).assetPair !== undefined
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset

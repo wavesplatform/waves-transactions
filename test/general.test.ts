@@ -1,6 +1,8 @@
 import { publicKey, verifySignature } from "waves-crypto";
 import { reissue, signTx } from '../src';
 import { reissueToBytes } from "../src/transactions/reissue";
+import { broadcast } from "../src/general";
+import { data } from "./sandbox.spec";
 
 export const reissueMinimalParams = {
   assetId: 'test',
@@ -28,5 +30,28 @@ describe('signTx', () => {
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
     const signedTwoTimes = () => signTx(tx, [stringSeed])
     expect(signedTwoTimes).toThrow('Proof at index 0 is already exists.')
+  })
+
+  it('Should send tx to node', async () => {
+    const dataParams = {data: [
+        {
+          key: 'oneTwo',
+          value: false
+        },
+        {
+          key: 'twoThree',
+          value: 2
+        },
+        {
+          key: 'three',
+          value: Uint8Array.from([1,2,3,4,5,6])
+        }
+      ],
+      timestamp: 100000
+    }
+    const result =  data('seed', dataParams)
+
+    await expect(broadcast(result, 'https://nodes.wavesplatform.com/')).rejects
+      .toEqual(new Error("Transaction not allowed by account-script"))
   })
 })
