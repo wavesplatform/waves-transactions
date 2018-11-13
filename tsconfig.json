@@ -5,7 +5,6 @@
       "es7",
       "es2018"
     ],
-    "sourceMap": true,
     "inlineSourceMap": true,
     "declaration": true,
     "module": "commonjs",

@@ -57,5 +57,3 @@ export default {
     console.log(`Manifest has been written`);
   })
 }
-
-buildSchemas()

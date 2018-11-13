@@ -1,7 +1,9 @@
 import { remove, p, run, files, copy, create, copyJson, npmInstall } from "./utils";
+import { buildSchemas} from "./schemas";
 
 async function build() {
   try {
+    buildSchemas()
     await remove(p('tmp'))
     await remove(p('../dist'))
     await remove(p('../docs'))
