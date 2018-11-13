@@ -1,5 +1,5 @@
 import {
-  BASE58_STRING,
+  BASE58_STRING, BASE64_STRING,
   BYTE,
   BYTES,
   concat,
@@ -31,9 +31,11 @@ export interface DataParams extends Params {
 }
 
 const typeMap: any = {
+  integer: ['integer', 0, LONG],
   number: ['integer', 0, LONG],
   boolean: ['boolean', 1, BYTE],
   string: ['string', 3, LEN(SHORT)(STRING)],
+  binary: ['binary', 2, (s:string) => LEN(SHORT)(BASE64_STRING)(s.slice(7))], // Slice base54: part
   _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
@@ -46,7 +48,7 @@ export const dataToBytes = (tx: DataTransaction): Uint8Array => concat(
   BYTE(TransactionType.Data),
   BYTE(1),
   BASE58_STRING(tx.senderPublicKey),
-  COUNT(SHORT)((x: DataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(tx.data),
+  COUNT(SHORT)((x: DataEntry) => concat(LEN(SHORT)(STRING)(x.key), [typeMap[x.type][1]], typeMap[x.type][2](x.value)))(tx.data),
   LONG(tx.timestamp),
   LONG(tx.fee)
 )
