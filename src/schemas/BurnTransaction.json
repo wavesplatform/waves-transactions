@@ -13,9 +13,6 @@
         "number"
       ]
     },
-    "chainId": {
-      "type": "string"
-    },
     "id": {
       "type": "string"
     },
@@ -45,9 +42,14 @@
     },
     "senderPublicKey": {
       "type": "string"
+    },
+    "chainId": {
+      "description": "Network byte",
+      "minLength": 1,
+      "maxLength": 1,
+      "type": "string"
     }
   },
-  "additionalProperties": false,
   "required": [
     "assetId",
     "chainId",

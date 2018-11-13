@@ -16,8 +16,8 @@ export function getSenderPublicKey(seed: Option<SeedTypes>, params: Params) {
 
 export type OneOrMany<T> = T | T[]
 
-export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isArray(oneOrMany)
-export const toMany = <T>(oneOrMany: OneOrMany<T>): T[] => isOne(oneOrMany) ? [oneOrMany] : oneOrMany
+//export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isArray(oneOrMany)
+//export const toMany = <T>(oneOrMany: OneOrMany<T>): T[] => isOne(oneOrMany) ? [oneOrMany] : oneOrMany
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (index == null) {

@@ -5,15 +5,16 @@
       "es7",
       "es2018"
     ],
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "declaration": true,
     "module": "commonjs",
     "outDir": "dist",
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": [
     "./src/**/*"
-    //"./declarations/**/*"
   ],
   "exclude": [
     "node_modules",

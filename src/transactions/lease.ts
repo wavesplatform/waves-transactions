@@ -1,7 +1,10 @@
 import { TransactionType, LeaseTransaction } from "../transactions"
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
+import { ValidationResult } from "waves-crypto/validation";
+import { generalValidation, raiseValidationErrors } from "../validation";
+import { VALIDATOR_MAP } from "../schemas";
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -10,35 +13,40 @@ export interface LeaseParams extends Params {
   timestamp?: number
 }
 
+export const leaseValidation = (tx: LeaseTransaction): ValidationResult => []
+
+export const leaseToBytes = (tx: LeaseTransaction): Uint8Array => concat(
+  BYTES([TransactionType.Lease, tx.version, 0]),
+  BASE58_STRING(tx.senderPublicKey),
+  BASE58_STRING(tx.recipient),
+  LONG(tx.amount),
+  LONG(tx.fee),
+  LONG(tx.timestamp),
+)
+
 /* @echo DOCS */
 export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTypes): LeaseTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { recipient, amount, fee, timestamp } = paramsOrTx
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = (<any>paramsOrTx)['proofs']
-  const tx: LeaseTransaction = proofs && proofs.length > 0 ?
-    paramsOrTx as LeaseTransaction : {
+  const tx: LeaseTransaction =  {
       type: TransactionType.Lease,
       version: 2,
-      recipient,
-      amount,
-      fee: valOrDef(fee, 100000),
+      fee: 100000,
       senderPublicKey,
-      timestamp: valOrDef(timestamp, Date.now()),
+      timestamp:Date.now(),
       proofs: [],
-      id: ''
+      id: '',
+    ...paramsOrTx
     }
 
-  const bytes = concat(
-    BYTES([TransactionType.Lease, tx.version, 0]),
-    BASE58_STRING(tx.senderPublicKey),
-    BASE58_STRING(tx.recipient),
-    LONG(tx.amount),
-    LONG(tx.fee),
-    LONG(tx.timestamp),
+  raiseValidationErrors(
+    generalValidation(tx, VALIDATOR_MAP['LeaseTransaction']),
+    leaseValidation(tx)
   )
+
+  const bytes = leaseToBytes(tx)
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)

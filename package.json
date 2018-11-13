@@ -1,6 +1,6 @@
 {
   "name": "waves-transactions",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -24,7 +24,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/ajv": "^1.0.0",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.3",
     "copy-webpack-plugin": "^4.5.2",

@@ -1,17 +1,7 @@
-import {
-  BASE58_STRING,
-  BASE64_STRING,
-  BYTES,
-  concat,
-  LEN,
-  LONG,
-  OPTION,
-  SHORT,
-  verifySignature,
-  publicKey,
-} from "waves-crypto";
+import { verifySignature, publicKey, } from "waves-crypto";
 import { setScript } from '../src';
 import { SetScriptTransaction } from "../src/transactions";
+import { setScriptToBytes } from "../src/transactions/set-script";
 
 describe('setScript', () => {
 
@@ -31,6 +21,7 @@ describe('setScript', () => {
     const signedTx = setScript(txParams, [null, seed, seed2]);
 
     expect(signedTx.proofs[0]).toBeNull()
+    expect(signedTx.script).toBeNull()
     expect(validateSetScriptTx(signedTx, 1)).toBe(true)
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   });
@@ -53,7 +44,7 @@ describe('setScript', () => {
 
   it('Should generate correct setScript transaction without seed', () => {
     const txParams = { script: compiledContract, senderPublicKey: publicKey(seed) }
-    const tx = setScript(txParams, );
+    const tx = setScript(txParams,);
 
     expect(tx.script).toEqual('base64:' + txParams.script)
     expect(tx.senderPublicKey).toEqual(publicKey(seed))
@@ -72,15 +63,22 @@ describe('setScript', () => {
     expect(signedTx.proofs[1]).toBeNull()
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   });
+
+  it('Should throw on schema validation', () => {
+    const tx = () => setScript({ script: null, fee: null } as any, seed)
+    expect(tx).toThrow(`[{
+  "keyword": "type",
+  "dataPath": ".fee",
+  "schemaPath": "#/properties/fee/type",
+  "params": {
+    "type": "string,number"
+  },
+  "message": "should be string,number"
+}]`)
+  })
 })
 
 function validateSetScriptTx(tx: SetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
-  const bytes = concat(
-    BYTES([tx.type, tx.version, tx.chainId.charCodeAt(0)]),
-    BASE58_STRING(tx.senderPublicKey),
-    OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
-    LONG(tx.fee),
-    LONG(tx.timestamp),
-  )
+  const bytes = setScriptToBytes(tx)
   return verifySignature(publicKey || tx.senderPublicKey, bytes, tx.proofs[proofNumber]!)
 }

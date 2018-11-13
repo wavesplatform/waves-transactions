@@ -56,7 +56,6 @@
       "type": "string"
     }
   },
-  "additionalProperties": false,
   "required": [
     "chainId",
     "decimals",
