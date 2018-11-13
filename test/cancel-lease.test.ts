@@ -1,9 +1,9 @@
-import { publicKey, verifySignature } from "waves-crypto";
-import { cancelLease } from '../src';
-import { cancelLeaseToBytes } from "../src/transactions/cancel-lease";
+import { publicKey, verifySignature } from 'waves-crypto'
+import { cancelLease } from '../src'
+import { cancelLeaseToBytes } from '../src/transactions/cancel-lease'
 
 export const cancelLeaseMinimalParams = {
-  leaseId: 'test'
+  leaseId: 'test',
 }
 
 describe('cancel-lease', () => {

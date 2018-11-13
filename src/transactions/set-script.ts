@@ -1,4 +1,4 @@
-import { TransactionType, SetScriptTransaction } from "../transactions"
+import { TransactionType, SetScriptTransaction } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -10,12 +10,12 @@ import {
   OPTION,
   LEN,
   SHORT
-} from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params } from "../types";
-import { noError, ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+} from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { noError, ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface SetScriptParams extends Params {
   script: string | null
@@ -25,7 +25,7 @@ export interface SetScriptParams extends Params {
 }
 
 export const setScriptValidation = (tx: SetScriptTransaction): ValidationResult => [
-  noError
+  noError,
 ]
 
 export const setScriptToBytes = (tx: SetScriptTransaction): Uint8Array => concat(
@@ -33,7 +33,7 @@ export const setScriptToBytes = (tx: SetScriptTransaction): Uint8Array => concat
   BASE58_STRING(tx.senderPublicKey),
   OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
   LONG(tx.fee),
-  LONG(tx.timestamp),
+  LONG(tx.timestamp)
 )
 
 const base64Prefix = (str: string | null) => str === null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
@@ -54,7 +54,7 @@ export function setScript(paramsOrTx: SetScriptParams | SetScriptTransaction, se
     proofs: [],
     id: '',
     ...paramsOrTx,
-    script: base64Prefix(paramsOrTx.script)
+    script: base64Prefix(paramsOrTx.script),
   }
 
   raiseValidationErrors(

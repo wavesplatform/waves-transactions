@@ -8,7 +8,7 @@ const params = {
     { key: 'booleanVal', value: true },
     { key: 'stringVal', value: 'hello' },
     { key: 'binaryVal', value: [1, 2, 3, 4] },
-  ]
+  ],
   //timestamp: Date.now(),
   //fee: 100000 + bytes.length * 100000
 }

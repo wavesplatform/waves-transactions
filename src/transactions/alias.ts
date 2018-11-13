@@ -1,10 +1,10 @@
-import { TransactionType, AliasTransaction } from "../transactions"
-import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params } from "../types";
-import { generalValidation, raiseValidationErrors } from '../validation';
-import { ValidationResult, noError } from 'waves-crypto/validation';
-import { VALIDATOR_MAP } from "../schemas";
+import { TransactionType, AliasTransaction } from '../transactions'
+import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { ValidationResult, noError } from 'waves-crypto/validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface AliasParams extends Params {
   alias: string
@@ -15,7 +15,7 @@ export interface AliasParams extends Params {
 
 export const aliasValidation = (tx: AliasTransaction): ValidationResult => [
   tx.fee < 100000 ? 'fee is lees than 100000' : noError,
-  !tx.alias || tx.alias.length === 0 ? `alias is empty or undefined` : noError,
+  !tx.alias || tx.alias.length === 0 ? 'alias is empty or undefined' : noError,
 ]
 
 export const aliasToBytes = (tx: AliasTransaction): Uint8Array => concat(
@@ -40,7 +40,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
     timestamp: Date.now(),
     id: '',
     proofs: [],
-    ...paramsOrTx
+    ...paramsOrTx,
   }
 
   raiseValidationErrors(

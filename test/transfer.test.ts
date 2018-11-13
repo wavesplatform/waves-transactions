@@ -1,10 +1,10 @@
-import { publicKey, verifySignature } from "waves-crypto";
-import { transfer } from '../src';
-import { transferToBytes } from "../src/transactions/transfer";
+import { publicKey, verifySignature } from 'waves-crypto'
+import { transfer } from '../src'
+import { transferToBytes } from '../src/transactions/transfer'
 
 export const transferMinimalParams = {
   recipient: 'aaaa',
-  amount: 10000
+  amount: 10000,
 }
 
 describe('transfer', () => {

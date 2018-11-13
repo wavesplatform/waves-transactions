@@ -1,10 +1,10 @@
-import { TransactionType, BurnTransaction } from "../transactions"
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params } from "../types";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
-import { noError, ValidationResult } from "waves-crypto/validation";
+import { TransactionType, BurnTransaction } from '../transactions'
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
+import { noError, ValidationResult } from 'waves-crypto/validation'
 
 
 export interface BurnParams extends Params {
@@ -16,7 +16,7 @@ export interface BurnParams extends Params {
 }
 
 export const burnValidation = (tx: BurnTransaction): ValidationResult => [
-  noError
+  noError,
 ]
 
 export const burnToBytes = (tx: BurnTransaction): Uint8Array => concat(
@@ -43,7 +43,7 @@ export function burn(paramsOrTx: BurnParams | BurnTransaction, seed?: SeedTypes)
     timestamp: Date.now(),
     proofs: [],
     id: '',
-    ...paramsOrTx
+    ...paramsOrTx,
   }
 
   raiseValidationErrors(

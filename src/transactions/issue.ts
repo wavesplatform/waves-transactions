@@ -1,10 +1,10 @@
-import { IssueTransaction, TransactionType } from "../transactions"
-import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params} from "../types";
-import { ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+import { IssueTransaction, TransactionType } from '../transactions'
+import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params} from '../types'
+import { ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface IssueParams extends Params {
   name: string
@@ -49,7 +49,7 @@ export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTyp
       chainId: 'W',
       proofs: [],
       id: '',
-        ...paramsOrTx
+        ...paramsOrTx,
     }
 
     raiseValidationErrors(

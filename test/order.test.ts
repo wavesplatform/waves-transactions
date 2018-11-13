@@ -1,12 +1,12 @@
-import { publicKey, verifySignature } from "waves-crypto";
-import { order } from '../src';
-import { OrderParams, orderToBytes } from "../src/transactions/order";
+import { publicKey, verifySignature } from 'waves-crypto'
+import { order } from '../src'
+import { OrderParams, orderToBytes } from '../src/transactions/order'
 
 export const orderMinimalParams: OrderParams = {
   matcherPublicKey: 'aaaa',
   price: 10000,
   amount: 1233,
-  orderType: 'buy'
+  orderType: 'buy',
 }
 
 describe('order', () => {

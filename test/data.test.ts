@@ -1,21 +1,21 @@
-import { publicKey, verifySignature } from "waves-crypto";
-import { data } from '../src';
-import { dataToBytes } from "../src/transactions/data";
+import { publicKey, verifySignature } from 'waves-crypto'
+import { data } from '../src'
+import { dataToBytes } from '../src/transactions/data'
 
 export const dataMinimalParams = {
   data: [
     {
       key: 'someparam',
-      value: Uint8Array.from([1, 2, 3, 4])
+      value: Uint8Array.from([1, 2, 3, 4]),
     }, {
       key: 'someparam2',
       type: 'binary',
-      value: 'base64:YXNkYQ=='
+      value: 'base64:YXNkYQ==',
     }, {
       key: 'someparam3',
-      value: true
-    }
-  ]
+      value: true,
+    },
+  ],
 }
 
 describe('data', () => {
@@ -31,8 +31,8 @@ describe('data', () => {
   it('Should throw on wrong data field type', () => {
     const tx = () => data({ ...dataMinimalParams, data: null } as any, stringSeed)
     const tx1 = () => data({ ...dataMinimalParams, data: { haha: 123 } } as any, stringSeed)
-    expect(tx).toThrow(`["data should be array"]`)
-    expect(tx1).toThrow(`["data should be array"]`)
+    expect(tx).toThrow('["data should be array"]')
+    expect(tx1).toThrow('["data should be array"]')
   })
 
 
@@ -53,21 +53,21 @@ describe('data', () => {
     const dataParams = {data: [
         {
           key: 'oneTwo',
-          value: false
+          value: false,
         },
         {
           key: 'twoThree',
-          value: 2
+          value: 2,
         },
         {
           key: 'three',
-          value: Uint8Array.from([1,2,3,4])
-        }
+          value: Uint8Array.from([1,2,3,4]),
+        },
       ],
-      timestamp: 100000
+      timestamp: 100000,
     }
     const tx = data(dataParams, 'seed')
-    const barr = "12,1,252,114,65,226,103,96,110,242,73,35,82,18,85,173,252,168,159,237,67,226,116,182,178,180,249,152,104,50,219,208,174,108,0,3,0,6,111,110,101,84,119,111,1,0,0,8,116,119,111,84,104,114,101,101,0,0,0,0,0,0,0,0,2,0,5,116,104,114,101,101,2,0,4,1,2,3,4,0,0,0,0,0,1,134,160,0,0,0,0,0,1,134,160"
+    const barr = '12,1,252,114,65,226,103,96,110,242,73,35,82,18,85,173,252,168,159,237,67,226,116,182,178,180,249,152,104,50,219,208,174,108,0,3,0,6,111,110,101,84,119,111,1,0,0,8,116,119,111,84,104,114,101,101,0,0,0,0,0,0,0,0,2,0,5,116,104,114,101,101,2,0,4,1,2,3,4,0,0,0,0,0,1,134,160,0,0,0,0,0,1,134,160'
     expect(dataToBytes(tx).toString()).toEqual(barr)
   })
 })

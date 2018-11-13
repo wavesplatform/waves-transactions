@@ -1,9 +1,9 @@
-import { TransactionType, TransferTransaction } from "../transactions"
-import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params } from "../types";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+import { TransactionType, TransferTransaction } from '../transactions'
+import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface TransferParams extends Params {
   recipient: string
@@ -25,7 +25,7 @@ export const transferToBytes = (tx: TransferTransaction) => concat(
   LONG(tx.amount),
   LONG(tx.fee),
   BASE58_STRING(tx.recipient),
-  LEN(SHORT)(STRING)(tx.attachment),
+  LEN(SHORT)(STRING)(tx.attachment)
 )
 
 export const transferValidation = (tx: TransferTransaction) => []
@@ -44,7 +44,7 @@ export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?
     timestamp: Date.now(),
     proofs: [],
     id: '',
-    ...paramsOrTx
+    ...paramsOrTx,
   }
 
   raiseValidationErrors(

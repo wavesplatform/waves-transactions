@@ -1,6 +1,6 @@
-import { ValidationResult, noError } from 'waves-crypto/validation';
-import { Option, Params } from "./types";
-import { ValidateFunction } from "ajv";
+import { ValidationResult, noError } from 'waves-crypto/validation'
+import { Option, Params } from './types'
+import { ValidateFunction } from 'ajv'
 
 
 export function generalValidation(params: Params, validate: ValidateFunction): ValidationResult {

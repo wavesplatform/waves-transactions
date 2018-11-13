@@ -1,5 +1,5 @@
-import { remove, p, run, files, copy, create, copyJson, npmInstall } from "./utils";
-import { buildSchemas} from "./schemas";
+import { remove, p, run, copy, create, copyJson, npmInstall, npmGetVersion } from './utils'
+import { buildSchemas } from './schemas'
 
 async function build() {
   try {
@@ -18,12 +18,21 @@ async function build() {
     await copy(p('../tsconfig.json'), p('tmp/tsconfig.json'))
     await run('tsc', p('tmp'))
     await copy(p('tmp/dist'), p('tmp/node_modules/waves-transactions'))
-    await copyJson(p('../package.json'), p('tmp/node_modules/waves-transactions/package.json'), {main:'index.js', types:'index.d.ts'})
+    await copyJson(p('../package.json'), p('tmp/node_modules/waves-transactions/package.json'), { main: 'index.js', types: 'index.d.ts' })
     await remove(p('tmp/dist'))
     await run('ts-node usage/index.ts', p('tmp'))
     await run('typedoc', p('tmp'))
     await run('tsc', p('tmp'))
-    await copyJson(p('../package.json'), p('tmp/dist/package.json'), { main: 'index.js', types: 'index.d.ts' })
+    const latestVersion = await npmGetVersion('waves-transactions')
+    await copyJson(p('../package.json'), p('tmp/dist/package.json'),
+      {
+        main: 'index.js',
+        types: 'index.d.ts',
+        version: latestVersion,
+        dependencies: undefined,
+        devDependencies: undefined,
+        scripts: undefined,
+      })
     await copy(p('../README.md'), p('tmp/dist/README.md'))
     await copy(p('tmp/dist'), p('../dist'))
     await copy(p('tmp/docs'), p('../docs'))

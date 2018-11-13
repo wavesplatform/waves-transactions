@@ -16,6 +16,7 @@
   "scripts": {
     "build": "ts-node build/build.ts",
     "deploy": "cd dist; npm version patch; npm publish",
+    "fix-style": "tslint --fix -c tslint.json '{src,test,usage}/**/*{.ts,.tsx}'",
     "test": "jest"
   },
   "author": {
@@ -24,6 +25,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.3",
     "copy-webpack-plugin": "^4.5.2",
@@ -50,6 +52,7 @@
   },
   "dependencies": {
     "ajv": "^6.5.5",
+    "axios": "^0.18.0",
     "npm": "^6.4.1",
     "waves-crypto": "^1.0.39"
   }

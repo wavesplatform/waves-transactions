@@ -2,7 +2,7 @@ import Ajv, {ValidateFunction} from 'ajv'
 import schemas from './manifest'
 
 const ajv = Ajv({
-  allErrors: true
+  allErrors: true,
 })
 
 const mapObj = <T>(obj: any, f:(v:any)=>any): {[key:string]: ValidateFunction} => {

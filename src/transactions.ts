@@ -1,4 +1,4 @@
-import { Option } from "./types";
+import { Option } from './types'
 
 export type long = number | string
 
@@ -139,11 +139,11 @@ export interface DataTransaction extends Transaction, WithSender {
 
 export interface Order extends WithSender, WithProofs {
   id: string
-  orderType: "buy" | "sell"
+  orderType: 'buy' | 'sell'
   assetPair: {
     amountAsset?: string
     priceAsset?: string
-  };
+  }
   price: long
   amount: long
   timestamp: number

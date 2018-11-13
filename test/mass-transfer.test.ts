@@ -1,18 +1,18 @@
-import { publicKey, verifySignature } from "waves-crypto";
-import { massTransfer } from '../src';
-import { massTransferToBytes } from "../src/transactions/mass-transfer";
+import { publicKey, verifySignature } from 'waves-crypto'
+import { massTransfer } from '../src'
+import { massTransferToBytes } from '../src/transactions/mass-transfer'
 
 export const massTransferMinimalParams = {
   transfers: [
     {
       recipient: 'aaa',
-      amount: 10000
+      amount: 10000,
     },
     {
       recipient: 'aab',
-      amount: 10000
-    }
-  ]
+      amount: 10000,
+    },
+  ],
 }
 
 describe('massTransfer', () => {
@@ -26,7 +26,7 @@ describe('massTransfer', () => {
 
   it('Should throw on transfers not being array', () => {
     const tx = () => massTransfer({ ...massTransferMinimalParams, transfers: null } as any, stringSeed)
-    expect(tx).toThrow(`["transfers should be array"]`)
+    expect(tx).toThrow('["transfers should be array"]')
   })
 
 

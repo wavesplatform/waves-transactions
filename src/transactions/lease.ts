@@ -1,10 +1,10 @@
-import { TransactionType, LeaseTransaction } from "../transactions"
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params} from "../types";
-import { ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+import { TransactionType, LeaseTransaction } from '../transactions'
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params} from '../types'
+import { ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -21,7 +21,7 @@ export const leaseToBytes = (tx: LeaseTransaction): Uint8Array => concat(
   BASE58_STRING(tx.recipient),
   LONG(tx.amount),
   LONG(tx.fee),
-  LONG(tx.timestamp),
+  LONG(tx.timestamp)
 )
 
 /* @echo DOCS */
@@ -38,7 +38,7 @@ export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTyp
       timestamp:Date.now(),
       proofs: [],
       id: '',
-    ...paramsOrTx
+    ...paramsOrTx,
     }
 
   raiseValidationErrors(

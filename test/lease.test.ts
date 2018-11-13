@@ -1,10 +1,10 @@
-import { publicKey, verifySignature } from "waves-crypto";
-import { lease } from '../src';
-import { leaseToBytes } from "../src/transactions/lease";
+import { publicKey, verifySignature } from 'waves-crypto'
+import { lease } from '../src'
+import { leaseToBytes } from '../src/transactions/lease'
 
 export const leaseMinimalParams = {
   recipient: 'sssss',
-  amount: 10000
+  amount: 10000,
 }
 
 describe('lease', () => {

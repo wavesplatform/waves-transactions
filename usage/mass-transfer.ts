@@ -11,8 +11,8 @@ const params = {
     {
       amount: 200,
       recipient: '3PPnqZznWJbPG2Z1Y35w8tZzskiq5AMfUXr',
-    }
-  ]
+    },
+  ],
   //timestamp: Date.now(),
   //fee: 100000 + transfers.length * 50000,
 }

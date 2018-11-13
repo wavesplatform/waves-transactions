@@ -1,7 +1,7 @@
-import { TransactionType, MassTransferTransaction, Transfer } from "../transactions"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params } from "../types";
-import { noError, ValidationResult } from "waves-crypto/validation";
+import { TransactionType, MassTransferTransaction, Transfer } from '../transactions'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { noError, ValidationResult } from 'waves-crypto/validation'
 import {
   BASE58_STRING,
   BYTE,
@@ -14,9 +14,9 @@ import {
   SHORT,
   signBytes,
   STRING
-} from "waves-crypto";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+} from 'waves-crypto'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface MassTransferParams extends Params {
   transfers: Transfer[]
@@ -27,7 +27,7 @@ export interface MassTransferParams extends Params {
 }
 
 export const massTransferValidation = (tx: MassTransferTransaction): ValidationResult => [
-  noError
+  noError,
 ]
 
 export const massTransferToBytes = (tx: MassTransferTransaction): Uint8Array => concat(
@@ -38,7 +38,7 @@ export const massTransferToBytes = (tx: MassTransferTransaction): Uint8Array => 
   COUNT(SHORT)((x: Transfer) => concat(BASE58_STRING(x.recipient), LONG(x.amount)))(tx.transfers),
   LONG(tx.timestamp),
   LONG(tx.fee),
-  LEN(SHORT)(STRING)(tx.attachment),
+  LEN(SHORT)(STRING)(tx.attachment)
 )
 
 /* @echo DOCS */
@@ -57,7 +57,7 @@ export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransa
     timestamp: Date.now(),
     proofs: [],
     id: '', //TODO: invalid id for masstransfer tx
-    ...paramsOrTx
+    ...paramsOrTx,
   }
 
   raiseValidationErrors(

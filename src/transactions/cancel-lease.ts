@@ -1,10 +1,10 @@
-import { TransactionType, CancelLeaseTransaction } from "../transactions"
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params} from "../types";
-import { noError, ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+import { TransactionType, CancelLeaseTransaction } from '../transactions'
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params} from '../types'
+import { noError, ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface CancelLeaseParams extends Params {
   leaseId: string
@@ -40,7 +40,7 @@ export function cancelLease(paramsOrTx: CancelLeaseParams | CancelLeaseTransacti
       chainId: 'W',
       proofs: [],
       id: '',
-    ...paramsOrTx
+    ...paramsOrTx,
     }
 
   raiseValidationErrors(

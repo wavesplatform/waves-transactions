@@ -1,10 +1,10 @@
-import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from "waves-crypto"
-import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from "../generic"
-import { Order } from "../transactions"
-import { SeedTypes, Params} from "../types";
-import { ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
+import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from '../generic'
+import { Order } from '../transactions'
+import { SeedTypes, Params} from '../types'
+import { ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface OrderParams extends Params {
   matcherPublicKey: string
@@ -19,6 +19,8 @@ export interface OrderParams extends Params {
   expiration?: number
 }
 
+export const isOrder = (p: any): p is Order => (<Order>p).assetPair !== undefined
+
 export const orderValidation = (ord: Order): ValidationResult => []
 
 export const orderToBytes = (ord: Order) => concat(
@@ -31,7 +33,7 @@ export const orderToBytes = (ord: Order) => concat(
   LONG(ord.amount),
   LONG(ord.timestamp),
   LONG(ord.expiration),
-  LONG(ord.matcherFee),
+  LONG(ord.matcherFee)
 )
 
 /**
@@ -55,7 +57,7 @@ export const orderToBytes = (ord: Order) => concat(
  * }
  * 
  *
- * const signedOrder = burn(seed, params)
+ * const signedOrder = order(params, seed)
  * ```
  * ### Output
  * ```json
@@ -78,13 +80,12 @@ export const orderToBytes = (ord: Order) => concat(
  * }
  * ```
  *
- * @param seed
  * @param paramsOrOrder
+ * @param [seed]
  * @returns
  *
  */
 export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Order {
-  const isOrder = (p: OrderParams | Order): p is Order => (<Order>p).assetPair !== undefined
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
@@ -111,7 +112,7 @@ export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Ord
     matcherPublicKey,
     senderPublicKey,
     proofs,
-    id: ''
+    id: '',
   }
 
   raiseValidationErrors(

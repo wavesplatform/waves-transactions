@@ -11,13 +11,13 @@ import {
   SHORT,
   signBytes,
   STRING
-} from "waves-crypto"
-import { DataTransaction, TransactionType, DataEntry, DataType } from "../transactions"
-import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from "../generic"
-import { Params, SeedTypes } from "../types";
-import { ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+} from 'waves-crypto'
+import { DataTransaction, TransactionType, DataEntry, DataType } from '../transactions'
+import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from '../generic'
+import { Params, SeedTypes } from '../types'
+import { ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface TypelessDataEntry {
   key: string
@@ -90,7 +90,7 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
         return {
           type,
           key: x.key,
-          value: type === 'binary' ? 'base64:' + Buffer.from(x.value as any[]).toString('base64') : x.value as (string | number | boolean)
+          value: type === 'binary' ? 'base64:' + Buffer.from(x.value as any[]).toString('base64') : x.value as (string | number | boolean),
         }
       }
     }),

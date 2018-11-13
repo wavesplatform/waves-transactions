@@ -1,10 +1,10 @@
-import { TransactionType, ReissueTransaction } from "../transactions"
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params } from "../types";
-import { noError, ValidationResult } from "waves-crypto/validation";
-import { generalValidation, raiseValidationErrors } from "../validation";
-import { VALIDATOR_MAP } from "../schemas";
+import { TransactionType, ReissueTransaction } from '../transactions'
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { noError, ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface ReissueParams extends Params {
   assetId: string
@@ -16,7 +16,7 @@ export interface ReissueParams extends Params {
 }
 
 export const reissueValidation = (tx: ReissueTransaction): ValidationResult => [
-  noError
+  noError,
 ]
 
 export const reissueToBytes = (tx: ReissueTransaction): Uint8Array => concat(
@@ -44,7 +44,7 @@ export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: S
     timestamp: Date.now(),
     proofs: [],
     id: '',
-    ...paramsOrTx
+    ...paramsOrTx,
   }
 
   raiseValidationErrors(
