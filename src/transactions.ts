@@ -125,9 +125,16 @@ export interface MassTransferTransaction extends Transaction, WithSender {
   attachment?: string
 }
 
+export type DataType = 'integer' | 'boolean' | 'string' | 'binary'
+
+export interface DataEntry {
+  key: string
+  type: DataType
+  value: string | number | boolean
+}
 export interface DataTransaction extends Transaction, WithSender {
   type: TransactionType.Data
-  data: { key: string, type: string, value: string | number | boolean }[]
+  data: DataEntry[]
 }
 
 export interface Order extends WithSender, WithProofs {
