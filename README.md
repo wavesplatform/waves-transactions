@@ -1,5 +1,11 @@
 # waves-transactions  [![npm version](https://badge.fury.io/js/waves-transactions.svg)](https://www.npmjs.com/package/waves-transactions)
 
+[![License][license-image]][license-url] ![Coverage badge gree][coverage-badge-green]
+
+[license-url]: https://opensource.org/licenses/MIT
+[license-image]: https://img.shields.io/npm/l/make-coverage-badge.svg
+[coverage-badge-green]:https://img.shields.io/badge/Coverage-100%25-brightgreen.svg
+
 Using this library you can easily create and sign transactions for Waves blockchain.
 It also allows you to multi-sign existing transactions or create them without signature at all.
 
@@ -14,6 +20,7 @@ This library is a set of transaction constructing functions:
 * [Mass transfer](https://ebceu4.github.io/waves-transactions/globals.html#masstransfer)
 * [Set script](https://ebceu4.github.io/waves-transactions/globals.html#setscript)
 * [Data](https://ebceu4.github.io/waves-transactions/globals.html#data)
+* [Order](https://ebceu4.github.io/waves-transactions/globals.html#order)
 
 Check full documentation on [GitHub Pages](https://ebceu4.github.io/waves-transactions/index.html).
 

@@ -35,7 +35,7 @@ const typeMap: any = {
   number: ['integer', 0, LONG],
   boolean: ['boolean', 1, BYTE],
   string: ['string', 3, LEN(SHORT)(STRING)],
-  binary: ['binary', 2, (s:string) => LEN(SHORT)(BASE64_STRING)(s.slice(7))], // Slice base54: part
+  binary: ['binary', 2, (s:string) => LEN(SHORT)(BASE64_STRING)(s.slice(7))], // Slice base64: part
   _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
