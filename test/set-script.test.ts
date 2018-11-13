@@ -21,6 +21,7 @@ describe('setScript', () => {
     const signedTx = setScript(txParams, [null, seed, seed2]);
 
     expect(signedTx.proofs[0]).toBeNull()
+    expect(signedTx.script).toBeNull()
     expect(validateSetScriptTx(signedTx, 1)).toBe(true)
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   });

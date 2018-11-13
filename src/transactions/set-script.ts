@@ -12,7 +12,7 @@ import {
   SHORT
 } from "waves-crypto"
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params, Option } from "../types";
+import { SeedTypes, Params } from "../types";
 import { noError, ValidationResult } from "waves-crypto/validation";
 import { generalValidation, raiseValidationErrors } from "../validation";
 import { VALIDATOR_MAP } from "../schemas";
@@ -36,7 +36,7 @@ export const setScriptToBytes = (tx: SetScriptTransaction): Uint8Array => concat
   LONG(tx.timestamp),
 )
 
-const base64Prefix = (str:Option<string>) => str != null && str.slice(0,7) === 'base64:' ? str : 'base64:' + str
+const base64Prefix = (str: string | null) => str === null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
 /* @echo DOCS */
 export function setScript(paramsOrTx: SetScriptParams | SetScriptTransaction, seed?: SeedTypes): SetScriptTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)

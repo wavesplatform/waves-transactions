@@ -1,7 +1,9 @@
 import { TransactionType, TransferTransaction } from "../transactions"
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
-import { SeedTypes, Params} from "../types";
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
+import { SeedTypes, Params } from "../types";
+import { generalValidation, raiseValidationErrors } from "../validation";
+import { VALIDATOR_MAP } from "../schemas";
 
 export interface TransferParams extends Params {
   recipient: string
@@ -13,44 +15,46 @@ export interface TransferParams extends Params {
   timestamp?: number
 }
 
+export const transferToBytes = (tx: TransferTransaction) => concat(
+  BYTE(TransactionType.Transfer),
+  BYTE(tx.version),
+  BASE58_STRING(tx.senderPublicKey),
+  OPTION(BASE58_STRING)(tx.assetId),
+  OPTION(BASE58_STRING)(tx.feeAssetId),
+  LONG(tx.timestamp),
+  LONG(tx.amount),
+  LONG(tx.fee),
+  BASE58_STRING(tx.recipient),
+  LEN(SHORT)(STRING)(tx.attachment),
+)
+
+export const transferValidation = (tx: TransferTransaction) => []
+
 /* @echo DOCS */
 export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?: SeedTypes): TransferTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { recipient, assetId, amount, feeAssetId, attachment, fee, timestamp } = paramsOrTx
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = (<any>paramsOrTx)['proofs']
-  const tx: TransferTransaction = proofs && proofs.length > 0 ?
-    paramsOrTx as TransferTransaction : {
-      type: TransactionType.Transfer,
-      version: 2,
-      recipient,
-      attachment,
-      feeAssetId,
-      assetId,
-      amount,
-      fee: valOrDef(fee, 100000),
-      senderPublicKey,
-      timestamp: valOrDef(timestamp, Date.now()),
-      proofs: [],
-      id: ''
-    }
+  const tx: TransferTransaction = {
+    type: TransactionType.Transfer,
+    version: 2,
+    fee: 100000,
+    senderPublicKey,
+    timestamp: Date.now(),
+    proofs: [],
+    id: '',
+    ...paramsOrTx
+  }
 
-  const bytes = concat(
-    BYTE(TransactionType.Transfer),
-    BYTE(tx.version),
-    BASE58_STRING(tx.senderPublicKey),
-    OPTION(BASE58_STRING)(tx.assetId),
-    OPTION(BASE58_STRING)(tx.feeAssetId),
-    LONG(tx.timestamp),
-    LONG(tx.amount),
-    LONG(tx.fee),
-    BASE58_STRING(tx.recipient),
-    LEN(SHORT)(STRING)(tx.attachment),
+  raiseValidationErrors(
+    generalValidation(tx, VALIDATOR_MAP['TransferTransaction']),
+    transferValidation(tx)
   )
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
+  const bytes = transferToBytes(tx)
+
+    mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
   return nextSeed ? transfer(tx, nextSeed) : tx
 }
