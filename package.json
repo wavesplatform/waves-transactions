@@ -49,7 +49,9 @@
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "ajv": "^6.5.5",
+    "axios": "^0.18.0",
     "npm": "^6.4.1",
     "waves-crypto": "^1.0.39"
   }
