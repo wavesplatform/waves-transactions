@@ -1,7 +1,10 @@
 import { IssueTransaction, TransactionType } from "../transactions"
-import { publicKey, concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
-import { pullSeedAndIndex, addProof, valOrDef, mapSeed, getSenderPublicKey } from "../generic"
+import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from "waves-crypto"
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from "../generic"
 import { SeedTypes, Params} from "../types";
+import { ValidationResult } from "waves-crypto/validation";
+import { generalValidation, raiseValidationErrors } from "../validation";
+import { VALIDATOR_MAP } from "../schemas";
 
 export interface IssueParams extends Params {
   name: string
@@ -14,43 +17,47 @@ export interface IssueParams extends Params {
   chainId?: string
 }
 
+export const issueValidation = (tx: IssueTransaction): ValidationResult => []
+
+export const issueToBytes = (tx: IssueTransaction): Uint8Array => concat(
+  BYTES([TransactionType.Issue, tx.version, tx.chainId.charCodeAt(0)]),
+  BASE58_STRING(tx.senderPublicKey),
+  LEN(SHORT)(STRING)(tx.name),
+  LEN(SHORT)(STRING)(tx.description),
+  LONG(tx.quantity),
+  BYTE(tx.decimals),
+  BOOL(tx.reissuable),
+  LONG(tx.fee),
+  LONG(tx.timestamp),
+  [0] //Script
+)
+
 /* @echo DOCS */
 export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTypes): IssueTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { name, description, decimals, quantity, reissuable, fee, timestamp, chainId } = paramsOrTx
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = (<any>paramsOrTx)['proofs']
-  const tx: IssueTransaction = proofs && proofs.length > 0 ?
-    paramsOrTx as IssueTransaction : {
+  const tx: IssueTransaction = {
       type: TransactionType.Issue,
       version: 2,
-      name,
-      description,
-      decimals: valOrDef(decimals, 8),
-      quantity,
-      reissuable: reissuable || false,
-      fee: valOrDef(fee, 100000000),
+      decimals: 8,
+      reissuable: false,
+      fee:100000000,
       senderPublicKey,
-      timestamp: valOrDef(timestamp, Date.now()),
-      chainId: chainId || 'W',
+      timestamp: Date.now(),
+      chainId: 'W',
       proofs: [],
-      id: ''
+      id: '',
+        ...paramsOrTx
     }
 
-  const bytes = concat(
-    BYTES([TransactionType.Issue, tx.version, tx.chainId.charCodeAt(0)]),
-    BASE58_STRING(tx.senderPublicKey),
-    LEN(SHORT)(STRING)(tx.name),
-    LEN(SHORT)(STRING)(tx.description),
-    LONG(tx.quantity),
-    BYTE(tx.decimals),
-    BOOL(tx.reissuable),
-    LONG(tx.fee),
-    LONG(tx.timestamp),
-    [0] //Script
-  )
+    raiseValidationErrors(
+      generalValidation(tx, VALIDATOR_MAP['IssueTransaction']),
+      issueValidation(tx)
+    )
+
+  const bytes = issueToBytes(tx)
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
