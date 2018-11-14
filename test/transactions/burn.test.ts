@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { burn } from '../src'
-import { burnToBytes } from '../src/transactions/burn'
-import { burnMinimalParams } from './testMinimalParams'
+import { burn } from '../../src'
+import { burnToBytes } from '../../src/transactions/burn'
+import { burnMinimalParams } from '../minimalParams'
 
 describe('burn', () => {
 
@@ -24,7 +24,6 @@ describe('burn', () => {
   "message": "should be string"
 }]`)
   })
-
 
   it('Should get correct signature', () => {
     const tx = burn({ ...burnMinimalParams }, stringSeed)

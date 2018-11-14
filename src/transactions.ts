@@ -2,7 +2,7 @@ import { Option } from './types'
 
 export type long = number | string
 
-export const enum TransactionType {
+export enum TransactionType {
   Genesis = 1,
   Payment = 2,
   Issue = 3,

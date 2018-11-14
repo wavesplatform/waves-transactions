@@ -1,19 +1,17 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue, signTx, data } from '../src'
 import { reissueToBytes } from '../src/transactions/reissue'
-import { broadcast } from '../src/general'
-
-const reissueMinimalParams = {
-  assetId: 'test',
-  quantity: 10000,
-  reissuable: false,
-}
+import { broadcast, txTypeMap } from '../src/general'
+import { reissueMinimalParams, minimalParams } from './minimalParams'
+import { TransactionType } from '../src/transactions'
 
 describe('signTx', () => {
+
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
-  it('sign existing transactions', () => {
+  it('sign txs', () => {
     const stringSeed2 = 'example seed 2'
+    txTypeMap[TransactionType.Transfer].sign(minimalParams[TransactionType.Transfer], stringSeed)
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
     const signedTwoTimes = signTx(tx, stringSeed2)
     expect(verifySignature(publicKey(stringSeed2), reissueToBytes(signedTwoTimes as any), signedTwoTimes.proofs[1]!)).toBeTruthy()
@@ -35,10 +33,6 @@ describe('signTx', () => {
     const signedTwoTimes = () => signTx({ ...tx, type: 99 }, [stringSeed])
     expect(signedTwoTimes).toThrow('Unknown tx type: 99')
   })
-})
-
-it('sign tx cases', () => {
-  
 })
 
 it('Should send tx to node', async () => {

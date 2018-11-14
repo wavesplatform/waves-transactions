@@ -1,19 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { massTransfer } from '../src'
-import { massTransferToBytes } from '../src/transactions/mass-transfer'
-
-export const massTransferMinimalParams = {
-  transfers: [
-    {
-      recipient: 'aaa',
-      amount: 10000,
-    },
-    {
-      recipient: 'aab',
-      amount: 10000,
-    },
-  ],
-}
+import { massTransfer } from '../../src'
+import { massTransferToBytes } from '../../src/transactions/mass-transfer'
+import { massTransferMinimalParams } from '../minimalParams'
 
 describe('massTransfer', () => {
 

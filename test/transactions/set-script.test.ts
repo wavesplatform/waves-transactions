@@ -1,7 +1,7 @@
 import { verifySignature, publicKey, } from 'waves-crypto'
-import { setScript } from '../src'
-import { SetScriptTransaction } from '../src/transactions'
-import { setScriptToBytes } from '../src/transactions/set-script'
+import { setScript } from '../../src'
+import { SetScriptTransaction } from '../../src/transactions'
+import { setScriptToBytes } from '../../src/transactions/set-script'
 
 describe('setScript', () => {
 

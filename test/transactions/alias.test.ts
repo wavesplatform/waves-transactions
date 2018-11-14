@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { alias } from '../src'
-import { aliasToBytes } from '../src/transactions/alias'
-import { aliasMinimalParams } from './testMinimalParams'
+import { alias } from '../../src'
+import { aliasToBytes } from '../../src/transactions/alias'
+import { aliasMinimalParams } from '../minimalParams'
 
 describe('alias', () => {
 

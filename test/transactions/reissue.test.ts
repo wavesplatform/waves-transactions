@@ -1,12 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { reissue } from '../src'
-import { reissueToBytes } from '../src/transactions/reissue'
-
-export const reissueMinimalParams = {
-  assetId: 'test',
-  quantity: 10000,
-  reissuable: false,
-}
+import { reissue } from '../../src'
+import { reissueToBytes } from '../../src/transactions/reissue'
+import { reissueMinimalParams } from '../minimalParams'
 
 describe('reissue', () => {
 

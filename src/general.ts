@@ -1,5 +1,5 @@
 import { Order, TransactionType, Tx, IssueTransaction, TransferTransaction, ReissueTransaction, BurnTransaction, LeaseTransaction, CancelLeaseTransaction, AliasTransaction, MassTransferTransaction, DataTransaction, SetScriptTransaction } from './transactions'
-import { SeedTypes } from './types'
+import { SeedTypes, Params } from './types'
 import { issue, issueToBytes } from './transactions/issue'
 import { transfer, transferToBytes } from './transactions/transfer'
 import { reissue, reissueToBytes } from './transactions/reissue'
@@ -14,7 +14,7 @@ import { isOrder, orderToBytes } from './transactions/order'
 import axios from 'axios'
 import { URL } from 'url'
 
-const typeMap: { [type: number]: { sign: (tx: Tx, seed: SeedTypes) => Tx, serialize: (obj: Tx | Order) => Uint8Array } } = {
+export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTypes) => Tx, serialize: (obj: Tx | Order) => Uint8Array } } = {
   [TransactionType.Issue]: { sign: (x, seed) => issue(x as IssueTransaction, seed), serialize: (x) => issueToBytes(x as IssueTransaction) },
   [TransactionType.Transfer]: { sign: (x, seed) => transfer(x as TransferTransaction, seed), serialize: (x) => transferToBytes(x as TransferTransaction) },
   [TransactionType.Reissue]: { sign: (x, seed) => reissue(x as ReissueTransaction, seed), serialize: (x) => reissueToBytes(x as ReissueTransaction) },
@@ -28,16 +28,16 @@ const typeMap: { [type: number]: { sign: (tx: Tx, seed: SeedTypes) => Tx, serial
 }
 
 export function signTx(tx: Tx, seed: SeedTypes): Tx {
-  if (!typeMap[tx.type]) throw new Error(`Unknown tx type: ${tx!.type}`)
+  if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx!.type}`)
 
-  return typeMap[tx.type].sign(tx, seed)
+  return txTypeMap[tx.type].sign(tx, seed)
 }
 
 export function serialize(obj: Tx | Order): Uint8Array {
   if (isOrder(obj)) return orderToBytes(obj)
-  if (!typeMap[obj.type]) throw new Error(`Unknown tx type: ${obj!.type}`)
+  if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj!.type}`)
 
-  return typeMap[obj.type].serialize(obj)
+  return txTypeMap[obj.type].serialize(obj)
 }
 
 export const broadcast = (tx: Tx, apiBase: string) =>

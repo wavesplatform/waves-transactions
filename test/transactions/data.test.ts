@@ -1,29 +1,14 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { data } from '../src'
-import { dataToBytes } from '../src/transactions/data'
-
-export const dataMinimalParams = {
-  data: [
-    {
-      key: 'someparam',
-      value: Uint8Array.from([1, 2, 3, 4]),
-    }, {
-      key: 'someparam2',
-      type: 'binary',
-      value: 'base64:YXNkYQ==',
-    }, {
-      key: 'someparam3',
-      value: true,
-    },
-  ],
-}
+import { data } from '../../src'
+import { dataToBytes } from '../../src/transactions/data'
+import { dataMinimalParams } from '../minimalParams'
 
 describe('data', () => {
 
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
   it('should build from minimal set of params', () => {
-    const tx = data({ ...dataMinimalParams }as any, stringSeed)
+    const tx = data({ ...dataMinimalParams } as any, stringSeed)
     expect(tx.data.length).toEqual(3)
     expect(tx.proofs.length).toEqual(1)
   })
@@ -50,7 +35,8 @@ describe('data', () => {
 
   // Test correct serialization.Compare with value from old data function version
   it('Should correctly serialize', () => {
-    const dataParams = {data: [
+    const dataParams = {
+      data: [
         {
           key: 'oneTwo',
           value: false,
@@ -61,7 +47,7 @@ describe('data', () => {
         },
         {
           key: 'three',
-          value: Uint8Array.from([1,2,3,4]),
+          value: Uint8Array.from([1, 2, 3, 4]),
         },
       ],
       timestamp: 100000,

@@ -1,13 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { issue } from '../src'
-import { issueToBytes } from '../src/transactions/issue'
-
-export const issueMinimalParams = {
-  assetId: 'test',
-  quantity: 10000,
-  name:'test',
-  description: 'tratata',
-}
+import { issue } from '../../src'
+import { issueToBytes } from '../../src/transactions/issue'
+import { issueMinimalParams } from '../minimalParams'
 
 describe('issue', () => {
 
