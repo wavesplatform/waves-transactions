@@ -12,7 +12,7 @@ describe('order', () => {
     expect(tx).toMatchObject({ ...orderMinimalParams })
   })
 
-  it('Should throw on schema validation', () => {
+  it('should throw on schema validation', () => {
     const tx = () => order({ ...orderMinimalParams, matcherPublicKey: null } as any, stringSeed)
     expect(tx).toThrow(`[{
   "keyword": "type",
@@ -25,12 +25,12 @@ describe('order', () => {
 }]`)
   })
 
-  it('Should get correct signature', () => {
+  it('should get correct signature', () => {
     const tx = order({ ...orderMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), orderToBytes(tx), tx.proofs[0]!)).toBeTruthy()
   })
 
-  it('Should get correct multiSignature', () => {
+  it('should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = order({ ...orderMinimalParams, orderType: 'sell' }, [null, stringSeed, null, stringSeed2])
     expect(verifySignature(publicKey(stringSeed), orderToBytes(tx), tx.proofs[1]!)).toBeTruthy()

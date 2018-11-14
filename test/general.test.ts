@@ -1,9 +1,8 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue, signTx, data } from '../src'
-import { reissueToBytes } from '../src/transactions/reissue'
-import { broadcast, txTypeMap, serialize } from '../src/general'
-import { reissueMinimalParams, minimalParams } from './minimalParams'
-import { TransactionType, Tx } from '../src/transactions'
+import { broadcast, serialize } from '../src/general'
+import { reissueMinimalParams } from './minimalParams'
+import { Tx } from '../src/transactions'
 import { exampleTxs } from './exampleTxs'
 
 describe('signTx', () => {
@@ -12,7 +11,7 @@ describe('signTx', () => {
 
   const txs = Object.keys(exampleTxs).map(x => exampleTxs[x] as Tx)
   txs.forEach(tx => {
-    it('sign tx type: ' + tx.type, () => {
+    it('type: ' + tx.type, () => {
       const signed = signTx(tx, stringSeed)
       const bytes = serialize(signed)
       expect(verifySignature(publicKey(stringSeed), bytes, signed.proofs[1]!)).toBeTruthy()
@@ -37,7 +36,7 @@ describe('signTx', () => {
   })
 })
 
-it('Should send tx to node', async () => {
+it('should send tx to node', async () => {
   const dataParams = {
     data: [
       {
