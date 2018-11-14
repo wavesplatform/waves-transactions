@@ -13,5 +13,5 @@ const params = {
   //fee: 100000,
 }
 
-const signedTransferTx = transfer(seed, params)
+const signedTransferTx = transfer(params, seed)
 console.log(signedTransferTx)

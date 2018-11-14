@@ -1,5 +1,5 @@
-import { readFileSync } from "fs"
-import { runInNewContext } from "vm"
+import { readFileSync } from 'fs'
+import { runInNewContext } from 'vm'
 
 const pp = require('preprocess')
 
@@ -40,13 +40,13 @@ const _DOCS = `/**
 function use(filename: string) {
   const box: any = {
     output: undefined,
-    require: (r) =>
+    require: (r:any) =>
       require(r),
     console: {
-      log: (str) => {
+      log: (str:any) => {
         box.output = { id: str.id, ...str }
-      }
-    }
+      },
+    },
   }
   var file = readFileSync(filename, { encoding: 'utf8' })
   const regex = /import\s+\{\s*(\w+)\s*\}\s*from\s+('|")[\w\.\/]+('|")/gm
@@ -69,10 +69,10 @@ txs.forEach(t => {
   const DOCS = pp.preprocess(_DOCS, {
     TRANSACTION_TYPE: t.interface,
     USAGE_JS: x.contents,
-    OUTPUT: x.output
+    OUTPUT: x.output,
   })
 
-  pp.preprocessFile(`./src/transactions/${t.file}.ts`, `./src/transactions/${t.file}.ts`, { DOCS }, (err) => {
+  pp.preprocessFile(`./src/transactions/${t.file}.ts`, `./src/transactions/${t.file}.ts`, { DOCS }, (err:any) => {
     console.log(err)
   })
 })

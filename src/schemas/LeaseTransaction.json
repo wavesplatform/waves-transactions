@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/LeaseTransaction.json#/definitions/TransactionType.Lease"
+    },
+    "amount": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "recipient": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "Transaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": [
+          "null",
+          "string"
+        ]
+      }
+    },
+    "senderPublicKey": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "amount",
+    "fee",
+    "id",
+    "proofs",
+    "recipient",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TransactionType.Lease": {
+      "type": "number",
+      "enum": [
+        8
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/LeaseTransaction.json"
+}

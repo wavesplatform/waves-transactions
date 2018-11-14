@@ -1,6 +1,11 @@
-import { TransactionType, BurnTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, addProof, SeedTypes, valOrDef, mapSeed, validateParams } from "../generic"
+import { TransactionType, BurnTransaction } from '../transactions'
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
+import { noError, ValidationResult } from 'waves-crypto/validation'
+
 
 export interface BurnParams extends Params {
   assetId: string
@@ -10,38 +15,45 @@ export interface BurnParams extends Params {
   chainId?: string
 }
 
+export const burnValidation = (tx: BurnTransaction): ValidationResult => [
+  noError,
+]
+
+export const burnToBytes = (tx: BurnTransaction): Uint8Array => concat(
+  BYTES([TransactionType.Burn, tx.version, tx.chainId.charCodeAt(0)]),
+  BASE58_STRING(tx.senderPublicKey),
+  BASE58_STRING(tx.assetId),
+  LONG(tx.quantity),
+  LONG(tx.fee),
+  LONG(tx.timestamp)
+)
+
 /* @echo DOCS */
-export function burn(seed: SeedTypes, paramsOrTx: BurnParams | BurnTransaction): BurnTransaction {
+export function burn(paramsOrTx: BurnParams | BurnTransaction, seed?: SeedTypes): BurnTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { assetId, quantity, chainId, fee, timestamp, senderPublicKey } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
-  const tx: BurnTransaction = proofs && proofs.length > 0 ?
-    paramsOrTx as BurnTransaction : {
-      type: TransactionType.Burn,
-      version: 2,
-      assetId,
-      quantity,
-      chainId: chainId || 'W',
-      fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
-      timestamp: valOrDef(timestamp, Date.now()),
-      proofs: [],
-      id: ''
-    }
+  const tx: BurnTransaction = {
+    type: TransactionType.Burn,
+    version: 2,
+    chainId: 'W',
+    fee: 100000,
+    senderPublicKey,
+    timestamp: Date.now(),
+    proofs: [],
+    id: '',
+    ...paramsOrTx,
+  }
 
-  const bytes = concat(
-    BYTES([TransactionType.Burn, tx.version, tx.chainId.charCodeAt(0)]),
-    BASE58_STRING(tx.senderPublicKey),
-    BASE58_STRING(tx.assetId),
-    LONG(tx.quantity),
-    LONG(tx.fee),
-    LONG(tx.timestamp)
+  raiseValidationErrors(
+    generalValidation(tx, VALIDATOR_MAP['BurnTransaction']),
+    burnValidation(tx)
   )
+
+  const bytes = burnToBytes(tx)
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? burn(nextSeed, tx) : tx
+  return nextSeed ? burn(tx, nextSeed) : tx
 }

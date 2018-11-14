@@ -1,6 +1,10 @@
-import { TransactionType, LeaseTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, pullSeedAndIndex, SeedTypes, addProof, valOrDef, mapSeed, validateParams } from "../generic"
+import { TransactionType, LeaseTransaction } from '../transactions'
+import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params} from '../types'
+import { ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -9,37 +13,42 @@ export interface LeaseParams extends Params {
   timestamp?: number
 }
 
-/* @echo DOCS */
-export function lease(seed: SeedTypes, paramsOrTx: LeaseParams | LeaseTransaction): LeaseTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
-  const { recipient, amount, fee, timestamp, senderPublicKey } = paramsOrTx
+export const leaseValidation = (tx: LeaseTransaction): ValidationResult => []
 
-  validateParams(seed, paramsOrTx)
-  
-  const proofs = paramsOrTx['proofs']
-  const tx: LeaseTransaction = proofs && proofs.length > 0 ?
-    paramsOrTx as LeaseTransaction : {
+export const leaseToBytes = (tx: LeaseTransaction): Uint8Array => concat(
+  BYTES([TransactionType.Lease, tx.version, 0]),
+  BASE58_STRING(tx.senderPublicKey),
+  BASE58_STRING(tx.recipient),
+  LONG(tx.amount),
+  LONG(tx.fee),
+  LONG(tx.timestamp)
+)
+
+/* @echo DOCS */
+export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTypes): LeaseTransaction {
+  const { nextSeed } = pullSeedAndIndex(seed)
+
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+
+  const tx: LeaseTransaction =  {
       type: TransactionType.Lease,
       version: 2,
-      recipient,
-      amount,
-      fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
-      timestamp: valOrDef(timestamp, Date.now()),
+      fee: 100000,
+      senderPublicKey,
+      timestamp:Date.now(),
       proofs: [],
-      id: ''
+      id: '',
+    ...paramsOrTx,
     }
 
-  const bytes = concat(
-    BYTES([TransactionType.Lease, tx.version, 0]),
-    BASE58_STRING(tx.senderPublicKey),
-    BASE58_STRING(tx.recipient),
-    LONG(tx.amount),
-    LONG(tx.fee),
-    LONG(tx.timestamp),
+  raiseValidationErrors(
+    generalValidation(tx, VALIDATOR_MAP['LeaseTransaction']),
+    leaseValidation(tx)
   )
+
+  const bytes = leaseToBytes(tx)
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? lease(nextSeed, tx) : tx
+  return nextSeed ? lease(tx, nextSeed) : tx
 }

@@ -1,4 +1,8 @@
-export const enum TransactionType {
+import { Option } from './types'
+
+export type long = number | string
+
+export enum TransactionType {
   Genesis = 1,
   Payment = 2,
   Issue = 3,
@@ -16,14 +20,27 @@ export const enum TransactionType {
 }
 
 export interface WithProofs {
-  proofs: string[]
+  /**
+   * Transaction signatures
+   * @minItems 0
+   * @maxItems 8
+   */
+  proofs: Option<string>[]
 }
 
+export interface WithChainId {
+  /**
+   * Network byte
+   * @minLength 1
+   * @maxLength 1
+   */
+  chainId: string
+}
 export interface Transaction extends WithProofs {
   id: string
   type: number
   timestamp: number
-  fee: number
+  fee: long
   version: number
 }
 
@@ -48,21 +65,20 @@ export interface IssueTransaction extends Transaction, WithSender {
   name: string
   description: string
   decimals: number
-  quantity: number
+  quantity: long
   reissuable: boolean
   chainId: string
 }
 
-export interface SetScriptTransaction extends Transaction, WithSender {
+export interface SetScriptTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.SetScript
-  script: string //base64
-  chainId: string
+  script: string | null //base64
 }
 
 export interface TransferTransaction extends Transaction, WithSender {
   type: TransactionType.Transfer
   recipient: string
-  amount: number
+  amount: long
   feeAssetId?: string
   assetId?: string
   attachment?: string
@@ -70,34 +86,31 @@ export interface TransferTransaction extends Transaction, WithSender {
 
 export interface Transfer {
   recipient: string
-  amount: number
+  amount: long
 }
 
-export interface ReissueTransaction extends Transaction, WithSender {
+export interface ReissueTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.Reissue
   assetId: string
-  quantity: number
-  chainId: string
+  quantity: long
   reissuable: boolean
 }
 
-export interface BurnTransaction extends Transaction, WithSender {
+export interface BurnTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.Burn
   assetId: string
-  quantity: number
-  chainId: string
+  quantity: long
 }
 
 export interface LeaseTransaction extends Transaction, WithSender {
   type: TransactionType.Lease
-  amount: number
+  amount: long
   recipient: string
 }
 
-export interface CancelLeaseTransaction extends Transaction, WithSender {
+export interface CancelLeaseTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.CancelLease
   leaseId: string
-  chainId: number
 }
 
 export interface AliasTransaction extends Transaction, WithSender {
@@ -112,20 +125,27 @@ export interface MassTransferTransaction extends Transaction, WithSender {
   attachment?: string
 }
 
+export type DataType = 'integer' | 'boolean' | 'string' | 'binary'
+
+export interface DataEntry {
+  key: string
+  type: DataType
+  value: string | number | boolean
+}
 export interface DataTransaction extends Transaction, WithSender {
   type: TransactionType.Data
-  data: { key: string, type: string, value: string | number | boolean }[]
+  data: DataEntry[]
 }
 
 export interface Order extends WithSender, WithProofs {
   id: string
-  orderType: "buy" | "sell"
+  orderType: 'buy' | 'sell'
   assetPair: {
-    amountAsset: string
-    priceAsset: string
-  };
-  price: number
-  amount: number
+    amountAsset?: string
+    priceAsset?: string
+  }
+  price: long
+  amount: long
   timestamp: number
   expiration: number
   matcherFee: number

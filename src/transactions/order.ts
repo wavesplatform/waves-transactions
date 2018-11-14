@@ -1,6 +1,10 @@
-import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, publicKey, hashBytes } from "waves-crypto"
-import { SeedTypes, mapSeed, valOrDef, Params, validateParams, addProof, pullSeedAndIndex } from "../generic"
-import { Order } from "../transactions"
+import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
+import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from '../generic'
+import { Order } from '../transactions'
+import { SeedTypes, Params} from '../types'
+import { ValidationResult } from 'waves-crypto/validation'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface OrderParams extends Params {
   matcherPublicKey: string
@@ -15,6 +19,22 @@ export interface OrderParams extends Params {
   expiration?: number
 }
 
+export const isOrder = (p: any): p is Order => (<Order>p).assetPair !== undefined
+
+export const orderValidation = (ord: Order): ValidationResult => []
+
+export const orderToBytes = (ord: Order) => concat(
+  BASE58_STRING(ord.senderPublicKey),
+  BASE58_STRING(ord.matcherPublicKey),
+  OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
+  OPTION(BASE58_STRING)(ord.assetPair.priceAsset),
+  BYTE(ord.orderType === 'sell' ? 1 : 0),
+  LONG(ord.price),
+  LONG(ord.amount),
+  LONG(ord.timestamp),
+  LONG(ord.expiration),
+  LONG(ord.matcherFee)
+)
 
 /**
  * Creates and signs [[Order]].
@@ -37,7 +57,7 @@ export interface OrderParams extends Params {
  * }
  * 
  *
- * const signedOrder = burn(seed, params)
+ * const signedOrder = order(params, seed)
  * ```
  * ### Output
  * ```json
@@ -60,21 +80,21 @@ export interface OrderParams extends Params {
  * }
  * ```
  *
- * @param seed
  * @param paramsOrOrder
+ * @param [seed]
  * @returns
  *
  */
-export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Order {
-  const isOrder = (p: OrderParams | Order): p is Order => (<Order>p).assetPair !== undefined
+export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Order {
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
+  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : []
 
-  const { senderPublicKey, matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
+  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
   const t = valOrDef(timestamp, Date.now())
 
-  validateParams(seed, paramsOrOrder)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrOrder)
 
   const { nextSeed } = pullSeedAndIndex(seed)
 
@@ -90,28 +110,22 @@ export function order(seed: SeedTypes, paramsOrOrder: OrderParams | Order): Orde
     expiration: valOrDef(expiration, t + 1728000000),
     matcherFee: valOrDef(matcherFee, 300000),
     matcherPublicKey,
-    senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
-    proofs: [],
-    id: ''
+    senderPublicKey,
+    proofs,
+    id: '',
   }
 
-  const bytes = concat(
-    BASE58_STRING(ord.senderPublicKey),
-    BASE58_STRING(ord.matcherPublicKey),
-    OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
-    OPTION(BASE58_STRING)(ord.assetPair.priceAsset),
-    BYTE(ord.orderType == 'sell' ? 1 : 0),
-    LONG(ord.price),
-    LONG(ord.amount),
-    LONG(ord.timestamp),
-    LONG(ord.expiration),
-    LONG(ord.matcherFee),
+  raiseValidationErrors(
+    generalValidation(ord, VALIDATOR_MAP['Order']),
+    orderValidation(ord)
   )
 
-  mapSeed(seed, s => addProof(ord, signBytes(bytes, s)))
+  const bytes = orderToBytes(ord)
+
+  mapSeed(seed, (s, i) => addProof(ord, signBytes(bytes, s), i))
   ord.id = hashBytes(bytes)
 
-  return nextSeed ? order(nextSeed, ord) : ord
+  return nextSeed ? order(ord, nextSeed) : ord
 }
 
 

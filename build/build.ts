@@ -1,30 +1,38 @@
-import { remove, p, run, files, copy, create, copyJson } from "./utils";
+import { remove, p, run, copy, create, copyJson, npmInstall, npmGetVersion } from './utils'
+import { buildSchemas } from './schemas'
 
 async function build() {
   try {
+    buildSchemas()
     await remove(p('tmp'))
     await remove(p('../dist'))
     await remove(p('../docs'))
     await create(p('tmp'))
     await create(p('tmp/src'))
 
-    await run('npm pack typedoc-clarity-theme', p('tmp'))
-    const tgz = (await files(p('tmp'), f => f.startsWith('typedoc-clarity-theme-')))[0]
-    await run(`tar zxvf ${tgz}`, p('tmp'))
-    await create(p('tmp/node_modules'))
-    await copy(p('tmp/package'), p('tmp/node_modules/typedoc-clarity-theme'))
+    await npmInstall('typedoc-clarity-theme', 'tmp')
+    await npmInstall('waves-crypto', 'tmp')
 
     await copy(p('../src'), p('tmp/src'))
     await copy(p('../usage'), p('tmp/usage'))
     await copy(p('../tsconfig.json'), p('tmp/tsconfig.json'))
     await run('tsc', p('tmp'))
     await copy(p('tmp/dist'), p('tmp/node_modules/waves-transactions'))
-    await copyJson(p('../package.json'), p('tmp/node_modules/waves-transactions/package.json'), {main:'index.js', types:'index.d.ts'})
+    await copyJson(p('../package.json'), p('tmp/node_modules/waves-transactions/package.json'), { main: 'index.js', types: 'index.d.ts' })
     await remove(p('tmp/dist'))
     await run('ts-node usage/index.ts', p('tmp'))
     await run('typedoc', p('tmp'))
     await run('tsc', p('tmp'))
-    await copyJson(p('../package.json'), p('tmp/dist/package.json'), { main: 'index.js', types: 'index.d.ts' })
+    const latestVersion = await npmGetVersion('waves-transactions')
+    await copyJson(p('../package.json'), p('tmp/dist/package.json'),
+      {
+        main: 'index.js',
+        types: 'index.d.ts',
+        version: latestVersion,
+        dependencies: undefined,
+        devDependencies: undefined,
+        scripts: undefined,
+      })
     await copy(p('../README.md'), p('tmp/dist/README.md'))
     await copy(p('tmp/dist'), p('../dist'))
     await copy(p('tmp/docs'), p('../docs'))

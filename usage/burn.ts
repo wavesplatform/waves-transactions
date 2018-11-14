@@ -10,5 +10,5 @@ const params = {
   //chainId: 'W',
 }
 
-const signedBurnTx = burn(seed, params)
+const signedBurnTx = burn(params, seed)
 console.log(signedBurnTx)

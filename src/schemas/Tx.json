@@ -1,0 +1,765 @@
+{
+  "anyOf": [
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/AliasTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/IssueTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransferTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/ReissueTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/BurnTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/LeaseTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/CancelLeaseTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/MassTransferTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/SetScriptTransaction"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/DataTransaction"
+    }
+  ],
+  "definitions": {
+    "AliasTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Alias"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "alias",
+        "fee",
+        "id",
+        "proofs",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Alias": {
+      "type": "number",
+      "enum": [
+        10
+      ]
+    },
+    "IssueTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Issue"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "decimals": {
+          "type": "number"
+        },
+        "quantity": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "reissuable": {
+          "type": "boolean"
+        },
+        "chainId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "chainId",
+        "decimals",
+        "description",
+        "fee",
+        "id",
+        "name",
+        "proofs",
+        "quantity",
+        "reissuable",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Issue": {
+      "type": "number",
+      "enum": [
+        3
+      ]
+    },
+    "TransferTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Transfer"
+        },
+        "recipient": {
+          "type": "string"
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "feeAssetId": {
+          "type": "string"
+        },
+        "assetId": {
+          "type": "string"
+        },
+        "attachment": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "fee",
+        "id",
+        "proofs",
+        "recipient",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Transfer": {
+      "type": "number",
+      "enum": [
+        4
+      ]
+    },
+    "ReissueTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Reissue"
+        },
+        "assetId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "reissuable": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "assetId",
+        "chainId",
+        "fee",
+        "id",
+        "proofs",
+        "quantity",
+        "reissuable",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Reissue": {
+      "type": "number",
+      "enum": [
+        5
+      ]
+    },
+    "BurnTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Burn"
+        },
+        "assetId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "assetId",
+        "chainId",
+        "fee",
+        "id",
+        "proofs",
+        "quantity",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Burn": {
+      "type": "number",
+      "enum": [
+        6
+      ]
+    },
+    "LeaseTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Lease"
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "recipient": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "fee",
+        "id",
+        "proofs",
+        "recipient",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Lease": {
+      "type": "number",
+      "enum": [
+        8
+      ]
+    },
+    "CancelLeaseTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.CancelLease"
+        },
+        "leaseId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "chainId",
+        "fee",
+        "id",
+        "leaseId",
+        "proofs",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.CancelLease": {
+      "type": "number",
+      "enum": [
+        9
+      ]
+    },
+    "MassTransferTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.MassTransfer"
+        },
+        "transfers": {
+          "type": "array",
+          "items": {
+            "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/Transfer"
+          }
+        },
+        "assetId": {
+          "type": "string"
+        },
+        "attachment": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fee",
+        "id",
+        "proofs",
+        "senderPublicKey",
+        "timestamp",
+        "transfers",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.MassTransfer": {
+      "type": "number",
+      "enum": [
+        11
+      ]
+    },
+    "Transfer": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string"
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "recipient"
+      ]
+    },
+    "SetScriptTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.SetScript"
+        },
+        "script": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte",
+          "minLength": 1,
+          "maxLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "chainId",
+        "fee",
+        "id",
+        "proofs",
+        "script",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.SetScript": {
+      "type": "number",
+      "enum": [
+        13
+      ]
+    },
+    "DataTransaction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/TransactionType.Data"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/DataEntry"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "Transaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "data",
+        "fee",
+        "id",
+        "proofs",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TransactionType.Data": {
+      "type": "number",
+      "enum": [
+        12
+      ]
+    },
+    "DataEntry": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json#/definitions/DataType"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "type",
+        "value"
+      ]
+    },
+    "DataType": {
+      "enum": [
+        "binary",
+        "boolean",
+        "integer",
+        "string"
+      ],
+      "type": "string"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/Tx.json"
+}

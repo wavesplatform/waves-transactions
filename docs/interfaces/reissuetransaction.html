@@ -70,6 +70,9 @@
 					</li>
 					<li>
 						<a href="withsender.html" class="tsd-signature-type">WithSender</a>
+					</li>
+					<li>
+						<a href="withchainid.html" class="tsd-signature-type">WithChainId</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">ReissueTransaction</span>
@@ -86,7 +89,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="reissuetransaction.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="reissuetransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="reissuetransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="reissuetransaction.html#fee" class="tsd-kind-icon">fee</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="reissuetransaction.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="reissuetransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
@@ -109,28 +112,42 @@
 					<div class="tsd-signature tsd-kind-icon">asset<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:78</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="chainid" class="tsd-anchor"></a>
-					<h3>chain<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in transactions.ts:80</li>
+							<li>Defined in transactions.ts:94</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="chainid" class="tsd-anchor"></a>
+					<h3>chain<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="withchainid.html">WithChainId</a>.<a href="withchainid.html#chainid">chainId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:37</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Network byte</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>minlength</dt>
+							<dd><p>1</p>
+							</dd>
+							<dt>maxlength</dt>
+							<dd><p>1</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="fee" class="tsd-anchor"></a>
 					<h3>fee</h3>
-					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <a href="../globals.html#long" class="tsd-signature-type">long</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:26</li>
+							<li>Defined in transactions.ts:43</li>
 						</ul>
 					</aside>
 				</section>
@@ -141,28 +158,41 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#id">id</a></p>
 						<ul>
-							<li>Defined in transactions.ts:23</li>
+							<li>Defined in transactions.ts:40</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="proofs" class="tsd-anchor"></a>
 					<h3>proofs</h3>
-					<div class="tsd-signature tsd-kind-icon">proofs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">proofs<span class="tsd-signature-symbol">:</span> <a href="../globals.html#option" class="tsd-signature-type">Option</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="withproofs.html">WithProofs</a>.<a href="withproofs.html#proofs">proofs</a></p>
 						<ul>
-							<li>Defined in transactions.ts:19</li>
+							<li>Defined in transactions.ts:28</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Transaction signatures</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>minitems</dt>
+							<dd><p>0</p>
+							</dd>
+							<dt>maxitems</dt>
+							<dd><p>8</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="quantity" class="tsd-anchor"></a>
 					<h3>quantity</h3>
-					<div class="tsd-signature tsd-kind-icon">quantity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">quantity<span class="tsd-signature-symbol">:</span> <a href="../globals.html#long" class="tsd-signature-type">long</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:79</li>
+							<li>Defined in transactions.ts:95</li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">reissuable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:81</li>
+							<li>Defined in transactions.ts:96</li>
 						</ul>
 					</aside>
 				</section>
@@ -183,7 +213,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="withsender.html">WithSender</a>.<a href="withsender.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in transactions.ts:43</li>
+							<li>Defined in transactions.ts:60</li>
 						</ul>
 					</aside>
 				</section>
@@ -194,7 +224,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:25</li>
+							<li>Defined in transactions.ts:42</li>
 						</ul>
 					</aside>
 				</section>
@@ -205,7 +235,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="transaction.html">Transaction</a>.<a href="transaction.html#type">type</a></p>
 						<ul>
-							<li>Defined in transactions.ts:77</li>
+							<li>Defined in transactions.ts:93</li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +246,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="transaction.html">Transaction</a>.<a href="transaction.html#version">version</a></p>
 						<ul>
-							<li>Defined in transactions.ts:27</li>
+							<li>Defined in transactions.ts:44</li>
 						</ul>
 					</aside>
 				</section>
@@ -240,7 +270,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="reissuetransaction.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="reissuetransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">

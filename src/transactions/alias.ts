@@ -1,6 +1,10 @@
-import { TransactionType, AliasTransaction } from "../transactions"
-import { publicKey, concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from "waves-crypto"
-import { Params, addProof, pullSeedAndIndex, SeedTypes, valOrDef, mapSeed, validateParams } from "../generic"
+import { TransactionType, AliasTransaction } from '../transactions'
+import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from '../generic'
+import { SeedTypes, Params } from '../types'
+import { generalValidation, raiseValidationErrors } from '../validation'
+import { ValidationResult, noError } from 'waves-crypto/validation'
+import { VALIDATOR_MAP } from '../schemas'
 
 export interface AliasParams extends Params {
   alias: string
@@ -9,36 +13,44 @@ export interface AliasParams extends Params {
   chainId?: string
 }
 
+export const aliasValidation = (tx: AliasTransaction): ValidationResult => [
+  tx.fee < 100000 ? 'fee is lees than 100000' : noError,
+  !tx.alias || tx.alias.length === 0 ? 'alias is empty or undefined' : noError,
+]
+
+export const aliasToBytes = (tx: AliasTransaction): Uint8Array => concat(
+  BYTES([TransactionType.Alias, tx.version]),
+  BASE58_STRING(tx.senderPublicKey),
+  LEN(SHORT)(STRING)(tx.alias),
+  LONG(tx.fee),
+  LONG(tx.timestamp)
+)
+
 /* @echo DOCS */
-export function alias(seed: SeedTypes, paramsOrTx: AliasParams | AliasTransaction): AliasTransaction {
+export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTypes): AliasTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
-  const { alias: _alias, fee, timestamp, senderPublicKey } = paramsOrTx
 
-  validateParams(seed, paramsOrTx)
+  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const proofs = paramsOrTx['proofs']
-  const tx: AliasTransaction = proofs && proofs.length > 0 ?
-    paramsOrTx as AliasTransaction : {
-      type: TransactionType.Alias,
-      version: 2,
-      alias: _alias,
-      fee: valOrDef(fee, 100000),
-      senderPublicKey: senderPublicKey || mapSeed(seed, s => publicKey(s)),
-      timestamp: valOrDef(timestamp, Date.now()),
-      id: '',
-      proofs: []
-    }
+  const tx: AliasTransaction = {
+    type: TransactionType.Alias,
+    version: 2,
+    fee: 100000,
+    senderPublicKey,
+    timestamp: Date.now(),
+    id: '',
+    proofs: [],
+    ...paramsOrTx,
+  }
 
-
-  const bytes = concat(
-    BYTES([TransactionType.Alias, tx.version]),
-    BASE58_STRING(tx.senderPublicKey),
-    LEN(SHORT)(STRING)(tx.alias),
-    LONG(tx.fee),
-    LONG(tx.timestamp)
+  raiseValidationErrors(
+    generalValidation(tx, VALIDATOR_MAP['AliasTransaction']),
+    aliasValidation(tx)
   )
+
+  const bytes = aliasToBytes(tx)
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? alias(nextSeed, tx) : tx
+  return nextSeed ? alias(tx, nextSeed) : tx
 }

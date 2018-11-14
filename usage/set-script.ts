@@ -9,5 +9,5 @@ const params = {
   //chainId: 'W'
 }
 
-const signedSetScriptTx = setScript(seed, params)
+const signedSetScriptTx = setScript(params, seed)
 console.log(signedSetScriptTx)
