@@ -1,20 +1,22 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue, signTx, data } from '../src'
 import { reissueToBytes } from '../src/transactions/reissue'
-import { broadcast, txTypeMap } from '../src/general'
+import { broadcast, txTypeMap, serialize } from '../src/general'
 import { reissueMinimalParams, minimalParams } from './minimalParams'
-import { TransactionType } from '../src/transactions'
+import { TransactionType, Tx } from '../src/transactions'
+import { exampleTxs } from './exampleTxs'
 
 describe('signTx', () => {
 
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
-  it('sign txs', () => {
-    const stringSeed2 = 'example seed 2'
-    txTypeMap[TransactionType.Transfer].sign(minimalParams[TransactionType.Transfer], stringSeed)
-    const tx = reissue({ ...reissueMinimalParams }, stringSeed)
-    const signedTwoTimes = signTx(tx, stringSeed2)
-    expect(verifySignature(publicKey(stringSeed2), reissueToBytes(signedTwoTimes as any), signedTwoTimes.proofs[1]!)).toBeTruthy()
+  const txs = Object.keys(exampleTxs).map(x => exampleTxs[x] as Tx)
+  txs.forEach(tx => {
+    it('sign tx type: ' + tx.type, () => {
+      const signed = signTx(tx, stringSeed)
+      const bytes = serialize(signed)
+      expect(verifySignature(publicKey(stringSeed), bytes, signed.proofs[1]!)).toBeTruthy()
+    })
   })
 
   it('should throw on no public key or seed', () => {

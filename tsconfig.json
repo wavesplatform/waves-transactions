@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": [
-      "es7",
-      "es2018"
+      "esnext"
     ],
     "inlineSourceMap": true,
     "declaration": true,

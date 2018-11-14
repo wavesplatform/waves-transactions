@@ -20,11 +20,16 @@ const objectToSource = (obj: any) =>
 
 const r = Object.keys(types)
   .map((t) => txTypeMap[t].sign(minimalParams[t], seed))
-  .map(async (tx) => `export const ${types[tx.type].slice(0, 1).toLowerCase()}${types[tx.type].slice(1)}Tx = ${objectToSource(tx)}`)
+  .map(async (tx) => {
+    const name = `${types[tx.type].slice(0, 1).toLowerCase()}${types[tx.type].slice(1)}Tx`
+    return { statement: `export const ${name} = ${objectToSource(tx)}`, name, type: tx.type }
+  })
 
 async function main() {
-  const rr = await Promise.all(r)
-  writeFileSync('./test/exampleTxs.ts', rr.join('\n'))
+  const result = await Promise.all(r)
+  writeFileSync('./test/exampleTxs.ts', result.map(r => r.statement).join('\n') + `
+  export const exampleTxs = {${result.map(r => `${r.type}: ${r.name}`)}}
+  `)
 }
 
 main()
