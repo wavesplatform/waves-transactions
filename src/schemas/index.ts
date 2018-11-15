@@ -1,4 +1,4 @@
-import Ajv, {ValidateFunction} from 'ajv'
+import Ajv from 'ajv'
 import schemas from './manifest'
 
 const ajv = Ajv({
