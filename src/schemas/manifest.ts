@@ -22,5 +22,5 @@ export default {
   MassTransferTransaction,
   SetScriptTransaction,
   DataTransaction,
-  Order,
+  Order
 }

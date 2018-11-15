@@ -26,7 +26,7 @@ export const transferTx = {
     ['BM5vkvpA9Q4hBUiTSVr4u73ne5msVsBDvRen8hhPkZzsggtNwBkX6BkutcgmLiGqCcsZugej4p7izPZdYpzNXNJ'],
   id: '2JVyFNogQyVzoct1V3rw2AozyHReGVXWa5i5PndrkGYf',
   recipient: 'aaaa',
-  amount: 10000,
+  amount: '10000',
 }
 
 export const reissueTx = {

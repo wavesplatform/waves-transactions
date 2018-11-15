@@ -1,5 +1,5 @@
 import { ValidationResult, noError } from 'waves-crypto/validation'
-import { Option, Params } from './types'
+import { Params } from './types'
 import { ValidateFunction } from 'ajv'
 
 

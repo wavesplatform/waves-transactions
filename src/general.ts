@@ -13,6 +13,7 @@ import { setScript, setScriptToBytes } from './transactions/set-script'
 import { isOrder, orderToBytes } from './transactions/order'
 import axios from 'axios'
 import { URL } from 'url'
+import { txToJson } from './txToJson'
 
 export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTypes) => Tx, serialize: (obj: Tx | Order) => Uint8Array } } = {
   [TransactionType.Issue]: { sign: (x, seed) => issue(x as IssueTransaction, seed), serialize: (x) => issueToBytes(x as IssueTransaction) },
@@ -41,6 +42,6 @@ export function serialize(obj: Tx | Order): Uint8Array {
 }
 
 export const broadcast = (tx: Tx, apiBase: string) =>
-  axios.post(new URL('transactions/broadcast', apiBase).toString(), tx)
+  axios.post('transactions/broadcast', txToJson(tx), { baseURL: apiBase, headers: { 'content-type': 'application/json' } })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
