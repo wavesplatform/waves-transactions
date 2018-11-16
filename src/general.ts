@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Order, TransactionType, Tx, IssueTransaction, TransferTransaction, ReissueTransaction, BurnTransaction, LeaseTransaction, CancelLeaseTransaction, AliasTransaction, MassTransferTransaction, DataTransaction, SetScriptTransaction } from './transactions'
 import { SeedTypes, Params } from './types'
 import { issue, issueToBytes } from './transactions/issue'
@@ -11,8 +12,6 @@ import { massTransfer, massTransferToBytes } from './transactions/mass-transfer'
 import { alias, aliasToBytes } from './transactions/alias'
 import { setScript, setScriptToBytes } from './transactions/set-script'
 import { isOrder, orderToBytes } from './transactions/order'
-import axios from 'axios'
-import { URL } from 'url'
 import { txToJson } from './txToJson'
 
 export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTypes) => Tx, serialize: (obj: Tx | Order) => Uint8Array } } = {
@@ -29,14 +28,14 @@ export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTy
 }
 
 export function signTx(tx: Tx, seed: SeedTypes): Tx {
-  if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx!.type}`)
+  if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
 }
 
 export function serialize(obj: Tx | Order): Uint8Array {
   if (isOrder(obj)) return orderToBytes(obj)
-  if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj!.type}`)
+  if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj.type}`)
 
   return txTypeMap[obj.type].serialize(obj)
 }
