@@ -4,7 +4,7 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes, Params} from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface CancelLeaseParams extends Params {
   leaseId: string
@@ -44,7 +44,7 @@ export function cancelLease(paramsOrTx: CancelLeaseParams | CancelLeaseTransacti
     }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['CancelLeaseTransaction']),
+    generalValidation(tx, validators.CancelLeaseTransaction),
     cancelLeaseValidation(tx)
   )
 

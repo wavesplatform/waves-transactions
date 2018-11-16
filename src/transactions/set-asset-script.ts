@@ -1,4 +1,4 @@
-import { TransactionType, SetScriptTransaction } from '../transactions'
+import { TransactionType, SetAssetScriptTransaction } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -17,35 +17,37 @@ import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface SetScriptParams extends Params {
+export interface SetAssetScriptParams extends Params {
   script: string | null
+  assetId: string
   fee?: number
   timestamp?: number
   chainId?: string
 }
 
-export const setScriptValidation = (tx: SetScriptTransaction): ValidationResult => [
+export const setAssetScriptValidation = (tx: SetAssetScriptTransaction): ValidationResult => [
   noError,
 ]
 
-export const setScriptToBytes = (tx: SetScriptTransaction): Uint8Array => concat(
-  BYTES([TransactionType.SetScript, tx.version, tx.chainId.charCodeAt(0)]),
+export const setAssetScriptToBytes = (tx: SetAssetScriptTransaction): Uint8Array => concat(
+  BYTES([TransactionType.SetAssetScript, tx.version, tx.chainId.charCodeAt(0)]),
   BASE58_STRING(tx.senderPublicKey),
-  OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
+  BASE58_STRING(tx.assetId),
   LONG(tx.fee),
-  LONG(tx.timestamp)
+  LONG(tx.timestamp),
+  OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null)
 )
 
 const base64Prefix = (str: string | null) => str === null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
 /* @echo DOCS */
-export function setScript(paramsOrTx: SetScriptParams | SetScriptTransaction, seed?: SeedTypes): SetScriptTransaction {
+export function setAssetScript(paramsOrTx: SetAssetScriptParams | SetAssetScriptTransaction, seed?: SeedTypes): SetAssetScriptTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
-  const tx: SetScriptTransaction = {
-    type: TransactionType.SetScript,
+  const tx: SetAssetScriptTransaction = {
+    type: TransactionType.SetAssetScript,
     version: 1,
     fee: 1000000,
     senderPublicKey,
@@ -58,13 +60,13 @@ export function setScript(paramsOrTx: SetScriptParams | SetScriptTransaction, se
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.SetScriptTransaction),
-    setScriptValidation(tx)
+    generalValidation(tx, validators.SetAssetScriptTransaction),
+    setAssetScriptValidation(tx)
   )
 
-  const bytes = setScriptToBytes(tx)
+  const bytes = setAssetScriptToBytes(tx)
 
   mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
-  return nextSeed ? setScript(tx, nextSeed,) : tx
+  return nextSeed ? setAssetScript(tx, nextSeed,) : tx
 }

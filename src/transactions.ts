@@ -17,6 +17,7 @@ export enum TransactionType {
   Data = 12,
   SetScript = 13,
   SponsorFee = 14,
+  SetAssetScript = 15,
 }
 
 export interface WithProofs {
@@ -55,6 +56,7 @@ export type Tx =
   | MassTransferTransaction
   | SetScriptTransaction
   | DataTransaction
+  | SetAssetScriptTransaction
 
 export interface WithSender {
   senderPublicKey: string
@@ -72,6 +74,12 @@ export interface IssueTransaction extends Transaction, WithSender {
 
 export interface SetScriptTransaction extends Transaction, WithSender, WithChainId {
   type: TransactionType.SetScript
+  script: string | null //base64
+}
+
+export interface SetAssetScriptTransaction extends Transaction, WithSender, WithChainId {
+  type: TransactionType.SetAssetScript
+  assetId: string
   script: string | null //base64
 }
 

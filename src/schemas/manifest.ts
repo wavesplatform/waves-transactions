@@ -8,6 +8,7 @@ import LeaseTransaction from './LeaseTransaction.json'
 import CancelLeaseTransaction from './CancelLeaseTransaction.json'
 import MassTransferTransaction from './MassTransferTransaction.json'
 import SetScriptTransaction from './SetScriptTransaction.json'
+import SetAssetScriptTransaction from './SetAssetScriptTransaction.json'
 import DataTransaction from './DataTransaction.json'
 import Order from './Order.json'
 export default {
@@ -21,6 +22,7 @@ export default {
   CancelLeaseTransaction,
   MassTransferTransaction,
   SetScriptTransaction,
+  SetAssetScriptTransaction,
   DataTransaction,
   Order
 }

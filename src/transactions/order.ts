@@ -4,7 +4,7 @@ import { Order } from '../transactions'
 import { SeedTypes, Params} from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface OrderParams extends Params {
   matcherPublicKey: string
@@ -116,7 +116,7 @@ export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Ord
   }
 
   raiseValidationErrors(
-    generalValidation(ord, VALIDATOR_MAP['Order']),
+    generalValidation(ord, validators.Order),
     orderValidation(ord)
   )
 

@@ -3,7 +3,7 @@ import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashB
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface TransferParams extends Params {
   recipient: string
@@ -48,7 +48,7 @@ export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['TransferTransaction']),
+    generalValidation(tx, validators.TransferTransaction),
     transferValidation(tx)
   )
 

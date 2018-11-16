@@ -4,7 +4,7 @@ import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes, Params } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { ValidationResult, noError } from 'waves-crypto/validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface AliasParams extends Params {
   alias: string
@@ -44,7 +44,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['AliasTransaction']),
+    generalValidation(tx, validators.AliasTransaction),
     aliasValidation(tx)
   )
 

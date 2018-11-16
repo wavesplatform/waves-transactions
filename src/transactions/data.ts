@@ -17,7 +17,7 @@ import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } fro
 import { Params, SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface TypelessDataEntry {
   key: string
@@ -97,7 +97,7 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['DataTransaction']),
+    generalValidation(tx, validators.DataTransaction),
     dataValidation(tx)
   )
   bytes = dataToBytes(tx)

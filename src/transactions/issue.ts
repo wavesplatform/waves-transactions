@@ -4,7 +4,7 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes, Params} from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface IssueParams extends Params {
   name: string
@@ -53,7 +53,7 @@ export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTyp
     }
 
     raiseValidationErrors(
-      generalValidation(tx, VALIDATOR_MAP['IssueTransaction']),
+      generalValidation(tx, validators.IssueTransaction),
       issueValidation(tx)
     )
 

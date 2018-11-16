@@ -4,7 +4,7 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes, Params} from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface LeaseParams extends Params {
   recipient: string
@@ -42,7 +42,7 @@ export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTyp
     }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['LeaseTransaction']),
+    generalValidation(tx, validators.LeaseTransaction),
     leaseValidation(tx)
   )
 

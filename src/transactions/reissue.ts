@@ -4,7 +4,7 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes, Params } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface ReissueParams extends Params {
   assetId: string
@@ -48,7 +48,7 @@ export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: S
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['ReissueTransaction']),
+    generalValidation(tx, validators.ReissueTransaction),
     reissueValidation(tx)
 )
   const bytes = reissueToBytes(tx)

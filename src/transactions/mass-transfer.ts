@@ -16,7 +16,7 @@ import {
   STRING
 } from 'waves-crypto'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface MassTransferParams extends Params {
   transfers: Transfer[]
@@ -61,7 +61,7 @@ export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransa
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['MassTransferTransaction']),
+    generalValidation(tx, validators.MassTransferTransaction),
     massTransferValidation(tx)
   )
 

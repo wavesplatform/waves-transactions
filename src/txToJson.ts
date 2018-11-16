@@ -1,4 +1,4 @@
-import { schemaByTranscationType } from './schemas'
+import { schemaByTransactionType } from './schemas'
 import { Tx } from './transactions'
 
 export function txToJson(value: Tx): string | undefined {
@@ -8,7 +8,7 @@ export function txToJson(value: Tx): string | undefined {
 
   function stringifyValue(value: any): string | undefined {
     if (typeof value === 'string' && path.length == 1) {
-      const prop = schemaByTranscationType[type].properties[path[0]]
+      const prop = schemaByTransactionType[type].properties[path[0]]
       if (prop && typeof prop.type == 'object') {
         return value
       }
