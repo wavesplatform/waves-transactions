@@ -29,7 +29,7 @@ async function build() {
         main: 'index.js',
         types: 'index.d.ts',
         version: latestVersion,
-        dependencies: undefined,
+        //dependencies: undefined,
         devDependencies: undefined,
         scripts: undefined,
       })

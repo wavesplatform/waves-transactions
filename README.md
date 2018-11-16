@@ -4,7 +4,7 @@
 
 [license-url]: https://opensource.org/licenses/MIT
 [license-image]: https://img.shields.io/npm/l/make-coverage-badge.svg
-[coverage-badge-green]:https://img.shields.io/badge/Coverage-100%25-brightgreen.svg
+[coverage-badge-green]:https://img.shields.io/badge/Coverage-98.77%25-brightgreen.svg
 
 Using this library you can easily create and sign transactions for Waves blockchain.
 It also allows you to multi-sign existing transactions or create them without signature at all.

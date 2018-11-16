@@ -53,7 +53,6 @@
   "dependencies": {
     "ajv": "^6.5.5",
     "axios": "^0.18.0",
-    "npm": "^6.4.1",
     "waves-crypto": "^1.0.39"
   }
 }
