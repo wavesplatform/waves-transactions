@@ -119,6 +119,9 @@
         "chainId": {
           "type": "string"
         },
+        "script": {
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
