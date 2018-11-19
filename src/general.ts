@@ -12,8 +12,9 @@ import { alias, aliasToBytes } from './transactions/alias'
 import { setScript, setScriptToBytes } from './transactions/set-script'
 import { isOrder, orderToBytes } from './transactions/order'
 import axios from 'axios'
-import { URL } from 'url'
 import { txToJson } from './txToJson'
+
+export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
 export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTypes) => Tx, serialize: (obj: Tx | Order) => Uint8Array } } = {
   [TransactionType.Issue]: { sign: (x, seed) => issue(x as IssueTransaction, seed), serialize: (x) => issueToBytes(x as IssueTransaction) },
@@ -28,13 +29,13 @@ export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTy
   [TransactionType.SetScript]: { sign: (x, seed) => setScript(x as SetScriptTransaction, seed), serialize: (x) => setScriptToBytes(x as SetScriptTransaction) },
 }
 
-export function signTx(tx: Tx, seed: SeedTypes): Tx {
+export const signTx = (tx: Tx, seed: SeedTypes): Tx => {
   if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx!.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
 }
 
-export function serialize(obj: Tx | Order): Uint8Array {
+export const serialize = (obj: Tx | Order): Uint8Array => {
   if (isOrder(obj)) return orderToBytes(obj)
   if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj!.type}`)
 
@@ -45,3 +46,24 @@ export const broadcast = (tx: Tx, apiBase: string) =>
   axios.post('transactions/broadcast', txToJson(tx), { baseURL: apiBase, headers: { 'content-type': 'application/json' } })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+
+
+export const delay = (timeout: number): CancellablePromise<{}> => {
+  const t: any = {}
+  const p = new Promise((resolve, _) => {
+    t.resolve = resolve
+    t.id = setTimeout(() => resolve(), timeout)
+  }) as any
+  (<any>p).cancel = () => { t.resolve(); clearTimeout(t.id) }
+  return p
+}
+
+export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<Tx> => {
+  const promise = (): Promise<Tx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
+    .then(x => x.data).catch(_ => delay(1000).then(_ => promise()))
+
+  const t = delay(timeout)
+  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as Tx
+  t.cancel()
+  return r
+}
