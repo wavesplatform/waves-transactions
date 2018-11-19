@@ -11,7 +11,7 @@ import {
   LEN,
   SHORT
 } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
@@ -38,7 +38,6 @@ export const setAssetScriptToBytes = (tx: SetAssetScriptTransaction): Uint8Array
   OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null)
 )
 
-const base64Prefix = (str: string | null) => str === null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
 /* @echo DOCS */
 export function setAssetScript(paramsOrTx: SetAssetScriptParams | SetAssetScriptTransaction, seed?: SeedTypes): SetAssetScriptTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)

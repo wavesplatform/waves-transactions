@@ -12,6 +12,8 @@ export function getSenderPublicKey(seed: Option<SeedTypes>, params: Params) {
   }
 }
 
+export const base64Prefix = (str: string | null) => str == null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
+
 export type OneOrMany<T> = T | T[]
 
 //export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isArray(oneOrMany)

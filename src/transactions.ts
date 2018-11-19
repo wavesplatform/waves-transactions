@@ -70,6 +70,7 @@ export interface IssueTransaction extends Transaction, WithSender {
   quantity: long
   reissuable: boolean
   chainId: string
+  script?: string
 }
 
 export interface SetScriptTransaction extends Transaction, WithSender, WithChainId {

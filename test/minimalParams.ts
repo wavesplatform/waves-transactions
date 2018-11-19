@@ -2,6 +2,7 @@ import { OrderParams } from '../src/transactions/order'
 import { TransactionType } from '../src/transactions'
 import { SetScriptParams } from '../src/transactions/set-script'
 import { TransferParams } from '../src/transactions/transfer'
+import { SetAssetScriptParams } from "../src/transactions/set-asset-script";
 
 export const aliasMinimalParams = {
   alias: 'MyTestAlias',
@@ -79,6 +80,11 @@ export const setScriptMinimalParams: SetScriptParams = {
   script: 'AQa3b8tH',
 }
 
+export const setAssetScriptMinimalParams: SetAssetScriptParams = {
+  script: 'AQa3b8tH',
+  assetId: ''
+}
+
 export const minimalParams = {
   [TransactionType.Issue]: issueMinimalParams,
   [TransactionType.Transfer]: transferMinimalParams,
@@ -90,4 +96,5 @@ export const minimalParams = {
   [TransactionType.MassTransfer]: massTransferMinimalParams,
   [TransactionType.Data]: dataMinimalParams,
   [TransactionType.SetScript]: setScriptMinimalParams,
+  [TransactionType.SetAssetScript]: setAssetScriptMinimalParams,
 }
