@@ -1,22 +1,23 @@
-import { broadcast, burn, issue, reissue, setAssetScript, setScript } from "../src";
+import { broadcast, burn, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from "../src";
 import { IssueParams } from "../src/transactions/issue";
 import { ReissueParams } from "../src/transactions/reissue";
 import { SetScriptParams } from "../src/transactions/set-script";
-import { publicKey } from "waves-crypto";
+import { address, publicKey } from "waves-crypto";
 import { txToJson } from "../src/txToJson";
 import { waitForTx } from "../src/general";
 import { BurnParams } from "../src/transactions/burn";
 import { SetAssetScriptParams } from "../src/transactions/set-asset-script";
+import { TransferParams } from "../src/transactions/transfer";
+import { MassTransferParams } from "../src/transactions/mass-transfer";
 
 describe('Blockchain interaction', () => {
   /**
    * Before running test you should prepare new account with WAVES on it!!
    */
-  const seed = 'test seed 1'
+  const seed = 'test seed 1';
+  const recipientSeed = 'MyRecipient'
   const apiBase = 'https://testnodes.wavesnodes.com'
   const chainId = 'T'
-  // const assetId = '3oYpW3VuUx3eqMzTwE8YotDv4nntCXhFaLLS9jiTvcNd'
-  // const scriptedAssetId = 'CcYTiNMf2S52JSuhd8cd51wW8FNDGyAPxnUFXHqsC6ev'
   const timeout = 120000
 
   describe('Assets', () => {
@@ -59,7 +60,40 @@ describe('Blockchain interaction', () => {
       }
       const burnTx = burn(burnParams, seed)
       const resp =  await broadcast(burnTx, apiBase)
-      await expect(resp.type).toEqual(6)
+      expect(resp.type).toEqual(6)
+    })
+
+    it('Should transfer asset', async () =>{
+      const transferParams: TransferParams = {
+        amount: '500',
+        recipient: address(recipientSeed, chainId)
+      }
+
+      const tx = transfer(transferParams, seed)
+      const resp = await broadcast(tx, apiBase)
+      expect(resp.type).toEqual(4)
+    });
+
+    it('Should masstransfer asset', async () =>{
+      const massTransferParams: MassTransferParams = {
+        fee:'200000',
+        assetId,
+        transfers:[
+          {
+            recipient: address(recipientSeed, chainId),
+            amount: '100'
+          },
+          {
+            recipient: address(recipientSeed, chainId),
+            amount: '100'
+          }
+        ]
+      }
+
+      const tx = massTransfer(massTransferParams, seed)
+      const resp = await broadcast(tx, apiBase)
+      expect(resp.type).toEqual(11)
+      expect(resp.id).toEqual(tx.id)
     })
   });
 
@@ -149,6 +183,7 @@ describe('Blockchain interaction', () => {
       expect(resp2.type).toEqual(13)
 
     }, timeout)
-  })
+  });
+
 })
 
