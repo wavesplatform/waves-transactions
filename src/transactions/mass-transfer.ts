@@ -1,4 +1,4 @@
-import { TransactionType, MassTransferTransaction, Transfer } from '../transactions'
+import { TransactionType, MassTransferTransaction, Transfer, long } from '../transactions'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
@@ -22,7 +22,7 @@ export interface MassTransferParams extends Params {
   transfers: Transfer[]
   attachment?: string
   assetId?: string
-  fee?: number
+  fee?: long
   timestamp?: number
 }
 

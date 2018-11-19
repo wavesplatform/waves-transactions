@@ -1,4 +1,4 @@
-import { TransactionType, LeaseTransaction } from '../transactions'
+import { TransactionType, LeaseTransaction, long } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params} from '../types'
@@ -8,8 +8,8 @@ import { validators } from '../schemas'
 
 export interface LeaseParams extends Params {
   recipient: string
-  amount: number
-  fee?: number
+  amount: long
+  fee?: long
   timestamp?: number
 }
 

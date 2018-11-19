@@ -1,6 +1,6 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
 import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from '../generic'
-import { Order } from '../transactions'
+import { long, Order } from '../transactions'
 import { SeedTypes, Params} from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
@@ -8,8 +8,8 @@ import { validators } from '../schemas'
 
 export interface OrderParams extends Params {
   matcherPublicKey: string
-  price: number
-  amount: number
+  price: long
+  amount: long
   orderType: 'buy' | 'sell',
   amountAsset?: string
   priceAsset?: string

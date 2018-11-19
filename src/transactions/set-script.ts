@@ -1,4 +1,4 @@
-import { TransactionType, SetScriptTransaction } from '../transactions'
+import { TransactionType, SetScriptTransaction, long } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -19,7 +19,7 @@ import { validators } from '../schemas'
 
 export interface SetScriptParams extends Params {
   script: string | null
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
 }

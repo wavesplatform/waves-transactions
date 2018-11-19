@@ -1,4 +1,4 @@
-import { TransactionType, CancelLeaseTransaction } from '../transactions'
+import { TransactionType, CancelLeaseTransaction, long } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params} from '../types'
@@ -8,7 +8,7 @@ import { validators } from '../schemas'
 
 export interface CancelLeaseParams extends Params {
   leaseId: string
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
 }

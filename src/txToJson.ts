@@ -1,15 +1,32 @@
 import { schemaByTransactionType } from './schemas'
 import { Tx } from './transactions'
 
+const isLongType = (type:any) => {
+  if (typeof type !== 'object') return false
+  return type[0]==='string' && type[1]==='number'
+}
+
+// const resolvePath = (obj:any, path: string[]): any => {
+//   if (path.length === 0) {
+//     return obj
+//   }else if(obj[path[0]] === undefined){
+//     return undefined
+//   }else if (obj[path[0]]===){
+//
+//   }
+// }
+
+
 export function txToJson(value: Tx): string | undefined {
   const path: string[] = []
   const stack: any[] = []
   const type: number = value.type
 
   function stringifyValue(value: any): string | undefined {
+
     if (typeof value === 'string' && path.length == 1) {
       const prop = schemaByTransactionType[type].properties[path[0]]
-      if (prop && typeof prop.type == 'object') {
+      if (prop && isLongType(prop.type)) {
         return value
       }
     }

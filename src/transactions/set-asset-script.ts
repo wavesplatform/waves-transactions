@@ -1,4 +1,4 @@
-import { TransactionType, SetAssetScriptTransaction } from '../transactions'
+import { TransactionType, SetAssetScriptTransaction, long } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -20,7 +20,7 @@ import { validators } from '../schemas'
 export interface SetAssetScriptParams extends Params {
   script: string | null
   assetId: string
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
 }
@@ -48,7 +48,7 @@ export function setAssetScript(paramsOrTx: SetAssetScriptParams | SetAssetScript
   const tx: SetAssetScriptTransaction = {
     type: TransactionType.SetAssetScript,
     version: 1,
-    fee: 1000000,
+    fee: 100000000,
     senderPublicKey,
     timestamp: Date.now(),
     chainId: 'W',

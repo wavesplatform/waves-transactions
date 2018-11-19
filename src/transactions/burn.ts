@@ -1,4 +1,4 @@
-import { TransactionType, BurnTransaction } from '../transactions'
+import { TransactionType, BurnTransaction, long } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
@@ -9,8 +9,8 @@ import { noError, ValidationResult } from 'waves-crypto/validation'
 
 export interface BurnParams extends Params {
   assetId: string
-  quantity: number
-  fee?: number
+  quantity: long
+  fee?: long
   timestamp?: number
   chainId?: string
 }

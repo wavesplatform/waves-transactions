@@ -12,7 +12,7 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { DataTransaction, TransactionType, DataEntry, DataType } from '../transactions'
+import { DataTransaction, TransactionType, DataEntry, DataType, long } from '../transactions'
 import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from '../generic'
 import { Params, SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
@@ -26,7 +26,7 @@ export interface TypelessDataEntry {
 
 export interface DataParams extends Params {
   data: Array<DataEntry | TypelessDataEntry>
-  fee?: number,
+  fee?: long,
   timestamp?: number
 }
 

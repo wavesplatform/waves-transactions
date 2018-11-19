@@ -1,4 +1,4 @@
-import { IssueTransaction, TransactionType } from '../transactions'
+import { IssueTransaction, long, TransactionType } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -23,9 +23,9 @@ export interface IssueParams extends Params {
   name: string
   description: string
   decimals?: number
-  quantity: number
+  quantity: long
   reissuable?: boolean
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
   script?: string
