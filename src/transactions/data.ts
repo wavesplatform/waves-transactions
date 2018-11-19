@@ -12,12 +12,12 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { DataTransaction, TransactionType, DataEntry, DataType } from '../transactions'
+import { DataTransaction, TransactionType, DataEntry, DataType, long } from '../transactions'
 import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from '../generic'
 import { Params, SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface TypelessDataEntry {
   key: string
@@ -26,7 +26,7 @@ export interface TypelessDataEntry {
 
 export interface DataParams extends Params {
   data: Array<DataEntry | TypelessDataEntry>
-  fee?: number,
+  fee?: long,
   timestamp?: number
 }
 
@@ -97,7 +97,7 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['DataTransaction']),
+    generalValidation(tx, validators.DataTransaction),
     dataValidation(tx)
   )
   bytes = dataToBytes(tx)

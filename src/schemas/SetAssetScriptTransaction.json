@@ -2,31 +2,16 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IssueTransaction.json#/definitions/TransactionType.Issue"
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/SetAssetScriptTransaction.json#/definitions/TransactionType.SetAssetScript"
     },
-    "name": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
-    },
-    "decimals": {
-      "type": "number"
-    },
-    "quantity": {
-      "type": [
-        "string",
-        "number"
-      ]
-    },
-    "reissuable": {
-      "type": "boolean"
-    },
-    "chainId": {
+    "assetId": {
       "type": "string"
     },
     "script": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "id": {
       "type": "string"
@@ -57,31 +42,34 @@
     },
     "senderPublicKey": {
       "type": "string"
+    },
+    "chainId": {
+      "description": "Network byte",
+      "minLength": 1,
+      "maxLength": 1,
+      "type": "string"
     }
   },
   "required": [
+    "assetId",
     "chainId",
-    "decimals",
-    "description",
     "fee",
     "id",
-    "name",
     "proofs",
-    "quantity",
-    "reissuable",
+    "script",
     "senderPublicKey",
     "timestamp",
     "type",
     "version"
   ],
   "definitions": {
-    "TransactionType.Issue": {
+    "TransactionType.SetAssetScript": {
       "type": "number",
       "enum": [
-        3
+        15
       ]
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/IssueTransaction.json"
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/SetAssetScriptTransaction.json"
 }

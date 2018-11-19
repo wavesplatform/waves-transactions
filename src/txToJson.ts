@@ -1,5 +1,33 @@
-import { schemaByTranscationType } from './schemas'
+import { schemaByTransactionType } from './schemas'
 import { Tx } from './transactions'
+
+const isLongType = (type:any) => {
+  if (typeof type !== 'object' || type.length !== 2) return false
+  return type[0]==='string' && type[1]==='number'
+}
+
+const resolveProp = (fullPath: string[], fullSchema:any): any => {
+
+  function go(path: string[], schema:any):any{
+    if (path.length === 0) return schema
+
+    if (typeof schema !== 'object' || (!schema.type && !schema.$ref) ) return undefined
+
+    if (schema.type === 'object') return go(path.slice(1), schema.properties[path[0]])
+
+    if (schema.type === 'array') {
+      return go(path.slice(1), schema.items)
+    }
+
+    if (schema.$ref){
+      const refArr = schema.$ref.split('/')
+      const definition = refArr[refArr.length - 1]
+      return go(path, fullSchema.definitions[definition])
+    }
+  }
+  return go(fullPath, fullSchema)
+}
+
 
 export function txToJson(value: Tx): string | undefined {
   const path: string[] = []
@@ -7,9 +35,10 @@ export function txToJson(value: Tx): string | undefined {
   const type: number = value.type
 
   function stringifyValue(value: any): string | undefined {
-    if (typeof value === 'string' && path.length == 1) {
-      const prop = schemaByTranscationType[type].properties[path[0]]
-      if (prop && typeof prop.type == 'object') {
+
+    if (typeof value === 'string') {
+      const prop = resolveProp(path, schemaByTransactionType[type])
+      if (prop && isLongType(prop.type)) {
         return value
       }
     }

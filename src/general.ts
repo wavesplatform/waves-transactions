@@ -1,4 +1,20 @@
-import { Order, TransactionType, Tx, IssueTransaction, TransferTransaction, ReissueTransaction, BurnTransaction, LeaseTransaction, CancelLeaseTransaction, AliasTransaction, MassTransferTransaction, DataTransaction, SetScriptTransaction } from './transactions'
+import axios from 'axios'
+import {
+  Order,
+  TransactionType,
+  Tx,
+  IssueTransaction,
+  TransferTransaction,
+  ReissueTransaction,
+  BurnTransaction,
+  LeaseTransaction,
+  CancelLeaseTransaction,
+  AliasTransaction,
+  MassTransferTransaction,
+  DataTransaction,
+  SetScriptTransaction,
+  SetAssetScriptTransaction
+} from './transactions'
 import { SeedTypes, Params } from './types'
 import { issue, issueToBytes } from './transactions/issue'
 import { transfer, transferToBytes } from './transactions/transfer'
@@ -11,8 +27,8 @@ import { massTransfer, massTransferToBytes } from './transactions/mass-transfer'
 import { alias, aliasToBytes } from './transactions/alias'
 import { setScript, setScriptToBytes } from './transactions/set-script'
 import { isOrder, orderToBytes } from './transactions/order'
-import axios from 'axios'
 import { txToJson } from './txToJson'
+import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-script";
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -27,17 +43,18 @@ export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTy
   [TransactionType.MassTransfer]: { sign: (x, seed) => massTransfer(x as MassTransferTransaction, seed), serialize: (x) => massTransferToBytes(x as MassTransferTransaction) },
   [TransactionType.Data]: { sign: (x, seed) => data(x as DataTransaction, seed), serialize: (x) => dataToBytes(x as DataTransaction) },
   [TransactionType.SetScript]: { sign: (x, seed) => setScript(x as SetScriptTransaction, seed), serialize: (x) => setScriptToBytes(x as SetScriptTransaction) },
+  [TransactionType.SetAssetScript]: { sign: (x, seed) => setAssetScript(x as SetAssetScriptTransaction, seed), serialize: (x) => setAssetScriptToBytes(x as SetAssetScriptTransaction) },
 }
 
 export const signTx = (tx: Tx, seed: SeedTypes): Tx => {
-  if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx!.type}`)
+  if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
 }
 
 export const serialize = (obj: Tx | Order): Uint8Array => {
   if (isOrder(obj)) return orderToBytes(obj)
-  if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj!.type}`)
+  if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj.type}`)
 
   return txTypeMap[obj.type].serialize(obj)
 }

@@ -1,15 +1,15 @@
-import { TransactionType, LeaseTransaction } from '../transactions'
+import { TransactionType, LeaseTransaction, long } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params} from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface LeaseParams extends Params {
   recipient: string
-  amount: number
-  fee?: number
+  amount: long
+  fee?: long
   timestamp?: number
 }
 
@@ -42,7 +42,7 @@ export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTyp
     }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['LeaseTransaction']),
+    generalValidation(tx, validators.LeaseTransaction),
     leaseValidation(tx)
   )
 

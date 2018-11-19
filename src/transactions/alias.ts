@@ -1,14 +1,14 @@
-import { TransactionType, AliasTransaction } from '../transactions'
+import { TransactionType, AliasTransaction, long } from '../transactions'
 import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { ValidationResult, noError } from 'waves-crypto/validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface AliasParams extends Params {
   alias: string
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
 }
@@ -44,7 +44,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['AliasTransaction']),
+    generalValidation(tx, validators.AliasTransaction),
     aliasValidation(tx)
   )
 

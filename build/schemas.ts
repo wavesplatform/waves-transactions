@@ -14,6 +14,7 @@ export const TYPES = [
   'CancelLeaseTransaction',
   'MassTransferTransaction',
   'SetScriptTransaction',
+  'SetAssetScriptTransaction',
   'DataTransaction',
   'Order',
 ]

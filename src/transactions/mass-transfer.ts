@@ -1,4 +1,4 @@
-import { TransactionType, MassTransferTransaction, Transfer } from '../transactions'
+import { TransactionType, MassTransferTransaction, Transfer, long } from '../transactions'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
@@ -16,13 +16,13 @@ import {
   STRING
 } from 'waves-crypto'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface MassTransferParams extends Params {
   transfers: Transfer[]
   attachment?: string
   assetId?: string
-  fee?: number
+  fee?: long
   timestamp?: number
 }
 
@@ -61,7 +61,7 @@ export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransa
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['MassTransferTransaction']),
+    generalValidation(tx, validators.MassTransferTransaction),
     massTransferValidation(tx)
   )
 

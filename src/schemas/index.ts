@@ -1,4 +1,4 @@
-import Ajv, { ValidateFunction } from 'ajv'
+import Ajv from 'ajv'
 import { TransactionType } from '../transactions'
 import schemas from './manifest'
 
@@ -6,13 +6,13 @@ const ajv = Ajv({
   allErrors: true,
 })
 
-const mapObj = (obj: any, f: (v: any) => any): { [key: string]: ValidateFunction } => {
-  return Object.entries(obj).map(([k, v]) => [k, f(v)]).reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {} as any)
-}
+const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>
+  Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
+    .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
 
-export const VALIDATOR_MAP = mapObj(schemas, ajv.compile.bind(ajv))
+export const validators = mapObj(schemas, (schema) => ajv.compile(schema));
 
-export const schemaByTranscationType: { [i: number]: any } = {
+export const schemaByTransactionType: { [i: number]: any } = {
   [TransactionType.Issue]: schemas.IssueTransaction,
   [TransactionType.Transfer]: schemas.TransferTransaction,
   [TransactionType.Reissue]: schemas.ReissueTransaction,
@@ -23,4 +23,5 @@ export const schemaByTranscationType: { [i: number]: any } = {
   [TransactionType.MassTransfer]: schemas.MassTransferTransaction,
   [TransactionType.Data]: schemas.DataTransaction,
   [TransactionType.SetScript]: schemas.SetScriptTransaction,
+  [TransactionType.SetAssetScript]: schemas.SetAssetScriptTransaction,
 }

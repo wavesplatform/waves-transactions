@@ -1,20 +1,34 @@
-import { IssueTransaction, TransactionType } from '../transactions'
-import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
+import { IssueTransaction, long, TransactionType } from '../transactions'
+import {
+  concat,
+  BASE58_STRING,
+  BYTE,
+  LEN,
+  SHORT,
+  STRING,
+  LONG,
+  signBytes,
+  hashBytes,
+  BYTES,
+  BOOL,
+  OPTION, BASE64_STRING
+} from 'waves-crypto'
+import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
 import { SeedTypes, Params} from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface IssueParams extends Params {
   name: string
   description: string
   decimals?: number
-  quantity: number
+  quantity: long
   reissuable?: boolean
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
+  script?: string
 }
 
 export const issueValidation = (tx: IssueTransaction): ValidationResult => []
@@ -29,7 +43,7 @@ export const issueToBytes = (tx: IssueTransaction): Uint8Array => concat(
   BOOL(tx.reissuable),
   LONG(tx.fee),
   LONG(tx.timestamp),
-  [0] //Script
+  OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
 )
 
 /* @echo DOCS */
@@ -50,10 +64,11 @@ export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTyp
       proofs: [],
       id: '',
         ...paramsOrTx,
+      script: paramsOrTx.script == null ? undefined : base64Prefix(paramsOrTx.script)!
     }
 
     raiseValidationErrors(
-      generalValidation(tx, VALIDATOR_MAP['IssueTransaction']),
+      generalValidation(tx, validators.IssueTransaction),
       issueValidation(tx)
     )
 

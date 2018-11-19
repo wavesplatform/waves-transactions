@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>BurnTransaction | waves-transactions</title>
+	<title>SetAssetScriptTransaction | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="burntransaction.html">BurnTransaction</a>
+					<a href="setassetscripttransaction.html">SetAssetScriptTransaction</a>
 				</li>
 			</ul>
-			<h1>Interface BurnTransaction</h1>
+			<h1>Interface SetAssetScriptTransaction</h1>
 		</div>
 	</div>
 </header>
@@ -75,7 +75,7 @@
 						<a href="withchainid.html" class="tsd-signature-type">WithChainId</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">BurnTransaction</span>
+								<span class="target">SetAssetScriptTransaction</span>
 							</li>
 						</ul>
 					</li>
@@ -88,16 +88,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="burntransaction.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="burntransaction.html#quantity" class="tsd-kind-icon">quantity</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="burntransaction.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="burntransaction.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="setassetscripttransaction.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="setassetscripttransaction.html#script" class="tsd-kind-icon">script</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="setassetscripttransaction.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="setassetscripttransaction.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,7 +111,7 @@
 					<div class="tsd-signature tsd-kind-icon">asset<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:110</li>
+							<li>Defined in transactions.ts:83</li>
 						</ul>
 					</aside>
 				</section>
@@ -186,12 +186,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="quantity" class="tsd-anchor"></a>
-					<h3>quantity</h3>
-					<div class="tsd-signature tsd-kind-icon">quantity<span class="tsd-signature-symbol">:</span> <a href="../globals.html#long" class="tsd-signature-type">long</a></div>
+					<a name="script" class="tsd-anchor"></a>
+					<h3>script</h3>
+					<div class="tsd-signature tsd-kind-icon">script<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:111</li>
+							<li>Defined in transactions.ts:84</li>
 						</ul>
 					</aside>
 				</section>
@@ -220,11 +220,11 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transactiontype.html#burn" class="tsd-signature-type">Burn</a></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transactiontype.html#setassetscript" class="tsd-signature-type">SetAssetScript</a></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="transaction.html">Transaction</a>.<a href="transaction.html#type">type</a></p>
 						<ul>
-							<li>Defined in transactions.ts:109</li>
+							<li>Defined in transactions.ts:82</li>
 						</ul>
 					</aside>
 				</section>
@@ -254,37 +254,37 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="burntransaction.html" class="tsd-kind-icon">Burn<wbr>Transaction</a>
+						<a href="setassetscripttransaction.html" class="tsd-kind-icon">Set<wbr>Asset<wbr>Script<wbr>Transaction</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="burntransaction.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a>
+								<a href="setassetscripttransaction.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
+								<a href="setassetscripttransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="setassetscripttransaction.html#fee" class="tsd-kind-icon">fee</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#id" class="tsd-kind-icon">id</a>
+								<a href="setassetscripttransaction.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#proofs" class="tsd-kind-icon">proofs</a>
+								<a href="setassetscripttransaction.html#proofs" class="tsd-kind-icon">proofs</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="burntransaction.html#quantity" class="tsd-kind-icon">quantity</a>
+								<a href="setassetscripttransaction.html#script" class="tsd-kind-icon">script</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+								<a href="setassetscripttransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="setassetscripttransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="burntransaction.html#type" class="tsd-kind-icon">type</a>
+								<a href="setassetscripttransaction.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="burntransaction.html#version" class="tsd-kind-icon">version</a>
+								<a href="setassetscripttransaction.html#version" class="tsd-kind-icon">version</a>
 							</li>
 						</ul>
 					</li>

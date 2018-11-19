@@ -1,16 +1,16 @@
-import { TransactionType, ReissueTransaction } from '../transactions'
+import { TransactionType, ReissueTransaction, long } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface ReissueParams extends Params {
   assetId: string
-  quantity: number
+  quantity: long
   reissuable: boolean
-  fee?: number
+  fee?: long
   timestamp?: number
   chainId?: string
 }
@@ -48,7 +48,7 @@ export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: S
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['ReissueTransaction']),
+    generalValidation(tx, validators.ReissueTransaction),
     reissueValidation(tx)
 )
   const bytes = reissueToBytes(tx)

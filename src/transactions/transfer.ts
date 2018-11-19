@@ -1,17 +1,17 @@
-import { TransactionType, TransferTransaction } from '../transactions'
+import { long, TransactionType, TransferTransaction } from '../transactions'
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes, Params } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { VALIDATOR_MAP } from '../schemas'
+import { validators } from '../schemas'
 
 export interface TransferParams extends Params {
   recipient: string
-  amount: number
+  amount: long
   attachment?: string
   feeAssetId?: string
   assetId?: string
-  fee?: number
+  fee?: long
   timestamp?: number
 }
 
@@ -48,7 +48,7 @@ export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?
   }
 
   raiseValidationErrors(
-    generalValidation(tx, VALIDATOR_MAP['TransferTransaction']),
+    generalValidation(tx, validators.TransferTransaction),
     transferValidation(tx)
   )
 
