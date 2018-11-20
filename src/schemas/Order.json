@@ -55,10 +55,7 @@
       "maxItems": 8,
       "type": "array",
       "items": {
-        "type": [
-          "null",
-          "string"
-        ]
+        "type": "string"
       }
     }
   },
