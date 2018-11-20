@@ -1,5 +1,3 @@
-import { Option } from './types'
-
 export type long = number | string
 
 export enum TransactionType {
@@ -26,7 +24,7 @@ export interface WithProofs {
    * @minItems 0
    * @maxItems 8
    */
-  proofs: Option<string>[]
+  proofs: string[]
 }
 
 export interface WithChainId {
