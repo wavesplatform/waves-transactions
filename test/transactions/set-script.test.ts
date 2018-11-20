@@ -20,7 +20,7 @@ describe('setScript', () => {
     const txParams = { script: null }
     const signedTx = setScript(txParams, [null, seed, seed2])
 
-    expect(signedTx.proofs[0]).toBeNull()
+    expect(signedTx.proofs[0]).toEqual('')
     expect(signedTx.script).toBeNull()
     expect(validateSetScriptTx(signedTx, 1)).toBe(true)
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
@@ -30,7 +30,7 @@ describe('setScript', () => {
     const txParams = { script: compiledContract }
     const signedTx = setScript(txParams, { '1': seed, '2': seed2 })
 
-    expect(signedTx.proofs[0]).toBeNull()
+    expect(signedTx.proofs[0]).toEqual('')
     expect(validateSetScriptTx(signedTx, 1, publicKey(seed))).toBe(true)
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
@@ -59,8 +59,8 @@ describe('setScript', () => {
     const txParams = { script: compiledContract }
     const signedTx = setScript(txParams, { 'asd1': seed, '2': seed2 } as any)
 
-    expect(signedTx.proofs[0]).toBeNull()
-    expect(signedTx.proofs[1]).toBeNull()
+    expect(signedTx.proofs[0]).toEqual('')
+    expect(signedTx.proofs[1]).toEqual('')
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 

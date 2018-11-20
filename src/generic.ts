@@ -27,7 +27,7 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (tx.proofs != null && !!tx.proofs[index])
     throw new Error(`Proof at index ${index} is already exists.`)
   for (let i = tx.proofs.length; i < index; i++)
-    tx.proofs.push(null)
+    tx.proofs.push('')
   tx.proofs[index] = proof
   return tx
 }
