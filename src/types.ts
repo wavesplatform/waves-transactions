@@ -5,8 +5,3 @@ export interface SeedsAndIndexes {
 }
 
 export type SeedTypes = string | Option<string>[] | SeedsAndIndexes
-
-export interface Params {
-  senderPublicKey?: string
-  timestamp?: number
-}

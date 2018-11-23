@@ -12,9 +12,9 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { DataTransaction, TransactionType, DataEntry, DataType, long } from '../transactions'
+import { IDataTransaction, TRANSACTION_TYPE, DataEntry, DataType, IDataParams } from '../transactions'
 import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from '../generic'
-import { Params, SeedTypes } from '../types'
+import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
@@ -24,11 +24,7 @@ export interface TypelessDataEntry {
   value: string | number | boolean | Buffer | Uint8Array | number[]
 }
 
-export interface DataParams extends Params {
-  data: Array<DataEntry | TypelessDataEntry>
-  fee?: long,
-  timestamp?: number
-}
+
 
 const typeMap: any = {
   integer: ['integer', 0, LONG],
@@ -42,10 +38,10 @@ const typeMap: any = {
 const mapType = <T>(value: T): [DataType, number, serializer<T>] =>
   typeMap[typeof value] || typeMap['_']
 
-export const dataValidation = (tx: DataTransaction): ValidationResult => []
+export const dataValidation = (tx: IDataTransaction): ValidationResult => []
 
-export const dataToBytes = (tx: DataTransaction): Uint8Array => concat(
-  BYTE(TransactionType.Data),
+export const dataToBytes = (tx: IDataTransaction): Uint8Array => concat(
+  BYTE(TRANSACTION_TYPE.DATA),
   BYTE(1),
   BASE58_STRING(tx.senderPublicKey),
   COUNT(SHORT)((x: DataEntry) => concat(LEN(SHORT)(STRING)(x.key), [typeMap[x.type][1]], typeMap[x.type][2](x.value)))(tx.data),
@@ -54,7 +50,7 @@ export const dataToBytes = (tx: DataTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes): DataTransaction {
+export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: SeedTypes): IDataTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
   const { data: _data, fee, timestamp } = paramsOrTx
 
@@ -65,7 +61,7 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
   const _timestamp = valOrDef(timestamp, Date.now())
 
   let bytes = concat(
-    BYTE(TransactionType.Data),
+    BYTE(TRANSACTION_TYPE.DATA),
     BYTE(1),
     BASE58_STRING(senderPublicKey),
     COUNT(SHORT)((x: DataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(_data),
@@ -74,7 +70,7 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
 
   const computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
 
-  const tx: DataTransaction = {
+  const tx: IDataTransaction = {
     type: 12,
     version: 1,
     senderPublicKey,
@@ -97,7 +93,7 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.DataTransaction),
+    generalValidation(tx, validators.IDataTransaction),
     dataValidation(tx)
   )
   bytes = dataToBytes(tx)

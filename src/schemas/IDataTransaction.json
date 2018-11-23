@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/TRANSACTION_TYPE.DATA"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DataEntry"
+      }
+    },
+    "id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/LONG"
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "ITransaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senderPublicKey": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "data",
+    "fee",
+    "id",
+    "proofs",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TRANSACTION_TYPE.DATA": {
+      "type": "number",
+      "enum": [
+        12
+      ]
+    },
+    "DataEntry": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DataType"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "type",
+        "value"
+      ]
+    },
+    "DataType": {
+      "enum": [
+        "binary",
+        "boolean",
+        "integer",
+        "string"
+      ],
+      "type": "string"
+    },
+    "LONG": {
+      "type": "object"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json"
+}

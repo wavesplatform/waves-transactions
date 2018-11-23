@@ -1,22 +1,13 @@
-import { long, TransactionType, TransferTransaction } from '../transactions'
+import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams } from '../transactions'
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
+import { SeedTypes } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface TransferParams extends Params {
-  recipient: string
-  amount: long
-  attachment?: string
-  feeAssetId?: string
-  assetId?: string
-  fee?: long
-  timestamp?: number
-}
 
-export const transferToBytes = (tx: TransferTransaction) => concat(
-  BYTE(TransactionType.Transfer),
+export const transferToBytes = (tx: ITransferTransaction) => concat(
+  BYTE(TRANSACTION_TYPE.TRANSFER),
   BYTE(tx.version),
   BASE58_STRING(tx.senderPublicKey),
   OPTION(BASE58_STRING)(tx.assetId),
@@ -28,16 +19,16 @@ export const transferToBytes = (tx: TransferTransaction) => concat(
   LEN(SHORT)(STRING)(tx.attachment)
 )
 
-export const transferValidation = (tx: TransferTransaction) => []
+export const transferValidation = (tx: ITransferTransaction) => []
 
 /* @echo DOCS */
-export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?: SeedTypes): TransferTransaction {
+export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, seed?: SeedTypes): ITransferTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: TransferTransaction = {
-    type: TransactionType.Transfer,
+  const tx: ITransferTransaction = {
+    type: TRANSACTION_TYPE.TRANSFER,
     version: 2,
     fee: 100000,
     senderPublicKey,
@@ -48,7 +39,7 @@ export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.TransferTransaction),
+    generalValidation(tx, validators.ITransferTransaction),
     transferValidation(tx)
   )
 

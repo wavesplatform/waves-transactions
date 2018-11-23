@@ -1,4 +1,4 @@
-import { IssueTransaction, long, TransactionType } from '../transactions'
+import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -14,27 +14,17 @@ import {
   OPTION, BASE64_STRING
 } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
-import { SeedTypes, Params} from '../types'
+import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface IssueParams extends Params {
-  name: string
-  description: string
-  decimals?: number
-  quantity: long
-  reissuable?: boolean
-  fee?: long
-  timestamp?: number
-  chainId?: string
-  script?: string
-}
 
-export const issueValidation = (tx: IssueTransaction): ValidationResult => []
 
-export const issueToBytes = (tx: IssueTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Issue, tx.version, tx.chainId.charCodeAt(0)]),
+export const issueValidation = (tx: IIssueTransaction): ValidationResult => []
+
+export const issueToBytes = (tx: IIssueTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.ISSUE, tx.version, tx.chainId.charCodeAt(0)]),
   BASE58_STRING(tx.senderPublicKey),
   LEN(SHORT)(STRING)(tx.name),
   LEN(SHORT)(STRING)(tx.description),
@@ -47,13 +37,13 @@ export const issueToBytes = (tx: IssueTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTypes): IssueTransaction {
+export function issue(paramsOrTx: IIssueParams | IIssueTransaction, seed?: SeedTypes): IIssueTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: IssueTransaction = {
-      type: TransactionType.Issue,
+  const tx: IIssueTransaction = {
+      type: TRANSACTION_TYPE.ISSUE,
       version: 2,
       decimals: 8,
       reissuable: false,
@@ -68,7 +58,7 @@ export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTyp
     }
 
     raiseValidationErrors(
-      generalValidation(tx, validators.IssueTransaction),
+      generalValidation(tx, validators.IIssueTransaction),
       issueValidation(tx)
     )
 

@@ -1,28 +1,28 @@
-import Tx from './Tx.json'
-import AliasTransaction from './AliasTransaction.json'
-import IssueTransaction from './IssueTransaction.json'
-import TransferTransaction from './TransferTransaction.json'
-import ReissueTransaction from './ReissueTransaction.json'
-import BurnTransaction from './BurnTransaction.json'
-import LeaseTransaction from './LeaseTransaction.json'
-import CancelLeaseTransaction from './CancelLeaseTransaction.json'
-import MassTransferTransaction from './MassTransferTransaction.json'
-import SetScriptTransaction from './SetScriptTransaction.json'
-import SetAssetScriptTransaction from './SetAssetScriptTransaction.json'
-import DataTransaction from './DataTransaction.json'
-import Order from './Order.json'
+import TTx from './TTx.json'
+import IAliasTransaction from './IAliasTransaction.json'
+import IIssueTransaction from './IIssueTransaction.json'
+import ITransferTransaction from './ITransferTransaction.json'
+import IReissueTransaction from './IReissueTransaction.json'
+import IBurnTransaction from './IBurnTransaction.json'
+import ILeaseTransaction from './ILeaseTransaction.json'
+import ICancelLeaseTransaction from './ICancelLeaseTransaction.json'
+import IMassTransferTransaction from './IMassTransferTransaction.json'
+import ISetScriptTransaction from './ISetScriptTransaction.json'
+import ISetAssetScriptTransaction from './ISetAssetScriptTransaction.json'
+import IDataTransaction from './IDataTransaction.json'
+import IOrder from './IOrder.json'
 export default {
-  Tx,
-  AliasTransaction,
-  IssueTransaction,
-  TransferTransaction,
-  ReissueTransaction,
-  BurnTransaction,
-  LeaseTransaction,
-  CancelLeaseTransaction,
-  MassTransferTransaction,
-  SetScriptTransaction,
-  SetAssetScriptTransaction,
-  DataTransaction,
-  Order
+  TTx,
+  IAliasTransaction,
+  IIssueTransaction,
+  ITransferTransaction,
+  IReissueTransaction,
+  IBurnTransaction,
+  ILeaseTransaction,
+  ICancelLeaseTransaction,
+  IMassTransferTransaction,
+  ISetScriptTransaction,
+  ISetAssetScriptTransaction,
+  IDataTransaction,
+  IOrder
 }

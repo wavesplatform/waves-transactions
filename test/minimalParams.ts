@@ -1,5 +1,5 @@
 import { OrderParams } from '../src/transactions/order'
-import { TransactionType } from '../src/transactions'
+import { TRANSACTION_TYPE } from '../src/transactions'
 import { SetScriptParams } from '../src/transactions/set-script'
 import { TransferParams } from '../src/transactions/transfer'
 import { SetAssetScriptParams } from "../src/transactions/set-asset-script";
@@ -86,15 +86,15 @@ export const setAssetScriptMinimalParams: SetAssetScriptParams = {
 }
 
 export const minimalParams = {
-  [TransactionType.Issue]: issueMinimalParams,
-  [TransactionType.Transfer]: transferMinimalParams,
-  [TransactionType.Reissue]: reissueMinimalParams,
-  [TransactionType.Burn]: burnMinimalParams,
-  [TransactionType.Lease]: leaseMinimalParams,
-  [TransactionType.CancelLease]: cancelLeaseMinimalParams,
-  [TransactionType.Alias]: aliasMinimalParams,
-  [TransactionType.MassTransfer]: massTransferMinimalParams,
-  [TransactionType.Data]: dataMinimalParams,
-  [TransactionType.SetScript]: setScriptMinimalParams,
-  [TransactionType.SetAssetScript]: setAssetScriptMinimalParams,
+  [TRANSACTION_TYPE.ISSUE]: issueMinimalParams,
+  [TRANSACTION_TYPE.TRANSFER]: transferMinimalParams,
+  [TRANSACTION_TYPE.REISSUE]: reissueMinimalParams,
+  [TRANSACTION_TYPE.BURN]: burnMinimalParams,
+  [TRANSACTION_TYPE.LEASE]: leaseMinimalParams,
+  [TRANSACTION_TYPE.CANCEL_LEASE]: cancelLeaseMinimalParams,
+  [TRANSACTION_TYPE.ALIAS]: aliasMinimalParams,
+  [TRANSACTION_TYPE.MASS_TRANSFER]: massTransferMinimalParams,
+  [TRANSACTION_TYPE.DATA]: dataMinimalParams,
+  [TRANSACTION_TYPE.SET_SCRIPT]: setScriptMinimalParams,
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: setAssetScriptMinimalParams,
 }

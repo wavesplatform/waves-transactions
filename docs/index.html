@@ -114,7 +114,7 @@
 }</code></pre>
 				<p>Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> otherPartySeed = <span class="hljs-string">'18f6edd4c8d647b4ba5ed366093ef5b8d0c4d8b3a6154a2b876f54773a678781'</span>
-<span class="hljs-keyword">const</span> transferSidnedWithTwoParties = transfer(signedTranserTx <span class="hljs-comment">/*Tx from first example*/</span>, seed)</code></pre>
+<span class="hljs-keyword">const</span> transferSidnedWithTwoParties = transfer(signedTranserTx: TTransaction, seed)</code></pre>
 				<p>So now there are two proofs:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
@@ -146,103 +146,100 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum">
-						<a href="enums/transactiontype.html" class="tsd-kind-icon">Transaction<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aliasparams.html" class="tsd-kind-icon">Alias<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/aliastransaction.html" class="tsd-kind-icon">Alias<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/burnparams.html" class="tsd-kind-icon">Burn<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/burntransaction.html" class="tsd-kind-icon">Burn<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/cancelleaseparams.html" class="tsd-kind-icon">Cancel<wbr>Lease<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/cancelleasetransaction.html" class="tsd-kind-icon">Cancel<wbr>Lease<wbr>Transaction</a>
+						<a href="enums/transaction_type.html" class="tsd-kind-icon">TRANSACTION_<wbr>TYPE</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/dataentry.html" class="tsd-kind-icon">Data<wbr>Entry</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/dataparams.html" class="tsd-kind-icon">Data<wbr>Params</a>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ialiasparams.html" class="tsd-kind-icon">IAlias<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ialiastransaction.html" class="tsd-kind-icon">IAlias<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iburnparams.html" class="tsd-kind-icon">IBurn<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iburntransaction.html" class="tsd-kind-icon">IBurn<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icancelleaseparams.html" class="tsd-kind-icon">ICancel<wbr>Lease<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icancelleasetransaction.html" class="tsd-kind-icon">ICancel<wbr>Lease<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idataparams.html" class="tsd-kind-icon">IData<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idatatransaction.html" class="tsd-kind-icon">IData<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iissueparams.html" class="tsd-kind-icon">IIssue<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iissuetransaction.html" class="tsd-kind-icon">IIssue<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ileaseparams.html" class="tsd-kind-icon">ILease<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ileasetransaction.html" class="tsd-kind-icon">ILease<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/imasstransferitem.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/imasstransferparams.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/imasstransfertransaction.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iorder.html" class="tsd-kind-icon">IOrder</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iorderparams.html" class="tsd-kind-icon">IOrder<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ireissueparams.html" class="tsd-kind-icon">IReissue<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ireissuetransaction.html" class="tsd-kind-icon">IReissue<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetassetscriptparams.html" class="tsd-kind-icon">ISet<wbr>Asset<wbr>Script<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetassetscripttransaction.html" class="tsd-kind-icon">ISet<wbr>Asset<wbr>Script<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetscriptparams.html" class="tsd-kind-icon">ISet<wbr>Script<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetscripttransaction.html" class="tsd-kind-icon">ISet<wbr>Script<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itransaction.html" class="tsd-kind-icon">ITransaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itransferparams.html" class="tsd-kind-icon">ITransfer<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itransfertransaction.html" class="tsd-kind-icon">ITransfer<wbr>Transaction</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/datatransaction.html" class="tsd-kind-icon">Data<wbr>Transaction</a>
+						<a href="interfaces/iwithchainid.html" class="tsd-kind-icon">IWith<wbr>Chain<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/issueparams.html" class="tsd-kind-icon">Issue<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/issuetransaction.html" class="tsd-kind-icon">Issue<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/leaseparams.html" class="tsd-kind-icon">Lease<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/leasetransaction.html" class="tsd-kind-icon">Lease<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/masstransferparams.html" class="tsd-kind-icon">Mass<wbr>Transfer<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/masstransfertransaction.html" class="tsd-kind-icon">Mass<wbr>Transfer<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/order.html" class="tsd-kind-icon">Order</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/orderparams.html" class="tsd-kind-icon">Order<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/params.html" class="tsd-kind-icon">Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/reissueparams.html" class="tsd-kind-icon">Reissue<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/reissuetransaction.html" class="tsd-kind-icon">Reissue<wbr>Transaction</a>
+						<a href="interfaces/iwithproofs.html" class="tsd-kind-icon">IWith<wbr>Proofs</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/seedsandindexes.html" class="tsd-kind-icon">Seeds<wbr>And<wbr>Indexes</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/setassetscriptparams.html" class="tsd-kind-icon">Set<wbr>Asset<wbr>Script<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/setassetscripttransaction.html" class="tsd-kind-icon">Set<wbr>Asset<wbr>Script<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/setscriptparams.html" class="tsd-kind-icon">Set<wbr>Script<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/setscripttransaction.html" class="tsd-kind-icon">Set<wbr>Script<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/transaction.html" class="tsd-kind-icon">Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/transfer.html" class="tsd-kind-icon">Transfer</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/transferparams.html" class="tsd-kind-icon">Transfer<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/transfertransaction.html" class="tsd-kind-icon">Transfer<wbr>Transaction</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="interfaces/typelessdataentry.html" class="tsd-kind-icon">Typeless<wbr>Data<wbr>Entry</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/withchainid.html" class="tsd-kind-icon">With<wbr>Chain<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/withproofs.html" class="tsd-kind-icon">With<wbr>Proofs</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/withsender.html" class="tsd-kind-icon">With<wbr>Sender</a>
@@ -259,11 +256,14 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#seedtypes" class="tsd-kind-icon">Seed<wbr>Types</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tx" class="tsd-kind-icon">Tx</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#ttx" class="tsd-kind-icon">TTx</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#ttxparams" class="tsd-kind-icon">TTx<wbr>Params</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#long" class="tsd-kind-icon">long</a>
+						<a href="globals.html#twithtype" class="tsd-kind-icon">TWith<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#alias" class="tsd-kind-icon">alias</a>
@@ -309,6 +309,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#generalvalidation" class="tsd-kind-icon">general<wbr>Validation</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getfee" class="tsd-kind-icon">get<wbr>Fee</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isorder" class="tsd-kind-icon">is<wbr>Order</a>

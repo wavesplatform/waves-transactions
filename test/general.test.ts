@@ -2,14 +2,14 @@ import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue, signTx, data } from '../src'
 import { broadcast, serialize } from '../src/general'
 import { reissueMinimalParams } from './minimalParams'
-import { Tx } from '../src/transactions'
+import { TTx } from '../src/transactions'
 import { exampleTxs } from './exampleTxs'
 
 describe('signTx', () => {
 
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
-  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as Tx)
+  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as TTx)
   txs.forEach(tx => {
     it('type: ' + tx.type, () => {
       const signed = signTx(tx, stringSeed)

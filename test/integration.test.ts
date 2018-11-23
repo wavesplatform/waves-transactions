@@ -1,14 +1,14 @@
 import { broadcast, burn, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from "../src";
-import { IssueParams } from "../src/transactions/issue";
-import { ReissueParams } from "../src/transactions/reissue";
-import { SetScriptParams } from "../src/transactions/set-script";
 import { address, publicKey } from "waves-crypto";
-import { txToJson } from "../src/txToJson";
 import { waitForTx } from "../src/general";
-import { BurnParams } from "../src/transactions/burn";
-import { SetAssetScriptParams } from "../src/transactions/set-asset-script";
-import { TransferParams } from "../src/transactions/transfer";
-import { MassTransferParams } from "../src/transactions/mass-transfer";
+import {
+  IBurnParams,
+  IIssueParams, IMassTransferParams,
+  IReissueParams,
+  ISetAssetScriptParams,
+  ISetScriptParams, ITransferParams
+} from "../src/transactions";
+import { txToJson } from "../src/txToJson";
 
 describe('Blockchain interaction', () => {
   /**
@@ -23,8 +23,8 @@ describe('Blockchain interaction', () => {
   describe('Assets', () => {
     let assetId = '';
 
-    it('Should Issue new token', async () => {
-      const txParams: IssueParams = {
+    it('Should ISSUE new token', async () => {
+      const txParams: IIssueParams = {
         name: 'Test token',
         description: 'no description',
         decimals: 3,
@@ -41,7 +41,7 @@ describe('Blockchain interaction', () => {
     }, timeout);
 
     it('Should ReIssue token', async () => {
-      const txParams: ReissueParams = {
+      const txParams: IReissueParams = {
         reissuable: true,
         assetId,
         quantity: 1000,
@@ -52,8 +52,8 @@ describe('Blockchain interaction', () => {
       expect(resp.type).toEqual(5)
     });
 
-    it('Should Burn token', async () => {
-      const burnParams: BurnParams = {
+    it('Should BURN token', async () => {
+      const burnParams: IBurnParams = {
         assetId,
         quantity: 500,
         chainId
@@ -64,7 +64,7 @@ describe('Blockchain interaction', () => {
     })
 
     it('Should transfer asset', async () =>{
-      const transferParams: TransferParams = {
+      const transferParams: ITransferParams = {
         amount: '500',
         recipient: address(recipientSeed, chainId)
       }
@@ -75,7 +75,7 @@ describe('Blockchain interaction', () => {
     });
 
     it('Should masstransfer asset', async () =>{
-      const massTransferParams: MassTransferParams = {
+      const massTransferParams: IMassTransferParams = {
         fee:'200000',
         assetId,
         transfers:[
@@ -103,7 +103,7 @@ describe('Blockchain interaction', () => {
     it('Should issue token with script. Should execute token script', async () => {
       // script prohibits burn transaction
       const script = "AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA"
-      const txParams: IssueParams = {
+      const txParams: IIssueParams = {
         name: 'scriptedToken',
         description: 'no description',
         decimals: 3,
@@ -118,7 +118,7 @@ describe('Blockchain interaction', () => {
       assetId = tx.id
       await waitForTx(assetId, timeout, apiBase)
 
-      const burnParams: BurnParams = {
+      const burnParams: IBurnParams = {
         assetId,
         quantity: 1000,
         chainId
@@ -132,7 +132,7 @@ describe('Blockchain interaction', () => {
     it('Should set new token script. Should execute new token script', async () => {
       // script allows everything
       const script = "AQa3b8tH"
-      const txParams: SetAssetScriptParams = {
+      const txParams: ISetAssetScriptParams = {
         assetId,
         chainId,
         script
@@ -142,7 +142,7 @@ describe('Blockchain interaction', () => {
       expect(resp.type).toEqual(15)
       await waitForTx(tx.id, timeout, apiBase)
 
-      const burnParams: BurnParams = {
+      const burnParams: IBurnParams = {
         assetId,
         quantity: '1000',
         chainId,
@@ -159,7 +159,7 @@ describe('Blockchain interaction', () => {
     it('Should set and then remove multisig account script', async () => {
       // Multisig script 2 of 3. 'alice', 'bob', 'cooper'
       const script = 'AQQAAAALYWxpY2VQdWJLZXkBAAAAID3+K0HJI42oXrHhtHFpHijU5PC4nn1fIFVsJp5UWrYABAAAAAlib2JQdWJLZXkBAAAAIBO1uieokBahePoeVqt4/usbhaXRq+i5EvtfsdBILNtuBAAAAAxjb29wZXJQdWJLZXkBAAAAIOfM/qkwkfi4pdngdn18n5yxNwCrBOBC3ihWaFg4gV4yBAAAAAthbGljZVNpZ25lZAMJAAH0AAAAAwgFAAAAAnR4AAAACWJvZHlCeXRlcwkAAZEAAAACCAUAAAACdHgAAAAGcHJvb2ZzAAAAAAAAAAAABQAAAAthbGljZVB1YktleQAAAAAAAAAAAQAAAAAAAAAAAAQAAAAJYm9iU2lnbmVkAwkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAEFAAAACWJvYlB1YktleQAAAAAAAAAAAQAAAAAAAAAAAAQAAAAMY29vcGVyU2lnbmVkAwkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAIFAAAADGNvb3BlclB1YktleQAAAAAAAAAAAQAAAAAAAAAAAAkAAGcAAAACCQAAZAAAAAIJAABkAAAAAgUAAAALYWxpY2VTaWduZWQFAAAACWJvYlNpZ25lZAUAAAAMY29vcGVyU2lnbmVkAAAAAAAAAAACVateHg=='
-      const txParams: SetScriptParams = {
+      const txParams: ISetScriptParams = {
         chainId,
         script
       }
@@ -171,7 +171,7 @@ describe('Blockchain interaction', () => {
 
       await waitForTx(tx.id, timeout, apiBase)
 
-      const removeTxParams: SetScriptParams = {
+      const removeTxParams: ISetScriptParams = {
         senderPublicKey: publicKey(seed),
         chainId,
         script: null,

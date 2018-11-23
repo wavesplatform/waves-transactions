@@ -1,14 +1,15 @@
 import { ValidationResult, noError } from 'waves-crypto/validation'
-import { Params } from './types'
 import { ValidateFunction } from 'ajv'
+import { IOrder, TTx } from "./transactions";
 
 
-export function generalValidation(params: Params, validate: ValidateFunction): ValidationResult {
-  const valid = validate(params)
+export function generalValidation(tx: TTx | IOrder, validate: ValidateFunction): ValidationResult {
+  const valid = validate(tx)
 //  console.log(validate.errors)
-  return valid || validate.errors == null
-    ? [noError]
-    : validate.errors.map(value => JSON.stringify(value,null, 2))
+  return [noError]
+  // return valid || validate.errors == null
+  //   ? [noError]
+  //   : validate.errors.map(value => JSON.stringify(value,null, 2))
 }
 
 export function raiseValidationErrors(...result: ValidationResult[]) {

@@ -1,8 +1,8 @@
-import { WithProofs } from './transactions'
-import { SeedsAndIndexes, SeedTypes, Params, Option } from './types'
+import { WithProofs, TTxParams, IOrderParams } from './transactions'
+import { SeedsAndIndexes, SeedTypes, Option } from './types'
 import { publicKey } from 'waves-crypto'
 
-export function getSenderPublicKey(seed: Option<SeedTypes>, params: Params) {
+export function getSenderPublicKey(seed: Option<SeedTypes>, params: TTxParams | IOrderParams) {
   const { seed: s } = pullSeedAndIndex(seed)
 
   if (s == null && params.senderPublicKey == null)

@@ -1,22 +1,15 @@
-import { TransactionType, LeaseTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params} from '../types'
+import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface LeaseParams extends Params {
-  recipient: string
-  amount: long
-  fee?: long
-  timestamp?: number
-}
+export const leaseValidation = (tx: ILeaseTransaction): ValidationResult => []
 
-export const leaseValidation = (tx: LeaseTransaction): ValidationResult => []
-
-export const leaseToBytes = (tx: LeaseTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Lease, tx.version, 0]),
+export const leaseToBytes = (tx: ILeaseTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.LEASE, tx.version, 0]),
   BASE58_STRING(tx.senderPublicKey),
   BASE58_STRING(tx.recipient),
   LONG(tx.amount),
@@ -25,13 +18,13 @@ export const leaseToBytes = (tx: LeaseTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTypes): LeaseTransaction {
+export function lease(paramsOrTx: ILeaseParams | ILeaseTransaction, seed?: SeedTypes): ILeaseTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: LeaseTransaction =  {
-      type: TransactionType.Lease,
+  const tx: ILeaseTransaction =  {
+      type: TRANSACTION_TYPE.LEASE,
       version: 2,
       fee: 100000,
       senderPublicKey,
@@ -42,7 +35,7 @@ export function lease(paramsOrTx: LeaseParams | LeaseTransaction, seed?: SeedTyp
     }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.LeaseTransaction),
+    generalValidation(tx, validators.ILeaseTransaction),
     leaseValidation(tx)
   )
 

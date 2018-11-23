@@ -1,21 +1,21 @@
 import axios from 'axios'
 import {
-  Order,
-  TransactionType,
-  Tx,
-  IssueTransaction,
-  TransferTransaction,
-  ReissueTransaction,
-  BurnTransaction,
-  LeaseTransaction,
-  CancelLeaseTransaction,
-  AliasTransaction,
-  MassTransferTransaction,
-  DataTransaction,
-  SetScriptTransaction,
-  SetAssetScriptTransaction
+  IOrder,
+  TRANSACTION_TYPE,
+  TTx,
+  IIssueTransaction,
+  ITransferTransaction,
+  IReissueTransaction,
+  IBurnTransaction,
+  ILeaseTransaction,
+  ICancelLeaseTransaction,
+  IAliasTransaction,
+  IMassTransferTransaction,
+  IDataTransaction,
+  ISetScriptTransaction,
+  ISetAssetScriptTransaction, TTxParams
 } from './transactions'
-import { SeedTypes, Params } from './types'
+import { SeedTypes } from './types'
 import { issue, issueToBytes } from './transactions/issue'
 import { transfer, transferToBytes } from './transactions/transfer'
 import { reissue, reissueToBytes } from './transactions/reissue'
@@ -31,35 +31,36 @@ import { txToJson } from './txToJson'
 import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-script";
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
+export type WithTxType = { type: TRANSACTION_TYPE}
 
-export const txTypeMap: { [type: number]: { sign: (tx: Tx | Params, seed: SeedTypes) => Tx, serialize: (obj: Tx | Order) => Uint8Array } } = {
-  [TransactionType.Issue]: { sign: (x, seed) => issue(x as IssueTransaction, seed), serialize: (x) => issueToBytes(x as IssueTransaction) },
-  [TransactionType.Transfer]: { sign: (x, seed) => transfer(x as TransferTransaction, seed), serialize: (x) => transferToBytes(x as TransferTransaction) },
-  [TransactionType.Reissue]: { sign: (x, seed) => reissue(x as ReissueTransaction, seed), serialize: (x) => reissueToBytes(x as ReissueTransaction) },
-  [TransactionType.Burn]: { sign: (x, seed) => burn(x as BurnTransaction, seed), serialize: (x) => burnToBytes(x as BurnTransaction) },
-  [TransactionType.Lease]: { sign: (x, seed) => lease(x as LeaseTransaction, seed), serialize: (x) => leaseToBytes(x as LeaseTransaction) },
-  [TransactionType.CancelLease]: { sign: (x, seed) => cancelLease(x as CancelLeaseTransaction, seed), serialize: (x) => cancelLeaseToBytes(x as CancelLeaseTransaction) },
-  [TransactionType.Alias]: { sign: (x, seed) => alias(x as AliasTransaction, seed), serialize: (x) => aliasToBytes(x as AliasTransaction) },
-  [TransactionType.MassTransfer]: { sign: (x, seed) => massTransfer(x as MassTransferTransaction, seed), serialize: (x) => massTransferToBytes(x as MassTransferTransaction) },
-  [TransactionType.Data]: { sign: (x, seed) => data(x as DataTransaction, seed), serialize: (x) => dataToBytes(x as DataTransaction) },
-  [TransactionType.SetScript]: { sign: (x, seed) => setScript(x as SetScriptTransaction, seed), serialize: (x) => setScriptToBytes(x as SetScriptTransaction) },
-  [TransactionType.SetAssetScript]: { sign: (x, seed) => setAssetScript(x as SetAssetScriptTransaction, seed), serialize: (x) => setAssetScriptToBytes(x as SetAssetScriptTransaction) },
+export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: SeedTypes) => TTx, serialize: (obj: TTx | IOrder) => Uint8Array } } = {
+  [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction, seed), serialize: (x) => issueToBytes(x as IIssueTransaction) },
+  [TRANSACTION_TYPE.TRANSFER]: { sign: (x, seed) => transfer(x as ITransferTransaction, seed), serialize: (x) => transferToBytes(x as ITransferTransaction) },
+  [TRANSACTION_TYPE.REISSUE]: { sign: (x, seed) => reissue(x as IReissueTransaction, seed), serialize: (x) => reissueToBytes(x as IReissueTransaction) },
+  [TRANSACTION_TYPE.BURN]: { sign: (x, seed) => burn(x as IBurnTransaction, seed), serialize: (x) => burnToBytes(x as IBurnTransaction) },
+  [TRANSACTION_TYPE.LEASE]: { sign: (x, seed) => lease(x as ILeaseTransaction, seed), serialize: (x) => leaseToBytes(x as ILeaseTransaction) },
+  [TRANSACTION_TYPE.CANCEL_LEASE]: { sign: (x, seed) => cancelLease(x as ICancelLeaseTransaction, seed), serialize: (x) => cancelLeaseToBytes(x as ICancelLeaseTransaction) },
+  [TRANSACTION_TYPE.ALIAS]: { sign: (x, seed) => alias(x as IAliasTransaction, seed), serialize: (x) => aliasToBytes(x as IAliasTransaction) },
+  [TRANSACTION_TYPE.MASS_TRANSFER]: { sign: (x, seed) => massTransfer(x as IMassTransferTransaction, seed), serialize: (x) => massTransferToBytes(x as IMassTransferTransaction) },
+  [TRANSACTION_TYPE.DATA]: { sign: (x, seed) => data(x as IDataTransaction, seed), serialize: (x) => dataToBytes(x as IDataTransaction) },
+  [TRANSACTION_TYPE.SET_SCRIPT]: { sign: (x, seed) => setScript(x as ISetScriptTransaction, seed), serialize: (x) => setScriptToBytes(x as ISetScriptTransaction) },
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed), serialize: (x) => setAssetScriptToBytes(x as ISetAssetScriptTransaction) },
 }
 
-export const signTx = (tx: Tx, seed: SeedTypes): Tx => {
+export const signTx = (tx: TTx | TTxParams & WithTxType, seed: SeedTypes): TTx => {
   if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
 }
 
-export const serialize = (obj: Tx | Order): Uint8Array => {
+export const serialize = (obj: TTx | IOrder): Uint8Array => {
   if (isOrder(obj)) return orderToBytes(obj)
   if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj.type}`)
 
   return txTypeMap[obj.type].serialize(obj)
 }
 
-export const broadcast = (tx: Tx, apiBase: string) =>
+export const broadcast = (tx: TTx, apiBase: string) =>
   axios.post('transactions/broadcast', txToJson(tx), { baseURL: apiBase, headers: { 'content-type': 'application/json' } })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
@@ -75,12 +76,16 @@ export const delay = (timeout: number): CancellablePromise<{}> => {
   return p
 }
 
-export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<Tx> => {
-  const promise = (): Promise<Tx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
+export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<TTx> => {
+  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
     .then(x => x.data).catch(_ => delay(1000).then(_ => promise()))
 
   const t = delay(timeout)
-  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as Tx
+  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as TTx
   t.cancel()
   return r
+}
+
+export function getFee(tx: TTx, scripted = false, assetScripted = false){
+  return 100000000
 }

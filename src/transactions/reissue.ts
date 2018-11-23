@@ -1,26 +1,17 @@
-import { TransactionType, ReissueTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
+import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface ReissueParams extends Params {
-  assetId: string
-  quantity: long
-  reissuable: boolean
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
-
-export const reissueValidation = (tx: ReissueTransaction): ValidationResult => [
+export const reissueValidation = (tx: IReissueTransaction): ValidationResult => [
   noError,
 ]
 
-export const reissueToBytes = (tx: ReissueTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Reissue, tx.version, tx.chainId.charCodeAt(0)]),
+export const reissueToBytes = (tx: IReissueTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.REISSUE, tx.version, tx.chainId.charCodeAt(0)]),
   BASE58_STRING(tx.senderPublicKey),
   BASE58_STRING(tx.assetId),
   LONG(tx.quantity),
@@ -30,13 +21,13 @@ export const reissueToBytes = (tx: ReissueTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: SeedTypes): ReissueTransaction {
+export function reissue(paramsOrTx: IReissueParams | IReissueTransaction, seed?: SeedTypes): IReissueTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: ReissueTransaction = {
-    type: TransactionType.Reissue,
+  const tx: IReissueTransaction = {
+    type: TRANSACTION_TYPE.REISSUE,
     version: 2,
     chainId: 'W',
     fee: 100000000,
@@ -48,7 +39,7 @@ export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: S
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.ReissueTransaction),
+    generalValidation(tx, validators.IReissueTransaction),
     reissueValidation(tx)
 )
   const bytes = reissueToBytes(tx)

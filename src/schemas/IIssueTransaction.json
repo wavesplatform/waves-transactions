@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json#/definitions/TRANSACTION_TYPE.ISSUE"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "decimals": {
+      "type": "number"
+    },
+    "quantity": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json#/definitions/LONG"
+    },
+    "reissuable": {
+      "type": "boolean"
+    },
+    "chainId": {
+      "type": "string"
+    },
+    "script": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json#/definitions/LONG"
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "ITransaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senderPublicKey": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "chainId",
+    "decimals",
+    "description",
+    "fee",
+    "id",
+    "name",
+    "proofs",
+    "quantity",
+    "reissuable",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TRANSACTION_TYPE.ISSUE": {
+      "type": "number",
+      "enum": [
+        3
+      ]
+    },
+    "LONG": {
+      "type": "object"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json"
+}

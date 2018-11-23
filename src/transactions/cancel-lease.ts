@@ -1,24 +1,19 @@
-import { TransactionType, CancelLeaseTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params} from '../types'
+import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface CancelLeaseParams extends Params {
-  leaseId: string
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
 
-export const cancelLeaseValidation = (tx: CancelLeaseTransaction): ValidationResult => [
+
+export const cancelLeaseValidation = (tx: ICancelLeaseTransaction): ValidationResult => [
 
 ]
 
-export const cancelLeaseToBytes = (tx: CancelLeaseTransaction): Uint8Array => concat(
-  BYTES([TransactionType.CancelLease, tx.version, tx.chainId.charCodeAt(0)]),
+export const cancelLeaseToBytes = (tx: ICancelLeaseTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.CANCEL_LEASE, tx.version, tx.chainId.charCodeAt(0)]),
   BASE58_STRING(tx.senderPublicKey),
   LONG(tx.fee),
   LONG(tx.timestamp),
@@ -26,13 +21,13 @@ export const cancelLeaseToBytes = (tx: CancelLeaseTransaction): Uint8Array => co
 )
 
 /* @echo DOCS */
-export function cancelLease(paramsOrTx: CancelLeaseParams | CancelLeaseTransaction, seed?: SeedTypes): CancelLeaseTransaction {
+export function cancelLease(paramsOrTx: ICancelLeaseParams | ICancelLeaseTransaction, seed?: SeedTypes): ICancelLeaseTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: CancelLeaseTransaction = {
-      type: TransactionType.CancelLease,
+  const tx: ICancelLeaseTransaction = {
+      type: TRANSACTION_TYPE.CANCEL_LEASE,
       version: 2,
       fee:100000,
       senderPublicKey,
@@ -44,7 +39,7 @@ export function cancelLease(paramsOrTx: CancelLeaseParams | CancelLeaseTransacti
     }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.CancelLeaseTransaction),
+    generalValidation(tx, validators.ICancelLeaseTransaction),
     cancelLeaseValidation(tx)
   )
 

@@ -1,25 +1,19 @@
-import { TransactionType, AliasTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, IAliasTransaction, IAliasParams } from '../transactions'
 import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
+import { SeedTypes } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { ValidationResult, noError } from 'waves-crypto/validation'
 import { validators } from '../schemas'
 
-export interface AliasParams extends Params {
-  alias: string
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
 
-export const aliasValidation = (tx: AliasTransaction): ValidationResult => [
+export const aliasValidation = (tx: IAliasTransaction): ValidationResult => [
   tx.fee < 100000 ? 'fee is lees than 100000' : noError,
   !tx.alias || tx.alias.length === 0 ? 'alias is empty or undefined' : noError,
 ]
 
-export const aliasToBytes = (tx: AliasTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Alias, tx.version]),
+export const aliasToBytes = (tx: IAliasTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.ALIAS, tx.version]),
   BASE58_STRING(tx.senderPublicKey),
   LEN(SHORT)(STRING)(tx.alias),
   LONG(tx.fee),
@@ -27,13 +21,13 @@ export const aliasToBytes = (tx: AliasTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTypes): AliasTransaction {
+export function alias(paramsOrTx: IAliasParams | IAliasTransaction, seed?: SeedTypes): IAliasTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: AliasTransaction = {
-    type: TransactionType.Alias,
+  const tx: IAliasTransaction = {
+    type: TRANSACTION_TYPE.ALIAS,
     version: 2,
     fee: 100000,
     senderPublicKey,
@@ -44,7 +38,7 @@ export function alias(paramsOrTx: AliasParams | AliasTransaction, seed?: SeedTyp
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.AliasTransaction),
+    generalValidation(tx, validators.IAliasTransaction),
     aliasValidation(tx)
   )
 

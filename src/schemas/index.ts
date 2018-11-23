@@ -1,5 +1,5 @@
 import Ajv from 'ajv'
-import { TransactionType } from '../transactions'
+import { TRANSACTION_TYPE } from '../transactions'
 import schemas from './manifest'
 
 const ajv = Ajv({
@@ -10,18 +10,18 @@ const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record
   Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
     .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
 
-export const validators = mapObj(schemas, (schema) => ajv.compile(schema));
+export const validators = mapObj(schemas, (schema:any) => ajv.compile(schema));
 
 export const schemaByTransactionType: { [i: number]: any } = {
-  [TransactionType.Issue]: schemas.IssueTransaction,
-  [TransactionType.Transfer]: schemas.TransferTransaction,
-  [TransactionType.Reissue]: schemas.ReissueTransaction,
-  [TransactionType.Burn]: schemas.BurnTransaction,
-  [TransactionType.Lease]: schemas.LeaseTransaction,
-  [TransactionType.CancelLease]: schemas.CancelLeaseTransaction,
-  [TransactionType.Alias]: schemas.AliasTransaction,
-  [TransactionType.MassTransfer]: schemas.MassTransferTransaction,
-  [TransactionType.Data]: schemas.DataTransaction,
-  [TransactionType.SetScript]: schemas.SetScriptTransaction,
-  [TransactionType.SetAssetScript]: schemas.SetAssetScriptTransaction,
+  [TRANSACTION_TYPE.ISSUE]: schemas.IIssueTransaction,
+  [TRANSACTION_TYPE.TRANSFER]: schemas.ITransferTransaction,
+  [TRANSACTION_TYPE.REISSUE]: schemas.IReissueTransaction,
+  [TRANSACTION_TYPE.BURN]: schemas.IBurnTransaction,
+  [TRANSACTION_TYPE.LEASE]: schemas.ILeaseTransaction,
+  [TRANSACTION_TYPE.CANCEL_LEASE]: schemas.ICancelLeaseTransaction,
+  [TRANSACTION_TYPE.ALIAS]: schemas.IAliasTransaction,
+  [TRANSACTION_TYPE.MASS_TRANSFER]: schemas.IMassTransferTransaction,
+  [TRANSACTION_TYPE.DATA]: schemas.IDataTransaction,
+  [TRANSACTION_TYPE.SET_SCRIPT]: schemas.ISetScriptTransaction,
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: schemas.ISetAssetScriptTransaction,
 }

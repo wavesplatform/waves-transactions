@@ -1,6 +1,6 @@
-import { TransactionType, MassTransferTransaction, Transfer, long } from '../transactions'
+import { TRANSACTION_TYPE, IMassTransferTransaction, IMassTransferItem, IMassTransferParams } from '../transactions'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
+import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import {
   BASE58_STRING,
@@ -18,39 +18,33 @@ import {
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface MassTransferParams extends Params {
-  transfers: Transfer[]
-  attachment?: string
-  assetId?: string
-  fee?: long
-  timestamp?: number
-}
 
-export const massTransferValidation = (tx: MassTransferTransaction): ValidationResult => [
+
+export const massTransferValidation = (tx: IMassTransferTransaction): ValidationResult => [
   noError,
 ]
 
-export const massTransferToBytes = (tx: MassTransferTransaction): Uint8Array => concat(
-  BYTE(TransactionType.MassTransfer),
+export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array => concat(
+  BYTE(TRANSACTION_TYPE.MASS_TRANSFER),
   BYTE(1),
   BASE58_STRING(tx.senderPublicKey),
   OPTION(BASE58_STRING)(tx.assetId),
-  COUNT(SHORT)((x: Transfer) => concat(BASE58_STRING(x.recipient), LONG(x.amount)))(tx.transfers),
+  COUNT(SHORT)((x: IMassTransferItem) => concat(BASE58_STRING(x.recipient), LONG(x.amount)))(tx.transfers),
   LONG(tx.timestamp),
   LONG(tx.fee),
   LEN(SHORT)(STRING)(tx.attachment)
 )
 
 /* @echo DOCS */
-export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransaction, seed?: SeedTypes): MassTransferTransaction {
+export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTransaction, seed?: SeedTypes): IMassTransferTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
   if (!Array.isArray(paramsOrTx.transfers))  throw new Error('["transfers should be array"]')
 
-  const tx: MassTransferTransaction = {
-    type: TransactionType.MassTransfer,
+  const tx: IMassTransferTransaction = {
+    type: TRANSACTION_TYPE.MASS_TRANSFER,
     version: 1,
     fee: (100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
     senderPublicKey,
@@ -61,7 +55,7 @@ export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransa
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.MassTransferTransaction),
+    generalValidation(tx, validators.IMassTransferTransaction),
     massTransferValidation(tx)
   )
 

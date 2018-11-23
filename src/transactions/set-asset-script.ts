@@ -1,4 +1,4 @@
-import { TransactionType, SetAssetScriptTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, ISetAssetScriptTransaction, ISetAssetScriptParams } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -12,25 +12,17 @@ import {
   SHORT
 } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
-import { SeedTypes, Params } from '../types'
+import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface SetAssetScriptParams extends Params {
-  script: string | null
-  assetId: string
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
-
-export const setAssetScriptValidation = (tx: SetAssetScriptTransaction): ValidationResult => [
+export const setAssetScriptValidation = (tx: ISetAssetScriptTransaction): ValidationResult => [
   noError,
 ]
 
-export const setAssetScriptToBytes = (tx: SetAssetScriptTransaction): Uint8Array => concat(
-  BYTES([TransactionType.SetAssetScript, tx.version, tx.chainId.charCodeAt(0)]),
+export const setAssetScriptToBytes = (tx: ISetAssetScriptTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.SET_ASSET_SCRIPT, tx.version, tx.chainId.charCodeAt(0)]),
   BASE58_STRING(tx.senderPublicKey),
   BASE58_STRING(tx.assetId),
   LONG(tx.fee),
@@ -39,14 +31,14 @@ export const setAssetScriptToBytes = (tx: SetAssetScriptTransaction): Uint8Array
 )
 
 /* @echo DOCS */
-export function setAssetScript(paramsOrTx: SetAssetScriptParams | SetAssetScriptTransaction, seed?: SeedTypes): SetAssetScriptTransaction {
+export function setAssetScript(paramsOrTx: ISetAssetScriptParams | ISetAssetScriptTransaction, seed?: SeedTypes): ISetAssetScriptTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
-  const tx: SetAssetScriptTransaction = {
-    type: TransactionType.SetAssetScript,
+  const tx: ISetAssetScriptTransaction = {
+    type: TRANSACTION_TYPE.SET_ASSET_SCRIPT,
     version: 1,
     fee: 100000000,
     senderPublicKey,
@@ -59,7 +51,7 @@ export function setAssetScript(paramsOrTx: SetAssetScriptParams | SetAssetScript
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.SetAssetScriptTransaction),
+    generalValidation(tx, validators.ISetAssetScriptTransaction),
     setAssetScriptValidation(tx)
   )
 

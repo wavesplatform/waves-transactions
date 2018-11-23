@@ -1,29 +1,18 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
 import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from '../generic'
-import { long, Order } from '../transactions'
-import { SeedTypes, Params} from '../types'
+import { IOrder, IOrderParams } from '../transactions'
+import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 
-export interface OrderParams extends Params {
-  matcherPublicKey: string
-  price: long
-  amount: long
-  orderType: 'buy' | 'sell',
-  amountAsset?: string
-  priceAsset?: string
-  senderPublicKey?: string
-  matcherFee?: number
-  timestamp?: number
-  expiration?: number
-}
 
-export const isOrder = (p: any): p is Order => (<Order>p).assetPair !== undefined
 
-export const orderValidation = (ord: Order): ValidationResult => []
+export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
 
-export const orderToBytes = (ord: Order) => concat(
+export const orderValidation = (ord: IOrder): ValidationResult => []
+
+export const orderToBytes = (ord: IOrder) => concat(
   BASE58_STRING(ord.senderPublicKey),
   BASE58_STRING(ord.matcherPublicKey),
   OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
@@ -85,7 +74,7 @@ export const orderToBytes = (ord: Order) => concat(
  * @returns
  *
  */
-export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Order {
+export function order(paramsOrOrder: IOrderParams | IOrder, seed?: SeedTypes): IOrder {
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
@@ -98,7 +87,7 @@ export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Ord
 
   const { nextSeed } = pullSeedAndIndex(seed)
 
-  const ord: Order = {
+  const ord: IOrder = {
     orderType,
     assetPair: {
       amountAsset,
@@ -116,7 +105,7 @@ export function order(paramsOrOrder: OrderParams | Order, seed?: SeedTypes): Ord
   }
 
   raiseValidationErrors(
-    generalValidation(ord, validators.Order),
+    generalValidation(ord, validators.IOrder),
     orderValidation(ord)
   )
 

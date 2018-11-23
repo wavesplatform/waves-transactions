@@ -1,26 +1,26 @@
-export type long = number | string
+import { TypelessDataEntry } from "./transactions/data";
 
-export enum TransactionType {
-  Genesis = 1,
-  Payment = 2,
-  Issue = 3,
-  Transfer = 4,
-  Reissue = 5,
-  Burn = 6,
-  Exchange = 7,
-  Lease = 8,
-  CancelLease = 9,
-  Alias = 10,
-  MassTransfer = 11,
-  Data = 12,
-  SetScript = 13,
-  SponsorFee = 14,
-  SetAssetScript = 15,
+export enum TRANSACTION_TYPE {
+  GENESIS = 1,
+  PAYMENT = 2,
+  ISSUE = 3,
+  TRANSFER = 4,
+  REISSUE = 5,
+  BURN = 6,
+  EXCHANGE = 7,
+  LEASE = 8,
+  CANCEL_LEASE = 9,
+  ALIAS = 10,
+  MASS_TRANSFER = 11,
+  DATA = 12,
+  SET_SCRIPT = 13,
+  SPONSORSHIP = 14,
+  SET_ASSET_SCRIPT = 15,
 }
 
 export interface WithProofs {
   /**
-   * Transaction signatures
+   * ITransaction signatures
    * @minItems 0
    * @maxItems 8
    */
@@ -35,99 +35,140 @@ export interface WithChainId {
    */
   chainId: string
 }
-export interface Transaction extends WithProofs {
+
+/**
+ * This interface has common fields for all transactions
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ITransaction<LONG = string | number> extends WithProofs {
   id: string
   type: number
   timestamp: number
-  fee: long
+  fee: LONG
   version: number
 }
 
-export type Tx =
-  | AliasTransaction
-  | IssueTransaction
-  | TransferTransaction
-  | ReissueTransaction
-  | BurnTransaction
-  | LeaseTransaction
-  | CancelLeaseTransaction
-  | MassTransferTransaction
-  | SetScriptTransaction
-  | DataTransaction
-  | SetAssetScriptTransaction
+/**
+ *
+ */
+export type TTx<LONG = string | number> =
+  | IAliasTransaction<LONG>
+  | IIssueTransaction<LONG>
+  | ITransferTransaction<LONG>
+  | IReissueTransaction<LONG>
+  | IBurnTransaction<LONG>
+  | ILeaseTransaction<LONG>
+  | ICancelLeaseTransaction<LONG>
+  | IMassTransferTransaction<LONG>
+  | ISetScriptTransaction<LONG>
+  | IDataTransaction<LONG>
+  | ISetAssetScriptTransaction<LONG>
 
 export interface WithSender {
   senderPublicKey: string
 }
 
-export interface IssueTransaction extends Transaction, WithSender {
-  type: TransactionType.Issue
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IIssueTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.ISSUE
   name: string
   description: string
   decimals: number
-  quantity: long
+  quantity: LONG
   reissuable: boolean
   chainId: string
   script?: string
 }
 
-export interface SetScriptTransaction extends Transaction, WithSender, WithChainId {
-  type: TransactionType.SetScript
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ISetScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
+  type: TRANSACTION_TYPE.SET_SCRIPT
   script: string | null //base64
 }
 
-export interface SetAssetScriptTransaction extends Transaction, WithSender, WithChainId {
-  type: TransactionType.SetAssetScript
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ISetAssetScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
+  type: TRANSACTION_TYPE.SET_ASSET_SCRIPT
   assetId: string
   script: string | null //base64
 }
 
-export interface TransferTransaction extends Transaction, WithSender {
-  type: TransactionType.Transfer
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ITransferTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.TRANSFER
   recipient: string
-  amount: long
+  amount: LONG
   feeAssetId?: string
   assetId?: string
   attachment?: string
 }
 
-export interface Transfer {
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IMassTransferItem<LONG = string | number> {
   recipient: string
-  amount: long
+  amount: LONG
 }
 
-export interface ReissueTransaction extends Transaction, WithSender, WithChainId {
-  type: TransactionType.Reissue
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IReissueTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
+  type: TRANSACTION_TYPE.REISSUE
   assetId: string
-  quantity: long
+  quantity: LONG
   reissuable: boolean
 }
 
-export interface BurnTransaction extends Transaction, WithSender, WithChainId {
-  type: TransactionType.Burn
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IBurnTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
+  type: TRANSACTION_TYPE.BURN
   assetId: string
-  quantity: long
+  quantity: LONG
 }
 
-export interface LeaseTransaction extends Transaction, WithSender {
-  type: TransactionType.Lease
-  amount: long
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ILeaseTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.LEASE
+  amount: LONG
   recipient: string
 }
 
-export interface CancelLeaseTransaction extends Transaction, WithSender, WithChainId {
-  type: TransactionType.CancelLease
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ICancelLeaseTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
+  type: TRANSACTION_TYPE.CANCEL_LEASE
   leaseId: string
 }
 
-export interface AliasTransaction extends Transaction, WithSender {
-  type: TransactionType.Alias
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IAliasTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.ALIAS
   alias: string
 }
 
-export interface MassTransferTransaction extends Transaction, WithSender {
-  type: TransactionType.MassTransfer
-  transfers: Transfer[]
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IMassTransferTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.MASS_TRANSFER
+  transfers: IMassTransferItem<LONG>[]
   assetId?: string
   attachment?: string
 }
@@ -139,22 +180,192 @@ export interface DataEntry {
   type: DataType
   value: string | number | boolean
 }
-export interface DataTransaction extends Transaction, WithSender {
-  type: TransactionType.Data
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IDataTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.DATA
   data: DataEntry[]
 }
 
-export interface Order extends WithSender, WithProofs {
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IOrder<LONG = string | number> extends WithSender, WithProofs {
   id: string
   orderType: 'buy' | 'sell'
   assetPair: {
     amountAsset?: string
     priceAsset?: string
   }
-  price: long
-  amount: long
+  price: LONG
+  amount: LONG
   timestamp: number
   expiration: number
   matcherFee: number
   matcherPublicKey: string
+}
+
+//////////////params
+export type TTxParams<LONG = string | number> =
+  | IAliasParams<LONG>
+  | IBurnParams<LONG>
+  | ICancelLeaseParams<LONG>
+  | IDataParams<LONG>
+  | IIssueParams<LONG>
+  | ILeaseParams<LONG>
+  | IMassTransferParams<LONG>
+  | IReissueParams<LONG>
+  | ISetAssetScriptParams<LONG>
+  | ISetScriptParams<LONG>
+  | ITransferParams<LONG>
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IAliasParams<LONG = string | number> {
+  alias: string
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IBurnParams<LONG = string | number> {
+  assetId: string
+  quantity: LONG
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ICancelLeaseParams<LONG = string | number> {
+  leaseId: string
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IDataParams<LONG = string | number> {
+  data: Array<DataEntry | TypelessDataEntry>
+  fee?: LONG,
+  timestamp?: number
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IIssueParams<LONG = string | number> {
+  name: string
+  description: string
+  decimals?: number
+  quantity: LONG
+  reissuable?: boolean
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  script?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ILeaseParams<LONG = string | number> {
+  recipient: string
+  amount: LONG
+  fee?: LONG
+  timestamp?: number
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IMassTransferParams<LONG = string | number> {
+  transfers: IMassTransferItem[]
+  attachment?: string
+  assetId?: string
+  fee?: LONG
+  timestamp?: number
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IOrderParams<LONG = string | number> {
+  matcherPublicKey: string
+  price: LONG
+  amount: LONG
+  orderType: 'buy' | 'sell',
+  amountAsset?: string
+  priceAsset?: string
+  senderPublicKey?: string
+  matcherFee?: number
+  timestamp?: number
+  expiration?: number
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IReissueParams<LONG = string | number> {
+  assetId: string
+  quantity: LONG
+  reissuable: boolean
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ISetAssetScriptParams<LONG = string | number> {
+  script: string | null
+  assetId: string
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ISetScriptParams<LONG = string | number> {
+  script: string | null
+  fee?: LONG
+  timestamp?: number
+  chainId?: string
+  senderPublicKey?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface ITransferParams<LONG = string | number> {
+  recipient: string
+  amount: LONG
+  attachment?: string
+  feeAssetId?: string
+  assetId?: string
+  fee?: LONG
+  timestamp?: number
+  senderPublicKey?: string
 }

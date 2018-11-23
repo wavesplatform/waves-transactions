@@ -1,6 +1,6 @@
 import { verifySignature, publicKey, } from 'waves-crypto'
 import { setScript } from '../../src'
-import { SetScriptTransaction } from '../../src/transactions'
+import { ISetScriptTransaction } from '../../src/transactions'
 import { setScriptToBytes } from '../../src/transactions/set-script'
 
 describe('setScript', () => {
@@ -78,7 +78,7 @@ describe('setScript', () => {
   })
 })
 
-function validateSetScriptTx(tx: SetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
+function validateSetScriptTx(tx: ISetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
   const bytes = setScriptToBytes(tx)
   return verifySignature(publicKey || tx.senderPublicKey, bytes, tx.proofs[proofNumber]!)
 }

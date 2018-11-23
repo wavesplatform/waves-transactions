@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetAssetScriptTransaction.json#/definitions/TRANSACTION_TYPE.SET_ASSET_SCRIPT"
+    },
+    "assetId": {
+      "type": "string"
+    },
+    "script": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetAssetScriptTransaction.json#/definitions/LONG"
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "ITransaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senderPublicKey": {
+      "type": "string"
+    },
+    "chainId": {
+      "description": "Network byte",
+      "minLength": 1,
+      "maxLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "assetId",
+    "chainId",
+    "fee",
+    "id",
+    "proofs",
+    "script",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TRANSACTION_TYPE.SET_ASSET_SCRIPT": {
+      "type": "number",
+      "enum": [
+        15
+      ]
+    },
+    "LONG": {
+      "type": "object"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetAssetScriptTransaction.json"
+}

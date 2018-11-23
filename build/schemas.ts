@@ -4,19 +4,19 @@ import { writeFile } from 'fs-extra'
 import * as TJS from 'typescript-json-schema'
 
 export const TYPES = [
-  'Tx',
-  'AliasTransaction',
-  'IssueTransaction',
-  'TransferTransaction',
-  'ReissueTransaction',
-  'BurnTransaction',
-  'LeaseTransaction',
-  'CancelLeaseTransaction',
-  'MassTransferTransaction',
-  'SetScriptTransaction',
-  'SetAssetScriptTransaction',
-  'DataTransaction',
-  'Order',
+  'TTx',
+  'IAliasTransaction',
+  'IIssueTransaction',
+  'ITransferTransaction',
+  'IReissueTransaction',
+  'IBurnTransaction',
+  'ILeaseTransaction',
+  'ICancelLeaseTransaction',
+  'IMassTransferTransaction',
+  'ISetScriptTransaction',
+  'ISetAssetScriptTransaction',
+  'IDataTransaction',
+  'IOrder',
 ]
 
 export function buildSchemas() {
@@ -31,6 +31,11 @@ export function buildSchemas() {
   // optionally pass ts compiler options
   const compilerOptions: TJS.CompilerOptions = {
     strictNullChecks: true,
+    resolveJsonModule: true,
+    allowSyntheticDefaultImports: true,
+    lib: [
+      'esnext'
+    ]
   }
 
   const program = TJS.getProgramFromFiles([resolve('src/transactions.ts')], compilerOptions)
@@ -56,3 +61,5 @@ export default {
     console.log('Manifest has been written')
   })
 }
+
+//buildSchemas()

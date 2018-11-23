@@ -1,26 +1,17 @@
-import { TransactionType, BurnTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
+import { SeedTypes } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
 import { validators } from '../schemas'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 
-
-export interface BurnParams extends Params {
-  assetId: string
-  quantity: long
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
-
-export const burnValidation = (tx: BurnTransaction): ValidationResult => [
+export const burnValidation = (tx: IBurnTransaction): ValidationResult => [
   noError,
 ]
 
-export const burnToBytes = (tx: BurnTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Burn, tx.version, tx.chainId.charCodeAt(0)]),
+export const burnToBytes = (tx: IBurnTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.BURN, tx.version, tx.chainId.charCodeAt(0)]),
   BASE58_STRING(tx.senderPublicKey),
   BASE58_STRING(tx.assetId),
   LONG(tx.quantity),
@@ -29,13 +20,13 @@ export const burnToBytes = (tx: BurnTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function burn(paramsOrTx: BurnParams | BurnTransaction, seed?: SeedTypes): BurnTransaction {
+export function burn(paramsOrTx: IBurnParams | IBurnTransaction, seed?: SeedTypes): IBurnTransaction {
   const { nextSeed } = pullSeedAndIndex(seed)
 
   const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
 
-  const tx: BurnTransaction = {
-    type: TransactionType.Burn,
+  const tx: IBurnTransaction = {
+    type: TRANSACTION_TYPE.BURN,
     version: 2,
     chainId: 'W',
     fee: 100000,
@@ -47,7 +38,7 @@ export function burn(paramsOrTx: BurnParams | BurnTransaction, seed?: SeedTypes)
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.BurnTransaction),
+    generalValidation(tx, validators.IBurnTransaction),
     burnValidation(tx)
   )
 
