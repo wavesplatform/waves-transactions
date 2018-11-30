@@ -38,12 +38,14 @@ export function buildSchemas() {
     ]
   }
 
-  const program = TJS.getProgramFromFiles([resolve('src/transactions.ts')], compilerOptions)
+  const program = TJS.getProgramFromFiles([resolve('dist/transactions.d.ts')], compilerOptions)
 
 
   TYPES.forEach(type => {
     const id = `https://github.com/github/ebceu4/blob/master/src/schemas/${type}.json`
-    const schema = TJS.generateSchema(program, type, { ...settings, id })
+    let schema = TJS.generateSchema(program, type, { ...settings, id })
+    //Define generic LONG as string | number in JSON schema. Otherwise ot would be object. Should probably pass param that defines LONG schema;
+    schema!.definitions = {...schema!.definitions,  LONG:{type:['string', 'number']}};
     const filePath = `src/schemas/${type}.json`
     const fileContent = JSON.stringify(schema, null, 2)
     writeFile(filePath, fileContent, (err) => {
@@ -62,4 +64,4 @@ export default {
   })
 }
 
-//buildSchemas()
+buildSchemas()

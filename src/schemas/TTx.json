@@ -87,7 +87,10 @@
       ]
     },
     "LONG": {
-      "type": "object"
+      "type": [
+        "string",
+        "number"
+      ]
     },
     "IIssueTransaction<LONG>": {
       "type": "object",

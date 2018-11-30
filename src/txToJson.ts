@@ -2,7 +2,6 @@ import { schemaByTransactionType } from './schemas'
 import { TTx } from './transactions'
 
 const isLongType = (type:any) => {
-  return type === 'object'
   if (typeof type !== 'object' || type.length !== 2) return false
   return type[0]==='string' && type[1]==='number'
 }
