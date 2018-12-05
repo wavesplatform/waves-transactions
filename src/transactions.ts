@@ -106,8 +106,8 @@ export interface ITransferTransaction<LONG = string | number> extends ITransacti
   type: TRANSACTION_TYPE.TRANSFER
   recipient: string
   amount: LONG
-  feeAssetId?: string
-  assetId?: string
+  feeAssetId?: string | null
+  assetId?: string | null
   attachment?: string
 }
 
@@ -169,7 +169,7 @@ export interface IAliasTransaction<LONG = string | number> extends ITransaction<
 export interface IMassTransferTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
   type: TRANSACTION_TYPE.MASS_TRANSFER
   transfers: IMassTransferItem<LONG>[]
-  assetId?: string
+  assetId?: string | null
   attachment?: string
 }
 

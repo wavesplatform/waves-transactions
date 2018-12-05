@@ -4,7 +4,6 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 
 
@@ -39,7 +38,6 @@ export function cancelLease(paramsOrTx: ICancelLeaseParams | ICancelLeaseTransac
     }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.ICancelLeaseTransaction),
     cancelLeaseValidation(tx)
   )
 

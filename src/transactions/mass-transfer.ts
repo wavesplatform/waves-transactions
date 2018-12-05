@@ -16,7 +16,6 @@ import {
   STRING
 } from 'waves-crypto'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 
 
@@ -55,7 +54,6 @@ export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTran
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.IMassTransferTransaction),
     massTransferValidation(tx)
   )
 

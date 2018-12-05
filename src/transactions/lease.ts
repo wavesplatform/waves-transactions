@@ -4,7 +4,6 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 export const leaseValidation = (tx: ILeaseTransaction): ValidationResult => []
 
@@ -35,7 +34,6 @@ export function lease(paramsOrTx: ILeaseParams | ILeaseTransaction, seed?: SeedT
     }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.ILeaseTransaction),
     leaseValidation(tx)
   )
 

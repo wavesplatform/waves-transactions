@@ -38,7 +38,7 @@ export function buildSchemas() {
     ]
   }
 
-  const program = TJS.getProgramFromFiles([resolve('dist/transactions.d.ts')], compilerOptions)
+  const program = TJS.getProgramFromFiles([resolve('src/transactions.ts')], compilerOptions)
 
 
   TYPES.forEach(type => {

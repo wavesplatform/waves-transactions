@@ -4,9 +4,6 @@ import { IOrder, IOrderParams } from '../transactions'
 import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
-
-
 
 export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
 
@@ -105,7 +102,6 @@ export function order(paramsOrOrder: IOrderParams | IOrder, seed?: SeedTypes): I
   }
 
   raiseValidationErrors(
-    generalValidation(ord, validators.IOrder),
     orderValidation(ord)
   )
 

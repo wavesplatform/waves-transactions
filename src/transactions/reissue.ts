@@ -4,7 +4,6 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../gene
 import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 export const reissueValidation = (tx: IReissueTransaction): ValidationResult => [
   noError,
@@ -39,7 +38,6 @@ export function reissue(paramsOrTx: IReissueParams | IReissueTransaction, seed?:
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.IReissueTransaction),
     reissueValidation(tx)
 )
   const bytes = reissueToBytes(tx)

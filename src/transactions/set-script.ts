@@ -15,7 +15,6 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix }
 import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 
 export const setScriptValidation = (tx: ISetScriptTransaction): ValidationResult => [
@@ -52,7 +51,6 @@ export function setScript(paramsOrTx: ISetScriptParams | ISetScriptTransaction, 
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.ISetScriptTransaction),
     setScriptValidation(tx)
   )
 

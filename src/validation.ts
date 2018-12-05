@@ -4,12 +4,10 @@ import { IOrder, TTx } from "./transactions";
 
 
 export function generalValidation(tx: TTx | IOrder, validate: ValidateFunction): ValidationResult {
-  const valid = validate(tx)
-//  console.log(validate.errors)
-  return [noError]
-  // return valid || validate.errors == null
-  //   ? [noError]
-  //   : validate.errors.map(value => JSON.stringify(value,null, 2))
+  const valid = validate(tx);
+  return valid || validate.errors == null
+    ? [noError]
+    : validate.errors.map(value => JSON.stringify(value,null, 2))
 }
 
 export function raiseValidationErrors(...result: ValidationResult[]) {

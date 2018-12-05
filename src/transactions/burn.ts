@@ -3,7 +3,6 @@ import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 
 export const burnValidation = (tx: IBurnTransaction): ValidationResult => [
@@ -38,7 +37,6 @@ export function burn(paramsOrTx: IBurnParams | IBurnTransaction, seed?: SeedType
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.IBurnTransaction),
     burnValidation(tx)
   )
 

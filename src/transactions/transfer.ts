@@ -3,7 +3,6 @@ import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashB
 import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
 import { SeedTypes } from '../types'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 
 export const transferToBytes = (tx: ITransferTransaction) => concat(
@@ -39,7 +38,6 @@ export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, see
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.ITransferTransaction),
     transferValidation(tx)
   )
 

@@ -179,10 +179,16 @@
           "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/LONG"
         },
         "feeAssetId": {
-          "type": "string"
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "assetId": {
-          "type": "string"
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "attachment": {
           "type": "string"
@@ -484,7 +490,10 @@
           }
         },
         "assetId": {
-          "type": "string"
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "attachment": {
           "type": "string"

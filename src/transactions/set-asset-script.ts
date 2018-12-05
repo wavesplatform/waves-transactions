@@ -15,7 +15,6 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix }
 import { SeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 export const setAssetScriptValidation = (tx: ISetAssetScriptTransaction): ValidationResult => [
   noError,
@@ -51,7 +50,6 @@ export function setAssetScript(paramsOrTx: ISetAssetScriptParams | ISetAssetScri
   }
 
   raiseValidationErrors(
-    generalValidation(tx, validators.ISetAssetScriptTransaction),
     setAssetScriptValidation(tx)
   )
 

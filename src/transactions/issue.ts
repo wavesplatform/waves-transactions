@@ -17,7 +17,6 @@ import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix }
 import { SeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
 import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
 
 
 
@@ -58,7 +57,6 @@ export function issue(paramsOrTx: IIssueParams | IIssueTransaction, seed?: SeedT
     }
 
     raiseValidationErrors(
-      generalValidation(tx, validators.IIssueTransaction),
       issueValidation(tx)
     )
 

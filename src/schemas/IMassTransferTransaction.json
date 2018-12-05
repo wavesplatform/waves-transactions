@@ -11,7 +11,10 @@
       }
     },
     "assetId": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "attachment": {
       "type": "string"
