@@ -1,4 +1,4 @@
-import Ajv from 'ajv'
+import Ajv = require("ajv");
 import { TRANSACTION_TYPE } from '../transactions'
 import schemas from './manifest'
 
