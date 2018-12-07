@@ -1,48 +1,51 @@
-import { OrderParams } from '../src/transactions/order'
-import { TRANSACTION_TYPE } from '../src/transactions'
-import { SetScriptParams } from '../src/transactions/set-script'
-import { TransferParams } from '../src/transactions/transfer'
-import { SetAssetScriptParams } from "../src/transactions/set-asset-script";
+import {
+  IAliasParams,
+  IBurnParams,
+  ICancelLeaseParams, IDataParams, IIssueParams,
+  ILeaseParams,
+  IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
+  TRANSACTION_TYPE
+} from '../src/transactions'
 
-export const aliasMinimalParams = {
+export const aliasMinimalParams: IAliasParams = {
   alias: 'MyTestAlias',
 }
 
-export const burnMinimalParams = {
-  assetId: 'test',
+export const burnMinimalParams: IBurnParams = {
+  assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
   quantity: 10000,
 }
 
-export const leaseMinimalParams = {
-  recipient: 'sssss',
+export const leaseMinimalParams: ILeaseParams = {
+  recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
   amount: 10000,
 }
 
-export const cancelLeaseMinimalParams = {
-  leaseId: 'test',
+export const cancelLeaseMinimalParams: ICancelLeaseParams = {
+  leaseId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
 }
 
-export const massTransferMinimalParams = {
+export const massTransferMinimalParams: IMassTransferParams = {
   transfers: [
     {
-      recipient: 'aaa',
+      recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
       amount: 10000,
     },
     {
-      recipient: 'aab',
+      recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
       amount: 10000,
     },
   ],
 }
 
-export const orderMinimalParams: OrderParams = {
-  matcherPublicKey: 'aaaa',
+export const orderMinimalParams: IOrderParams = {
+  matcherPublicKey: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
   price: 10000,
   amount: 1233,
   orderType: 'buy',
 }
 
-export const dataMinimalParams = {
+export const dataMinimalParams: IDataParams = {
   data: [
     {
       key: 'someparam',
@@ -58,29 +61,28 @@ export const dataMinimalParams = {
   ],
 }
 
-export const reissueMinimalParams = {
-  assetId: 'test',
+export const reissueMinimalParams: IReissueParams = {
+  assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
   quantity: 10000,
   reissuable: false,
 }
 
-export const issueMinimalParams = {
-  assetId: 'test',
+export const issueMinimalParams: IIssueParams = {
   quantity: 10000,
   name: 'test',
   description: 'tratata',
 }
 
-export const transferMinimalParams: TransferParams = {
-  recipient: 'aaaa',
+export const transferMinimalParams: ITransferParams = {
+  recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
   amount: 10000,
 }
 
-export const setScriptMinimalParams: SetScriptParams = {
+export const setScriptMinimalParams: ISetScriptParams = {
   script: 'AQa3b8tH',
 }
 
-export const setAssetScriptMinimalParams: SetAssetScriptParams = {
+export const setAssetScriptMinimalParams: ISetAssetScriptParams = {
   script: 'AQa3b8tH',
   assetId: ''
 }

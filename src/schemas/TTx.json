@@ -44,9 +44,6 @@
         "alias": {
           "type": "string"
         },
-        "id": {
-          "type": "string"
-        },
         "timestamp": {
           "type": "number"
         },
@@ -72,7 +69,6 @@
       "required": [
         "alias",
         "fee",
-        "id",
         "proofs",
         "senderPublicKey",
         "timestamp",
@@ -119,9 +115,6 @@
         "script": {
           "type": "string"
         },
-        "id": {
-          "type": "string"
-        },
         "timestamp": {
           "type": "number"
         },
@@ -149,7 +142,6 @@
         "decimals",
         "description",
         "fee",
-        "id",
         "name",
         "proofs",
         "quantity",
@@ -178,6 +170,9 @@
         "amount": {
           "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/LONG"
         },
+        "attachment": {
+          "type": "string"
+        },
         "feeAssetId": {
           "type": [
             "null",
@@ -189,12 +184,6 @@
             "null",
             "string"
           ]
-        },
-        "attachment": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
         },
         "timestamp": {
           "type": "number"
@@ -220,8 +209,8 @@
       },
       "required": [
         "amount",
+        "attachment",
         "fee",
-        "id",
         "proofs",
         "recipient",
         "senderPublicKey",
@@ -251,9 +240,6 @@
         "reissuable": {
           "type": "boolean"
         },
-        "id": {
-          "type": "string"
-        },
         "timestamp": {
           "type": "number"
         },
@@ -286,7 +272,6 @@
         "assetId",
         "chainId",
         "fee",
-        "id",
         "proofs",
         "quantity",
         "reissuable",
@@ -314,9 +299,6 @@
         "quantity": {
           "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/LONG"
         },
-        "id": {
-          "type": "string"
-        },
         "timestamp": {
           "type": "number"
         },
@@ -349,7 +331,6 @@
         "assetId",
         "chainId",
         "fee",
-        "id",
         "proofs",
         "quantity",
         "senderPublicKey",
@@ -374,9 +355,6 @@
           "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/LONG"
         },
         "recipient": {
-          "type": "string"
-        },
-        "id": {
           "type": "string"
         },
         "timestamp": {
@@ -404,7 +382,6 @@
       "required": [
         "amount",
         "fee",
-        "id",
         "proofs",
         "recipient",
         "senderPublicKey",
@@ -426,9 +403,6 @@
           "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.CANCEL_LEASE"
         },
         "leaseId": {
-          "type": "string"
-        },
-        "id": {
           "type": "string"
         },
         "timestamp": {
@@ -462,7 +436,6 @@
       "required": [
         "chainId",
         "fee",
-        "id",
         "leaseId",
         "proofs",
         "senderPublicKey",
@@ -489,17 +462,14 @@
             "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/IMassTransferItem<LONG>"
           }
         },
+        "attachment": {
+          "type": "string"
+        },
         "assetId": {
           "type": [
             "null",
             "string"
           ]
-        },
-        "attachment": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
         },
         "timestamp": {
           "type": "number"
@@ -524,8 +494,8 @@
         }
       },
       "required": [
+        "attachment",
         "fee",
-        "id",
         "proofs",
         "senderPublicKey",
         "timestamp",
@@ -567,9 +537,6 @@
             "string"
           ]
         },
-        "id": {
-          "type": "string"
-        },
         "timestamp": {
           "type": "number"
         },
@@ -601,7 +568,6 @@
       "required": [
         "chainId",
         "fee",
-        "id",
         "proofs",
         "script",
         "senderPublicKey",
@@ -628,9 +594,6 @@
             "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/DataEntry"
           }
         },
-        "id": {
-          "type": "string"
-        },
         "timestamp": {
           "type": "number"
         },
@@ -656,7 +619,6 @@
       "required": [
         "data",
         "fee",
-        "id",
         "proofs",
         "senderPublicKey",
         "timestamp",
@@ -677,7 +639,7 @@
           "type": "string"
         },
         "type": {
-          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/DataType"
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/DATA_FIELD_TYPE"
         },
         "value": {
           "type": [
@@ -693,7 +655,7 @@
         "value"
       ]
     },
-    "DataType": {
+    "DATA_FIELD_TYPE": {
       "enum": [
         "binary",
         "boolean",
@@ -716,9 +678,6 @@
             "null",
             "string"
           ]
-        },
-        "id": {
-          "type": "string"
         },
         "timestamp": {
           "type": "number"
@@ -752,7 +711,6 @@
         "assetId",
         "chainId",
         "fee",
-        "id",
         "proofs",
         "script",
         "senderPublicKey",

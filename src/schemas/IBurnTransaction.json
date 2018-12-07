@@ -10,9 +10,6 @@
     "quantity": {
       "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IBurnTransaction.json#/definitions/LONG"
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -45,7 +42,6 @@
     "assetId",
     "chainId",
     "fee",
-    "id",
     "proofs",
     "quantity",
     "senderPublicKey",

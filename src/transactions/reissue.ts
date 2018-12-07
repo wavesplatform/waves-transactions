@@ -2,12 +2,8 @@ import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId } from '.
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
-export const reissueValidation = (tx: IReissueTransaction): ValidationResult => [
-  noError,
-]
 
 export const reissueToBytes = (tx: IReissueTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.REISSUE, tx.version, tx.chainId.charCodeAt(0)]),

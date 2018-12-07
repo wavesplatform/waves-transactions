@@ -27,12 +27,14 @@ import { data, dataToBytes } from './transactions/data'
 import { massTransfer, massTransferToBytes } from './transactions/mass-transfer'
 import { alias, aliasToBytes } from './transactions/alias'
 import { setScript, setScriptToBytes } from './transactions/set-script'
-import { isOrder, orderToBytes } from './transactions/order'
+import { orderToBytes } from './transactions/order'
+import { isOrder} from "./generic";
 import { txToJson } from './txToJson'
 import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-script";
 
-export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
-export type WithTxType = { type: TRANSACTION_TYPE}
+export interface WithTxType {
+  type: TRANSACTION_TYPE
+}
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx, serialize: (obj: TTx | IOrder) => Uint8Array } } = {
   [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction, seed), serialize: (x) => issueToBytes(x as IIssueTransaction) },
@@ -52,46 +54,16 @@ export const signTx = (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes): TTx 
   if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
-}
+};
 
 export const serialize = (obj: TTx | IOrder): Uint8Array => {
   if (isOrder(obj)) return orderToBytes(obj)
   if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj.type}`)
 
   return txTypeMap[obj.type].serialize(obj)
-}
+};
 
 export const broadcast = (tx: TTx, apiBase: string) =>
   axios.post('transactions/broadcast', txToJson(tx), { baseURL: apiBase, headers: { 'content-type': 'application/json' } })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
-
-
-export const delay = (timeout: number): CancellablePromise<{}> => {
-  const t: any = {}
-  const p = new Promise((resolve, _) => {
-    t.resolve = resolve
-    t.id = setTimeout(() => resolve(), timeout)
-  }) as any
-  (<any>p).cancel = () => { t.resolve(); clearTimeout(t.id) }
-  return p
-}
-
-export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<TTx> => {
-  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
-    .then(x => x.data).catch(_ => delay(1000).then(_ => promise()))
-
-  const t = delay(timeout)
-  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as TTx
-  t.cancel()
-  return r
-}
-
-// export function getFee(tx: TTxParams & WithTxType){
-//   switch (tx.type) {
-//     case TRANSACTION_TYPE.ALIAS:
-//       return 100000;
-//     default:
-//       throw new Error(`Unknown tx type: ${tx.type}`)
-//   }
-// }

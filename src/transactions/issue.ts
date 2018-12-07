@@ -15,10 +15,7 @@ import {
 } from 'waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs } from '../generic'
 import { TSeedTypes } from '../types'
-import { ValidationResult } from 'waves-crypto/validation'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
-
-export const issueValidation = (tx: IIssueTransaction): ValidationResult => []
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export const issueToBytes = (tx: IIssueTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.ISSUE, tx.version, tx.chainId.charCodeAt(0)]),

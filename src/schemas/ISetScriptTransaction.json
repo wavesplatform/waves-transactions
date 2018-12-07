@@ -10,9 +10,6 @@
         "string"
       ]
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -44,7 +41,6 @@
   "required": [
     "chainId",
     "fee",
-    "id",
     "proofs",
     "script",
     "senderPublicKey",

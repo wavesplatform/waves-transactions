@@ -10,9 +10,6 @@
     "recipient": {
       "type": "string"
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -38,7 +35,6 @@
   "required": [
     "amount",
     "fee",
-    "id",
     "proofs",
     "recipient",
     "senderPublicKey",

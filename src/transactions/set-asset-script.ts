@@ -13,12 +13,7 @@ import {
 } from 'waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs } from '../generic'
 import { TSeedTypes } from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
-
-export const setAssetScriptValidation = (tx: ISetAssetScriptTransaction): ValidationResult => [
-  noError,
-]
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export const setAssetScriptToBytes = (tx: ISetAssetScriptTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.SET_ASSET_SCRIPT, tx.version, tx.chainId.charCodeAt(0)]),

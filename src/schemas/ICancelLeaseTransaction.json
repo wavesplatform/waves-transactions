@@ -7,9 +7,6 @@
     "leaseId": {
       "type": "string"
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -41,7 +38,6 @@
   "required": [
     "chainId",
     "fee",
-    "id",
     "leaseId",
     "proofs",
     "senderPublicKey",

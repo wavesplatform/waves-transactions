@@ -10,9 +10,6 @@
         "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DataEntry"
       }
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -38,7 +35,6 @@
   "required": [
     "data",
     "fee",
-    "id",
     "proofs",
     "senderPublicKey",
     "timestamp",
@@ -59,7 +55,7 @@
           "type": "string"
         },
         "type": {
-          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DataType"
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DATA_FIELD_TYPE"
         },
         "value": {
           "type": [
@@ -75,7 +71,7 @@
         "value"
       ]
     },
-    "DataType": {
+    "DATA_FIELD_TYPE": {
       "enum": [
         "binary",
         "boolean",

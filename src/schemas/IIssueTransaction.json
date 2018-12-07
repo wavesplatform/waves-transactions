@@ -25,9 +25,6 @@
     "script": {
       "type": "string"
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -55,7 +52,6 @@
     "decimals",
     "description",
     "fee",
-    "id",
     "name",
     "proofs",
     "quantity",

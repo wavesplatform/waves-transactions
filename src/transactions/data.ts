@@ -12,11 +12,10 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { IDataTransaction, TRANSACTION_TYPE, DataEntry, DataType, IDataParams, WithId } from '../transactions'
+import { IDataTransaction, TRANSACTION_TYPE, DataEntry, DATA_FIELD_TYPE, IDataParams, WithId } from '../transactions'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { ValidationResult } from 'waves-crypto/validation'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export interface TypelessDataEntry {
   key: string
@@ -34,10 +33,9 @@ const typeMap: any = {
   _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T): [DataType, number, serializer<T>] =>
+const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, serializer<T>] =>
   typeMap[typeof value] || typeMap['_']
 
-export const dataValidation = (tx: IDataTransaction): ValidationResult => []
 
 export const dataToBytes = (tx: IDataTransaction): Uint8Array => concat(
   BYTE(TRANSACTION_TYPE.DATA),

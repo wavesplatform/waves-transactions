@@ -1,5 +1,5 @@
 import { IAliasParams, IAliasTransaction, TRANSACTION_TYPE, WithId, WithSender } from '../transactions'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 import { BASE58_STRING, BYTES, concat, hashBytes, LEN, LONG, SHORT, signBytes, STRING } from 'waves-crypto'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
@@ -28,7 +28,7 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
     alias: paramsOrTx.alias,
     fee: paramsOrTx.fee || 100000,
     timestamp: paramsOrTx.timestamp || Date.now(),
-    proofs: [] || paramsOrTx.proofs,
+    proofs: paramsOrTx.proofs || [],
     id: ''
   };
 

@@ -10,17 +10,14 @@
         "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IMassTransferTransaction.json#/definitions/IMassTransferItem<LONG>"
       }
     },
+    "attachment": {
+      "type": "string"
+    },
     "assetId": {
       "type": [
         "null",
         "string"
       ]
-    },
-    "attachment": {
-      "type": "string"
-    },
-    "id": {
-      "type": "string"
     },
     "timestamp": {
       "type": "number"
@@ -45,8 +42,8 @@
     }
   },
   "required": [
+    "attachment",
     "fee",
-    "id",
     "proofs",
     "senderPublicKey",
     "timestamp",

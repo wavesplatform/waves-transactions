@@ -7,9 +7,6 @@
     "alias": {
       "type": "string"
     },
-    "id": {
-      "type": "string"
-    },
     "timestamp": {
       "type": "number"
     },
@@ -35,7 +32,6 @@
   "required": [
     "alias",
     "fee",
-    "id",
     "proofs",
     "senderPublicKey",
     "timestamp",

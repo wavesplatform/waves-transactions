@@ -2,8 +2,7 @@ import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId } from 
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
-
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export const transferToBytes = (tx: ITransferTransaction) => concat(
   BYTE(TRANSACTION_TYPE.TRANSFER),
@@ -18,8 +17,6 @@ export const transferToBytes = (tx: ITransferTransaction) => concat(
   LEN(SHORT)(STRING)(tx.attachment)
 )
 
-export const transferValidation = (tx: ITransferTransaction) => []
-
 /* @echo DOCS */
 export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction {
   const seedsAndIndexes = convertToPairs(seed);
@@ -30,6 +27,7 @@ export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, see
     version: 2,
     fee: 100000,
     senderPublicKey,
+    attachment: paramsOrTx.attachment || '',
     timestamp: Date.now(),
     proofs: [],
     id: '',

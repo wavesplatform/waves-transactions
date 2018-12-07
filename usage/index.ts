@@ -31,10 +31,6 @@ const _DOCS = `/**
 <!-- @echo OUTPUT -->
  * \`\`\`
  *
- * @param seed
- * @param paramsOrTx
- * @returns
- *
  */`
 
 function use(filename: string) {

@@ -1,5 +1,5 @@
 import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams, WithId } from '../transactions'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
 import { TSeedTypes } from '../types'

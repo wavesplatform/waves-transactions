@@ -1,13 +1,8 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
-import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
 import { IOrder, IOrderParams } from '../transactions'
 import { TSeedTypes } from '../types'
-import { ValidationResult } from 'waves-crypto/validation'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
-
-export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
-
-export const orderValidation = (ord: IOrder): ValidationResult => []
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export const orderToBytes = (ord: IOrder) => concat(
   BASE58_STRING(ord.senderPublicKey),

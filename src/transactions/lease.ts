@@ -2,10 +2,7 @@ import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId } from '../tr
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { ValidationResult } from 'waves-crypto/validation'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
-
-export const leaseValidation = (tx: ILeaseTransaction): ValidationResult => []
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export const leaseToBytes = (tx: ILeaseTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.LEASE, tx.version, 0]),

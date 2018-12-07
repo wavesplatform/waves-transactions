@@ -10,6 +10,9 @@
     "amount": {
       "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ITransferTransaction.json#/definitions/LONG"
     },
+    "attachment": {
+      "type": "string"
+    },
     "feeAssetId": {
       "type": [
         "null",
@@ -21,12 +24,6 @@
         "null",
         "string"
       ]
-    },
-    "attachment": {
-      "type": "string"
-    },
-    "id": {
-      "type": "string"
     },
     "timestamp": {
       "type": "number"
@@ -52,8 +49,8 @@
   },
   "required": [
     "amount",
+    "attachment",
     "fee",
-    "id",
     "proofs",
     "recipient",
     "senderPublicKey",

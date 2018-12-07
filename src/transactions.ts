@@ -18,6 +18,13 @@ export enum TRANSACTION_TYPE {
   SET_ASSET_SCRIPT = 15,
 }
 
+export enum DATA_FIELD_TYPE {
+  INTEGER = 'integer',
+  BOOLEAN = 'boolean',
+  STRING = 'string',
+  BINARY = 'binary'
+}
+
 export interface WithProofs {
   /**
    * ITransaction signatures
@@ -37,7 +44,7 @@ export interface WithChainId {
 }
 
 /**
- * Has id field that equals to hashbytes of this object
+ * Has 'id' field. 32 bytes object hash encoded as base58 string
  */
 export interface WithId {
   /**
@@ -116,9 +123,9 @@ export interface ITransferTransaction<LONG = string | number> extends ITransacti
   type: TRANSACTION_TYPE.TRANSFER
   recipient: string
   amount: LONG
+  attachment: string
   feeAssetId?: string | null
   assetId?: string | null
-  attachment?: string
 }
 
 /**
@@ -179,15 +186,13 @@ export interface IAliasTransaction<LONG = string | number> extends ITransaction<
 export interface IMassTransferTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
   type: TRANSACTION_TYPE.MASS_TRANSFER
   transfers: IMassTransferItem<LONG>[]
+  attachment: string
   assetId?: string | null
-  attachment?: string
 }
-
-export type DataType = 'integer' | 'boolean' | 'string' | 'binary'
 
 export interface DataEntry {
   key: string
-  type: DataType
+  type: DATA_FIELD_TYPE
   value: string | number | boolean
 }
 

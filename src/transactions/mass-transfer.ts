@@ -7,7 +7,6 @@ import {
 } from '../transactions'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
 import {
   BASE58_STRING,
   BYTE,
@@ -21,13 +20,7 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
-
-
-
-export const massTransferValidation = (tx: IMassTransferTransaction): ValidationResult => [
-  noError,
-]
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array => concat(
   BYTE(TRANSACTION_TYPE.MASS_TRANSFER),
@@ -53,6 +46,7 @@ export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTran
     fee: (100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
     senderPublicKey,
     timestamp: Date.now(),
+    attachment: paramsOrTx.attachment || '',
     proofs: [],
     id: '', //TODO: invalid id for masstransfer tx
     ...paramsOrTx,

@@ -1,6 +1,7 @@
 import { WithProofs, TTxParams, IOrderParams, TTx, IOrder } from './transactions'
 import { TSeedTypes } from './types'
 import { publicKey } from 'waves-crypto'
+import axios from "axios";
 
 export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: TTxParams | TTx | IOrderParams | IOrder) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
@@ -40,4 +41,29 @@ export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefine
     const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort();
     return keys.map(k => [seedObj[k], k] as [string, number])
   }
+}
+
+export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined;
+
+
+export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
+
+export const delay = (timeout: number): CancellablePromise<{}> => {
+  const t: any = {}
+  const p = new Promise((resolve, _) => {
+    t.resolve = resolve
+    t.id = setTimeout(() => resolve(), timeout)
+  }) as any
+  (<any>p).cancel = () => { t.resolve(); clearTimeout(t.id) }
+  return p
+}
+
+export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<TTx> => {
+  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
+    .then(x => x.data).catch(_ => delay(1000).then(_ => promise()))
+
+  const t = delay(timeout)
+  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as TTx
+  t.cancel()
+  return r
 }
