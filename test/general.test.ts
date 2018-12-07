@@ -1,9 +1,10 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue, signTx, data } from '../src'
 import { broadcast, serialize } from '../src/general'
-import { reissueMinimalParams } from './minimalParams'
+import { reissueMinimalParams, burnMinimalParams } from './minimalParams'
 import { TTx } from '../src/transactions'
 import { exampleTxs } from './exampleTxs'
+import { burn } from "../src/transactions/burn";
 
 describe('signTx', () => {
 
@@ -21,6 +22,11 @@ describe('signTx', () => {
   it('should throw on no public key or seed', () => {
     const tx = () => reissue({ ...reissueMinimalParams })
     expect(tx).toThrow('Please provide either seed or senderPublicKey')
+  })
+
+  it('should add additional fee to auto calculated one', () => {
+    const tx = burn({ ...burnMinimalParams, additionalFee: 100000 }, stringSeed)
+    expect(tx.fee).toEqual(200000)
   })
 
   it('should throw when index already exists', () => {

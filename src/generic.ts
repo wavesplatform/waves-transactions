@@ -1,4 +1,4 @@
-import { WithProofs, TTxParams, IOrderParams, TTx, IOrder } from './transactions'
+import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams } from './transactions'
 import { TSeedTypes } from './types'
 import { publicKey } from 'waves-crypto'
 import axios from "axios";
@@ -77,4 +77,10 @@ export function networkByte(p: number|string|undefined, def: number): number {
     default:
       return def
   }
+}
+
+export function fee(params: IBasicParams, def: number){
+  if (params.fee) return params.fee;
+  if (!params.additionalFee) return def;
+  return def + params.additionalFee
 }

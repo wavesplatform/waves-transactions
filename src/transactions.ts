@@ -235,7 +235,7 @@ export type TTxParams<LONG = string | number> =
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IBasicParams<LONG> {
+export interface IBasicParams<LONG = string | number> {
   /**
    * Transaction fee. If not set, fee will be calculated automatically
    */
@@ -244,7 +244,7 @@ export interface IBasicParams<LONG> {
    * If fee is not set, this value will be added to automatically calculated fee. E.x.:
    * Account is scripted and 400000 fee more is required.
    */
-  additionalFee?: LONG
+  additionalFee?: number
   /**
    * If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:
    * 1. Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.
@@ -270,14 +270,14 @@ export interface WithChainIdParam {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG>{
+export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG> {
   alias: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam{
+export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   assetId: string
   quantity: LONG
 }
@@ -285,22 +285,15 @@ export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>,
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface ICancelLeaseParams<LONG = string | number> {
+export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   leaseId: string
-  fee?: LONG
-  timestamp?: number
-  chainId?: string
-  senderPublicKey?: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IDataParams<LONG = string | number> {
+export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
   data: Array<DataEntry | TypelessDataEntry>
-  fee?: LONG,
-  timestamp?: number
-  senderPublicKey?: string
 }
 
 /**

@@ -1,7 +1,7 @@
 import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams, WithId, WithSender } from '../transactions'
 import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, networkByte } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 
 export const burnToBytes = (tx: IBurnTransaction): Uint8Array => concat(
@@ -29,7 +29,7 @@ export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & Wit
     assetId: paramsOrTx.assetId,
     quantity: paramsOrTx.quantity,
     chainId: networkByte(paramsOrTx.chainId, 87),
-    fee:  paramsOrTx.fee || 100000,
+    fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',
