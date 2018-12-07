@@ -18,6 +18,12 @@ describe('burn', () => {
     expect(verifySignature(publicKey(stringSeed), burnToBytes(tx), tx.proofs[0]!)).toBeTruthy()
   })
 
+  it('Should sign already signed', () => {
+    let tx = burn({ ...burnMinimalParams }, stringSeed);
+    tx = burn(tx, stringSeed);
+    expect(verifySignature(publicKey(stringSeed), burnToBytes(tx), tx.proofs[1]!)).toBeTruthy()
+  });
+
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = burn({ ...burnMinimalParams }, [null, stringSeed, null, stringSeed2])

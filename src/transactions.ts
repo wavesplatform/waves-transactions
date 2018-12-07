@@ -204,7 +204,6 @@ export interface IDataTransaction<LONG = string | number> extends ITransaction<L
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
 export interface IOrder<LONG = string | number> extends WithSender, WithProofs {
-  id: string
   orderType: 'buy' | 'sell'
   assetPair: {
     amountAsset?: string
@@ -299,40 +298,30 @@ export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IIssueParams<LONG = string | number> {
+export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam{
   name: string
   description: string
-  decimals?: number
   quantity: LONG
+  decimals?: number
   reissuable?: boolean
-  fee?: LONG
-  timestamp?: number
-  chainId?: string
   script?: string
-  senderPublicKey?: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface ILeaseParams<LONG = string | number> {
+export interface ILeaseParams<LONG = string | number> extends IBasicParams<LONG> {
   recipient: string
   amount: LONG
-  fee?: LONG
-  timestamp?: number
-  senderPublicKey?: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IMassTransferParams<LONG = string | number> {
+export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG>{
   transfers: IMassTransferItem[]
   attachment?: string
   assetId?: string
-  fee?: LONG
-  timestamp?: number
-  senderPublicKey?: string
 }
 
 /**

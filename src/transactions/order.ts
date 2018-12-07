@@ -1,6 +1,6 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
-import { IOrder, IOrderParams } from '../transactions'
+import { IOrder, IOrderParams, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'
 import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
@@ -61,12 +61,10 @@ export const orderToBytes = (ord: IOrder) => concat(
  * }
  * ```
  *
- * @param paramsOrOrder
- * @param [seed]
- * @returns
- *
  */
-export function order(paramsOrOrder: IOrderParams | IOrder, seed?: TSeedTypes): IOrder {
+export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): IOrder & WithId
+export function order(paramsOrOrder: IOrderParams & WithSender | IOrder, seed?: TSeedTypes): IOrder & WithId
+export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset;
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset;
@@ -78,7 +76,7 @@ export function order(paramsOrOrder: IOrderParams | IOrder, seed?: TSeedTypes): 
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrOrder);
 
-  const ord: IOrder = {
+  const ord: IOrder & WithId = {
     orderType,
     assetPair: {
       amountAsset,
@@ -95,7 +93,7 @@ export function order(paramsOrOrder: IOrderParams | IOrder, seed?: TSeedTypes): 
     id: '',
   };
 
-  const bytes = binary.serializeTx(ord);
+  const bytes = binary.serializeOrder(ord);
 
   seedsAndIndexes.forEach(([s,i]) => addProof(ord, signBytes(bytes, s),i));
   ord.id = hashBytes(bytes);

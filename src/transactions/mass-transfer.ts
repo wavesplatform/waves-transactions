@@ -3,9 +3,10 @@ import {
   IMassTransferTransaction,
   IMassTransferItem,
   IMassTransferParams,
-  WithId
+  WithId,
+  WithSender
 } from '../transactions'
-import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import {
   BASE58_STRING,
@@ -34,28 +35,33 @@ export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array =>
 )
 
 /* @echo DOCS */
-export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId{
+export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): IMassTransferTransaction & WithId;
+export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId;
+export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferTransaction & WithId {
+  const type = TRANSACTION_TYPE.MASS_TRANSFER;
+  const version = paramsOrTx.version || 1;
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  if (!Array.isArray(paramsOrTx.transfers))  throw new Error('["transfers should be array"]')
+  if (!Array.isArray(paramsOrTx.transfers)) throw new Error('["transfers should be array"]');
 
   const tx: IMassTransferTransaction & WithId = {
-    type: TRANSACTION_TYPE.MASS_TRANSFER,
-    version: 1,
-    fee: (100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
+    type,
+    version,
     senderPublicKey,
-    timestamp: Date.now(),
+    assetId: paramsOrTx.assetId,
+    transfers: paramsOrTx.transfers,
+    fee: fee(paramsOrTx,100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
     attachment: paramsOrTx.attachment || '',
-    proofs: [],
+    proofs: paramsOrTx.proofs || [],
     id: '', //TODO: invalid id for masstransfer tx
-    ...paramsOrTx,
   }
 
   const bytes = binary.serializeTx(tx);
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
   tx.id = hashBytes(bytes);
 
-  return tx as any
+  return tx
 }

@@ -18,6 +18,12 @@ describe('cancel-lease', () => {
     expect(verifySignature(publicKey(stringSeed), cancelLeaseToBytes(tx), tx.proofs[0]!)).toBeTruthy()
   });
 
+  it('Should sign already signed', () => {
+    let tx = cancelLease({ ...cancelLeaseMinimalParams }, stringSeed);
+    tx = cancelLease(tx, stringSeed);
+    expect(verifySignature(publicKey(stringSeed), cancelLeaseToBytes(tx), tx.proofs[1]!)).toBeTruthy()
+  });
+
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2';
     const tx = cancelLease({ ...cancelLeaseMinimalParams }, [null, stringSeed, null, stringSeed2]);

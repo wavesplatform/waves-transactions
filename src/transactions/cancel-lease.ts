@@ -29,7 +29,7 @@ export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): ICancelLeaseTra
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
-    proofs: [],
+    proofs: paramsOrTx.proofs || [],
     id: '',
   }
 
