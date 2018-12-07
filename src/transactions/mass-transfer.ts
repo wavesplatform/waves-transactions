@@ -34,7 +34,7 @@ export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array =>
 )
 
 /* @echo DOCS */
-export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction {
+export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId{
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 

@@ -1,0 +1,426 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>waves-transactions</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">waves-transactions</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> waves-transactions</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="waves-transactions-npm-version">waves-transactions  <a href="https://www.npmjs.com/package/waves-transactions"><img src="https://badge.fury.io/js/waves-transactions.svg" alt="npm version"></a></h1>
+				<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/npm/l/make-coverage-badge.svg" alt="License"></a> <img src="https://img.shields.io/badge/Coverage-98.77%25-brightgreen.svg" alt="Coverage badge gree"></p>
+				<p>Using this library you can easily create and sign transactions for Waves blockchain.
+				It also allows you to multi-sign existing transactions or create them without signature at all.</p>
+				<p>This library is a set of transaction constructing functions:</p>
+				<ul>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#alias">Alias</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#issue">Issue</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#reissue">Reissue</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#burn">Burn</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#lease">Lease</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#cancellease">Cancel lease</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#transfer">Transfer</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#masstransfer">Mass transfer</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#setscript">Set script</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#data">Data</a></li>
+					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#order">Order</a></li>
+				</ul>
+				<p>Check full documentation on <a href="https://ebceu4.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
+				<h3 id="transactions">Transactions</h3>
+				<p>The idea is really simple - you create transaction and sign it from a minimal set of required params.
+				If you want to create <a href="https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html">Transfer transaction</a> the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong>:</p>
+				<pre><code class="language-js">
+<span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'</span>
+<span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>, <span class="hljs-comment">//Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now()</span>
+
+  <span class="hljs-comment">//Every function from the list above has a set of required and optional params </span>
+  <span class="hljs-comment">//fee: 100000 //Fee is always optional, in case fee is not provided, it will be calculated for you</span>
+  <span class="hljs-comment">//feeAssetId: undefined</span>
+}, seed)</code></pre>
+				<p><a href="https://repl.it/@ebceu4/minimal-transfer-example?lite=true">RUN on Repl.it</a></p>
+				<p>Output will be a signed transfer transaction:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
+  <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">'6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>,
+  <span class="hljs-attr">proofs</span>: [
+    <span class="hljs-string">'25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'</span>
+  ]
+}</code></pre>
+				<p>Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> otherPartySeed = <span class="hljs-string">'18f6edd4c8d647b4ba5ed366093ef5b8d0c4d8b3a6154a2b876f54773a678781'</span>
+<span class="hljs-keyword">const</span> transferSidnedWithTwoParties = transfer(signedTranserTx: TTransaction, seed)</code></pre>
+				<p>So now there are two proofs:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
+  <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">'6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq'</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>,
+  <span class="hljs-attr">proofs</span>: [
+    <span class="hljs-string">'25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'</span>,
+    <span class="hljs-string">'CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z'</span>
+  ]
+}</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/data_field_type.html" class="tsd-kind-icon">DATA_<wbr>FIELD_<wbr>TYPE</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/transaction_type.html" class="tsd-kind-icon">TRANSACTION_<wbr>TYPE</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/dataentry.html" class="tsd-kind-icon">Data<wbr>Entry</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ialiasparams.html" class="tsd-kind-icon">IAlias<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ialiastransaction.html" class="tsd-kind-icon">IAlias<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ibasicparams.html" class="tsd-kind-icon">IBasic<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iburnparams.html" class="tsd-kind-icon">IBurn<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iburntransaction.html" class="tsd-kind-icon">IBurn<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icancelleaseparams.html" class="tsd-kind-icon">ICancel<wbr>Lease<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icancelleasetransaction.html" class="tsd-kind-icon">ICancel<wbr>Lease<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idataparams.html" class="tsd-kind-icon">IData<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idatatransaction.html" class="tsd-kind-icon">IData<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/iindexseedmap.html" class="tsd-kind-icon">IIndex<wbr>Seed<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iissueparams.html" class="tsd-kind-icon">IIssue<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iissuetransaction.html" class="tsd-kind-icon">IIssue<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ileaseparams.html" class="tsd-kind-icon">ILease<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ileasetransaction.html" class="tsd-kind-icon">ILease<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/imasstransferitem.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/imasstransferparams.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/imasstransfertransaction.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iorder.html" class="tsd-kind-icon">IOrder</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iorderparams.html" class="tsd-kind-icon">IOrder<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ireissueparams.html" class="tsd-kind-icon">IReissue<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ireissuetransaction.html" class="tsd-kind-icon">IReissue<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetassetscriptparams.html" class="tsd-kind-icon">ISet<wbr>Asset<wbr>Script<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetassetscripttransaction.html" class="tsd-kind-icon">ISet<wbr>Asset<wbr>Script<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetscriptparams.html" class="tsd-kind-icon">ISet<wbr>Script<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/isetscripttransaction.html" class="tsd-kind-icon">ISet<wbr>Script<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itransaction.html" class="tsd-kind-icon">ITransaction</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itransferparams.html" class="tsd-kind-icon">ITransfer<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itransfertransaction.html" class="tsd-kind-icon">ITransfer<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/typelessdataentry.html" class="tsd-kind-icon">Typeless<wbr>Data<wbr>Entry</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/withchainid.html" class="tsd-kind-icon">With<wbr>Chain<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/withid.html" class="tsd-kind-icon">With<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/withproofs.html" class="tsd-kind-icon">With<wbr>Proofs</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/withsender.html" class="tsd-kind-icon">With<wbr>Sender</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/withtxtype.html" class="tsd-kind-icon">With<wbr>TxType</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#option" class="tsd-kind-icon">Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tseedtypes" class="tsd-kind-icon">TSeed<wbr>Types</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#ttx" class="tsd-kind-icon">TTx</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#ttxparams" class="tsd-kind-icon">TTx<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#alias" class="tsd-kind-icon">alias</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#aliastobytes" class="tsd-kind-icon">alias<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#broadcast" class="tsd-kind-icon">broadcast</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#burn" class="tsd-kind-icon">burn</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#burntobytes" class="tsd-kind-icon">burn<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#cancellease" class="tsd-kind-icon">cancel<wbr>Lease</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#cancelleasetobytes" class="tsd-kind-icon">cancel<wbr>Lease<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#data" class="tsd-kind-icon">data</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#datatobytes" class="tsd-kind-icon">data<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#issue" class="tsd-kind-icon">issue</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#issuetobytes" class="tsd-kind-icon">issue<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#lease" class="tsd-kind-icon">lease</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#leasetobytes" class="tsd-kind-icon">lease<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#masstransfer" class="tsd-kind-icon">mass<wbr>Transfer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#masstransfertobytes" class="tsd-kind-icon">mass<wbr>Transfer<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#order" class="tsd-kind-icon">order</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#ordertobytes" class="tsd-kind-icon">order<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#reissue" class="tsd-kind-icon">reissue</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#reissuetobytes" class="tsd-kind-icon">reissue<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#serialize" class="tsd-kind-icon">serialize</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setassetscript" class="tsd-kind-icon">set<wbr>Asset<wbr>Script</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setassetscripttobytes" class="tsd-kind-icon">set<wbr>Asset<wbr>Script<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setscript" class="tsd-kind-icon">set<wbr>Script</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setscripttobytes" class="tsd-kind-icon">set<wbr>Script<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#transfer" class="tsd-kind-icon">transfer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#transfertobytes" class="tsd-kind-icon">transfer<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#txtypemap" class="tsd-kind-icon">tx<wbr>Type<wbr>Map</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

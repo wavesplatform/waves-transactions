@@ -67,3 +67,14 @@ export const waitForTx = async (txId: string, timeout: number, apiBase: string):
   t.cancel()
   return r
 }
+
+export function networkByte(p: number|string|undefined, def: number): number {
+  switch (typeof p) {
+    case 'string':
+      return p.charCodeAt(0);
+    case 'number':
+      return p;
+    default:
+      return def
+  }
+}

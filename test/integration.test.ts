@@ -1,6 +1,6 @@
 import { broadcast, burn, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from "../src";
 import { address, publicKey } from "waves-crypto";
-import { waitForTx } from "../src/general";
+import { waitForTx } from "../src/generic";
 import {
   IBurnParams,
   IIssueParams, IMassTransferParams,

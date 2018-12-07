@@ -36,19 +36,17 @@ export interface WithProofs {
 
 export interface WithChainId {
   /**
-   * Network byte
-   * @minLength 1
-   * @maxLength 1
+   * Network byte.
+   * E.g.,
+   * 87 is used for Waves mainnet, 84 for Waves testnet
    */
-  chainId: string
+  chainId: number
 }
 
-/**
- * Has 'id' field. 32 bytes object hash encoded as base58 string
- */
+
 export interface WithId {
   /**
-   * Transaction ID
+   * Transaction ID. 32 bytes object hash encoded as base58 string
    */
   id: string
 }
@@ -58,7 +56,6 @@ export interface WithId {
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
 export interface ITransaction<LONG = string | number> extends WithProofs {
-  //id: string
   type: number
   timestamp: number
   fee: LONG
@@ -88,14 +85,13 @@ export interface WithSender {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IIssueTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+export interface IIssueTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
   type: TRANSACTION_TYPE.ISSUE
   name: string
   description: string
   decimals: number
   quantity: LONG
   reissuable: boolean
-  chainId: string
   script?: string
 }
 
@@ -239,29 +235,51 @@ export type TTxParams<LONG = string | number> =
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IAliasParams<LONG = string | number> {
-  alias: string
+export interface IBasicParams<LONG> {
+  /**
+   * Transaction fee. If not set, fee will be calculated automatically
+   */
   fee?: LONG
   /**
    * If fee is not set, this value will be added to automatically calculated fee. E.x.:
    * Account is scripted and 400000 fee more is required.
    */
   additionalFee?: LONG
-  timestamp?: number
-  chainId?: string
+  /**
+   * If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:
+   * 1. Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.
+   * 2. You want only to create tx, not to sign it. Therefore no seed is provided.
+   */
   senderPublicKey?: string
+  /**
+   * Transaction timestamp. If not set current timestamp will be used. Date.now()
+   */
+  timestamp?: number
+}
+
+export interface WithChainIdParam {
+  /**
+   * Network byte. Could beb set as number or as char.
+   * If set as char(string), charCodeAt(0) will be used. E.g.,
+   * 'W' will be converted to '87'
+   * If not set, 87 will be used as default
+   */
+  chainId?: string | number
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IBurnParams<LONG = string | number> {
+export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG>{
+  alias: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam{
   assetId: string
   quantity: LONG
-  fee?: LONG
-  timestamp?: number
-  chainId?: string
-  senderPublicKey?: string
 }
 
 /**

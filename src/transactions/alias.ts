@@ -1,4 +1,4 @@
-import { IAliasParams, IAliasTransaction, TRANSACTION_TYPE, WithId, WithSender } from '../transactions'
+import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 import { BASE58_STRING, BYTES, concat, hashBytes, LEN, LONG, SHORT, signBytes, STRING } from 'waves-crypto'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
@@ -21,7 +21,7 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const tx = {
+  const tx: IAliasTransaction & WithId = {
     type,
     version,
     senderPublicKey,
@@ -34,8 +34,8 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
 
   const bytes = binary.serializeTx(tx);
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
   tx.id = hashBytes(bytes);
 
-  return tx as any
+  return tx
 }
