@@ -37,11 +37,21 @@ export interface WithChainId {
 }
 
 /**
+ * Has id field that equals to hashbytes of this object
+ */
+export interface WithId {
+  /**
+   * Transaction ID
+   */
+  id: string
+}
+
+/**
  * This interface has common fields for all transactions
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
 export interface ITransaction<LONG = string | number> extends WithProofs {
-  id: string
+  //id: string
   type: number
   timestamp: number
   fee: LONG
@@ -227,6 +237,11 @@ export type TTxParams<LONG = string | number> =
 export interface IAliasParams<LONG = string | number> {
   alias: string
   fee?: LONG
+  /**
+   * If fee is not set, this value will be added to automatically calculated fee. E.x.:
+   * Account is scripted and 400000 fee more is required.
+   */
+  additionalFee?: LONG
   timestamp?: number
   chainId?: string
   senderPublicKey?: string

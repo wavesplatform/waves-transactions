@@ -12,11 +12,11 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { IDataTransaction, TRANSACTION_TYPE, DataEntry, DataType, IDataParams } from '../transactions'
-import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from '../generic'
-import { SeedTypes } from '../types'
+import { IDataTransaction, TRANSACTION_TYPE, DataEntry, DataType, IDataParams, WithId } from '../transactions'
+import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 export interface TypelessDataEntry {
   key: string
@@ -49,15 +49,15 @@ export const dataToBytes = (tx: IDataTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: SeedTypes): IDataTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId  {
   const { data: _data, fee, timestamp } = paramsOrTx
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
   if (! Array.isArray(_data)) throw new Error('["data should be array"]')
 
-  const _timestamp = valOrDef(timestamp, Date.now())
+  const _timestamp = timestamp || Date.now()
 
   let bytes = concat(
     BYTE(TRANSACTION_TYPE.DATA),
@@ -69,7 +69,7 @@ export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: SeedType
 
   const computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
 
-  const tx: IDataTransaction = {
+  const tx: IDataTransaction & WithId = {
     type: 12,
     version: 1,
     senderPublicKey,
@@ -90,13 +90,10 @@ export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: SeedType
       }
     }),
   }
+  const bytes1 = binary.serializeTx(tx);
 
-  raiseValidationErrors(
-    dataValidation(tx)
-  )
-  bytes = dataToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes1, s),i));
+  tx.id = hashBytes(bytes1);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? data(tx, nextSeed) : tx
+  return tx as any
 } 

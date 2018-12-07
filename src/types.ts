@@ -1,7 +1,7 @@
 export type Option<T> = T | undefined | null
 
-export interface SeedsAndIndexes {
+export interface IIndexSeedMap {
   [key: number]: string
 }
 
-export type SeedTypes = string | Option<string>[] | SeedsAndIndexes
+export type TSeedTypes = string | Option<string>[] | IIndexSeedMap

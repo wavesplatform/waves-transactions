@@ -1,8 +1,8 @@
-import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams } from '../transactions'
+import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId } from '../transactions'
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
+import { TSeedTypes } from '../types'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 
 export const transferToBytes = (tx: ITransferTransaction) => concat(
@@ -21,12 +21,11 @@ export const transferToBytes = (tx: ITransferTransaction) => concat(
 export const transferValidation = (tx: ITransferTransaction) => []
 
 /* @echo DOCS */
-export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, seed?: SeedTypes): ITransferTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction {
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: ITransferTransaction = {
+  const tx: ITransferTransaction & WithId = {
     type: TRANSACTION_TYPE.TRANSFER,
     version: 2,
     fee: 100000,
@@ -37,13 +36,10 @@ export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, see
     ...paramsOrTx,
   }
 
-  raiseValidationErrors(
-    transferValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = transferToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-    mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? transfer(tx, nextSeed) : tx
+  return tx as any
 }

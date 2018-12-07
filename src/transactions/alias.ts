@@ -1,15 +1,8 @@
-import { TRANSACTION_TYPE, IAliasTransaction, IAliasParams } from '../transactions'
-import { concat, BASE58_STRING, LEN, SHORT, STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { addProof, pullSeedAndIndex, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { ValidationResult, noError } from 'waves-crypto/validation'
-
-
-export const aliasValidation = (tx: IAliasTransaction): ValidationResult => [
-  tx.fee < 100000 ? 'fee is lees than 100000' : noError,
-  !tx.alias || tx.alias.length === 0 ? 'alias is empty or undefined' : noError,
-]
+import { IAliasParams, IAliasTransaction, TRANSACTION_TYPE, WithId, WithSender } from '../transactions'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
+import { BASE58_STRING, BYTES, concat, hashBytes, LEN, LONG, SHORT, signBytes, STRING } from 'waves-crypto'
+import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
 
 export const aliasToBytes = (tx: IAliasTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.ALIAS, tx.version]),
@@ -20,29 +13,29 @@ export const aliasToBytes = (tx: IAliasTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function alias(paramsOrTx: IAliasParams | IAliasTransaction, seed?: SeedTypes): IAliasTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function alias(params: IAliasParams, seed: TSeedTypes): IAliasTransaction & WithId;
+export function alias(paramsOrTx: IAliasParams & WithSender | IAliasTransaction, seed?: TSeedTypes): IAliasTransaction & WithId;
+export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & WithId {
+  const type = TRANSACTION_TYPE.ALIAS;
+  const version = paramsOrTx.version || 2;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: IAliasTransaction = {
-    type: TRANSACTION_TYPE.ALIAS,
-    version: 2,
-    fee: 100000,
+  const tx = {
+    type,
+    version,
     senderPublicKey,
-    timestamp: Date.now(),
-    id: '',
-    proofs: [],
-    ...paramsOrTx,
-  }
+    alias: paramsOrTx.alias,
+    fee: paramsOrTx.fee || 100000,
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    proofs: [] || paramsOrTx.proofs,
+    id: ''
+  };
 
-  raiseValidationErrors(
-    aliasValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = aliasToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? alias(tx, nextSeed) : tx
+  return tx as any
 }

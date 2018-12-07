@@ -1,9 +1,9 @@
 import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
-import { mapSeed, valOrDef, addProof, pullSeedAndIndex, getSenderPublicKey } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
 import { IOrder, IOrderParams } from '../transactions'
-import { SeedTypes } from '../types'
+import { TSeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
 
@@ -71,18 +71,17 @@ export const orderToBytes = (ord: IOrder) => concat(
  * @returns
  *
  */
-export function order(paramsOrOrder: IOrderParams | IOrder, seed?: SeedTypes): IOrder {
+export function order(paramsOrOrder: IOrderParams | IOrder, seed?: TSeedTypes): IOrder {
 
-  const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
-  const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
-  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : []
+  const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset;
+  const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset;
+  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : [];
 
-  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
-  const t = valOrDef(timestamp, Date.now())
+  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder;
+  const t = timestamp || Date.now();
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrOrder)
-
-  const { nextSeed } = pullSeedAndIndex(seed)
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrOrder);
 
   const ord: IOrder = {
     orderType,
@@ -93,24 +92,20 @@ export function order(paramsOrOrder: IOrderParams | IOrder, seed?: SeedTypes): I
     price,
     amount,
     timestamp: t,
-    expiration: valOrDef(expiration, t + 1728000000),
-    matcherFee: valOrDef(matcherFee, 300000),
+    expiration: expiration || t + 1728000000,
+    matcherFee: matcherFee || 300000,
     matcherPublicKey,
     senderPublicKey,
     proofs,
     id: '',
-  }
+  };
 
-  raiseValidationErrors(
-    orderValidation(ord)
-  )
+  const bytes = binary.serializeTx(ord);
 
-  const bytes = orderToBytes(ord)
+  seedsAndIndexes.forEach(([s,i]) => addProof(ord, signBytes(bytes, s),i));
+  ord.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(ord, signBytes(bytes, s), i))
-  ord.id = hashBytes(bytes)
-
-  return nextSeed ? order(ord, nextSeed) : ord
+  return ord as any
 }
 
 

@@ -1,9 +1,9 @@
-import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams } from '../transactions'
+import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
+import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 export const leaseValidation = (tx: ILeaseTransaction): ValidationResult => []
 
@@ -17,12 +17,11 @@ export const leaseToBytes = (tx: ILeaseTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function lease(paramsOrTx: ILeaseParams | ILeaseTransaction, seed?: SeedTypes): ILeaseTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function lease(paramsOrTx: ILeaseParams | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId {
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: ILeaseTransaction =  {
+  const tx: ILeaseTransaction & WithId =  {
       type: TRANSACTION_TYPE.LEASE,
       version: 2,
       fee: 100000,
@@ -33,13 +32,10 @@ export function lease(paramsOrTx: ILeaseParams | ILeaseTransaction, seed?: SeedT
     ...paramsOrTx,
     }
 
-  raiseValidationErrors(
-    leaseValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = leaseToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? lease(tx, nextSeed) : tx
+  return tx as any
 }

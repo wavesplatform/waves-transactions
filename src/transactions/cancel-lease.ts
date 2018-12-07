@@ -1,15 +1,8 @@
-import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams } from '../transactions'
+import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams, WithId } from '../transactions'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
-
-
-
-export const cancelLeaseValidation = (tx: ICancelLeaseTransaction): ValidationResult => [
-
-]
+import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
+import { TSeedTypes } from '../types'
 
 export const cancelLeaseToBytes = (tx: ICancelLeaseTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.CANCEL_LEASE, tx.version, tx.chainId.charCodeAt(0)]),
@@ -20,12 +13,11 @@ export const cancelLeaseToBytes = (tx: ICancelLeaseTransaction): Uint8Array => c
 )
 
 /* @echo DOCS */
-export function cancelLease(paramsOrTx: ICancelLeaseParams | ICancelLeaseTransaction, seed?: SeedTypes): ICancelLeaseTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function cancelLease(paramsOrTx: ICancelLeaseParams | ICancelLeaseTransaction, seed?: TSeedTypes): ICancelLeaseTransaction {
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: ICancelLeaseTransaction = {
+  const tx: ICancelLeaseTransaction & WithId = {
       type: TRANSACTION_TYPE.CANCEL_LEASE,
       version: 2,
       fee:100000,
@@ -37,13 +29,10 @@ export function cancelLease(paramsOrTx: ICancelLeaseParams | ICancelLeaseTransac
     ...paramsOrTx,
     }
 
-  raiseValidationErrors(
-    cancelLeaseValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = cancelLeaseToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? cancelLease(tx, nextSeed) : tx
+  return tx as any
 }

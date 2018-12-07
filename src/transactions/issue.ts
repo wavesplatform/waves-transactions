@@ -1,4 +1,4 @@
-import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams } from '../transactions'
+import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -13,12 +13,10 @@ import {
   BOOL,
   OPTION, BASE64_STRING
 } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
-import { SeedTypes } from '../types'
+import { addProof, getSenderPublicKey, base64Prefix, convertToPairs } from '../generic'
+import { TSeedTypes } from '../types'
 import { ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
-
-
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 export const issueValidation = (tx: IIssueTransaction): ValidationResult => []
 
@@ -36,12 +34,11 @@ export const issueToBytes = (tx: IIssueTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function issue(paramsOrTx: IIssueParams | IIssueTransaction, seed?: SeedTypes): IIssueTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function issue(paramsOrTx: IIssueParams | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId {
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: IIssueTransaction = {
+  const tx: IIssueTransaction & WithId = {
       type: TRANSACTION_TYPE.ISSUE,
       version: 2,
       decimals: 8,
@@ -56,13 +53,10 @@ export function issue(paramsOrTx: IIssueParams | IIssueTransaction, seed?: SeedT
       script: paramsOrTx.script == null ? undefined : base64Prefix(paramsOrTx.script)!
     }
 
-    raiseValidationErrors(
-      issueValidation(tx)
-    )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = issueToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? issue(tx, nextSeed) : tx
+  return tx as any
 }

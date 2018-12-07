@@ -1,23 +1,16 @@
 import { WithProofs, TTxParams, IOrderParams, TTx, IOrder } from './transactions'
-import { SeedsAndIndexes, SeedTypes, Option } from './types'
+import { TSeedTypes } from './types'
 import { publicKey } from 'waves-crypto'
 
-export function getSenderPublicKey(seed: Option<SeedTypes>, params: TTxParams | TTx | IOrderParams | IOrder) {
-  const { seed: s } = pullSeedAndIndex(seed)
-
-  if (s == null && params.senderPublicKey == null)
-    throw new Error('Please provide either seed or senderPublicKey')
+export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: TTxParams | TTx | IOrderParams | IOrder) {
+  if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
+    throw new Error('Please provide either seed or senderPublicKey');
   else {
-    return params.senderPublicKey || publicKey(s!)
+    return params.senderPublicKey || publicKey(seedsAndIndexes[0][0])
   }
 }
 
-export const base64Prefix = (str: string | null) => str == null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
-
-export type OneOrMany<T> = T | T[]
-
-//export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isArray(oneOrMany)
-//export const toMany = <T>(oneOrMany: OneOrMany<T>): T[] => isOne(oneOrMany) ? [oneOrMany] : oneOrMany
+export const base64Prefix = (str: string | null) => str == null || str.slice(0, 7) === 'base64:' ? str : 'base64:' + str
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (index == null) {
@@ -25,52 +18,26 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
     return tx
   }
   if (tx.proofs != null && !!tx.proofs[index])
-    throw new Error(`Proof at index ${index} is already exists.`)
+    throw new Error(`Proof at index ${index} already exists.`);
   for (let i = tx.proofs.length; i < index; i++)
     tx.proofs.push('')
-  tx.proofs[index] = proof
+  tx.proofs[index] = proof;
   return tx
 }
 
-export const valOrDef = <T, K extends T>(val: Option<T>, def: K): T => val != null ? val : def
-
-export const isSeedsAndIndexes = (seed: SeedTypes): seed is SeedsAndIndexes =>
-  typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length === undefined
-
-export const isArrayOfSeeds = (seed: SeedTypes): seed is Option<string>[] =>
-  typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length !== undefined
-
-export const mapSeed = <T>(seed: Option<SeedTypes>, map: (seed: string, index?: number) => T): Option<T> => {
-  const { seed: _seed, index } = pullSeedAndIndex(seed)
-  if (_seed != null)
-    return map(_seed, index)
-  return undefined
-}
-
-export const pullSeedAndIndex = (seed: Option<SeedTypes>): { seed?: string, index?: number, nextSeed?: SeedTypes } => {
-  const empty = { seed: undefined, index: undefined, nextSeed: undefined }
-  if (seed == null || seed === '')
-    return empty
-
-  if (isSeedsAndIndexes(seed)) {
-    const keys = Object.keys(seed).map(k => parseInt(k)).filter(k => !isNaN(k))
-    if (keys == null || keys.length === 0)
-      return empty
-
-    const index = keys[0]
-    const newSeed: SeedsAndIndexes = Object.assign({}, seed)
-    delete newSeed[index]
-    return { seed: seed[keys[0]], index, nextSeed: Object.keys(newSeed).length > 0 ? newSeed : undefined }
-
-  } else if (isArrayOfSeeds(seed)) {
-
-    return pullSeedAndIndex(
-      Object.entries(seed).filter(([k, v]) => !!v).reduce((acc, [k, v]) => ({
-        ...acc,
-        [k]: v,
-      }), {} as SeedsAndIndexes)
-    )
+export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefined][] {
+  //Due to typescript duck typing, 'string' type satisfies IIndexSeedMap interface. Because of this we should typecheck against string first
+  if (seedObj == null) {
+    return []
   }
-
-  return { seed: seed }
+  else if (typeof seedObj === 'string') {
+    return [[seedObj, undefined]]
+  }
+  else if (Array.isArray(seedObj)) {
+    return seedObj.map((s, i) => [s, i] as [string, number]).filter(([s, _]) => s)
+  }
+  else {
+    const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort();
+    return keys.map(k => [seedObj[k], k] as [string, number])
+  }
 }

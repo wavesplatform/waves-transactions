@@ -1,6 +1,12 @@
-import { TRANSACTION_TYPE, IMassTransferTransaction, IMassTransferItem, IMassTransferParams } from '../transactions'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
+import {
+  TRANSACTION_TYPE,
+  IMassTransferTransaction,
+  IMassTransferItem,
+  IMassTransferParams,
+  WithId
+} from '../transactions'
+import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
 import {
   BASE58_STRING,
@@ -15,7 +21,7 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 
 
@@ -35,14 +41,13 @@ export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array =>
 )
 
 /* @echo DOCS */
-export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTransaction, seed?: SeedTypes): IMassTransferTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
-
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction {
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
   if (!Array.isArray(paramsOrTx.transfers))  throw new Error('["transfers should be array"]')
 
-  const tx: IMassTransferTransaction = {
+  const tx: IMassTransferTransaction & WithId = {
     type: TRANSACTION_TYPE.MASS_TRANSFER,
     version: 1,
     fee: (100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
@@ -53,13 +58,10 @@ export function massTransfer(paramsOrTx: IMassTransferParams | IMassTransferTran
     ...paramsOrTx,
   }
 
-  raiseValidationErrors(
-    massTransferValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = massTransferToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? massTransfer(tx, nextSeed) : tx
+  return tx as any
 }

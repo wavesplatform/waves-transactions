@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE, ISetAssetScriptTransaction, ISetAssetScriptParams } from '../transactions'
+import { TRANSACTION_TYPE, ISetAssetScriptTransaction, ISetAssetScriptParams, WithId } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -11,10 +11,10 @@ import {
   LEN,
   SHORT
 } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
-import { SeedTypes } from '../types'
+import { addProof, getSenderPublicKey, base64Prefix, convertToPairs } from '../generic'
+import { TSeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 export const setAssetScriptValidation = (tx: ISetAssetScriptTransaction): ValidationResult => [
   noError,
@@ -30,13 +30,12 @@ export const setAssetScriptToBytes = (tx: ISetAssetScriptTransaction): Uint8Arra
 )
 
 /* @echo DOCS */
-export function setAssetScript(paramsOrTx: ISetAssetScriptParams | ISetAssetScriptTransaction, seed?: SeedTypes): ISetAssetScriptTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
-
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+export function setAssetScript(paramsOrTx: ISetAssetScriptParams | ISetAssetScriptTransaction, seed?: TSeedTypes): ISetAssetScriptTransaction & WithId{
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
-  const tx: ISetAssetScriptTransaction = {
+  const tx: ISetAssetScriptTransaction & WithId = {
     type: TRANSACTION_TYPE.SET_ASSET_SCRIPT,
     version: 1,
     fee: 100000000,
@@ -49,13 +48,11 @@ export function setAssetScript(paramsOrTx: ISetAssetScriptParams | ISetAssetScri
     script: base64Prefix(paramsOrTx.script),
   }
 
-  raiseValidationErrors(
-    setAssetScriptValidation(tx)
-  )
 
-  const bytes = setAssetScriptToBytes(tx)
+  const bytes = binary.serializeTx(tx);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? setAssetScript(tx, nextSeed,) : tx
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
+
+  return tx as any
 }

@@ -1,9 +1,9 @@
-import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams } from '../transactions'
+import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
+import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
 import { noError, ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 
 export const reissueValidation = (tx: IReissueTransaction): ValidationResult => [
   noError,
@@ -20,12 +20,11 @@ export const reissueToBytes = (tx: IReissueTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function reissue(paramsOrTx: IReissueParams | IReissueTransaction, seed?: SeedTypes): IReissueTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function reissue(paramsOrTx: IReissueParams | IReissueTransaction, seed?: TSeedTypes): IReissueTransaction & WithId{
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: IReissueTransaction = {
+  const tx: IReissueTransaction & WithId = {
     type: TRANSACTION_TYPE.REISSUE,
     version: 2,
     chainId: 'W',
@@ -35,14 +34,12 @@ export function reissue(paramsOrTx: IReissueParams | IReissueTransaction, seed?:
     proofs: [],
     id: '',
     ...paramsOrTx,
-  }
+  };
 
-  raiseValidationErrors(
-    reissueValidation(tx)
-)
-  const bytes = reissueToBytes(tx)
+  const bytes = binary.serializeTx(tx);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? reissue(tx, nextSeed) : tx
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
+
+  return tx as any
 }

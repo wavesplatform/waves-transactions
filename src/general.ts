@@ -1,21 +1,22 @@
 import axios from 'axios'
 import {
+  IAliasTransaction,
+  IBurnTransaction,
+  ICancelLeaseTransaction,
+  IDataTransaction,
+  IIssueTransaction,
+  ILeaseTransaction,
+  IMassTransferTransaction,
   IOrder,
+  IReissueTransaction,
+  ISetAssetScriptTransaction,
+  ISetScriptTransaction,
+  ITransferTransaction,
   TRANSACTION_TYPE,
   TTx,
-  IIssueTransaction,
-  ITransferTransaction,
-  IReissueTransaction,
-  IBurnTransaction,
-  ILeaseTransaction,
-  ICancelLeaseTransaction,
-  IAliasTransaction,
-  IMassTransferTransaction,
-  IDataTransaction,
-  ISetScriptTransaction,
-  ISetAssetScriptTransaction, TTxParams
+  TTxParams
 } from './transactions'
-import { SeedTypes } from './types'
+import { TSeedTypes } from './types'
 import { issue, issueToBytes } from './transactions/issue'
 import { transfer, transferToBytes } from './transactions/transfer'
 import { reissue, reissueToBytes } from './transactions/reissue'
@@ -33,7 +34,7 @@ import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 export type WithTxType = { type: TRANSACTION_TYPE}
 
-export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: SeedTypes) => TTx, serialize: (obj: TTx | IOrder) => Uint8Array } } = {
+export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx, serialize: (obj: TTx | IOrder) => Uint8Array } } = {
   [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction, seed), serialize: (x) => issueToBytes(x as IIssueTransaction) },
   [TRANSACTION_TYPE.TRANSFER]: { sign: (x, seed) => transfer(x as ITransferTransaction, seed), serialize: (x) => transferToBytes(x as ITransferTransaction) },
   [TRANSACTION_TYPE.REISSUE]: { sign: (x, seed) => reissue(x as IReissueTransaction, seed), serialize: (x) => reissueToBytes(x as IReissueTransaction) },
@@ -47,7 +48,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxT
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed), serialize: (x) => setAssetScriptToBytes(x as ISetAssetScriptTransaction) },
 }
 
-export const signTx = (tx: TTx | TTxParams & WithTxType, seed: SeedTypes): TTx => {
+export const signTx = (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes): TTx => {
   if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
@@ -86,6 +87,11 @@ export const waitForTx = async (txId: string, timeout: number, apiBase: string):
   return r
 }
 
-export function getFee(tx: TTx, scripted = false, assetScripted = false){
-  return 100000000
-}
+// export function getFee(tx: TTxParams & WithTxType){
+//   switch (tx.type) {
+//     case TRANSACTION_TYPE.ALIAS:
+//       return 100000;
+//     default:
+//       throw new Error(`Unknown tx type: ${tx.type}`)
+//   }
+// }

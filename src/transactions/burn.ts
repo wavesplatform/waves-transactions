@@ -1,13 +1,8 @@
-import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams } from '../transactions'
+import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams, WithId } from '../transactions'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/src'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes } from '../types'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { noError, ValidationResult } from 'waves-crypto/validation'
-
-export const burnValidation = (tx: IBurnTransaction): ValidationResult => [
-  noError,
-]
+import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
+import { TSeedTypes } from '../types'
 
 export const burnToBytes = (tx: IBurnTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.BURN, tx.version, tx.chainId.charCodeAt(0)]),
@@ -19,12 +14,12 @@ export const burnToBytes = (tx: IBurnTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function burn(paramsOrTx: IBurnParams | IBurnTransaction, seed?: SeedTypes): IBurnTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function burn(paramsOrTx: IBurnParams | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId {
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const tx: IBurnTransaction = {
+  const tx: IBurnTransaction & WithId = {
     type: TRANSACTION_TYPE.BURN,
     version: 2,
     chainId: 'W',
@@ -36,13 +31,11 @@ export function burn(paramsOrTx: IBurnParams | IBurnTransaction, seed?: SeedType
     ...paramsOrTx,
   }
 
-  raiseValidationErrors(
-    burnValidation(tx)
-  )
 
-  const bytes = burnToBytes(tx)
+  const bytes = binary.serializeTx(tx);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? burn(tx, nextSeed) : tx
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
+
+  return tx as any
 }
