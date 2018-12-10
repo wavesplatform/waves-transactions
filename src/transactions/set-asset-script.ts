@@ -38,7 +38,7 @@ export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): ISetAssetScr
   const version = paramsOrTx.version || 1;
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
-  if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
+  if (paramsOrTx.script == null) throw new Error('Asset script cannot be empty')
 
   const tx: ISetAssetScriptTransaction & WithId = {
     type,

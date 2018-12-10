@@ -12,6 +12,11 @@ describe('issue', () => {
     expect(tx).toMatchObject({ ...issueMinimalParams })
   });
 
+  it('should build with asset script', () => {
+    const tx = issue({ ...issueMinimalParams, script:'AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA==' }, stringSeed);
+    expect(tx).toMatchObject({ ...issueMinimalParams })
+  });
+
   it('Should get correct signature', () => {
     const tx = issue({ ...issueMinimalParams }, stringSeed);
     expect(verifySignature(publicKey(stringSeed), issueToBytes(tx),tx.proofs[0]!)).toBeTruthy()
@@ -30,3 +35,5 @@ describe('issue', () => {
     expect(verifySignature(publicKey(stringSeed2), issueToBytes(tx),tx.proofs[3]!)).toBeTruthy()
   })
 });
+
+//AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA

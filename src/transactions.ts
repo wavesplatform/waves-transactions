@@ -356,7 +356,7 @@ export interface IReissueParams<LONG = string | number> extends IBasicParams<LON
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
 export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
-  script: string | null
+  script: string
   assetId: string
 }
 

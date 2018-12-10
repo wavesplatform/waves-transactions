@@ -8,7 +8,7 @@ import {
   ISetAssetScriptParams,
   ISetScriptParams, ITransferParams
 } from "../src/transactions";
-import { json } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { json, convert } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 describe('Blockchain interaction', () => {
   /**
@@ -103,7 +103,7 @@ describe('Blockchain interaction', () => {
 
     it('Should issue token with script. Should execute token script', async () => {
       // script prohibits burn transaction
-      const script = "AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA"
+      const script = "AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA=="
       const txParams: IIssueParams = {
         name: 'scriptedToken',
         description: 'no description',
@@ -166,7 +166,6 @@ describe('Blockchain interaction', () => {
       }
 
       const tx = setScript(txParams, seed)
-      console.log(json.stringifyTx(tx))
 
       const resp = await broadcast(tx, apiBase)
       expect(resp.type).toEqual(13)
@@ -182,6 +181,7 @@ describe('Blockchain interaction', () => {
 
       const removeTx = setScript(removeTxParams, [null, 'bob', 'cooper'])
       const resp2 = await broadcast(removeTx, apiBase)
+      await waitForTx(removeTx.id, timeout, apiBase)
       expect(resp2.type).toEqual(13)
 
     }, timeout)
