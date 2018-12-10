@@ -320,6 +320,9 @@ export interface ILeaseParams<LONG = string | number> extends IBasicParams<LONG>
  */
 export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG>{
   transfers: IMassTransferItem[]
+  /**
+   * Bytearray encoded as base string
+   */
   attachment?: string
   assetId?: string
 }
@@ -343,49 +346,37 @@ export interface IOrderParams<LONG = string | number> {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IReissueParams<LONG = string | number> {
+export interface IReissueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   assetId: string
   quantity: LONG
   reissuable: boolean
-  fee?: LONG
-  timestamp?: number
-  chainId?: string
-  senderPublicKey?: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface ISetAssetScriptParams<LONG = string | number> {
+export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   script: string | null
   assetId: string
-  fee?: LONG
-  timestamp?: number
-  chainId?: string
-  senderPublicKey?: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface ISetScriptParams<LONG = string | number> {
+export interface ISetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   script: string | null
-  fee?: LONG
-  timestamp?: number
-  chainId?: string
-  senderPublicKey?: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface ITransferParams<LONG = string | number> {
+export interface ITransferParams<LONG = string | number> extends IBasicParams<LONG> {
   recipient: string
   amount: LONG
+  /**
+   * Bytearray encoded as base string
+   */
   attachment?: string
   feeAssetId?: string
   assetId?: string
-  fee?: LONG
-  timestamp?: number
-  senderPublicKey?: string
 }

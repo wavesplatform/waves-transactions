@@ -29,8 +29,8 @@ import { alias, aliasToBytes } from './transactions/alias'
 import { setScript, setScriptToBytes } from './transactions/set-script'
 import { orderToBytes } from './transactions/order'
 import { isOrder} from "./generic";
-import { txToJson } from './txToJson'
 import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-script";
+import { json } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export interface WithTxType {
   type: TRANSACTION_TYPE
@@ -64,6 +64,6 @@ export const serialize = (obj: TTx | IOrder): Uint8Array => {
 };
 
 export const broadcast = (tx: TTx, apiBase: string) =>
-  axios.post('transactions/broadcast', txToJson(tx), { baseURL: apiBase, headers: { 'content-type': 'application/json' } })
+  axios.post('transactions/broadcast', json.stringifyTx(tx), { baseURL: apiBase, headers: { 'content-type': 'application/json' } })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))

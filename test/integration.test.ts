@@ -8,7 +8,7 @@ import {
   ISetAssetScriptParams,
   ISetScriptParams, ITransferParams
 } from "../src/transactions";
-import { txToJson } from "../src/txToJson";
+import { json } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 describe('Blockchain interaction', () => {
   /**
@@ -66,7 +66,8 @@ describe('Blockchain interaction', () => {
     it('Should transfer asset', async () =>{
       const transferParams: ITransferParams = {
         amount: '500',
-        recipient: address(recipientSeed, chainId)
+        recipient: address(recipientSeed, chainId),
+        attachment: '3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw'
       }
 
       const tx = transfer(transferParams, seed)
@@ -76,7 +77,7 @@ describe('Blockchain interaction', () => {
 
     it('Should masstransfer asset', async () =>{
       const massTransferParams: IMassTransferParams = {
-        fee:'200000',
+        //fee:'200000',
         assetId,
         transfers:[
           {
@@ -146,7 +147,7 @@ describe('Blockchain interaction', () => {
         assetId,
         quantity: '1000',
         chainId,
-        fee: '500000'
+        additionalFee: 400000
       }
       const burnTx = burn(burnParams, seed)
       const burnResp = await broadcast(burnTx, apiBase)
@@ -165,6 +166,7 @@ describe('Blockchain interaction', () => {
       }
 
       const tx = setScript(txParams, seed)
+      console.log(json.stringifyTx(tx))
 
       const resp = await broadcast(tx, apiBase)
       expect(resp.type).toEqual(13)
@@ -175,7 +177,7 @@ describe('Blockchain interaction', () => {
         senderPublicKey: publicKey(seed),
         chainId,
         script: null,
-        fee: 1400000
+        additionalFee: 400000
       }
 
       const removeTx = setScript(removeTxParams, [null, 'bob', 'cooper'])
