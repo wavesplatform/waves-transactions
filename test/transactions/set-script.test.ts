@@ -64,18 +64,6 @@ describe('setScript', () => {
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 
-  it('Should throw on schema validation', () => {
-    const tx = () => setScript({ script: null, fee: null } as any, seed)
-    expect(tx).toThrow(`[{
-  "keyword": "type",
-  "dataPath": ".fee",
-  "schemaPath": "#/properties/fee/type",
-  "params": {
-    "type": "string,number"
-  },
-  "message": "should be string,number"
-}]`)
-  })
 })
 
 function validateSetScriptTx(tx: ISetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {

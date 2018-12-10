@@ -1,6 +1,6 @@
-import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId } from '../transactions'
+import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId, WithSender } from '../transactions'
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
-import { addProof, getSenderPublicKey, convertToPairs } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
@@ -18,20 +18,25 @@ export const transferToBytes = (tx: ITransferTransaction) => concat(
 )
 
 /* @echo DOCS */
-export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction {
+export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId;
+export function transfer(paramsOrTx: ITransferParams & WithSender | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction & WithId;
+export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction {
+  const type = TRANSACTION_TYPE.TRANSFER;
+  const version = paramsOrTx.version || 2;
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
   const tx: ITransferTransaction & WithId = {
-    type: TRANSACTION_TYPE.TRANSFER,
-    version: 2,
-    fee: 100000,
+    type,
+    version,
     senderPublicKey,
+    recipient: paramsOrTx.recipient,
+    amount: paramsOrTx.amount,
     attachment: paramsOrTx.attachment || '',
-    timestamp: Date.now(),
-    proofs: [],
-    id: '',
-    ...paramsOrTx,
+    fee: fee(paramsOrTx, 100000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    proofs: paramsOrTx.proofs || [],
+    id: ''
   }
 
   const bytes = binary.serializeTx(tx);
@@ -39,5 +44,5 @@ export function transfer(paramsOrTx: ITransferParams | ITransferTransaction, see
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
   tx.id = hashBytes(bytes);
 
-  return tx as any
+  return tx
 }

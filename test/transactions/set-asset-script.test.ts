@@ -64,27 +64,6 @@ describe('setAssetScript', () => {
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 
-  it('Should throw on schema validation', () => {
-    const tx = () => setAssetScript({ script: null, fee: null } as any, seed)
-    expect(tx).toThrow(`[{
-  "keyword": "required",
-  "dataPath": "",
-  "schemaPath": "#/required",
-  "params": {
-    "missingProperty": "assetId"
-  },
-  "message": "should have required property 'assetId'"
-},
-{
-  "keyword": "type",
-  "dataPath": ".fee",
-  "schemaPath": "#/properties/fee/type",
-  "params": {
-    "type": "string,number"
-  },
-  "message": "should be string,number"
-}]`)
-  })
 })
 
 function validateSetScriptTx(tx: ISetAssetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {

@@ -10,26 +10,13 @@ describe('reissue', () => {
   it('should build from minimal set of params', () => {
     const tx = reissue({ ...reissueMinimalParams }as any, stringSeed)
     expect(tx).toMatchObject({ ...reissueMinimalParams })
-  })
-
-  it('Should throw on schema validation', () => {
-    const tx = () => reissue({ ...reissueMinimalParams, assetId: null } as any, stringSeed)
-    expect(tx).toThrow(`[{
-  "keyword": "type",
-  "dataPath": ".assetId",
-  "schemaPath": "#/properties/assetId/type",
-  "params": {
-    "type": "string"
-  },
-  "message": "should be string"
-}]`)
-  })
+  });
 
 
   it('Should get correct signature', () => {
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), reissueToBytes(tx),tx.proofs[0]!)).toBeTruthy()
-  })
+  });
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
