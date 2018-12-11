@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IDataTransaction | waves-transactions</title>
+	<title>IContractInvocationTransaction | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="idatatransaction.html">IDataTransaction</a>
+					<a href="icontractinvocationtransaction.html">IContractInvocationTransaction</a>
 				</li>
 			</ul>
-			<h1>Interface IDataTransaction&lt;LONG&gt;</h1>
+			<h1>Interface IContractInvocationTransaction&lt;LONG&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -87,9 +87,12 @@
 					</li>
 					<li>
 						<a href="withsender.html" class="tsd-signature-type">WithSender</a>
+					</li>
+					<li>
+						<a href="withchainid.html" class="tsd-signature-type">WithChainId</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">IDataTransaction</span>
+								<span class="target">IContractInvocationTransaction</span>
 							</li>
 						</ul>
 					</li>
@@ -102,13 +105,15 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatatransaction.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="idatatransaction.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationtransaction.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationtransaction.html#function" class="tsd-kind-icon">function</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="icontractinvocationtransaction.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,13 +121,31 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="chainid" class="tsd-anchor"></a>
+					<h3>chain<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="withchainid.html">WithChainId</a>.<a href="withchainid.html#chainid">chainId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:44</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Network byte.
+								E.g.,
+							87 is used for Waves mainnet, 84 for Waves testnet</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="data" class="tsd-anchor"></a>
-					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="dataentry.html" class="tsd-signature-type">DataEntry</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="contractaddress" class="tsd-anchor"></a>
+					<h3>contract<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">contract<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:201</li>
+							<li>Defined in transactions.ts:209</li>
 						</ul>
 					</aside>
 				</section>
@@ -136,6 +159,21 @@
 							<li>Defined in transactions.ts:62</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="function" class="tsd-anchor"></a>
+					<h3>function</h3>
+					<div class="tsd-signature tsd-kind-icon">function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:210</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="proofs" class="tsd-anchor"></a>
@@ -186,11 +224,11 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transaction_type.html#data" class="tsd-signature-type">DATA</a></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transaction_type.html#contract_invocation" class="tsd-signature-type">CONTRACT_INVOCATION</a></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#type">type</a></p>
 						<ul>
-							<li>Defined in transactions.ts:200</li>
+							<li>Defined in transactions.ts:208</li>
 						</ul>
 					</aside>
 				</section>
@@ -220,28 +258,34 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="idatatransaction.html" class="tsd-kind-icon">IData<wbr>Transaction</a>
+						<a href="icontractinvocationtransaction.html" class="tsd-kind-icon">IContract<wbr>Invocation<wbr>Transaction</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="icontractinvocationtransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="idatatransaction.html#data" class="tsd-kind-icon">data</a>
+								<a href="icontractinvocationtransaction.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="icontractinvocationtransaction.html#fee" class="tsd-kind-icon">fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="icontractinvocationtransaction.html#function" class="tsd-kind-icon">function</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#proofs" class="tsd-kind-icon">proofs</a>
+								<a href="icontractinvocationtransaction.html#proofs" class="tsd-kind-icon">proofs</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+								<a href="icontractinvocationtransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="icontractinvocationtransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="idatatransaction.html#type" class="tsd-kind-icon">type</a>
+								<a href="icontractinvocationtransaction.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#version" class="tsd-kind-icon">version</a>
+								<a href="icontractinvocationtransaction.html#version" class="tsd-kind-icon">version</a>
 							</li>
 						</ul>
 					</li>

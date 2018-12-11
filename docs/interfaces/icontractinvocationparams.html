@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IDataTransaction | waves-transactions</title>
+	<title>IContractInvocationParams | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="idatatransaction.html">IDataTransaction</a>
+					<a href="icontractinvocationparams.html">IContractInvocationParams</a>
 				</li>
 			</ul>
-			<h1>Interface IDataTransaction&lt;LONG&gt;</h1>
+			<h1>Interface IContractInvocationParams&lt;LONG&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -83,13 +83,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="itransaction.html" class="tsd-signature-type">ITransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span>
-					</li>
-					<li>
-						<a href="withsender.html" class="tsd-signature-type">WithSender</a>
+						<a href="ibasicparams.html" class="tsd-signature-type">IBasicParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">IDataTransaction</span>
+								<span class="target">IContractInvocationParams</span>
 							</li>
 						</ul>
 					</li>
@@ -102,13 +99,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatatransaction.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="idatatransaction.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idatatransaction.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationparams.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationparams.html#function" class="tsd-kind-icon">function</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,94 +112,99 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="additionalfee" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> additional<wbr>Fee</h3>
+					<div class="tsd-signature tsd-kind-icon">additional<wbr>Fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#additionalfee">additionalFee</a></p>
+						<ul>
+							<li>Defined in transactions.ts:260</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If fee is not set, this value will be added to automatically calculated fee. E.x.:
+							Account is scripted and 400000 fee more is required.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="data" class="tsd-anchor"></a>
-					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="dataentry.html" class="tsd-signature-type">DataEntry</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="contractaddress" class="tsd-anchor"></a>
+					<h3>contract<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">contract<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:201</li>
+							<li>Defined in transactions.ts:402</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="fee" class="tsd-anchor"></a>
-					<h3>fee</h3>
-					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LONG</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee</h3>
+					<div class="tsd-signature tsd-kind-icon">fee<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">LONG</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#fee">fee</a></p>
+						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:62</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="proofs" class="tsd-anchor"></a>
-					<h3>proofs</h3>
-					<div class="tsd-signature tsd-kind-icon">proofs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="withproofs.html">WithProofs</a>.<a href="withproofs.html#proofs">proofs</a></p>
-						<ul>
-							<li>Defined in transactions.ts:35</li>
+							<li>Defined in transactions.ts:255</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>ITransaction signatures</p>
+							<p>Transaction fee. If not set, fee will be calculated automatically</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>minitems</dt>
-							<dd><p>0</p>
-							</dd>
-							<dt>maxitems</dt>
-							<dd><p>8</p>
-							</dd>
-						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="function" class="tsd-anchor"></a>
+					<h3>function</h3>
+					<div class="tsd-signature tsd-kind-icon">function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:403</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="senderpublickey" class="tsd-anchor"></a>
-					<h3>sender<wbr>Public<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">sender<wbr>Public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sender<wbr>Public<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">sender<wbr>Public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="withsender.html">WithSender</a>.<a href="withsender.html#senderpublickey">senderPublicKey</a></p>
+						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in transactions.ts:83</li>
+							<li>Defined in transactions.ts:266</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:</p>
+							<ol>
+								<li>Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.</li>
+								<li>You want only to create tx, not to sign it. Therefore no seed is provided.</li>
+							</ol>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="timestamp" class="tsd-anchor"></a>
-					<h3>timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timestamp</h3>
+					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#timestamp">timestamp</a></p>
+						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:61</li>
+							<li>Defined in transactions.ts:270</li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transaction_type.html#data" class="tsd-signature-type">DATA</a></div>
-					<aside class="tsd-sources">
-						<p>Overrides <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#type">type</a></p>
-						<ul>
-							<li>Defined in transactions.ts:200</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="version" class="tsd-anchor"></a>
-					<h3>version</h3>
-					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#version">version</a></p>
-						<ul>
-							<li>Defined in transactions.ts:63</li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Transaction timestamp. If not set current timestamp will be used. Date.now()</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -220,28 +221,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="idatatransaction.html" class="tsd-kind-icon">IData<wbr>Transaction</a>
+						<a href="icontractinvocationparams.html" class="tsd-kind-icon">IContract<wbr>Invocation<wbr>Params</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="icontractinvocationparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="idatatransaction.html#data" class="tsd-kind-icon">data</a>
+								<a href="icontractinvocationparams.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="icontractinvocationparams.html#fee" class="tsd-kind-icon">fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="icontractinvocationparams.html#function" class="tsd-kind-icon">function</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#proofs" class="tsd-kind-icon">proofs</a>
+								<a href="icontractinvocationparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="idatatransaction.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="idatatransaction.html#version" class="tsd-kind-icon">version</a>
+								<a href="icontractinvocationparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 						</ul>
 					</li>

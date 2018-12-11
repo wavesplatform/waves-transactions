@@ -32,6 +32,9 @@
     },
     {
       "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/ISetAssetScriptTransaction<LONG>"
+    },
+    {
+      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/IContractInvocationTransaction<LONG>"
     }
   ],
   "definitions": {
@@ -714,6 +717,75 @@
       "type": "number",
       "enum": [
         15
+      ]
+    },
+    "IContractInvocationTransaction<LONG>": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.CONTRACT_INVOCATION"
+        },
+        "contractAddress": {
+          "type": "string"
+        },
+        "function": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "args": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "args",
+            "name"
+          ]
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/TTx.json#/definitions/LONG"
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "ITransaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "senderPublicKey": {
+          "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
+        }
+      },
+      "required": [
+        "chainId",
+        "contractAddress",
+        "fee",
+        "function",
+        "proofs",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TRANSACTION_TYPE.CONTRACT_INVOCATION": {
+      "type": "number",
+      "enum": [
+        16
       ]
     }
   },
