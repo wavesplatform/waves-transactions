@@ -2,6 +2,7 @@ import { publicKey, verifySignature } from 'waves-crypto'
 import { data } from '../../src'
 import { dataToBytes } from '../../src/transactions/data'
 import { dataMinimalParams } from '../minimalParams'
+import { binary } from "@waves/marshall";
 
 describe('data', () => {
 

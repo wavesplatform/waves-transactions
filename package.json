@@ -51,7 +51,7 @@
     "url": "https://github.com/ebceu4/waves-transactions.git"
   },
   "dependencies": {
-    "@waves/marshall": "0.0.1",
+    "@waves/marshall": "0.0.2",
     "ajv": "^6.5.5",
     "axios": "^0.18.0",
     "waves-crypto": "^1.0.39"

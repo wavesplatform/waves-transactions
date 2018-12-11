@@ -12,10 +12,18 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { IDataTransaction, TRANSACTION_TYPE, DataEntry, DATA_FIELD_TYPE, IDataParams, WithId } from '../transactions'
+import {
+  IDataTransaction,
+  TRANSACTION_TYPE,
+  DataEntry,
+  DATA_FIELD_TYPE,
+  IDataParams,
+  WithId,
+  IMassTransferParams, IMassTransferTransaction, WithSender
+} from '../transactions'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '@waves/marshall'
+import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 export interface TypelessDataEntry {
   key: string
@@ -47,36 +55,37 @@ export const dataToBytes = (tx: IDataTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId  {
-  const { data: _data, fee, timestamp } = paramsOrTx
-
+export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & WithId;
+export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId;
+export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & WithId  {
+  const type = TRANSACTION_TYPE.DATA;
+  const version = paramsOrTx.version || 1;
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  if (! Array.isArray(_data)) throw new Error('["data should be array"]')
+  if (! Array.isArray(paramsOrTx.data)) throw new Error('["data should be array"]')
 
-  const _timestamp = timestamp || Date.now()
+  const _timestamp = paramsOrTx.timestamp || Date.now()
 
   let bytes = concat(
     BYTE(TRANSACTION_TYPE.DATA),
     BYTE(1),
     BASE58_STRING(senderPublicKey),
-    COUNT(SHORT)((x: DataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(_data),
+    COUNT(SHORT)((x: DataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
     LONG(_timestamp)
   )
 
   const computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
 
   const tx: IDataTransaction & WithId = {
-    type: 12,
-    version: 1,
+    type,
+    version,
     senderPublicKey,
     fee: computedFee,
     timestamp: _timestamp,
-    proofs: [],
+    proofs: paramsOrTx.proofs || [],
     id: '',
-    ...paramsOrTx,
-    data: _data && (_data as any).map((x: DataEntry | TypelessDataEntry) => {
+    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: DataEntry | TypelessDataEntry) => {
       if ((<any>x).type) return x
       else {
         const type = mapType(x.value)[0]
@@ -93,5 +102,5 @@ export function data(paramsOrTx: IDataParams | IDataTransaction, seed?: TSeedTyp
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes1, s),i));
   tx.id = hashBytes(bytes1);
 
-  return tx as any
+  return tx
 } 
