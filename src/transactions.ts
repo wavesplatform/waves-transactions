@@ -16,13 +16,14 @@ export enum TRANSACTION_TYPE {
   SET_SCRIPT = 13,
   SPONSORSHIP = 14,
   SET_ASSET_SCRIPT = 15,
+  CONTRACT_INVOCATION = 16
 }
 
 export enum DATA_FIELD_TYPE {
   INTEGER = 'integer',
   BOOLEAN = 'boolean',
-  STRING = 'string',
-  BINARY = 'binary'
+  BINARY = 'binary',
+  STRING = 'string'
 }
 
 export interface WithProofs {
@@ -77,7 +78,7 @@ export type TTx<LONG = string | number> =
   | ISetScriptTransaction<LONG>
   | IDataTransaction<LONG>
   | ISetAssetScriptTransaction<LONG>
-
+  | IContractInvocationTransaction<LONG>
 export interface WithSender {
   senderPublicKey: string
 }
@@ -203,6 +204,18 @@ export interface IDataTransaction<LONG = string | number> extends ITransaction<L
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
+export interface IContractInvocationTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
+  type: TRANSACTION_TYPE.CONTRACT_INVOCATION
+  contractAddress: string
+  function: {
+    name: string
+    args: any[]
+  }
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
 export interface IOrder<LONG = string | number> extends WithSender, WithProofs {
   orderType: 'buy' | 'sell'
   assetPair: {
@@ -221,6 +234,7 @@ export interface IOrder<LONG = string | number> extends WithSender, WithProofs {
 export type TTxParams<LONG = string | number> =
   | IAliasParams<LONG>
   | IBurnParams<LONG>
+  | IContractInvocationParams<LONG>
   | ICancelLeaseParams<LONG>
   | IDataParams<LONG>
   | IIssueParams<LONG>
@@ -379,4 +393,16 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
   attachment?: string
   feeAssetId?: string
   assetId?: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number
+ */
+export interface IContractInvocationParams<LONG = string | number> extends IBasicParams<LONG> {
+  type: TRANSACTION_TYPE.CONTRACT_INVOCATION
+  contractAddress: string
+  function: {
+    name: string
+    args: any[]
+  }
 }
