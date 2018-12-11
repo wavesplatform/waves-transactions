@@ -1,9 +1,6 @@
 {
   "type": "object",
   "properties": {
-    "id": {
-      "type": "string"
-    },
     "orderType": {
       "enum": [
         "buy",
@@ -57,7 +54,6 @@
     "amount",
     "assetPair",
     "expiration",
-    "id",
     "matcherFee",
     "matcherPublicKey",
     "orderType",

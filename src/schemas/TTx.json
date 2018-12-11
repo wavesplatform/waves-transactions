@@ -134,10 +134,8 @@
           "type": "string"
         },
         "chainId": {
-          "description": "Network byte",
-          "minLength": 1,
-          "maxLength": 1,
-          "type": "string"
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
@@ -265,10 +263,8 @@
           "type": "string"
         },
         "chainId": {
-          "description": "Network byte",
-          "minLength": 1,
-          "maxLength": 1,
-          "type": "string"
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
@@ -324,10 +320,8 @@
           "type": "string"
         },
         "chainId": {
-          "description": "Network byte",
-          "minLength": 1,
-          "maxLength": 1,
-          "type": "string"
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
@@ -430,10 +424,8 @@
           "type": "string"
         },
         "chainId": {
-          "description": "Network byte",
-          "minLength": 1,
-          "maxLength": 1,
-          "type": "string"
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
@@ -562,10 +554,8 @@
           "type": "string"
         },
         "chainId": {
-          "description": "Network byte",
-          "minLength": 1,
-          "maxLength": 1,
-          "type": "string"
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
@@ -704,10 +694,8 @@
           "type": "string"
         },
         "chainId": {
-          "description": "Network byte",
-          "minLength": 1,
-          "maxLength": 1,
-          "type": "string"
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
