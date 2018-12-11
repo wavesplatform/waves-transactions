@@ -1,7 +1,7 @@
 import {
   IAliasParams,
   IBurnParams,
-  ICancelLeaseParams, IDataParams, IIssueParams,
+  ICancelLeaseParams, IContractInvocationParams, IDataParams, IIssueParams,
   ILeaseParams,
   IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
   TRANSACTION_TYPE
@@ -23,6 +23,17 @@ export const leaseMinimalParams: ILeaseParams = {
 
 export const cancelLeaseMinimalParams: ICancelLeaseParams = {
   leaseId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
+}
+
+export const contractInvocationMinimalParams: IContractInvocationParams = {
+  contractAddress: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+  function: {
+    name: 'foo',
+    args: [{
+      type: 'binary',
+      value: 'base64:AQa3b8tH'
+    }]
+  }
 }
 
 export const massTransferMinimalParams: IMassTransferParams = {
@@ -99,4 +110,5 @@ export const minimalParams = {
   [TRANSACTION_TYPE.DATA]: dataMinimalParams,
   [TRANSACTION_TYPE.SET_SCRIPT]: setScriptMinimalParams,
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: setAssetScriptMinimalParams,
+  [TRANSACTION_TYPE.CONTRACT_INVOCATION]: contractInvocationMinimalParams,
 }

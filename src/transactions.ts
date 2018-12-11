@@ -399,10 +399,12 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
 export interface IContractInvocationParams<LONG = string | number> extends IBasicParams<LONG> {
-  type: TRANSACTION_TYPE.CONTRACT_INVOCATION
   contractAddress: string
   function: {
     name: string
-    args: any[]
+    args: {
+      type: 'binary' | 'long' | 'boolean' | 'string',
+      value: string | number | boolean
+    }[]
   }
 }
