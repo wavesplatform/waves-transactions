@@ -2,7 +2,7 @@ import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId, WithSe
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 export const transferToBytes = (tx: ITransferTransaction) => concat(
   BYTE(TRANSACTION_TYPE.TRANSFER),

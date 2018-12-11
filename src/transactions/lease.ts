@@ -2,7 +2,7 @@ import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender }
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 export const leaseToBytes = (tx: ILeaseTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.LEASE, tx.version, 0]),

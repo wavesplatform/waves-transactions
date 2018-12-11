@@ -15,7 +15,7 @@ import {
 } from 'waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 export const issueToBytes = (tx: IIssueTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.ISSUE, tx.version, tx.chainId]),

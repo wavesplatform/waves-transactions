@@ -2,7 +2,7 @@ import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId, WithSend
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 
 export const reissueToBytes = (tx: IReissueTransaction): Uint8Array => concat(

@@ -9,6 +9,7 @@ const isLongType = (type:any) => {
 const resolveProp = (fullPath: string[], fullSchema:any): any => {
 
   function go(path: string[], schema:any):any{
+    if (!schema) return;
     if (schema.$ref){
       const refArr = schema.$ref.split('/')
       const definition = refArr[refArr.length - 1]

@@ -2,7 +2,7 @@ import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
 import { IOrder, IOrderParams, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 export const orderToBytes = (ord: IOrder) => concat(
   BASE58_STRING(ord.senderPublicKey),

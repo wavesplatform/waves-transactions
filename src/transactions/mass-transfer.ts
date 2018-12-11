@@ -21,7 +21,7 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array => concat(
   BYTE(TRANSACTION_TYPE.MASS_TRANSFER),

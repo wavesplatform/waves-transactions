@@ -20,7 +20,7 @@ describe('signTx', () => {
   })
 
   it('should throw on no public key or seed', () => {
-    const tx = () => reissue({ ...reissueMinimalParams })
+    const tx = () => reissue({ ...reissueMinimalParams } as any)
     expect(tx).toThrow('Please provide either seed or senderPublicKey')
   })
 
@@ -32,7 +32,7 @@ describe('signTx', () => {
   it('should throw when index already exists', () => {
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
     const signedTwoTimes = () => signTx(tx, [stringSeed])
-    expect(signedTwoTimes).toThrow('Proof at index 0 is already exists.')
+    expect(signedTwoTimes).toThrow('Proof at index 0 already exists')
   })
 
   it('should throw when type is unknown', () => {

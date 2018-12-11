@@ -30,7 +30,7 @@ import { setScript, setScriptToBytes } from './transactions/set-script'
 import { orderToBytes } from './transactions/order'
 import { isOrder} from "./generic";
 import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-script";
-import { json } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { json } from '@waves/marshall'
 
 export interface WithTxType {
   type: TRANSACTION_TYPE

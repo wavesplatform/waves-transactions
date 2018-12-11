@@ -1,3 +1,4 @@
+/*
 import { broadcast, burn, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from "../src";
 import { address, publicKey } from "waves-crypto";
 import { waitForTx } from "../src/generic";
@@ -11,9 +12,9 @@ import {
 import { json, convert } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
 
 describe('Blockchain interaction', () => {
-  /**
+  /!**
    * Before running test you should prepare new account with WAVES on it!!
-   */
+   *!/
   const seed = 'test seed 1';
   const recipientSeed = 'MyRecipient'
   const apiBase = 'https://testnodes.wavesnodes.com'
@@ -189,3 +190,4 @@ describe('Blockchain interaction', () => {
 
 })
 
+*/

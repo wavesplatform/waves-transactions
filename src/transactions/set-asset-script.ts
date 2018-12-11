@@ -19,7 +19,7 @@ import {
 } from 'waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { binary } from '@waves/marshall'
 
 export const setAssetScriptToBytes = (tx: ISetAssetScriptTransaction): Uint8Array => concat(
   BYTES([TRANSACTION_TYPE.SET_ASSET_SCRIPT, tx.version, tx.chainId]),

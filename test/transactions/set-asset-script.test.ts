@@ -17,11 +17,11 @@ describe('setAssetScript', () => {
   })
 
   it('Should generate correct signed setAssetScript transaction with multiple signers via array', () => {
-    const txParams = { script: null, assetId: '' }
+    const txParams = { script: 'AQIDBA==', assetId: '' }
     const signedTx = setAssetScript(txParams, [null, seed, seed2])
 
     expect(signedTx.proofs[0]).toEqual('')
-    expect(signedTx.script).toBeNull()
+    expect(signedTx.script).toEqual('base64:AQIDBA==')
     expect(validateSetScriptTx(signedTx, 1)).toBe(true)
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
@@ -35,12 +35,6 @@ describe('setAssetScript', () => {
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 
-  it('Should generate correct signed setAssetScript transaction with null script', () => {
-    const txParams = { script: null, assetId: '' }
-    const signedTx = setAssetScript(txParams, seed)
-
-    expect(validateSetScriptTx(signedTx)).toBe(true)
-  })
 
   it('Should generate correct setAssetScript transaction without seed', () => {
     const txParams = { script: compiledContract, senderPublicKey: publicKey(seed), assetId: '' }
@@ -52,7 +46,7 @@ describe('setAssetScript', () => {
 
   it('Should throw on undefined script', () => {
     const txParams = {}
-    expect(() => setAssetScript(txParams as any, seed)).toThrow('Script field cannot be undefined. Use null explicitly to remove script')
+    expect(() => setAssetScript(txParams as any, seed)).toThrow('Asset script cannot be empty')
   })
 
   it('Should handle incorrect keys in seedObject', () => {
