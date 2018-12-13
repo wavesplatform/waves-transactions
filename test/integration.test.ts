@@ -8,7 +8,7 @@ import {
   ISetAssetScriptParams,
   ISetScriptParams, ITransferParams
 } from "../src/transactions";
-import { json, convert } from '/Users/siem/IdeaProjects/tx-parse-serialize/dist'
+import { json, convert } from '@waves/marshall'
 
 describe('Blockchain interaction', () => {
   /**

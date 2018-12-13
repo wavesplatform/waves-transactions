@@ -4,7 +4,8 @@ import {
   ICancelLeaseParams, IContractInvocationParams, IDataParams, IIssueParams,
   ILeaseParams,
   IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
-  TRANSACTION_TYPE
+  TRANSACTION_TYPE,
+  ICancelOrderParams
 } from '../src/transactions'
 
 export const aliasMinimalParams: IAliasParams = {
@@ -54,6 +55,11 @@ export const orderMinimalParams: IOrderParams = {
   price: 10000,
   amount: 1233,
   orderType: 'buy',
+}
+
+export const cancelOrderMinimalParams: ICancelOrderParams = {
+  senderPublicKey: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+  orderId: '3B3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1'
 }
 
 export const dataMinimalParams: IDataParams = {

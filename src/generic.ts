@@ -1,9 +1,10 @@
-import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams } from './transactions'
+import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams, ICancelOrderParams, ICancelOrder } from './transactions'
 import { TSeedTypes } from './types'
 import { publicKey } from 'waves-crypto'
 import axios from "axios";
 
-export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: TTxParams | TTx | IOrderParams | IOrder) {
+type ParamsForSender =  TTxParams | TTx | IOrderParams | IOrder | ICancelOrderParams | ICancelOrder
+export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: ParamsForSender) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
     throw new Error('Please provide either seed or senderPublicKey');
   else {

@@ -230,6 +230,13 @@ export interface IOrder<LONG = string | number> extends WithSender, WithProofs {
   matcherPublicKey: string
 }
 
+export interface ICancelOrder extends WithSender {
+  sender: string
+  orderId: string
+  timestamp: number
+  signature: string
+}
+
 //////////////params
 export type TTxParams<LONG = string | number> =
   | IAliasParams<LONG>
@@ -355,6 +362,10 @@ export interface IOrderParams<LONG = string | number> {
   matcherFee?: number
   timestamp?: number
   expiration?: number
+}
+
+export interface ICancelOrderParams extends Partial<WithSender> {
+  orderId: string
 }
 
 /**
