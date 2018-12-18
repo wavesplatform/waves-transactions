@@ -2,19 +2,19 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/TRANSACTION_TYPE.DATA"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IDataTransaction.json#/definitions/TRANSACTION_TYPE.DATA"
     },
     "data": {
       "type": "array",
       "items": {
-        "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DataEntry"
+        "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IDataTransaction.json#/definitions/DataEntry"
       }
     },
     "timestamp": {
       "type": "number"
     },
     "fee": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IDataTransaction.json#/definitions/LONG"
     },
     "version": {
       "type": "number"
@@ -55,7 +55,7 @@
           "type": "string"
         },
         "type": {
-          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json#/definitions/DATA_FIELD_TYPE"
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IDataTransaction.json#/definitions/DATA_FIELD_TYPE"
         },
         "value": {
           "type": [
@@ -88,5 +88,5 @@
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/IDataTransaction.json"
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IDataTransaction.json"
 }

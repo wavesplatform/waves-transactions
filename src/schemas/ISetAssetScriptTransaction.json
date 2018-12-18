@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetAssetScriptTransaction.json#/definitions/TRANSACTION_TYPE.SET_ASSET_SCRIPT"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetAssetScriptTransaction.json#/definitions/TRANSACTION_TYPE.SET_ASSET_SCRIPT"
     },
     "assetId": {
       "type": "string"
@@ -17,7 +17,7 @@
       "type": "number"
     },
     "fee": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetAssetScriptTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetAssetScriptTransaction.json#/definitions/LONG"
     },
     "version": {
       "type": "number"
@@ -65,5 +65,5 @@
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetAssetScriptTransaction.json"
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetAssetScriptTransaction.json"
 }

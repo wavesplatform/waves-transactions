@@ -17,6 +17,17 @@ export const TYPES = [
   'ISetAssetScriptTransaction',
   'IDataTransaction',
   'IOrder',
+  'IAliasParams',
+  'IIssueParams',
+  'ITransferParams',
+  'IReissueParams',
+  'IBurnParams',
+  'ILeaseParams',
+  'ICancelLeaseParams',
+  'IMassTransferParams',
+  'ISetScriptParams',
+  'ISetAssetScriptParams',
+  'IDataParams',
 ]
 
 export function buildSchemas() {
@@ -42,7 +53,7 @@ export function buildSchemas() {
 
 
   TYPES.forEach(type => {
-    const id = `https://github.com/github/ebceu4/blob/master/src/schemas/${type}.json`
+    const id = `https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/${type}.json`
     let schema = TJS.generateSchema(program, type, { ...settings, id })
     //Define generic LONG as string | number in JSON schema. Otherwise ot would be object. Should probably pass param that defines LONG schema;
     schema!.definitions = {...schema!.definitions,  LONG:{type:['string', 'number']}};
@@ -62,6 +73,8 @@ export default {
     if (err1) throw err1
     console.log('Manifest has been written')
   })
+
+
 }
 
 //buildSchemas()

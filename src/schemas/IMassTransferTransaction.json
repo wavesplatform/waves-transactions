@@ -2,12 +2,12 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IMassTransferTransaction.json#/definitions/TRANSACTION_TYPE.MASS_TRANSFER"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IMassTransferTransaction.json#/definitions/TRANSACTION_TYPE.MASS_TRANSFER"
     },
     "transfers": {
       "type": "array",
       "items": {
-        "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IMassTransferTransaction.json#/definitions/IMassTransferItem<LONG>"
+        "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IMassTransferTransaction.json#/definitions/IMassTransferItem<LONG>"
       }
     },
     "attachment": {
@@ -23,7 +23,7 @@
       "type": "number"
     },
     "fee": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IMassTransferTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IMassTransferTransaction.json#/definitions/LONG"
     },
     "version": {
       "type": "number"
@@ -65,7 +65,7 @@
           "type": "string"
         },
         "amount": {
-          "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IMassTransferTransaction.json#/definitions/LONG"
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IMassTransferTransaction.json#/definitions/LONG"
         }
       },
       "required": [
@@ -81,5 +81,5 @@
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/IMassTransferTransaction.json"
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IMassTransferTransaction.json"
 }

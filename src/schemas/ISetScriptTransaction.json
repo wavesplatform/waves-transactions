@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetScriptTransaction.json#/definitions/TRANSACTION_TYPE.SET_SCRIPT"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetScriptTransaction.json#/definitions/TRANSACTION_TYPE.SET_SCRIPT"
     },
     "script": {
       "type": [
@@ -14,7 +14,7 @@
       "type": "number"
     },
     "fee": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetScriptTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetScriptTransaction.json#/definitions/LONG"
     },
     "version": {
       "type": "number"
@@ -61,5 +61,5 @@
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/ISetScriptTransaction.json"
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetScriptTransaction.json"
 }

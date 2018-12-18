@@ -3,7 +3,12 @@ import { TSeedTypes } from './types'
 import { publicKey } from 'waves-crypto'
 import axios from "axios";
 
+export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>
+  Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
+    .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
+
 type ParamsForSender =  TTxParams | TTx | IOrderParams | IOrder | ICancelOrderParams | ICancelOrder
+
 export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: ParamsForSender) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
     throw new Error('Please provide either seed or senderPublicKey');

@@ -14,7 +14,7 @@ describe('Blockchain interaction', () => {
   /**
    * Before running test you should prepare new account with WAVES on it!!
    */
-  const seed = 'test seed 1';
+  const seed = 'test acc 2';
   const recipientSeed = 'MyRecipient'
   const apiBase = 'https://testnodes.wavesnodes.com'
   const chainId = 'T'

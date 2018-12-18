@@ -63,5 +63,5 @@ it('should send tx to node', async () => {
   const result = data(dataParams, 'seed')
 
   await expect(broadcast(result, 'https://nodes.wavesplatform.com/')).rejects
-    .toEqual(new Error('Transaction is not allowed by account-script'))
+    .toEqual(new Error('Transaction not allowed by account-script'))
 })

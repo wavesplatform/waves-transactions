@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ILeaseTransaction.json#/definitions/TRANSACTION_TYPE.LEASE"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ILeaseTransaction.json#/definitions/TRANSACTION_TYPE.LEASE"
     },
     "amount": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ILeaseTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ILeaseTransaction.json#/definitions/LONG"
     },
     "recipient": {
       "type": "string"
@@ -14,7 +14,7 @@
       "type": "number"
     },
     "fee": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/ILeaseTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ILeaseTransaction.json#/definitions/LONG"
     },
     "version": {
       "type": "number"
@@ -57,5 +57,5 @@
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/ILeaseTransaction.json"
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ILeaseTransaction.json"
 }

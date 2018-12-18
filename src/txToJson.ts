@@ -1,4 +1,4 @@
-import { schemaByTransactionType } from './schemas'
+import { schemaTypeMap } from './schemas'
 import { TTx } from './transactions'
 
 const isLongType = (type:any) => {
@@ -39,7 +39,7 @@ export function txToJson(value: TTx): string | undefined {
   function stringifyValue(value: any): string | undefined {
 
     if (typeof value === 'string') {
-      const prop = resolveProp(path, schemaByTransactionType[type])
+      const prop = resolveProp(path, schemaTypeMap[type] && schemaTypeMap[type].schema)
       if (prop && isLongType(prop.type)) {
         return value
       }

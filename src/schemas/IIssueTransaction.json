@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json#/definitions/TRANSACTION_TYPE.ISSUE"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IIssueTransaction.json#/definitions/TRANSACTION_TYPE.ISSUE"
     },
     "name": {
       "type": "string"
@@ -14,7 +14,7 @@
       "type": "number"
     },
     "quantity": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IIssueTransaction.json#/definitions/LONG"
     },
     "reissuable": {
       "type": "boolean"
@@ -26,7 +26,7 @@
       "type": "number"
     },
     "fee": {
-      "$ref": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json#/definitions/LONG"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IIssueTransaction.json#/definitions/LONG"
     },
     "version": {
       "type": "number"
@@ -77,5 +77,5 @@
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/github/ebceu4/blob/master/src/schemas/IIssueTransaction.json"
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IIssueTransaction.json"
 }
