@@ -84,6 +84,9 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<a href="ibasicparams.html" class="tsd-signature-type">IBasicParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span>
+					</li>
+					<li>
+						<a href="withchainidparam.html" class="tsd-signature-type">WithChainIdParam</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">IContractInvocationParams</span>
@@ -100,9 +103,11 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationparams.html#call" class="tsd-kind-icon">call</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationparams.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationparams.html#function" class="tsd-kind-icon">function</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationparams.html#payment" class="tsd-kind-icon">payment</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
@@ -119,7 +124,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#additionalfee">additionalFee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:267</li>
+							<li>Defined in transactions.ts:273</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -130,12 +135,46 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="call" class="tsd-anchor"></a>
+					<h3>call</h3>
+					<div class="tsd-signature tsd-kind-icon">call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in transactions.ts:420</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="chainid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chain<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="withchainidparam.html">WithChainIdParam</a>.<a href="withchainidparam.html#chainid">chainId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:293</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Network byte. Could beb set as number or as char.
+								If set as char(string), charCodeAt(0) will be used. E.g.,
+								&#39;W&#39; will be converted to &#39;87&#39;
+							If not set, 87 will be used as default</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="contractaddress" class="tsd-anchor"></a>
 					<h3>contract<wbr>Address</h3>
 					<div class="tsd-signature tsd-kind-icon">contract<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:413</li>
+							<li>Defined in transactions.ts:419</li>
 						</ul>
 					</aside>
 				</section>
@@ -146,7 +185,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:262</li>
+							<li>Defined in transactions.ts:268</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -156,19 +195,14 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="function" class="tsd-anchor"></a>
-					<h3>function</h3>
-					<div class="tsd-signature tsd-kind-icon">function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<a name="payment" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> payment</h3>
+					<div class="tsd-signature tsd-kind-icon">payment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:414</li>
+							<li>Defined in transactions.ts:427</li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="senderpublickey" class="tsd-anchor"></a>
@@ -177,7 +211,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in transactions.ts:273</li>
+							<li>Defined in transactions.ts:279</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -197,7 +231,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="ibasicparams.html">IBasicParams</a>.<a href="ibasicparams.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:277</li>
+							<li>Defined in transactions.ts:283</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -227,13 +261,19 @@
 								<a href="icontractinvocationparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="icontractinvocationparams.html#call" class="tsd-kind-icon">call</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="icontractinvocationparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="icontractinvocationparams.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="icontractinvocationparams.html#fee" class="tsd-kind-icon">fee</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="icontractinvocationparams.html#function" class="tsd-kind-icon">function</a>
+								<a href="icontractinvocationparams.html#payment" class="tsd-kind-icon">payment</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="icontractinvocationparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>

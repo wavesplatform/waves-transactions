@@ -1,6 +1,9 @@
 {
   "type": "object",
   "properties": {
+    "version": {
+      "type": "number"
+    },
     "orderType": {
       "enum": [
         "buy",

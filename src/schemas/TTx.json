@@ -728,10 +728,10 @@
         "contractAddress": {
           "type": "string"
         },
-        "function": {
+        "call": {
           "type": "object",
           "properties": {
-            "name": {
+            "function": {
               "type": "string"
             },
             "args": {
@@ -741,7 +741,21 @@
           },
           "required": [
             "args",
-            "name"
+            "function"
+          ]
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "assetId": {
+              "type": "string"
+            },
+            "amount": {
+              "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/LONG"
+            }
+          },
+          "required": [
+            "amount"
           ]
         },
         "timestamp": {
@@ -771,10 +785,10 @@
         }
       },
       "required": [
+        "call",
         "chainId",
         "contractAddress",
         "fee",
-        "function",
         "proofs",
         "senderPublicKey",
         "timestamp",
