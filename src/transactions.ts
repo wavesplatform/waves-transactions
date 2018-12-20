@@ -79,6 +79,7 @@ export type TTx<LONG = string | number> =
   | IDataTransaction<LONG>
   | ISetAssetScriptTransaction<LONG>
   | IContractInvocationTransaction<LONG>
+
 export interface WithSender {
   senderPublicKey: string
 }
@@ -207,9 +208,13 @@ export interface IDataTransaction<LONG = string | number> extends ITransaction<L
 export interface IContractInvocationTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
   type: TRANSACTION_TYPE.CONTRACT_INVOCATION
   contractAddress: string
-  function: {
-    name: string
+  call: {
+    function: string
     args: any[]
+  },
+  payment?: {
+    assetId?: string
+    amount: LONG
   }
 }
 
@@ -217,6 +222,7 @@ export interface IContractInvocationTransaction<LONG = string | number> extends 
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
 export interface IOrder<LONG = string | number> extends WithSender, WithProofs {
+  version?: number,
   orderType: 'buy' | 'sell'
   assetPair: {
     amountAsset?: string
@@ -319,7 +325,7 @@ export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam{
+export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   name: string
   description: string
   quantity: LONG
@@ -339,7 +345,7 @@ export interface ILeaseParams<LONG = string | number> extends IBasicParams<LONG>
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG>{
+export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG> {
   transfers: IMassTransferItem[]
   /**
    * Bytearray encoded as base string
@@ -409,13 +415,17 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number
  */
-export interface IContractInvocationParams<LONG = string | number> extends IBasicParams<LONG> {
+export interface IContractInvocationParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   contractAddress: string
-  function: {
-    name: string
+  call: {
+    function: string
     args: {
       type: 'binary' | 'long' | 'boolean' | 'string',
       value: string | number | boolean
     }[]
+  },
+  payment?: {
+    assetId?: string
+    amount: LONG
   }
 }

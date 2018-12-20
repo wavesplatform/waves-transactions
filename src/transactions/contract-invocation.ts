@@ -25,7 +25,8 @@ export function contractInvocation(paramsOrTx: any, seed?: TSeedTypes): IContrac
     version,
     senderPublicKey,
     contractAddress: paramsOrTx.contractAddress,
-    function: paramsOrTx.function,
+    call: paramsOrTx.call,
+    payment: paramsOrTx.payment,
     fee: fee(paramsOrTx, 1000000),
     timestamp: Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
@@ -37,6 +38,9 @@ export function contractInvocation(paramsOrTx: any, seed?: TSeedTypes): IContrac
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
   tx.id = hashBytes(bytes);
+
+  //FixMe: for now node requires to have empty key field in args
+  tx.call.args = tx.call.args.map(arg => ({...arg, key: ''}));
 
   return tx
 }

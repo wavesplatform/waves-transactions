@@ -1,21 +1,9 @@
-import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
+import { signBytes, hashBytes } from 'waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
 import { IOrder, IOrderParams, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
-export const orderToBytes = (ord: IOrder) => concat(
-  BASE58_STRING(ord.senderPublicKey),
-  BASE58_STRING(ord.matcherPublicKey),
-  OPTION(BASE58_STRING)(ord.assetPair.amountAsset),
-  OPTION(BASE58_STRING)(ord.assetPair.priceAsset),
-  BYTE(ord.orderType === 'sell' ? 1 : 0),
-  LONG(ord.price),
-  LONG(ord.amount),
-  LONG(ord.timestamp),
-  LONG(ord.expiration),
-  LONG(ord.matcherFee)
-)
 
 /**
  * Creates and signs [[Order]].
@@ -76,8 +64,11 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
   const seedsAndIndexes = convertToPairs(seed);
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrOrder);
 
+  // Use old versionless order only if it is set to null explicitly
+  const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version || 2;
   const ord: IOrder & WithId = {
     orderType,
+    version,
     assetPair: {
       amountAsset,
       priceAsset,
@@ -98,7 +89,10 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
   seedsAndIndexes.forEach(([s,i]) => addProof(ord, signBytes(bytes, s),i));
   ord.id = hashBytes(bytes);
 
-  return ord as any
+  // for versionless order use signature instead of proofs
+  if (ord.version === undefined) (ord as any).signature = ord.proofs[0];
+
+  return ord
 }
 
 

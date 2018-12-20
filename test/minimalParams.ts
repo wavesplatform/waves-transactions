@@ -28,8 +28,8 @@ export const cancelLeaseMinimalParams: ICancelLeaseParams = {
 
 export const contractInvocationMinimalParams: IContractInvocationParams = {
   contractAddress: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
-  function: {
-    name: 'foo',
+  call: {
+    function: 'foo',
     args: [{
       type: 'binary',
       value: 'base64:AQa3b8tH'

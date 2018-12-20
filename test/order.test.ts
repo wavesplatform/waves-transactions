@@ -1,6 +1,6 @@
 import { publicKey, verifySignature } from 'waves-crypto'
+import { binary } from '@waves/marshall'
 import { order } from '../src'
-import { orderToBytes } from '../src/transactions/order'
 import { orderMinimalParams } from './minimalParams'
 
 describe('order', () => {
@@ -15,13 +15,13 @@ describe('order', () => {
 
   it('should get correct signature', () => {
     const tx = order({ ...orderMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), orderToBytes(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeOrder(tx), tx.proofs[0]!)).toBeTruthy()
   });
 
   it('should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = order({ ...orderMinimalParams, orderType: 'sell' }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), orderToBytes(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), orderToBytes(tx), tx.proofs[3]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed),  binary.serializeOrder(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed2),  binary.serializeOrder(tx), tx.proofs[3]!)).toBeTruthy()
   })
 })

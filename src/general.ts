@@ -27,10 +27,9 @@ import { data, dataToBytes } from './transactions/data'
 import { massTransfer, massTransferToBytes } from './transactions/mass-transfer'
 import { alias, aliasToBytes } from './transactions/alias'
 import { setScript, setScriptToBytes } from './transactions/set-script'
-import { orderToBytes } from './transactions/order'
 import { isOrder} from "./generic";
 import { setAssetScript, setAssetScriptToBytes } from "./transactions/set-asset-script";
-import { json } from '@waves/marshall'
+import { binary, json } from '@waves/marshall'
 
 export interface WithTxType {
   type: TRANSACTION_TYPE
@@ -57,7 +56,7 @@ export const signTx = (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes): TTx 
 };
 
 export const serialize = (obj: TTx | IOrder): Uint8Array => {
-  if (isOrder(obj)) return orderToBytes(obj)
+  if (isOrder(obj)) return binary.serializeOrder(obj)
   if (!txTypeMap[obj.type]) throw new Error(`Unknown tx type: ${obj.type}`)
 
   return txTypeMap[obj.type].serialize(obj)
