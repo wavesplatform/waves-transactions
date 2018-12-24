@@ -12,19 +12,6 @@ describe('transfer', () => {
     expect(tx).toMatchObject({ ...transferMinimalParams })
   })
 
-  it('Should throw on schema validation', () => {
-    const tx = () => transfer({ ...transferMinimalParams, assetId: null } as any, stringSeed)
-    expect(tx).toThrow(`[{
-  "keyword": "type",
-  "dataPath": ".assetId",
-  "schemaPath": "#/properties/assetId/type",
-  "params": {
-    "type": "string"
-  },
-  "message": "should be string"
-}]`)
-  })
-
 
   it('Should get correct signature', () => {
     const tx = transfer({ ...transferMinimalParams }, stringSeed)

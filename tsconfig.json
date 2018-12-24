@@ -26,7 +26,7 @@
     "out": "docs",
     "theme": "./node_modules/typedoc-clarity-theme",
     "ignoreCompilerErrors": true,
-    "exclude": "**/**/*+(generic|index).ts",
+    "exclude": "**/**/*+(generic|index|txToJson|validation).ts",
     "excludePrivate": true,
     "excludeExternals": true,
     "excludeNotExported": true,

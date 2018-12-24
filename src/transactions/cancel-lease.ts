@@ -1,24 +1,11 @@
-import { TransactionType, CancelLeaseTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams, WithId, WithSender } from '../transactions'
+import { binary } from '@waves/marshall'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params} from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
+import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
+import { TSeedTypes } from '../types'
 
-export interface CancelLeaseParams extends Params {
-  leaseId: string
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
-
-export const cancelLeaseValidation = (tx: CancelLeaseTransaction): ValidationResult => [
-
-]
-
-export const cancelLeaseToBytes = (tx: CancelLeaseTransaction): Uint8Array => concat(
-  BYTES([TransactionType.CancelLease, tx.version, tx.chainId.charCodeAt(0)]),
+export const cancelLeaseToBytes = (tx: ICancelLeaseTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.CANCEL_LEASE, tx.version, tx.chainId]),
   BASE58_STRING(tx.senderPublicKey),
   LONG(tx.fee),
   LONG(tx.timestamp),
@@ -26,31 +13,30 @@ export const cancelLeaseToBytes = (tx: CancelLeaseTransaction): Uint8Array => co
 )
 
 /* @echo DOCS */
-export function cancelLease(paramsOrTx: CancelLeaseParams | CancelLeaseTransaction, seed?: SeedTypes): CancelLeaseTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): ICancelLeaseTransaction & WithId;
+export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | ICancelLeaseTransaction, seed?: TSeedTypes): ICancelLeaseTransaction & WithId;
+export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): ICancelLeaseTransaction & WithId {
+  const type = TRANSACTION_TYPE.CANCEL_LEASE;
+  const version = paramsOrTx.version || 2;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+  const tx: ICancelLeaseTransaction & WithId = {
+    type,
+    version,
+    senderPublicKey,
+    leaseId: paramsOrTx.leaseId,
+    fee: fee(paramsOrTx, 100000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    chainId: networkByte(paramsOrTx.chainId, 87),
+    proofs: paramsOrTx.proofs || [],
+    id: '',
+  }
 
-  const tx: CancelLeaseTransaction = {
-      type: TransactionType.CancelLease,
-      version: 2,
-      fee:100000,
-      senderPublicKey,
-      timestamp: Date.now(),
-      chainId: 'W',
-      proofs: [],
-      id: '',
-    ...paramsOrTx,
-    }
+  const bytes = binary.serializeTx(tx);
 
-  raiseValidationErrors(
-    generalValidation(tx, validators.CancelLeaseTransaction),
-    cancelLeaseValidation(tx)
-  )
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
+  tx.id = hashBytes(bytes);
 
-  const bytes = cancelLeaseToBytes(tx)
-
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? cancelLease(tx, nextSeed) : tx
+  return tx
 }

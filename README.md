@@ -67,7 +67,7 @@ Output will be a signed transfer transaction:
 Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:
 ```js
 const otherPartySeed = '18f6edd4c8d647b4ba5ed366093ef5b8d0c4d8b3a6154a2b876f54773a678781'
-const transferSidnedWithTwoParties = transfer(signedTranserTx /*Tx from first example*/, seed)
+const transferSidnedWithTwoParties = transfer(signedTranserTx: TTransaction, seed)
 ```
 
 So now there are two proofs:

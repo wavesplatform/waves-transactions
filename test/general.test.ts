@@ -1,15 +1,16 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue, signTx, data } from '../src'
 import { broadcast, serialize } from '../src/general'
-import { reissueMinimalParams } from './minimalParams'
-import { Tx } from '../src/transactions'
+import { reissueMinimalParams, burnMinimalParams } from './minimalParams'
+import { TTx } from '../src/transactions'
 import { exampleTxs } from './exampleTxs'
+import { burn } from "../src/transactions/burn";
 
 describe('signTx', () => {
 
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
-  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as Tx)
+  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as TTx)
   txs.forEach(tx => {
     it('type: ' + tx.type, () => {
       const signed = signTx(tx, stringSeed)
@@ -19,14 +20,19 @@ describe('signTx', () => {
   })
 
   it('should throw on no public key or seed', () => {
-    const tx = () => reissue({ ...reissueMinimalParams })
+    const tx = () => reissue({ ...reissueMinimalParams } as any)
     expect(tx).toThrow('Please provide either seed or senderPublicKey')
+  })
+
+  it('should add additional fee to auto calculated one', () => {
+    const tx = burn({ ...burnMinimalParams, additionalFee: 100000 }, stringSeed)
+    expect(tx.fee).toEqual(200000)
   })
 
   it('should throw when index already exists', () => {
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
     const signedTwoTimes = () => signTx(tx, [stringSeed])
-    expect(signedTwoTimes).toThrow('Proof at index 0 is already exists.')
+    expect(signedTwoTimes).toThrow('Proof at index 0 already exists')
   })
 
   it('should throw when type is unknown', () => {
@@ -57,5 +63,5 @@ it('should send tx to node', async () => {
   const result = data(dataParams, 'seed')
 
   await expect(broadcast(result, 'https://nodes.wavesplatform.com/')).rejects
-    .toEqual(new Error('Transaction not allowed by account-script'))
+    .toEqual(new Error('Transaction is not allowed by account-script'))
 })

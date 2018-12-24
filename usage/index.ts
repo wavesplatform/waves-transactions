@@ -4,16 +4,16 @@ import { runInNewContext } from 'vm'
 const pp = require('preprocess')
 
 const txs = [
-  { file: 'burn', interface: 'BurnTransaction' },
-  { file: 'cancel-lease', interface: 'CancelLeaseTransaction' },
-  { file: 'data', interface: 'DataTransaction' },
-  { file: 'issue', interface: 'IssueTransaction' },
-  { file: 'lease', interface: 'LeaseTransaction' },
-  { file: 'mass-transfer', interface: 'MassTransferTransaction' },
-  { file: 'reissue', interface: 'ReissueTransaction' },
-  { file: 'transfer', interface: 'TransferTransaction' },
-  { file: 'alias', interface: 'AliasTransaction' },
-  { file: 'set-script', interface: 'SetScriptTransaction' },
+  { file: 'burn', interface: 'IBurnTransaction' },
+  { file: 'cancel-lease', interface: 'ICancelLeaseTransaction' },
+  { file: 'data', interface: 'IDataTransaction' },
+  { file: 'issue', interface: 'IIssueTransaction' },
+  { file: 'lease', interface: 'ILeaseTransaction' },
+  { file: 'mass-transfer', interface: 'IMassTransferTransaction' },
+  { file: 'reissue', interface: 'IReissueTransaction' },
+  { file: 'transfer', interface: 'ITransferTransaction' },
+  { file: 'alias', interface: 'IAliasTransaction' },
+  { file: 'set-script', interface: 'ISetScriptTransaction' },
 ]
 
 const _DOCS = `/**
@@ -30,10 +30,6 @@ const _DOCS = `/**
  * \`\`\`json
 <!-- @echo OUTPUT -->
  * \`\`\`
- *
- * @param seed
- * @param paramsOrTx
- * @returns
  *
  */`
 

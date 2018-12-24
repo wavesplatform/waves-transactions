@@ -1,23 +1,23 @@
-import { WithProofs } from './transactions'
-import { SeedsAndIndexes, SeedTypes, Params, Option } from './types'
+import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams, ICancelOrderParams, ICancelOrder } from './transactions'
+import { TSeedTypes } from './types'
 import { publicKey } from 'waves-crypto'
+import axios from "axios";
 
-export function getSenderPublicKey(seed: Option<SeedTypes>, params: Params) {
-  const { seed: s } = pullSeedAndIndex(seed)
+export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>
+  Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
+    .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
 
-  if (s == null && params.senderPublicKey == null)
-    throw new Error('Please provide either seed or senderPublicKey')
+type ParamsForSender =  TTxParams | TTx | IOrderParams | IOrder | ICancelOrderParams | ICancelOrder
+
+export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: ParamsForSender) {
+  if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
+    throw new Error('Please provide either seed or senderPublicKey');
   else {
-    return params.senderPublicKey || publicKey(s!)
+    return params.senderPublicKey || publicKey(seedsAndIndexes[0][0])
   }
 }
 
-export const base64Prefix = (str: string | null) => str == null || str.slice(0,7) === 'base64:' ? str : 'base64:' + str
-
-export type OneOrMany<T> = T | T[]
-
-//export const isOne = <T>(oneOrMany: OneOrMany<T>): oneOrMany is T => !Array.isArray(oneOrMany)
-//export const toMany = <T>(oneOrMany: OneOrMany<T>): T[] => isOne(oneOrMany) ? [oneOrMany] : oneOrMany
+export const base64Prefix = (str: string | null) => str == null || str.slice(0, 7) === 'base64:' ? str : 'base64:' + str
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (index == null) {
@@ -25,52 +25,68 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
     return tx
   }
   if (tx.proofs != null && !!tx.proofs[index])
-    throw new Error(`Proof at index ${index} is already exists.`)
+    throw new Error(`Proof at index ${index} already exists.`);
   for (let i = tx.proofs.length; i < index; i++)
     tx.proofs.push('')
-  tx.proofs[index] = proof
+  tx.proofs[index] = proof;
   return tx
 }
 
-export const valOrDef = <T, K extends T>(val: Option<T>, def: K): T => val != null ? val : def
-
-export const isSeedsAndIndexes = (seed: SeedTypes): seed is SeedsAndIndexes =>
-  typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length === undefined
-
-export const isArrayOfSeeds = (seed: SeedTypes): seed is Option<string>[] =>
-  typeof seed !== 'string' && typeof seed === 'object' && (<string[]>seed).length !== undefined
-
-export const mapSeed = <T>(seed: Option<SeedTypes>, map: (seed: string, index?: number) => T): Option<T> => {
-  const { seed: _seed, index } = pullSeedAndIndex(seed)
-  if (_seed != null)
-    return map(_seed, index)
-  return undefined
+export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefined][] {
+  //Due to typescript duck typing, 'string' type satisfies IIndexSeedMap interface. Because of this we should typecheck against string first
+  if (seedObj == null) {
+    return []
+  }
+  else if (typeof seedObj === 'string') {
+    return [[seedObj, undefined]]
+  }
+  else if (Array.isArray(seedObj)) {
+    return seedObj.map((s, i) => [s, i] as [string, number]).filter(([s, _]) => s)
+  }
+  else {
+    const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort();
+    return keys.map(k => [seedObj[k], k] as [string, number])
+  }
 }
 
-export const pullSeedAndIndex = (seed: Option<SeedTypes>): { seed?: string, index?: number, nextSeed?: SeedTypes } => {
-  const empty = { seed: undefined, index: undefined, nextSeed: undefined }
-  if (seed == null || seed === '')
-    return empty
+export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined;
 
-  if (isSeedsAndIndexes(seed)) {
-    const keys = Object.keys(seed).map(k => parseInt(k)).filter(k => !isNaN(k))
-    if (keys == null || keys.length === 0)
-      return empty
 
-    const index = keys[0]
-    const newSeed: SeedsAndIndexes = Object.assign({}, seed)
-    delete newSeed[index]
-    return { seed: seed[keys[0]], index, nextSeed: Object.keys(newSeed).length > 0 ? newSeed : undefined }
+export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
-  } else if (isArrayOfSeeds(seed)) {
+export const delay = (timeout: number): CancellablePromise<{}> => {
+  const t: any = {}
+  const p = new Promise((resolve, _) => {
+    t.resolve = resolve
+    t.id = setTimeout(() => resolve(), timeout)
+  }) as any
+  (<any>p).cancel = () => { t.resolve(); clearTimeout(t.id) }
+  return p
+}
 
-    return pullSeedAndIndex(
-      Object.entries(seed).filter(([k, v]) => !!v).reduce((acc, [k, v]) => ({
-        ...acc,
-        [k]: v,
-      }), {} as SeedsAndIndexes)
-    )
+export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<TTx> => {
+  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
+    .then(x => x.data).catch(_ => delay(1000).then(_ => promise()))
+
+  const t = delay(timeout)
+  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as TTx
+  t.cancel()
+  return r
+}
+
+export function networkByte(p: number|string|undefined, def: number): number {
+  switch (typeof p) {
+    case 'string':
+      return p.charCodeAt(0);
+    case 'number':
+      return p;
+    default:
+      return def
   }
+}
 
-  return { seed: seed }
+export function fee(params: IBasicParams, def: number){
+  if (params.fee) return params.fee;
+  if (!params.additionalFee) return def;
+  return def + params.additionalFee
 }

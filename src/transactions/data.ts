@@ -12,23 +12,25 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { DataTransaction, TransactionType, DataEntry, DataType, long } from '../transactions'
-import { addProof, getSenderPublicKey, mapSeed, pullSeedAndIndex, valOrDef } from '../generic'
-import { Params, SeedTypes } from '../types'
-import { ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
+import {
+  IDataTransaction,
+  TRANSACTION_TYPE,
+  DataEntry,
+  DATA_FIELD_TYPE,
+  IDataParams,
+  WithId,
+  IMassTransferParams, IMassTransferTransaction, WithSender
+} from '../transactions'
+import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
+import { binary } from '@waves/marshall'
 
 export interface TypelessDataEntry {
   key: string
   value: string | number | boolean | Buffer | Uint8Array | number[]
 }
 
-export interface DataParams extends Params {
-  data: Array<DataEntry | TypelessDataEntry>
-  fee?: long,
-  timestamp?: number
-}
+
 
 const typeMap: any = {
   integer: ['integer', 0, LONG],
@@ -39,13 +41,12 @@ const typeMap: any = {
   _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T): [DataType, number, serializer<T>] =>
+const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, serializer<T>] =>
   typeMap[typeof value] || typeMap['_']
 
-export const dataValidation = (tx: DataTransaction): ValidationResult => []
 
-export const dataToBytes = (tx: DataTransaction): Uint8Array => concat(
-  BYTE(TransactionType.Data),
+export const dataToBytes = (tx: IDataTransaction): Uint8Array => concat(
+  BYTE(TRANSACTION_TYPE.DATA),
   BYTE(1),
   BASE58_STRING(tx.senderPublicKey),
   COUNT(SHORT)((x: DataEntry) => concat(LEN(SHORT)(STRING)(x.key), [typeMap[x.type][1]], typeMap[x.type][2](x.value)))(tx.data),
@@ -54,36 +55,37 @@ export const dataToBytes = (tx: DataTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes): DataTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
-  const { data: _data, fee, timestamp } = paramsOrTx
+export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & WithId;
+export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId;
+export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & WithId  {
+  const type = TRANSACTION_TYPE.DATA;
+  const version = paramsOrTx.version || 1;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+  if (! Array.isArray(paramsOrTx.data)) throw new Error('["data should be array"]')
 
-  if (! Array.isArray(_data)) throw new Error('["data should be array"]')
-
-  const _timestamp = valOrDef(timestamp, Date.now())
+  const _timestamp = paramsOrTx.timestamp || Date.now()
 
   let bytes = concat(
-    BYTE(TransactionType.Data),
+    BYTE(TRANSACTION_TYPE.DATA),
     BYTE(1),
     BASE58_STRING(senderPublicKey),
-    COUNT(SHORT)((x: DataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(_data),
+    COUNT(SHORT)((x: DataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
     LONG(_timestamp)
   )
 
   const computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
 
-  const tx: DataTransaction = {
-    type: 12,
-    version: 1,
+  const tx: IDataTransaction & WithId = {
+    type,
+    version,
     senderPublicKey,
     fee: computedFee,
     timestamp: _timestamp,
-    proofs: [],
+    proofs: paramsOrTx.proofs || [],
     id: '',
-    ...paramsOrTx,
-    data: _data && (_data as any).map((x: DataEntry | TypelessDataEntry) => {
+    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: DataEntry | TypelessDataEntry) => {
       if ((<any>x).type) return x
       else {
         const type = mapType(x.value)[0]
@@ -95,14 +97,10 @@ export function data(paramsOrTx: DataParams | DataTransaction, seed?: SeedTypes)
       }
     }),
   }
+  const bytes1 = binary.serializeTx(tx);
 
-  raiseValidationErrors(
-    generalValidation(tx, validators.DataTransaction),
-    dataValidation(tx)
-  )
-  bytes = dataToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes1, s),i));
+  tx.id = hashBytes(bytes1);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? data(tx, nextSeed) : tx
+  return tx
 } 

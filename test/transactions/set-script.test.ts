@@ -1,6 +1,6 @@
 import { verifySignature, publicKey, } from 'waves-crypto'
 import { setScript } from '../../src'
-import { SetScriptTransaction } from '../../src/transactions'
+import { ISetScriptTransaction } from '../../src/transactions'
 import { setScriptToBytes } from '../../src/transactions/set-script'
 
 describe('setScript', () => {
@@ -64,21 +64,9 @@ describe('setScript', () => {
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 
-  it('Should throw on schema validation', () => {
-    const tx = () => setScript({ script: null, fee: null } as any, seed)
-    expect(tx).toThrow(`[{
-  "keyword": "type",
-  "dataPath": ".fee",
-  "schemaPath": "#/properties/fee/type",
-  "params": {
-    "type": "string,number"
-  },
-  "message": "should be string,number"
-}]`)
-  })
 })
 
-function validateSetScriptTx(tx: SetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
+function validateSetScriptTx(tx: ISetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
   const bytes = setScriptToBytes(tx)
   return verifySignature(publicKey || tx.senderPublicKey, bytes, tx.proofs[proofNumber]!)
 }

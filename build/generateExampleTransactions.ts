@@ -1,4 +1,4 @@
-import { TransactionType } from '../src/transactions'
+import { TRANSACTION_TYPE } from '../src/transactions'
 import { txTypeMap } from '../src/general'
 import { writeFileSync } from 'fs'
 import { execSync } from 'child_process'
@@ -6,9 +6,9 @@ import { minimalParams } from '../test/minimalParams'
 
 const seed = 'b0ccc0b232c246ac940abecb6a5a939c56fb7ea10f374ca48f698736ac10b000'
 
-const c = Object.keys(TransactionType).length / 2
-const typeNumbers = Object.keys(TransactionType).slice(0, c)
-const typeNames = Object.keys(TransactionType).slice(c)
+const c = Object.keys(TRANSACTION_TYPE).length / 2
+const typeNumbers = Object.keys(TRANSACTION_TYPE).slice(0, c)
+const typeNames = Object.keys(TRANSACTION_TYPE).slice(c)
 
 const types = typeNumbers
   .map((n, i) => (minimalParams as any)[parseInt(n)] != null ? { n, name: typeNames[i] } : undefined)

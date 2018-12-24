@@ -1,4 +1,4 @@
-import { IssueTransaction, long, TransactionType } from '../transactions'
+import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId, WithSender } from '../transactions'
 import {
   concat,
   BASE58_STRING,
@@ -13,28 +13,12 @@ import {
   BOOL,
   OPTION, BASE64_STRING
 } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey, base64Prefix } from '../generic'
-import { SeedTypes, Params} from '../types'
-import { ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
+import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
+import { TSeedTypes } from '../types'
+import { binary } from '@waves/marshall'
 
-export interface IssueParams extends Params {
-  name: string
-  description: string
-  decimals?: number
-  quantity: long
-  reissuable?: boolean
-  fee?: long
-  timestamp?: number
-  chainId?: string
-  script?: string
-}
-
-export const issueValidation = (tx: IssueTransaction): ValidationResult => []
-
-export const issueToBytes = (tx: IssueTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Issue, tx.version, tx.chainId.charCodeAt(0)]),
+export const issueToBytes = (tx: IIssueTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.ISSUE, tx.version, tx.chainId]),
   BASE58_STRING(tx.senderPublicKey),
   LEN(SHORT)(STRING)(tx.name),
   LEN(SHORT)(STRING)(tx.description),
@@ -47,34 +31,35 @@ export const issueToBytes = (tx: IssueTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function issue(paramsOrTx: IssueParams | IssueTransaction, seed?: SeedTypes): IssueTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId;
+export function issue(paramsOrTx: IIssueParams & WithSender | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId;
+export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & WithId {
+  const type = TRANSACTION_TYPE.ISSUE;
+  const version = paramsOrTx.version || 2;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+  const tx: IIssueTransaction & WithId = {
+    type,
+    version,
+    senderPublicKey,
+    name: paramsOrTx.name,
+    description: paramsOrTx.description,
+    quantity: paramsOrTx.quantity,
+    script: paramsOrTx.script == null ? undefined : base64Prefix(paramsOrTx.script)!,
+    decimals: paramsOrTx.decimals || 8,
+    reissuable: paramsOrTx.reissuable || false,
+    fee: fee(paramsOrTx, 100000000),
+    timestamp: Date.now(),
+    chainId: networkByte(paramsOrTx.chainId, 87),
+    proofs: paramsOrTx.proofs || [],
+    id: '',
+  };
 
-  const tx: IssueTransaction = {
-      type: TransactionType.Issue,
-      version: 2,
-      decimals: 8,
-      reissuable: false,
-      fee:100000000,
-      senderPublicKey,
-      timestamp: Date.now(),
-      chainId: 'W',
-      proofs: [],
-      id: '',
-        ...paramsOrTx,
-      script: paramsOrTx.script == null ? undefined : base64Prefix(paramsOrTx.script)!
-    }
+  const bytes = binary.serializeTx(tx);
 
-    raiseValidationErrors(
-      generalValidation(tx, validators.IssueTransaction),
-      issueValidation(tx)
-    )
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
+  tx.id = hashBytes(bytes);
 
-  const bytes = issueToBytes(tx)
-
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? issue(tx, nextSeed) : tx
+  return tx
 }

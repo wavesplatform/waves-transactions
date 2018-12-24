@@ -1,26 +1,12 @@
-import { TransactionType, ReissueTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId, WithSender } from '../transactions'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
+import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
+import { TSeedTypes } from '../types'
+import { binary } from '@waves/marshall'
 
-export interface ReissueParams extends Params {
-  assetId: string
-  quantity: long
-  reissuable: boolean
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
 
-export const reissueValidation = (tx: ReissueTransaction): ValidationResult => [
-  noError,
-]
-
-export const reissueToBytes = (tx: ReissueTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Reissue, tx.version, tx.chainId.charCodeAt(0)]),
+export const reissueToBytes = (tx: IReissueTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.REISSUE, tx.version, tx.chainId]),
   BASE58_STRING(tx.senderPublicKey),
   BASE58_STRING(tx.assetId),
   LONG(tx.quantity),
@@ -30,30 +16,32 @@ export const reissueToBytes = (tx: ReissueTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function reissue(paramsOrTx: ReissueParams | ReissueTransaction, seed?: SeedTypes): ReissueTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): IReissueTransaction & WithId
+export function reissue(paramsOrTx: IReissueParams & WithSender | IReissueTransaction, seed?: TSeedTypes): IReissueTransaction & WithId
+export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction & WithId{
+  const type = TRANSACTION_TYPE.REISSUE;
+  const version = paramsOrTx.version || 2;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: ReissueTransaction = {
-    type: TransactionType.Reissue,
-    version: 2,
-    chainId: 'W',
-    fee: 100000000,
+  const tx: IReissueTransaction & WithId = {
+    type,
+    version,
     senderPublicKey,
-    timestamp: Date.now(),
-    proofs: [],
+    assetId: paramsOrTx.assetId,
+    quantity: paramsOrTx.quantity,
+    reissuable: paramsOrTx.reissuable,
+    chainId: networkByte(paramsOrTx.chainId, 87),
+    fee: fee(paramsOrTx,100000000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    proofs: paramsOrTx.proofs || [],
     id: '',
-    ...paramsOrTx,
-  }
+  };
 
-  raiseValidationErrors(
-    generalValidation(tx, validators.ReissueTransaction),
-    reissueValidation(tx)
-)
-  const bytes = reissueToBytes(tx)
+  const bytes = binary.serializeTx(tx);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? reissue(tx, nextSeed) : tx
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
+
+  return tx
 }

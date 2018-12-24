@@ -12,23 +12,17 @@ describe('burn', () => {
     expect(tx).toMatchObject({ ...burnMinimalParams })
   })
 
-  it('Should throw on schema validation', () => {
-    const tx = () => burn({ ...burnMinimalParams, assetId: null } as any, stringSeed)
-    expect(tx).toThrow(`[{
-  "keyword": "type",
-  "dataPath": ".assetId",
-  "schemaPath": "#/properties/assetId/type",
-  "params": {
-    "type": "string"
-  },
-  "message": "should be string"
-}]`)
-  })
 
   it('Should get correct signature', () => {
     const tx = burn({ ...burnMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), burnToBytes(tx), tx.proofs[0]!)).toBeTruthy()
   })
+
+  it('Should sign already signed', () => {
+    let tx = burn({ ...burnMinimalParams }, stringSeed);
+    tx = burn(tx, stringSeed);
+    expect(verifySignature(publicKey(stringSeed), burnToBytes(tx), tx.proofs[1]!)).toBeTruthy()
+  });
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'

@@ -1,27 +1,89 @@
-import Ajv from 'ajv'
-import { TransactionType } from '../transactions'
+import Ajv = require("ajv");
+import { mapObj } from '../generic'
+import { TRANSACTION_TYPE } from '../transactions'
 import schemas from './manifest'
 
 const ajv = Ajv({
   allErrors: true,
-})
+});
 
-const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>
-  Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
-    .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
+export const validators = mapObj(schemas, (schema: any) => ajv.compile(schema));
 
-export const validators = mapObj(schemas, (schema) => ajv.compile(schema));
+export const schemaTypeMap: { [i: number]: { schema: any, paramsSchema: any, validator: Ajv.ValidateFunction, paramsValidator: Ajv.ValidateFunction } } = {
+  [TRANSACTION_TYPE.ISSUE]: {
+    schema: schemas.IIssueTransaction,
+    paramsSchema: schemas.IIssueParams,
+    validator: validators.IIssueTransaction,
+    paramsValidator: validators.IIssueParams
+  },
+  [TRANSACTION_TYPE.TRANSFER]: {
+    schema: schemas.ITransferTransaction,
+    paramsSchema: schemas.ITransferParams,
+    validator: validators.ITransferTransaction,
+    paramsValidator: validators.ITransferParams
+  },
+  [TRANSACTION_TYPE.REISSUE]: {
+    schema: schemas.IReissueTransaction,
+    paramsSchema: schemas.IReissueParams,
+    validator: validators.IReissueTransaction,
+    paramsValidator: validators.IReissueParams
+  },
+  [TRANSACTION_TYPE.BURN]: {
+    schema: schemas.IBurnTransaction,
+    paramsSchema: schemas.IBurnParams,
+    validator: validators.IBurnTransaction,
+    paramsValidator: validators.IBurnParams
+  }, [TRANSACTION_TYPE.LEASE]: {
+    schema: schemas.ILeaseTransaction,
+    paramsSchema: schemas.ILeaseParams,
+    validator: validators.ILeaseTransaction,
+    paramsValidator: validators.ILeaseParams
+  },
+  [TRANSACTION_TYPE.CANCEL_LEASE]: {
+    schema: schemas.ICancelLeaseTransaction,
+    paramsSchema: schemas.ICancelLeaseParams,
+    validator: validators.ICancelLeaseTransaction,
+    paramsValidator: validators.ICancelLeaseParams
+  },
+  [TRANSACTION_TYPE.ALIAS]: {
+    schema: schemas.IAliasTransaction,
+    paramsSchema: schemas.IAliasParams,
+    validator: validators.IAliasTransaction,
+    paramsValidator: validators.IAliasParams
+  },
 
-export const schemaByTransactionType: { [i: number]: any } = {
-  [TransactionType.Issue]: schemas.IssueTransaction,
-  [TransactionType.Transfer]: schemas.TransferTransaction,
-  [TransactionType.Reissue]: schemas.ReissueTransaction,
-  [TransactionType.Burn]: schemas.BurnTransaction,
-  [TransactionType.Lease]: schemas.LeaseTransaction,
-  [TransactionType.CancelLease]: schemas.CancelLeaseTransaction,
-  [TransactionType.Alias]: schemas.AliasTransaction,
-  [TransactionType.MassTransfer]: schemas.MassTransferTransaction,
-  [TransactionType.Data]: schemas.DataTransaction,
-  [TransactionType.SetScript]: schemas.SetScriptTransaction,
-  [TransactionType.SetAssetScript]: schemas.SetAssetScriptTransaction,
+  [TRANSACTION_TYPE.MASS_TRANSFER]: {
+    schema: schemas.IMassTransferTransaction,
+    paramsSchema: schemas.IMassTransferParams,
+    validator: validators.IMassTransferTransaction,
+    paramsValidator: validators.IMassTransferParams
+  },
+  [TRANSACTION_TYPE.DATA]: {
+    schema: schemas.IDataTransaction,
+    paramsSchema: schemas.IDataParams,
+    validator: validators.IDataTransaction,
+    paramsValidator: validators.IDataParams
+  },
+  [TRANSACTION_TYPE.SET_SCRIPT]: {
+    schema: schemas.ISetScriptTransaction,
+    paramsSchema: schemas.ISetScriptParams,
+    validator: validators.ISetScriptTransaction,
+    paramsValidator: validators.ISetScriptParams
+  },
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: {
+    schema: schemas.ISetAssetScriptTransaction,
+    paramsSchema: schemas.ISetAssetScriptParams,
+    validator: validators.ISetAssetScriptTransaction,
+    paramsValidator: validators.ISetAssetScriptParams
+  },
+  [TRANSACTION_TYPE.ALIAS]: {
+    schema: schemas.IAliasTransaction,
+    paramsSchema: schemas.IAliasParams,
+    validator: validators.IAliasTransaction,
+    paramsValidator: validators.IAliasParams
+  }
+}
+
+export {
+  schemas
 }

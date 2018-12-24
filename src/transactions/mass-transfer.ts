@@ -1,7 +1,13 @@
-import { TransactionType, MassTransferTransaction, Transfer, long } from '../transactions'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
-import { noError, ValidationResult } from 'waves-crypto/validation'
+import {
+  TRANSACTION_TYPE,
+  IMassTransferTransaction,
+  IMassTransferItem,
+  IMassTransferParams,
+  WithId,
+  WithSender
+} from '../transactions'
+import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
+import { TSeedTypes } from '../types'
 import {
   BASE58_STRING,
   BYTE,
@@ -15,59 +21,47 @@ import {
   signBytes,
   STRING
 } from 'waves-crypto'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
+import { binary } from '@waves/marshall'
 
-export interface MassTransferParams extends Params {
-  transfers: Transfer[]
-  attachment?: string
-  assetId?: string
-  fee?: long
-  timestamp?: number
-}
-
-export const massTransferValidation = (tx: MassTransferTransaction): ValidationResult => [
-  noError,
-]
-
-export const massTransferToBytes = (tx: MassTransferTransaction): Uint8Array => concat(
-  BYTE(TransactionType.MassTransfer),
+export const massTransferToBytes = (tx: IMassTransferTransaction): Uint8Array => concat(
+  BYTE(TRANSACTION_TYPE.MASS_TRANSFER),
   BYTE(1),
   BASE58_STRING(tx.senderPublicKey),
   OPTION(BASE58_STRING)(tx.assetId),
-  COUNT(SHORT)((x: Transfer) => concat(BASE58_STRING(x.recipient), LONG(x.amount)))(tx.transfers),
+  COUNT(SHORT)((x: IMassTransferItem) => concat(BASE58_STRING(x.recipient), LONG(x.amount)))(tx.transfers),
   LONG(tx.timestamp),
   LONG(tx.fee),
   LEN(SHORT)(STRING)(tx.attachment)
 )
 
 /* @echo DOCS */
-export function massTransfer(paramsOrTx: MassTransferParams | MassTransferTransaction, seed?: SeedTypes): MassTransferTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): IMassTransferTransaction & WithId;
+export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId;
+export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferTransaction & WithId {
+  const type = TRANSACTION_TYPE.MASS_TRANSFER;
+  const version = paramsOrTx.version || 1;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
+  if (!Array.isArray(paramsOrTx.transfers)) throw new Error('["transfers should be array"]');
 
-  if (!Array.isArray(paramsOrTx.transfers))  throw new Error('["transfers should be array"]')
-
-  const tx: MassTransferTransaction = {
-    type: TransactionType.MassTransfer,
-    version: 1,
-    fee: (100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
+  const tx: IMassTransferTransaction & WithId = {
+    type,
+    version,
     senderPublicKey,
-    timestamp: Date.now(),
-    proofs: [],
+    assetId: paramsOrTx.assetId,
+    transfers: paramsOrTx.transfers,
+    fee: fee(paramsOrTx,100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    attachment: paramsOrTx.attachment || '',
+    proofs: paramsOrTx.proofs || [],
     id: '', //TODO: invalid id for masstransfer tx
-    ...paramsOrTx,
   }
 
-  raiseValidationErrors(
-    generalValidation(tx, validators.MassTransferTransaction),
-    massTransferValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = massTransferToBytes(tx)
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? massTransfer(tx, nextSeed) : tx
+  return tx
 }

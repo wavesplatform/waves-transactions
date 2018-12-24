@@ -4,19 +4,30 @@ import { writeFile } from 'fs-extra'
 import * as TJS from 'typescript-json-schema'
 
 export const TYPES = [
-  'Tx',
-  'AliasTransaction',
-  'IssueTransaction',
-  'TransferTransaction',
-  'ReissueTransaction',
-  'BurnTransaction',
-  'LeaseTransaction',
-  'CancelLeaseTransaction',
-  'MassTransferTransaction',
-  'SetScriptTransaction',
-  'SetAssetScriptTransaction',
-  'DataTransaction',
-  'Order',
+  'TTx',
+  'IAliasTransaction',
+  'IIssueTransaction',
+  'ITransferTransaction',
+  'IReissueTransaction',
+  'IBurnTransaction',
+  'ILeaseTransaction',
+  'ICancelLeaseTransaction',
+  'IMassTransferTransaction',
+  'ISetScriptTransaction',
+  'ISetAssetScriptTransaction',
+  'IDataTransaction',
+  'IOrder',
+  'IAliasParams',
+  'IIssueParams',
+  'ITransferParams',
+  'IReissueParams',
+  'IBurnParams',
+  'ILeaseParams',
+  'ICancelLeaseParams',
+  'IMassTransferParams',
+  'ISetScriptParams',
+  'ISetAssetScriptParams',
+  'IDataParams',
 ]
 
 export function buildSchemas() {
@@ -31,14 +42,21 @@ export function buildSchemas() {
   // optionally pass ts compiler options
   const compilerOptions: TJS.CompilerOptions = {
     strictNullChecks: true,
+    resolveJsonModule: true,
+    allowSyntheticDefaultImports: true,
+    lib: [
+      'esnext'
+    ]
   }
 
   const program = TJS.getProgramFromFiles([resolve('src/transactions.ts')], compilerOptions)
 
 
   TYPES.forEach(type => {
-    const id = `https://github.com/github/ebceu4/blob/master/src/schemas/${type}.json`
-    const schema = TJS.generateSchema(program, type, { ...settings, id })
+    const id = `https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/${type}.json`
+    let schema = TJS.generateSchema(program, type, { ...settings, id })
+    //Define generic LONG as string | number in JSON schema. Otherwise ot would be object. Should probably pass param that defines LONG schema;
+    schema!.definitions = {...schema!.definitions,  LONG:{type:['string', 'number']}};
     const filePath = `src/schemas/${type}.json`
     const fileContent = JSON.stringify(schema, null, 2)
     writeFile(filePath, fileContent, (err) => {
@@ -55,4 +73,8 @@ export default {
     if (err1) throw err1
     console.log('Manifest has been written')
   })
+
+
 }
+
+//buildSchemas()

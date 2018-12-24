@@ -1,6 +1,6 @@
 import { verifySignature, publicKey, } from 'waves-crypto'
 import { setAssetScript } from '../../src'
-import { SetAssetScriptTransaction } from '../../src/transactions'
+import { ISetAssetScriptTransaction } from '../../src/transactions'
 import { setAssetScriptToBytes } from '../../src/transactions/set-asset-script'
 
 describe('setAssetScript', () => {
@@ -17,11 +17,11 @@ describe('setAssetScript', () => {
   })
 
   it('Should generate correct signed setAssetScript transaction with multiple signers via array', () => {
-    const txParams = { script: null, assetId: '' }
+    const txParams = { script: 'AQIDBA==', assetId: '' }
     const signedTx = setAssetScript(txParams, [null, seed, seed2])
 
     expect(signedTx.proofs[0]).toEqual('')
-    expect(signedTx.script).toBeNull()
+    expect(signedTx.script).toEqual('base64:AQIDBA==')
     expect(validateSetScriptTx(signedTx, 1)).toBe(true)
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
@@ -35,12 +35,6 @@ describe('setAssetScript', () => {
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 
-  it('Should generate correct signed setAssetScript transaction with null script', () => {
-    const txParams = { script: null, assetId: '' }
-    const signedTx = setAssetScript(txParams, seed)
-
-    expect(validateSetScriptTx(signedTx)).toBe(true)
-  })
 
   it('Should generate correct setAssetScript transaction without seed', () => {
     const txParams = { script: compiledContract, senderPublicKey: publicKey(seed), assetId: '' }
@@ -52,7 +46,7 @@ describe('setAssetScript', () => {
 
   it('Should throw on undefined script', () => {
     const txParams = {}
-    expect(() => setAssetScript(txParams as any, seed)).toThrow('Script field cannot be undefined. Use null explicitly to remove script')
+    expect(() => setAssetScript(txParams as any, seed)).toThrow('Asset script cannot be empty')
   })
 
   it('Should handle incorrect keys in seedObject', () => {
@@ -64,30 +58,9 @@ describe('setAssetScript', () => {
     expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
   })
 
-  it('Should throw on schema validation', () => {
-    const tx = () => setAssetScript({ script: null, fee: null } as any, seed)
-    expect(tx).toThrow(`[{
-  "keyword": "required",
-  "dataPath": "",
-  "schemaPath": "#/required",
-  "params": {
-    "missingProperty": "assetId"
-  },
-  "message": "should have required property 'assetId'"
-},
-{
-  "keyword": "type",
-  "dataPath": ".fee",
-  "schemaPath": "#/properties/fee/type",
-  "params": {
-    "type": "string,number"
-  },
-  "message": "should be string,number"
-}]`)
-  })
 })
 
-function validateSetScriptTx(tx: SetAssetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
+function validateSetScriptTx(tx: ISetAssetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
   const bytes = setAssetScriptToBytes(tx)
   return verifySignature(publicKey || tx.senderPublicKey, bytes, tx.proofs[proofNumber]!)
 }

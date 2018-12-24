@@ -1,26 +1,11 @@
-import { TransactionType, BurnTransaction, long } from '../transactions'
+import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams, WithId, WithSender } from '../transactions'
+import { binary } from '@waves/marshall'
 import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
-import { noError, ValidationResult } from 'waves-crypto/validation'
+import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
+import { TSeedTypes } from '../types'
 
-
-export interface BurnParams extends Params {
-  assetId: string
-  quantity: long
-  fee?: long
-  timestamp?: number
-  chainId?: string
-}
-
-export const burnValidation = (tx: BurnTransaction): ValidationResult => [
-  noError,
-]
-
-export const burnToBytes = (tx: BurnTransaction): Uint8Array => concat(
-  BYTES([TransactionType.Burn, tx.version, tx.chainId.charCodeAt(0)]),
+export const burnToBytes = (tx: IBurnTransaction): Uint8Array => concat(
+  BYTES([TRANSACTION_TYPE.BURN, tx.version, tx.chainId]),
   BASE58_STRING(tx.senderPublicKey),
   BASE58_STRING(tx.assetId),
   LONG(tx.quantity),
@@ -29,31 +14,31 @@ export const burnToBytes = (tx: BurnTransaction): Uint8Array => concat(
 )
 
 /* @echo DOCS */
-export function burn(paramsOrTx: BurnParams | BurnTransaction, seed?: SeedTypes): BurnTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function burn(params: IBurnParams, seed: TSeedTypes): IBurnTransaction & WithId;
+export function burn(paramsOrTx: IBurnParams & WithSender | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId;
+export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & WithId {
+  const type = TRANSACTION_TYPE.BURN;
+  const version = paramsOrTx.version || 2;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: BurnTransaction = {
-    type: TransactionType.Burn,
-    version: 2,
-    chainId: 'W',
-    fee: 100000,
+  const tx: IBurnTransaction & WithId = {
+    type,
+    version,
     senderPublicKey,
-    timestamp: Date.now(),
-    proofs: [],
+    assetId: paramsOrTx.assetId,
+    quantity: paramsOrTx.quantity,
+    chainId: networkByte(paramsOrTx.chainId, 87),
+    fee: fee(paramsOrTx, 100000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    proofs: paramsOrTx.proofs || [],
     id: '',
-    ...paramsOrTx,
-  }
+  };
 
-  raiseValidationErrors(
-    generalValidation(tx, validators.BurnTransaction),
-    burnValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = burnToBytes(tx)
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
+  tx.id = hashBytes(bytes);
 
-  mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? burn(tx, nextSeed) : tx
+  return tx
 }

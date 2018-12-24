@@ -23,7 +23,7 @@ async function build() {
     await run('ts-node usage/index.ts', p('tmp'))
     await run('typedoc', p('tmp'))
     await run('tsc', p('tmp'))
-    const latestVersion = await npmGetVersion('waves-transactions')
+    const latestVersion = await npmGetVersion('@waves/waves-transactions')
     await copyJson(p('../package.json'), p('tmp/dist/package.json'),
       {
         main: 'index.js',

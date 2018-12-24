@@ -10,26 +10,20 @@ describe('lease', () => {
   it('should build from minimal set of params', () => {
     const tx = lease({ ...leaseMinimalParams }, stringSeed)
     expect(tx).toMatchObject({ ...leaseMinimalParams })
-  })
-
-  it('Should throw on schema validation', () => {
-    const tx = () => lease({ ...leaseMinimalParams, recipient: null } as any, stringSeed)
-    expect(tx).toThrow(`[{
-  "keyword": "type",
-  "dataPath": ".recipient",
-  "schemaPath": "#/properties/recipient/type",
-  "params": {
-    "type": "string"
-  },
-  "message": "should be string"
-}]`)
-  })
+  });
 
 
   it('Should get correct signature', () => {
     const tx = lease({ ...leaseMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), leaseToBytes(tx), tx.proofs[0]!)).toBeTruthy()
-  })
+  });
+
+
+  it('Should sign already signed', () => {
+    let tx = lease({ ...leaseMinimalParams }, stringSeed);
+    tx = lease(tx, stringSeed);
+    expect(verifySignature(publicKey(stringSeed), leaseToBytes(tx), tx.proofs[1]!)).toBeTruthy()
+  });
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'

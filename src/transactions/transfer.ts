@@ -1,22 +1,11 @@
-import { long, TransactionType, TransferTransaction } from '../transactions'
+import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId, WithSender } from '../transactions'
 import { concat, BASE58_STRING, BYTE, LEN, SHORT, STRING, LONG, signBytes, hashBytes, OPTION } from 'waves-crypto'
-import { pullSeedAndIndex, addProof, mapSeed, getSenderPublicKey } from '../generic'
-import { SeedTypes, Params } from '../types'
-import { generalValidation, raiseValidationErrors } from '../validation'
-import { validators } from '../schemas'
+import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
+import { TSeedTypes } from '../types'
+import { binary } from '@waves/marshall'
 
-export interface TransferParams extends Params {
-  recipient: string
-  amount: long
-  attachment?: string
-  feeAssetId?: string
-  assetId?: string
-  fee?: long
-  timestamp?: number
-}
-
-export const transferToBytes = (tx: TransferTransaction) => concat(
-  BYTE(TransactionType.Transfer),
+export const transferToBytes = (tx: ITransferTransaction) => concat(
+  BYTE(TRANSACTION_TYPE.TRANSFER),
   BYTE(tx.version),
   BASE58_STRING(tx.senderPublicKey),
   OPTION(BASE58_STRING)(tx.assetId),
@@ -28,33 +17,32 @@ export const transferToBytes = (tx: TransferTransaction) => concat(
   LEN(SHORT)(STRING)(tx.attachment)
 )
 
-export const transferValidation = (tx: TransferTransaction) => []
-
 /* @echo DOCS */
-export function transfer(paramsOrTx: TransferParams | TransferTransaction, seed?: SeedTypes): TransferTransaction {
-  const { nextSeed } = pullSeedAndIndex(seed)
+export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId;
+export function transfer(paramsOrTx: ITransferParams & WithSender | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction & WithId;
+export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction {
+  const type = TRANSACTION_TYPE.TRANSFER;
+  const version = paramsOrTx.version || 2;
+  const seedsAndIndexes = convertToPairs(seed);
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
 
-  const senderPublicKey = getSenderPublicKey(seed, paramsOrTx)
-
-  const tx: TransferTransaction = {
-    type: TransactionType.Transfer,
-    version: 2,
-    fee: 100000,
+  const tx: ITransferTransaction & WithId = {
+    type,
+    version,
     senderPublicKey,
-    timestamp: Date.now(),
-    proofs: [],
-    id: '',
-    ...paramsOrTx,
+    recipient: paramsOrTx.recipient,
+    amount: paramsOrTx.amount,
+    attachment: paramsOrTx.attachment || '',
+    fee: fee(paramsOrTx, 100000),
+    timestamp: paramsOrTx.timestamp || Date.now(),
+    proofs: paramsOrTx.proofs || [],
+    id: ''
   }
 
-  raiseValidationErrors(
-    generalValidation(tx, validators.TransferTransaction),
-    transferValidation(tx)
-  )
+  const bytes = binary.serializeTx(tx);
 
-  const bytes = transferToBytes(tx)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
+  tx.id = hashBytes(bytes);
 
-    mapSeed(seed, (s, i) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
-  return nextSeed ? transfer(tx, nextSeed) : tx
+  return tx
 }
