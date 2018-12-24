@@ -1,16 +1,9 @@
 import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { BASE58_STRING, BYTES, concat, hashBytes, LEN, LONG, SHORT, signBytes, STRING } from 'waves-crypto'
+import { hashBytes, signBytes } from 'waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 
-export const aliasToBytes = (tx: IAliasTransaction): Uint8Array => concat(
-  BYTES([TRANSACTION_TYPE.ALIAS, tx.version]),
-  BASE58_STRING(tx.senderPublicKey),
-  LEN(SHORT)(STRING)(tx.alias),
-  LONG(tx.fee),
-  LONG(tx.timestamp)
-)
 
 /* @echo DOCS */
 export function alias(params: IAliasParams, seed: TSeedTypes): IAliasTransaction & WithId;

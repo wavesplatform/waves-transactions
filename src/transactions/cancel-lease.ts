@@ -1,16 +1,9 @@
 import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { signBytes, hashBytes } from 'waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 
-export const cancelLeaseToBytes = (tx: ICancelLeaseTransaction): Uint8Array => concat(
-  BYTES([TRANSACTION_TYPE.CANCEL_LEASE, tx.version, tx.chainId]),
-  BASE58_STRING(tx.senderPublicKey),
-  LONG(tx.fee),
-  LONG(tx.timestamp),
-  BASE58_STRING(tx.leaseId)
-)
 
 /* @echo DOCS */
 export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): ICancelLeaseTransaction & WithId;

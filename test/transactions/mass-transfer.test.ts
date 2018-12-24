@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { massTransfer } from '../../src'
-import { massTransferToBytes } from '../../src/transactions/mass-transfer'
 import { massTransferMinimalParams } from '../minimalParams'
+import { binary } from "@waves/marshall";
 
 describe('massTransfer', () => {
 
@@ -20,13 +20,13 @@ describe('massTransfer', () => {
 
   it('Should get correct signature', () => {
     const tx = massTransfer({ ...massTransferMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), massTransferToBytes(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = massTransfer({ ...massTransferMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), massTransferToBytes(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), massTransferToBytes(tx), tx.proofs[3]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed2),binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
   })
 })
