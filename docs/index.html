@@ -60,41 +60,44 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="waves-transactions-npm-version">waves-transactions  <a href="https://www.npmjs.com/package/waves-transactions"><img src="https://badge.fury.io/js/waves-transactions.svg" alt="npm version"></a></h1>
+				<h1 id="waves-transactions-npm-version">waves-transactions  <a href="https://www.npmjs.com/package/@waves/waves-transactions"><img src="https://badge.fury.io/js/waves-transactions.svg" alt="npm version"></a></h1>
 				<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/npm/l/make-coverage-badge.svg" alt="License"></a> <img src="https://img.shields.io/badge/Coverage-98.77%25-brightgreen.svg" alt="Coverage badge gree"></p>
 				<p>Using this library you can easily create and sign transactions for Waves blockchain.
 				It also allows you to multi-sign existing transactions or create them without signature at all.</p>
 				<p>This library is a set of transaction constructing functions:</p>
 				<ul>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#alias">Alias</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#issue">Issue</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#reissue">Reissue</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#burn">Burn</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#lease">Lease</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#cancellease">Cancel lease</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#transfer">Transfer</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#masstransfer">Mass transfer</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#setscript">Set script</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#data">Data</a></li>
-					<li><a href="https://ebceu4.github.io/waves-transactions/globals.html#order">Order</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#alias">Alias</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#issue">Issue</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#reissue">Reissue</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#burn">Burn</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#lease">Lease</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#cancellease">Cancel lease</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#transfer">Transfer</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#masstransfer">Mass transfer</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#setscript">Set script</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#data">Data</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#setassetscript">Set asset script</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#order">Order</a></li>
 				</ul>
-				<p>Check full documentation on <a href="https://ebceu4.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
+				<p>Check full documentation on <a href="https://wavesplatform.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
 				<h3 id="transactions">Transactions</h3>
 				<p>The idea is really simple - you create transaction and sign it from a minimal set of required params.
-				If you want to create <a href="https://ebceu4.github.io/waves-transactions/interfaces/transfertransaction.html">Transfer transaction</a> the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong>:</p>
+				If you want to create <a href="https://wavesplatform.github.io/waves-transactions/interfaces/itransfertransaction.html">Transfer transaction</a> the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong> as defined in <a href="https://wavesplatform.github.io/waves-transactions/interfaces/itransferparams.html">Transfer params</a>:</p>
 				<pre><code class="language-js">
 <span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'19875c31fa594035bd9a2473c2c33d3ff468c0f4beb981b8c1ea6def4a'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'some example seed phrase'</span>
 <span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
   <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
   <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>, <span class="hljs-comment">//Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now()</span>
 
-  <span class="hljs-comment">//Every function from the list above has a set of required and optional params </span>
-  <span class="hljs-comment">//fee: 100000 //Fee is always optional, in case fee is not provided, it will be calculated for you</span>
+  <span class="hljs-comment">//Every function from the list above has a set of required and optional params</span>
+  <span class="hljs-comment">//senderPublicKey: 'Cq5itmx4wbYuogySAoUp58MimLLkQrFFLr1tpJy2BYp1', // By default it is derived from seed, </span>
+  <span class="hljs-comment">// but if you don't want to sign transaction you have to provide it</span>
+  <span class="hljs-comment">//fee: 100000, //Fee is always optional, in case fee is not provided, it will be calculated for you</span>
+  <span class="hljs-comment">//additionalFee: 400000, //If fee is not set, this value will be added to the auto calculated value</span>
   <span class="hljs-comment">//feeAssetId: undefined</span>
 }, seed)</code></pre>
-				<p><a href="https://repl.it/@ebceu4/minimal-transfer-example?lite=true">RUN on Repl.it</a></p>
 				<p>Output will be a signed transfer transaction:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
@@ -113,8 +116,8 @@
   ]
 }</code></pre>
 				<p>Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> otherPartySeed = <span class="hljs-string">'18f6edd4c8d647b4ba5ed366093ef5b8d0c4d8b3a6154a2b876f54773a678781'</span>
-<span class="hljs-keyword">const</span> transferSidnedWithTwoParties = transfer(signedTranserTx: TTransaction, seed)</code></pre>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> otherPartySeed = <span class="hljs-string">'other party seed phrase'</span>
+<span class="hljs-keyword">const</span> transferSidnedWithTwoParties = transfer(signedTranserTx, seed)</code></pre>
 				<p>So now there are two proofs:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">id</span>: <span class="hljs-string">'8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq'</span>,
@@ -287,22 +290,13 @@
 						<a href="globals.html#alias" class="tsd-kind-icon">alias</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#aliastobytes" class="tsd-kind-icon">alias<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#broadcast" class="tsd-kind-icon">broadcast</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#burn" class="tsd-kind-icon">burn</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#burntobytes" class="tsd-kind-icon">burn<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#cancellease" class="tsd-kind-icon">cancel<wbr>Lease</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#cancelleasetobytes" class="tsd-kind-icon">cancel<wbr>Lease<wbr>ToBytes</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#cancelorder" class="tsd-kind-icon">cancel<wbr>Order</a>
@@ -317,25 +311,13 @@
 						<a href="globals.html#data" class="tsd-kind-icon">data</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#datatobytes" class="tsd-kind-icon">data<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#issue" class="tsd-kind-icon">issue</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#issuetobytes" class="tsd-kind-icon">issue<wbr>ToBytes</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#lease" class="tsd-kind-icon">lease</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#leasetobytes" class="tsd-kind-icon">lease<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#masstransfer" class="tsd-kind-icon">mass<wbr>Transfer</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#masstransfertobytes" class="tsd-kind-icon">mass<wbr>Transfer<wbr>ToBytes</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#order" class="tsd-kind-icon">order</a>
@@ -344,34 +326,19 @@
 						<a href="globals.html#reissue" class="tsd-kind-icon">reissue</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#reissuetobytes" class="tsd-kind-icon">reissue<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#serialize" class="tsd-kind-icon">serialize</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#setassetscript" class="tsd-kind-icon">set<wbr>Asset<wbr>Script</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#setassetscripttobytes" class="tsd-kind-icon">set<wbr>Asset<wbr>Script<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#setscript" class="tsd-kind-icon">set<wbr>Script</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setscripttobytes" class="tsd-kind-icon">set<wbr>Script<wbr>ToBytes</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#transfer" class="tsd-kind-icon">transfer</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#transfertobytes" class="tsd-kind-icon">transfer<wbr>ToBytes</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#txtypemap" class="tsd-kind-icon">tx<wbr>Type<wbr>Map</a>
 					</li>
 				</ul>
 			</nav>

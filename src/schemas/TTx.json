@@ -163,6 +163,7 @@
       ]
     },
     "ITransferTransaction<LONG>": {
+      "description": "Used to transfer assets from one account to another.",
       "type": "object",
       "properties": {
         "type": {

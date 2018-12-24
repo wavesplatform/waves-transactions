@@ -1,17 +1,9 @@
 import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender } from '../transactions'
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES } from 'waves-crypto'
+import { signBytes, hashBytes } from 'waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
-export const leaseToBytes = (tx: ILeaseTransaction): Uint8Array => concat(
-  BYTES([TRANSACTION_TYPE.LEASE, tx.version, 0]),
-  BASE58_STRING(tx.senderPublicKey),
-  BASE58_STRING(tx.recipient),
-  LONG(tx.amount),
-  LONG(tx.fee),
-  LONG(tx.timestamp)
-)
 
 /* @echo DOCS */
 export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction & WithId;

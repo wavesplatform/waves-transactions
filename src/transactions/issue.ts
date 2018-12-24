@@ -1,34 +1,9 @@
 import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId, WithSender } from '../transactions'
-import {
-  concat,
-  BASE58_STRING,
-  BYTE,
-  LEN,
-  SHORT,
-  STRING,
-  LONG,
-  signBytes,
-  hashBytes,
-  BYTES,
-  BOOL,
-  OPTION, BASE64_STRING
-} from 'waves-crypto'
+import { signBytes, hashBytes } from 'waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
-export const issueToBytes = (tx: IIssueTransaction): Uint8Array => concat(
-  BYTES([TRANSACTION_TYPE.ISSUE, tx.version, tx.chainId]),
-  BASE58_STRING(tx.senderPublicKey),
-  LEN(SHORT)(STRING)(tx.name),
-  LEN(SHORT)(STRING)(tx.description),
-  LONG(tx.quantity),
-  BYTE(tx.decimals),
-  BOOL(tx.reissuable),
-  LONG(tx.fee),
-  LONG(tx.timestamp),
-  OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
-)
 
 /* @echo DOCS */
 export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId;

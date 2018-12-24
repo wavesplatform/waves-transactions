@@ -1,10 +1,9 @@
 import { publicKey, verifySignature } from 'waves-crypto'
-import { reissue, signTx, data } from '../src'
+import { reissue, signTx, data, burn } from '../src'
 import { broadcast, serialize } from '../src/general'
 import { reissueMinimalParams, burnMinimalParams } from './minimalParams'
 import { TTx } from '../src/transactions'
 import { exampleTxs } from './exampleTxs'
-import { burn } from "../src/transactions/burn";
 
 describe('signTx', () => {
 

@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { reissue } from '../../src'
-import { reissueToBytes } from '../../src/transactions/reissue'
 import { reissueMinimalParams } from '../minimalParams'
+import { binary } from "@waves/marshall";
 
 describe('reissue', () => {
 
@@ -15,13 +15,13 @@ describe('reissue', () => {
 
   it('Should get correct signature', () => {
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), reissueToBytes(tx),tx.proofs[0]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[0]!)).toBeTruthy()
   });
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = reissue({ ...reissueMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), reissueToBytes(tx),tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), reissueToBytes(tx),tx.proofs[3]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx),tx.proofs[3]!)).toBeTruthy()
   })
 })

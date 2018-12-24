@@ -1,28 +1,8 @@
 import { TRANSACTION_TYPE, ISetScriptTransaction, ISetScriptParams, WithId, WithSender } from '../transactions'
-import {
-  concat,
-  BASE58_STRING,
-  LONG,
-  signBytes,
-  hashBytes,
-  BYTES,
-  BASE64_STRING,
-  OPTION,
-  LEN,
-  SHORT
-} from 'waves-crypto'
+import { signBytes, hashBytes, } from 'waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
-
-export const setScriptToBytes = (tx: ISetScriptTransaction): Uint8Array => concat(
-  BYTES([TRANSACTION_TYPE.SET_SCRIPT, tx.version, tx.chainId]),
-  BASE58_STRING(tx.senderPublicKey),
-  OPTION(LEN(SHORT)(BASE64_STRING))(tx.script ? tx.script.slice(7) : null),
-  LONG(tx.fee),
-  LONG(tx.timestamp)
-);
-
 
 /* @echo DOCS */
 export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScriptTransaction & WithId;

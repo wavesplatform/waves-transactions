@@ -19,7 +19,7 @@ import {
   DATA_FIELD_TYPE,
   IDataParams,
   WithId,
-  IMassTransferParams, IMassTransferTransaction, WithSender
+  WithSender
 } from '../transactions'
 import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
@@ -44,15 +44,6 @@ const typeMap: any = {
 const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, serializer<T>] =>
   typeMap[typeof value] || typeMap['_']
 
-
-export const dataToBytes = (tx: IDataTransaction): Uint8Array => concat(
-  BYTE(TRANSACTION_TYPE.DATA),
-  BYTE(1),
-  BASE58_STRING(tx.senderPublicKey),
-  COUNT(SHORT)((x: DataEntry) => concat(LEN(SHORT)(STRING)(x.key), [typeMap[x.type][1]], typeMap[x.type][2](x.value)))(tx.data),
-  LONG(tx.timestamp),
-  LONG(tx.fee)
-)
 
 /* @echo DOCS */
 export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & WithId;

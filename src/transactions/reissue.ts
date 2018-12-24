@@ -1,19 +1,9 @@
 import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId, WithSender } from '../transactions'
-import { concat, BASE58_STRING, LONG, signBytes, hashBytes, BYTES, BOOL } from 'waves-crypto'
+import { signBytes, hashBytes } from 'waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
-
-export const reissueToBytes = (tx: IReissueTransaction): Uint8Array => concat(
-  BYTES([TRANSACTION_TYPE.REISSUE, tx.version, tx.chainId]),
-  BASE58_STRING(tx.senderPublicKey),
-  BASE58_STRING(tx.assetId),
-  LONG(tx.quantity),
-  BOOL(tx.reissuable),
-  LONG(tx.fee),
-  LONG(tx.timestamp)
-)
 
 /* @echo DOCS */
 export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): IReissueTransaction & WithId

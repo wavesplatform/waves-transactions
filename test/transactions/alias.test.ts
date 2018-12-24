@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from 'waves-crypto'
 import { alias } from '../../src'
-import { aliasToBytes } from '../../src/transactions/alias'
 import { aliasMinimalParams } from '../minimalParams'
+import { binary } from "@waves/marshall";
 
 describe('alias', () => {
 
@@ -20,19 +20,19 @@ describe('alias', () => {
 
   it('Should get correct signature', () => {
     const tx = alias({ ...aliasMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), aliasToBytes(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
   });
 
   it('Should sign already signed', () => {
     let tx = alias({ ...aliasMinimalParams }, stringSeed);
     tx = alias(tx, stringSeed);
-    expect(verifySignature(publicKey(stringSeed), aliasToBytes(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
   });
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = alias({ ...aliasMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), aliasToBytes(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), aliasToBytes(tx), tx.proofs[3]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
   })
 })
