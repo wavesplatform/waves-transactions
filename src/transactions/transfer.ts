@@ -17,6 +17,7 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     type,
     version,
     senderPublicKey,
+    assetId:paramsOrTx.assetId,
     recipient: paramsOrTx.recipient,
     amount: paramsOrTx.amount,
     attachment: paramsOrTx.attachment || '',
