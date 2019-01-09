@@ -8,7 +8,6 @@ import {
   ISetAssetScriptParams,
   ISetScriptParams, ITransferParams
 } from "../src/transactions";
-import { json, convert } from '@waves/marshall'
 
 describe('Blockchain interaction', () => {
   /**
@@ -66,6 +65,7 @@ describe('Blockchain interaction', () => {
     it('Should transfer asset', async () =>{
       const transferParams: ITransferParams = {
         amount: '500',
+        assetId,
         recipient: address(recipientSeed, chainId),
         attachment: '3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw'
       }
