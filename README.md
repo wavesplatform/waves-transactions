@@ -1,4 +1,4 @@
-# waves-transactions  [![npm version](https://badge.fury.io/js/waves-transactions.svg)](https://www.npmjs.com/package/@waves/waves-transactions)
+# waves-transactions  [![npm version](https://badge.fury.io/js/%40waves%2Fwaves-transactions.svg)](https://badge.fury.io/js/%40waves%2Fwaves-transactions)
 
 [![License][license-image]][license-url] ![Coverage badge gree][coverage-badge-green]
 
