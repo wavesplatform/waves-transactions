@@ -52,13 +52,14 @@ export {
 } from './types'
 
 // internal libraries access
-import * as crypto from 'waves-crypto'
+import * as crypto from '@waves/waves-crypto'
 import * as marshall from '@waves/marshall'
 
 const libs = {
   crypto,
   marshall
 }
+
 
 export {
   libs

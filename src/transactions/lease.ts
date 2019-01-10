@@ -1,5 +1,5 @@
 import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender } from '../transactions'
-import { signBytes, hashBytes } from 'waves-crypto'
+import { signBytes, hashBytes } from '@waves/waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'

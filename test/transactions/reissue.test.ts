@@ -1,4 +1,4 @@
-import { publicKey, verifySignature } from 'waves-crypto'
+import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { reissue } from '../../src'
 import { reissueMinimalParams } from '../minimalParams'
 import { binary } from "@waves/marshall";

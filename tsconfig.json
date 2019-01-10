@@ -4,8 +4,7 @@
     "lib": [
       "esnext"
     ],
-    "inlineSourceMap": true,
-    "declaration": true,
+    "sourceMap": true,
     "module": "commonjs",
     "outDir": "dist",
     "strict": true,

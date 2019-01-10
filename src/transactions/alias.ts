@@ -1,6 +1,6 @@
 import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { hashBytes, signBytes } from 'waves-crypto'
+import { hashBytes, signBytes } from '@waves/waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 
