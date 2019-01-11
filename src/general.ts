@@ -27,7 +27,7 @@ export interface WithTxType {
   type: TRANSACTION_TYPE
 }
 
-const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
+export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
   [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction, seed)},
   [TRANSACTION_TYPE.TRANSFER]: { sign: (x, seed) => transfer(x as ITransferTransaction, seed) },
   [TRANSACTION_TYPE.REISSUE]: { sign: (x, seed) => reissue(x as IReissueTransaction, seed) },

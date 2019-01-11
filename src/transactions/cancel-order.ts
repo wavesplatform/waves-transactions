@@ -1,6 +1,8 @@
-import { concat, BASE58_STRING, OPTION, BYTE, LONG, signBytes, hashBytes } from 'waves-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
-import { IOrder, IOrderParams, WithId, WithSender, ICancelOrderParams, ICancelOrder } from '../transactions'
+import { concat, signBytes } from '@waves/waves-crypto'
+import { serializePrimitives } from '@waves/marshall'
+const {BASE58_STRING} = serializePrimitives
+import { getSenderPublicKey, convertToPairs } from '../generic'
+import { WithSender, ICancelOrderParams, ICancelOrder } from '../transactions'
 
 export const cancelOrderParamsToBytes = (cancelOrderParams: ICancelOrderParams & WithSender) => concat(
   BASE58_STRING(cancelOrderParams.senderPublicKey),

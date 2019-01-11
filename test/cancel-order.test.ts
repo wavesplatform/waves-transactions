@@ -1,4 +1,4 @@
-import { publicKey, verifySignature } from 'waves-crypto'
+import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { cancelOrder } from '../src'
 import { cancelOrderParamsToBytes } from '../src/transactions/cancel-order'
 import { cancelOrderMinimalParams } from './minimalParams'

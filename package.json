@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.0.9",
+  "version": "3.0.14",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "ts-node build/build.ts",
-    "deploy": "cd dist; npm version patch; npm publish",
+    "prepublishOnly": "npm run build",
     "fix-style": "tslint --fix -c tslint.json '{src,test,usage}/**/*{.ts,.tsx}'",
     "test": "jest"
   },
@@ -23,6 +23,12 @@
     "name": "Yuriy Naydenov",
     "email": "ebceu44@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Sergey B",
+      "email": "siemarell@gmail.com"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -51,9 +57,9 @@
     "url": "https://github.com/wavesplatform/waves-transactions.git"
   },
   "dependencies": {
-    "@waves/marshall": "0.1.0",
+    "@waves/marshall": "0.1.5",
+    "@waves/waves-crypto": "^2.0.4",
     "ajv": "^6.5.5",
-    "axios": "^0.18.0",
-    "waves-crypto": "^1.0.39"
+    "axios": "^0.18.0"
   }
 }

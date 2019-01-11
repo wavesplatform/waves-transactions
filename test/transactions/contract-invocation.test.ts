@@ -1,4 +1,4 @@
-import { publicKey, verifySignature } from 'waves-crypto'
+import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { contractInvocationMinimalParams } from '../minimalParams'
 import { contractInvocation } from "../../src/transactions/contract-invocation";
 import { binary } from "@waves/marshall";

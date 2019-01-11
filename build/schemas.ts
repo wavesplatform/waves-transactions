@@ -44,6 +44,7 @@ export function buildSchemas() {
     strictNullChecks: true,
     resolveJsonModule: true,
     allowSyntheticDefaultImports: true,
+    downlevelIteration: true,
     lib: [
       'esnext'
     ]

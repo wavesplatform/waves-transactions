@@ -23,17 +23,17 @@ async function build() {
     await run('ts-node usage/index.ts', p('tmp'))
     await run('typedoc', p('tmp'))
     await run('tsc', p('tmp'))
-    const latestVersion = await npmGetVersion('@waves/waves-transactions')
-    await copyJson(p('../package.json'), p('tmp/dist/package.json'),
-      {
-        main: 'index.js',
-        types: 'index.d.ts',
-        version: latestVersion,
-        //dependencies: undefined,
-        devDependencies: undefined,
-        scripts: undefined,
-      })
-    await copy(p('../README.md'), p('tmp/dist/README.md'))
+    // const latestVersion = await npmGetVersion('@waves/waves-transactions')
+    // await copyJson(p('../package.json'), p('tmp/dist/package.json'),
+    //   {
+    //     main: 'index.js',
+    //     types: 'index.d.ts',
+    //     version: latestVersion,
+    //     //dependencies: undefined,
+    //     devDependencies: undefined,
+    //     scripts: undefined,
+    //   })
+    // await copy(p('../README.md'), p('tmp/dist/README.md'))
     await copy(p('tmp/dist'), p('../dist'))
     await copy(p('tmp/docs'), p('../docs'))
     await remove(p('tmp'))

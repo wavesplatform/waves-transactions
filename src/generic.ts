@@ -1,6 +1,6 @@
 import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams, ICancelOrderParams, ICancelOrder } from './transactions'
 import { TSeedTypes } from './types'
-import { publicKey } from 'waves-crypto'
+import { publicKey } from '@waves/waves-crypto'
 import axios from "axios";
 
 export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>

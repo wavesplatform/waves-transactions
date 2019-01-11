@@ -1,17 +1,16 @@
-import {
-  BASE58_STRING, BASE64_STRING,
+import {serializePrimitives} from '@waves/marshall'
+const {
+  BASE58_STRING,
+  BASE64_STRING,
   BYTE,
   BYTES,
-  concat,
   COUNT,
-  hashBytes,
   LEN,
   LONG,
-  serializer,
   SHORT,
-  signBytes,
   STRING
-} from 'waves-crypto'
+} = serializePrimitives;
+import { concat, hashBytes, signBytes } from "@waves/waves-crypto";
 import {
   IDataTransaction,
   TRANSACTION_TYPE,
@@ -41,7 +40,7 @@ const typeMap: any = {
   _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, serializer<T>] =>
+const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, (value:T)=>Uint8Array] =>
   typeMap[typeof value] || typeMap['_']
 
 

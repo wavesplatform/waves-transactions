@@ -4,10 +4,10 @@
     "lib": [
       "esnext"
     ],
-    "inlineSourceMap": true,
-    "declaration": true,
+    "sourceMap": true,
     "module": "commonjs",
     "outDir": "dist",
+    "declaration": true,
     "strict": true,
     "resolveJsonModule": true,
     "esModuleInterop": true

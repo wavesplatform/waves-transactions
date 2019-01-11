@@ -1,4 +1,4 @@
-import { signBytes, hashBytes } from 'waves-crypto'
+import { signBytes, hashBytes } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
 import { IOrder, IOrderParams, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'

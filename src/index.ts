@@ -18,3 +18,51 @@ export { order } from './transactions/order'
 export { cancelOrder } from './transactions/cancel-order'
 export { contractInvocation } from './transactions/contract-invocation'
 export { signTx, broadcast } from './general'
+
+export {
+  ITransaction,
+  TTx,
+  IAliasTransaction,
+  IAliasParams,
+  IIssueTransaction,
+  IIssueParams,
+  IReissueTransaction,
+  IReissueParams,
+  IBurnTransaction,
+  IBurnParams,
+  ILeaseTransaction,
+  ILeaseParams,
+  ICancelLeaseTransaction,
+  ICancelLeaseParams,
+  IMassTransferTransaction,
+  IMassTransferParams,
+  ISetAssetScriptTransaction,
+  ISetScriptParams,
+  IDataTransaction,
+  IDataParams,
+  ISetScriptTransaction,
+  ISetAssetScriptParams,
+  IContractInvocationTransaction,
+  IContractInvocationParams
+} from './transactions'
+
+
+export {
+  TSeedTypes, TOption
+} from './types'
+
+// internal libraries access
+import * as crypto from '@waves/waves-crypto'
+import * as marshall from '@waves/marshall'
+
+const libs = {
+  crypto,
+  marshall
+}
+
+import * as seedUtils from './seedUtils'
+
+export {
+  libs,
+  seedUtils
+}
