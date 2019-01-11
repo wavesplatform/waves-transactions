@@ -60,7 +60,9 @@ const libs = {
   marshall
 }
 
+import * as seedUtils from './seedUtils'
 
 export {
-  libs
+  libs,
+  seedUtils
 }
