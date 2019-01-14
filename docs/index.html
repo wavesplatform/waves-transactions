@@ -84,7 +84,7 @@
 				<p>The idea is really simple - you create transaction and sign it from a minimal set of required params.
 				If you want to create <a href="https://wavesplatform.github.io/waves-transactions/interfaces/itransfertransaction.html">Transfer transaction</a> the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong> as defined in <a href="https://wavesplatform.github.io/waves-transactions/interfaces/itransferparams.html">Transfer params</a>:</p>
 				<pre><code class="language-js">
-<span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+<span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 <span class="hljs-keyword">const</span> seed = <span class="hljs-string">'some example seed phrase'</span>
 <span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
   <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,

@@ -31,7 +31,7 @@ The idea is really simple - you create transaction and sign it from a minimal se
 If you want to create [Transfer transaction](https://wavesplatform.github.io/waves-transactions/interfaces/itransfertransaction.html) the minimum you need to provide is **amount** and **recipient** as defined in [Transfer params](https://wavesplatform.github.io/waves-transactions/interfaces/itransferparams.html):
 ```js
 
-const { transfer } = require('waves-transactions')
+const { transfer } = require('@waves/waves-transactions')
 const seed = 'some example seed phrase'
 const signedTranserTx = transfer({ 
   amount: 1,
