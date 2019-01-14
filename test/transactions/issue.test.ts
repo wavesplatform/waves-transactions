@@ -17,6 +17,11 @@ describe('issue', () => {
     expect(tx).toMatchObject({ ...issueMinimalParams })
   });
 
+  it('should correctly sed reissuable and decimals', () => {
+    const tx = issue({ ...issueMinimalParams, decimals: 0, reissuable:true}, stringSeed);
+    expect(tx).toMatchObject({ decimals: 0, reissuable: true})
+  });
+
   it('Should get correct signature', () => {
     const tx = issue({ ...issueMinimalParams }, stringSeed);
     expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[0]!)).toBeTruthy()
