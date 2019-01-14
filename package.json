@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.0.15",
+  "version": "3.0.16",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -57,7 +57,7 @@
     "url": "https://github.com/wavesplatform/waves-transactions.git"
   },
   "dependencies": {
-    "@waves/marshall": "0.1.5",
+    "@waves/marshall": "0.1.6",
     "@waves/waves-crypto": "^2.0.4",
     "ajv": "^6.5.5",
     "axios": "^0.18.0"
