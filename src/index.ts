@@ -22,6 +22,7 @@ export { signTx, broadcast } from './general'
 export {
   ITransaction,
   TTx,
+  TTxParams,
   IAliasTransaction,
   IAliasParams,
   IIssueTransaction,
