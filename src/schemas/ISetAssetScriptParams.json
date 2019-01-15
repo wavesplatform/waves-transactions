@@ -2,6 +2,7 @@
   "type": "object",
   "properties": {
     "script": {
+      "description": "Compiled script encoded as base64 string",
       "type": "string"
     },
     "assetId": {

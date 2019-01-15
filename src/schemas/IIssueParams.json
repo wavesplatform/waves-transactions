@@ -2,9 +2,12 @@
   "type": "object",
   "properties": {
     "name": {
+      "minLength": 4,
+      "maxLength": 16,
       "type": "string"
     },
     "description": {
+      "maxLength": 1000,
       "type": "string"
     },
     "quantity": {

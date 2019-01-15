@@ -5,6 +5,7 @@
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISetScriptTransaction.json#/definitions/TRANSACTION_TYPE.SET_SCRIPT"
     },
     "script": {
+      "description": "Compiled script encoded as base64 string",
       "type": [
         "null",
         "string"

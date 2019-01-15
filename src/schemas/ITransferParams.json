@@ -8,7 +8,7 @@
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ITransferParams.json#/definitions/LONG"
     },
     "attachment": {
-      "description": "Bytearray encoded as base string",
+      "description": "Bytearray encoded as base58 string",
       "type": "string"
     },
     "feeAssetId": {

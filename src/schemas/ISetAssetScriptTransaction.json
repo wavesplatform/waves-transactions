@@ -8,6 +8,7 @@
       "type": "string"
     },
     "script": {
+      "description": "Compiled script encoded as base64 string",
       "type": [
         "null",
         "string"

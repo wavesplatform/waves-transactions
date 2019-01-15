@@ -89,7 +89,14 @@ export interface WithSender {
  */
 export interface IIssueTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
   type: TRANSACTION_TYPE.ISSUE
+  /**
+   * @minLength 4
+   * @maxLength 16
+   */
   name: string
+  /**
+   * @maxLength 1000
+   */
   description: string
   decimals: number
   quantity: LONG
@@ -102,6 +109,9 @@ export interface IIssueTransaction<LONG = string | number> extends ITransaction<
  */
 export interface ISetScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
   type: TRANSACTION_TYPE.SET_SCRIPT
+  /**
+   * Compiled script encoded as base64 string
+   */
   script: string | null //base64
 }
 
@@ -111,6 +121,9 @@ export interface ISetScriptTransaction<LONG = string | number> extends ITransact
 export interface ISetAssetScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
   type: TRANSACTION_TYPE.SET_ASSET_SCRIPT
   assetId: string
+  /**
+   * Compiled script encoded as base64 string
+   */
   script: string | null //base64
 }
 
@@ -327,7 +340,14 @@ export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> 
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+  /**
+   * @minLength 4
+   * @maxLength 16
+   */
   name: string
+  /**
+   * @maxLength 1000
+   */
   description: string
   quantity: LONG
   decimals?: number
@@ -388,6 +408,9 @@ export interface IReissueParams<LONG = string | number> extends IBasicParams<LON
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+  /**
+   * Compiled script encoded as base64 string
+   */
   script: string
   assetId: string
 }
@@ -396,6 +419,9 @@ export interface ISetAssetScriptParams<LONG = string | number> extends IBasicPar
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ISetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+  /**
+   * Compiled script encoded as base64 string
+   */
   script: string | null
 }
 
@@ -406,7 +432,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
   recipient: string
   amount: LONG
   /**
-   * Bytearray encoded as base string
+   * Bytearray encoded as base58 string
    */
   attachment?: string
   feeAssetId?: string

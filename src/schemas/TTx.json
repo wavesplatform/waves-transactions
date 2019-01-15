@@ -98,9 +98,12 @@
           "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.ISSUE"
         },
         "name": {
+          "minLength": 4,
+          "maxLength": 16,
           "type": "string"
         },
         "description": {
+          "maxLength": 1000,
           "type": "string"
         },
         "decimals": {
@@ -531,6 +534,7 @@
           "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.SET_SCRIPT"
         },
         "script": {
+          "description": "Compiled script encoded as base64 string",
           "type": [
             "null",
             "string"
@@ -671,6 +675,7 @@
           "type": "string"
         },
         "script": {
+          "description": "Compiled script encoded as base64 string",
           "type": [
             "null",
             "string"
