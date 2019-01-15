@@ -20,7 +20,7 @@ import {
   WithId,
   WithSender
 } from '../transactions'
-import { addProof, convertToPairs, getSenderPublicKey } from '../generic'
+import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
@@ -71,7 +71,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     type,
     version,
     senderPublicKey,
-    fee: computedFee,
+    fee: fee(paramsOrTx, computedFee),
     timestamp: _timestamp,
     proofs: paramsOrTx.proofs || [],
     id: '',
