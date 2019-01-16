@@ -44,9 +44,13 @@ export {
   ISetScriptTransaction,
   ISetAssetScriptParams,
   IContractInvocationTransaction,
-  IContractInvocationParams
+  IContractInvocationParams,
+  IOrder,
+  IOrderParams,
+  ICancelOrder,
+  ICancelOrderParams,
+  WithId,
 } from './transactions'
-
 
 export {
   TSeedTypes, TOption
@@ -58,7 +62,7 @@ import * as marshall from '@waves/marshall'
 
 const libs = {
   crypto,
-  marshall
+  marshall,
 }
 
 import * as seedUtils from './seedUtils'
