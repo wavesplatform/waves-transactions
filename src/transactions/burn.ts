@@ -5,13 +5,13 @@ import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '
 import { TSeedTypes } from '../types'
 
 /* @echo DOCS */
-export function burn(params: IBurnParams, seed: TSeedTypes): IBurnTransaction & WithId;
-export function burn(paramsOrTx: IBurnParams & WithSender | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId;
+export function burn(params: IBurnParams, seed: TSeedTypes): IBurnTransaction & WithId
+export function burn(paramsOrTx: IBurnParams & WithSender | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId
 export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & WithId {
-  const type = TRANSACTION_TYPE.BURN;
-  const version = paramsOrTx.version || 2;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.BURN
+  const version = paramsOrTx.version || 2
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: IBurnTransaction & WithId = {
     type,
@@ -24,12 +24,12 @@ export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & Wit
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',
-  };
+  }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

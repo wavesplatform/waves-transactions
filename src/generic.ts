@@ -1,7 +1,7 @@
 import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams, ICancelOrderParams, ICancelOrder } from './transactions'
 import { TSeedTypes } from './types'
 import { publicKey } from '@waves/waves-crypto'
-import axios from "axios";
+import axios from 'axios'
 
 export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>
   Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
@@ -11,7 +11,7 @@ type ParamsForSender =  TTxParams | TTx | IOrderParams | IOrder | ICancelOrderPa
 
 export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: ParamsForSender) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
-    throw new Error('Please provide either seed or senderPublicKey');
+    throw new Error('Please provide either seed or senderPublicKey')
   else {
     return params.senderPublicKey || publicKey(seedsAndIndexes[0][0])
   }
@@ -25,10 +25,10 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
     return tx
   }
   if (tx.proofs != null && !!tx.proofs[index])
-    throw new Error(`Proof at index ${index} already exists.`);
+    throw new Error(`Proof at index ${index} already exists.`)
   for (let i = tx.proofs.length; i < index; i++)
     tx.proofs.push('')
-  tx.proofs[index] = proof;
+  tx.proofs[index] = proof
   return tx
 }
 
@@ -44,12 +44,12 @@ export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefine
     return seedObj.map((s, i) => [s, i] as [string, number]).filter(([s, _]) => s)
   }
   else {
-    const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort();
+    const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort()
     return keys.map(k => [seedObj[k], k] as [string, number])
   }
 }
 
-export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined;
+export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
 
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
@@ -77,16 +77,16 @@ export const waitForTx = async (txId: string, timeout: number, apiBase: string):
 export function networkByte(p: number|string|undefined, def: number): number {
   switch (typeof p) {
     case 'string':
-      return p.charCodeAt(0);
+      return p.charCodeAt(0)
     case 'number':
-      return p;
+      return p
     default:
       return def
   }
 }
 
 export function fee(params: IBasicParams, def: number){
-  if (params.fee) return params.fee;
-  if (!params.additionalFee) return def;
+  if (params.fee) return params.fee
+  if (!params.additionalFee) return def
   return def + params.additionalFee
 }

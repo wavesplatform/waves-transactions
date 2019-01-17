@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { transfer } from '../../src'
 import { transferMinimalParams } from '../minimalParams'
-import { binary } from "@waves/marshall";
+import { binary } from '@waves/marshall'
 
 describe('transfer', () => {
 

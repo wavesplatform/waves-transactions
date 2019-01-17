@@ -10,11 +10,11 @@ describe('cancel-order', () => {
   it('should build from minimal set of params', () => {
     const tx = cancelOrder({ ...cancelOrderMinimalParams } as any, stringSeed)
     expect(tx).toMatchObject({ ...cancelOrderMinimalParams })
-  });
+  })
 
 
   it('should get correct signature', () => {
     const tx = cancelOrder({ ...cancelOrderMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), cancelOrderParamsToBytes(tx), tx.signature)).toBeTruthy()
-  });
+  })
 })

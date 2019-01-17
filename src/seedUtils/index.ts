@@ -30,7 +30,7 @@ export class Seed {
     this.address = address(phrase)
     this.keyPair = {
       privateKey: privateKey(phrase),
-      publicKey: publicKey(phrase)
+      publicKey: publicKey(phrase),
     }
 
     Object.freeze(this)

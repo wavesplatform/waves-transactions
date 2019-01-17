@@ -6,13 +6,13 @@ import { TSeedTypes } from '../types'
 
 
 /* @echo DOCS */
-export function alias(params: IAliasParams, seed: TSeedTypes): IAliasTransaction & WithId;
-export function alias(paramsOrTx: IAliasParams & WithSender | IAliasTransaction, seed?: TSeedTypes): IAliasTransaction & WithId;
+export function alias(params: IAliasParams, seed: TSeedTypes): IAliasTransaction & WithId
+export function alias(paramsOrTx: IAliasParams & WithSender | IAliasTransaction, seed?: TSeedTypes): IAliasTransaction & WithId
 export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & WithId {
-  const type = TRANSACTION_TYPE.ALIAS;
-  const version = paramsOrTx.version || 2;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.ALIAS
+  const version = paramsOrTx.version || 2
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: IAliasTransaction & WithId = {
     type,
@@ -22,13 +22,13 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
-    id: ''
-  };
+    id: '',
+  }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

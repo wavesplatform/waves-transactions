@@ -19,8 +19,8 @@ import { data } from './transactions/data'
 import { massTransfer } from './transactions/mass-transfer'
 import { alias } from './transactions/alias'
 import { setScript } from './transactions/set-script'
-import { isOrder } from "./generic";
-import { setAssetScript } from "./transactions/set-asset-script";
+import { isOrder } from './generic'
+import { setAssetScript } from './transactions/set-asset-script'
 import { binary, json } from '@waves/marshall'
 
 export interface WithTxType {
@@ -38,25 +38,25 @@ export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxT
   [TRANSACTION_TYPE.MASS_TRANSFER]: { sign: (x, seed) => massTransfer(x as IMassTransferTransaction, seed) },
   [TRANSACTION_TYPE.DATA]: { sign: (x, seed) => data(x as IDataTransaction, seed)},
   [TRANSACTION_TYPE.SET_SCRIPT]: { sign: (x, seed) => setScript(x as ISetScriptTransaction, seed) },
-  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed) }
-};
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed) },
+}
 
 export const signTx = (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes): TTx => {
   if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
   return txTypeMap[tx.type].sign(tx, seed)
-};
+}
 
 
 export const serialize = (obj: TTx | IOrder): Uint8Array => {
-  if (isOrder(obj)) return binary.serializeOrder(obj);
-  return binary.serializeTx(obj);
-};
+  if (isOrder(obj)) return binary.serializeOrder(obj)
+  return binary.serializeTx(obj)
+}
 
 export const broadcast = (tx: TTx, apiBase: string) =>
   axios.post('transactions/broadcast', json.stringifyTx(tx), {
     baseURL: apiBase,
-    headers: { 'content-type': 'application/json' }
+    headers: { 'content-type': 'application/json' },
   })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))

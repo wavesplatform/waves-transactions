@@ -1,4 +1,4 @@
-import { TypelessDataEntry } from "./transactions/data";
+import { TypelessDataEntry } from './transactions/data'
 
 export enum TRANSACTION_TYPE {
   GENESIS = 1,
@@ -16,14 +16,14 @@ export enum TRANSACTION_TYPE {
   SET_SCRIPT = 13,
   SPONSORSHIP = 14,
   SET_ASSET_SCRIPT = 15,
-  CONTRACT_INVOCATION = 16
+  CONTRACT_INVOCATION = 16,
 }
 
 export enum DATA_FIELD_TYPE {
   INTEGER = 'integer',
   BOOLEAN = 'boolean',
   BINARY = 'binary',
-  STRING = 'string'
+  STRING = 'string',
 }
 
 export interface WithProofs {

@@ -6,13 +6,13 @@ import { TSeedTypes } from '../types'
 
 
 /* @echo DOCS */
-export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): ICancelLeaseTransaction & WithId;
-export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | ICancelLeaseTransaction, seed?: TSeedTypes): ICancelLeaseTransaction & WithId;
+export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): ICancelLeaseTransaction & WithId
+export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | ICancelLeaseTransaction, seed?: TSeedTypes): ICancelLeaseTransaction & WithId
 export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): ICancelLeaseTransaction & WithId {
-  const type = TRANSACTION_TYPE.CANCEL_LEASE;
-  const version = paramsOrTx.version || 2;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.CANCEL_LEASE
+  const version = paramsOrTx.version || 2
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: ICancelLeaseTransaction & WithId = {
     type,
@@ -26,10 +26,10 @@ export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): ICancelLeaseTra
     id: '',
   }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

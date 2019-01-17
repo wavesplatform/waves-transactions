@@ -6,15 +6,15 @@ import { binary } from '@waves/marshall'
 
 
 /* @echo DOCS */
-export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): IMassTransferTransaction & WithId;
-export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId;
+export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): IMassTransferTransaction & WithId
+export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId
 export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferTransaction & WithId {
-  const type = TRANSACTION_TYPE.MASS_TRANSFER;
-  const version = paramsOrTx.version || 1;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.MASS_TRANSFER
+  const version = paramsOrTx.version || 1
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  if (!Array.isArray(paramsOrTx.transfers)) throw new Error('["transfers should be array"]');
+  if (!Array.isArray(paramsOrTx.transfers)) throw new Error('["transfers should be array"]')
 
   const tx: IMassTransferTransaction & WithId = {
     type,
@@ -29,10 +29,10 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
     id: '', //TODO: invalid id for masstransfer tx
   }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

@@ -46,5 +46,5 @@ export default {
   IMassTransferParams,
   ISetScriptParams,
   ISetAssetScriptParams,
-  IDataParams
+  IDataParams,
 }

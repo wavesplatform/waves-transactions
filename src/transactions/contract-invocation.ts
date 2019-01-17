@@ -12,13 +12,13 @@ import { binary } from '@waves/marshall'
 
 
 /* @echo DOCS */
-export function contractInvocation(params: IContractInvocationParams, seed: TSeedTypes): IContractInvocationTransaction & WithId;
-export function contractInvocation(paramsOrTx: IContractInvocationParams & WithSender | IContractInvocationTransaction, seed?: TSeedTypes): IContractInvocationTransaction & WithId;
+export function contractInvocation(params: IContractInvocationParams, seed: TSeedTypes): IContractInvocationTransaction & WithId
+export function contractInvocation(paramsOrTx: IContractInvocationParams & WithSender | IContractInvocationTransaction, seed?: TSeedTypes): IContractInvocationTransaction & WithId
 export function contractInvocation(paramsOrTx: any, seed?: TSeedTypes): IContractInvocationTransaction & WithId {
-  const type = TRANSACTION_TYPE.CONTRACT_INVOCATION;
-  const version = paramsOrTx.version || 1;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.CONTRACT_INVOCATION
+  const version = paramsOrTx.version || 1
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: IContractInvocationTransaction & WithId = {
     type,
@@ -32,15 +32,15 @@ export function contractInvocation(paramsOrTx: any, seed?: TSeedTypes): IContrac
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
     id: '',
-  };
+  }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   //FixMe: for now node requires to have empty key field in args
-  tx.call.args = tx.call.args.map(arg => ({...arg, key: ''}));
+  tx.call.args = tx.call.args.map(arg => ({...arg, key: ''}))
 
   return tx
 }

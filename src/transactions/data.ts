@@ -8,9 +8,9 @@ const {
   LEN,
   LONG,
   SHORT,
-  STRING
-} = serializePrimitives;
-import { concat, hashBytes, signBytes } from "@waves/waves-crypto";
+  STRING,
+} = serializePrimitives
+import { concat, hashBytes, signBytes } from '@waves/waves-crypto'
 import {
   IDataTransaction,
   TRANSACTION_TYPE,
@@ -45,13 +45,13 @@ const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, (value:T)=>Uint8Array] 
 
 
 /* @echo DOCS */
-export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & WithId;
-export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId;
+export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & WithId
+export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId
 export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & WithId  {
-  const type = TRANSACTION_TYPE.DATA;
-  const version = paramsOrTx.version || 1;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.DATA
+  const version = paramsOrTx.version || 1
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   if (! Array.isArray(paramsOrTx.data)) throw new Error('["data should be array"]')
 
@@ -87,10 +87,10 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
       }
     }),
   }
-  const bytes1 = binary.serializeTx(tx);
+  const bytes1 = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes1, s),i));
-  tx.id = hashBytes(bytes1);
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes1, s),i))
+  tx.id = hashBytes(bytes1)
 
   return tx
 } 

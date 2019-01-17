@@ -54,18 +54,18 @@ export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): IOrder & W
 export function order(paramsOrOrder: IOrderParams & WithSender | IOrder, seed?: TSeedTypes): IOrder & WithId
 export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
 
-  const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset;
-  const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset;
-  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : [];
+  const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
+  const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
+  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : []
 
-  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder;
-  const t = timestamp || Date.now();
+  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
+  const t = timestamp || Date.now()
 
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrOrder);
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
 
   // Use old versionless order only if it is set to null explicitly
-  const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version || 2;
+  const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version || 2
   const ord: IOrder & WithId = {
     orderType,
     version,
@@ -82,15 +82,15 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
     senderPublicKey,
     proofs,
     id: '',
-  };
+  }
 
-  const bytes = binary.serializeOrder(ord);
+  const bytes = binary.serializeOrder(ord)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(ord, signBytes(bytes, s),i));
-  ord.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s,i]) => addProof(ord, signBytes(bytes, s),i))
+  ord.id = hashBytes(bytes)
 
   // for versionless order use signature instead of proofs
-  if (ord.version === undefined) (ord as any).signature = ord.proofs[0];
+  if (ord.version === undefined) (ord as any).signature = ord.proofs[0]
 
   return ord
 }

@@ -32,9 +32,9 @@ export const contractInvocationMinimalParams: IContractInvocationParams = {
     function: 'foo',
     args: [{
       type: 'binary',
-      value: 'base64:AQa3b8tH'
-    }]
-  }
+      value: 'base64:AQa3b8tH',
+    }],
+  },
 }
 
 export const massTransferMinimalParams: IMassTransferParams = {
@@ -58,7 +58,7 @@ export const orderMinimalParams: IOrderParams = {
 }
 
 export const cancelOrderMinimalParams: ICancelOrderParams = {
-  orderId: '3B3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1'
+  orderId: '3B3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
 }
 
 export const dataMinimalParams: IDataParams = {
@@ -100,7 +100,7 @@ export const setScriptMinimalParams: ISetScriptParams = {
 
 export const setAssetScriptMinimalParams: ISetAssetScriptParams = {
   script: 'AQa3b8tH',
-  assetId: ''
+  assetId: '',
 }
 
 export const minimalParams = {

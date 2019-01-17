@@ -1,7 +1,7 @@
 import { verifySignature, publicKey, } from '@waves/waves-crypto'
 import { setScript } from '../../src'
 import { ISetScriptTransaction } from '../../src/transactions'
-import { binary } from "@waves/marshall";
+import { binary } from '@waves/marshall'
 
 describe('setScript', () => {
 

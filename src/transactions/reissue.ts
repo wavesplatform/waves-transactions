@@ -9,10 +9,10 @@ import { binary } from '@waves/marshall'
 export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): IReissueTransaction & WithId
 export function reissue(paramsOrTx: IReissueParams & WithSender | IReissueTransaction, seed?: TSeedTypes): IReissueTransaction & WithId
 export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction & WithId{
-  const type = TRANSACTION_TYPE.REISSUE;
-  const version = paramsOrTx.version || 2;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.REISSUE
+  const version = paramsOrTx.version || 2
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: IReissueTransaction & WithId = {
     type,
@@ -26,12 +26,12 @@ export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',
-  };
+  }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

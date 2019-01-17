@@ -10,13 +10,13 @@ describe('order', () => {
   it('should build from minimal set of params', () => {
     const tx = order({ ...orderMinimalParams } as any, stringSeed)
     expect(tx).toMatchObject({ ...orderMinimalParams })
-  });
+  })
 
 
   it('should get correct signature', () => {
     const tx = order({ ...orderMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), binary.serializeOrder(tx), tx.proofs[0]!)).toBeTruthy()
-  });
+  })
 
   it('should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'

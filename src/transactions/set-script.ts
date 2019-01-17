@@ -5,13 +5,13 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
 /* @echo DOCS */
-export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScriptTransaction & WithId;
-export function setScript(paramsOrTx: ISetScriptParams & WithSender | ISetScriptTransaction, seed?: TSeedTypes): ISetScriptTransaction & WithId;
+export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScriptTransaction & WithId
+export function setScript(paramsOrTx: ISetScriptParams & WithSender | ISetScriptTransaction, seed?: TSeedTypes): ISetScriptTransaction & WithId
 export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransaction & WithId {
-  const type = TRANSACTION_TYPE.SET_SCRIPT;
-  const version = paramsOrTx.version || 1;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.SET_SCRIPT
+  const version = paramsOrTx.version || 1
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
   const tx: ISetScriptTransaction & WithId = {
@@ -26,10 +26,10 @@ export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransac
     script: base64Prefix(paramsOrTx.script),
   }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

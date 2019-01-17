@@ -6,13 +6,13 @@ import { binary } from '@waves/marshall'
 
 
 /* @echo DOCS */
-export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId;
-export function issue(paramsOrTx: IIssueParams & WithSender | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId;
+export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId
+export function issue(paramsOrTx: IIssueParams & WithSender | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId
 export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & WithId {
-  const type = TRANSACTION_TYPE.ISSUE;
-  const version = paramsOrTx.version || 2;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.ISSUE
+  const version = paramsOrTx.version || 2
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: IIssueTransaction & WithId = {
     type,
@@ -29,12 +29,12 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & W
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
     id: '',
-  };
+  }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }

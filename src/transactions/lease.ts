@@ -6,13 +6,13 @@ import { binary } from '@waves/marshall'
 
 
 /* @echo DOCS */
-export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction & WithId;
-export function lease(paramsOrTx: ILeaseParams & WithSender | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId;
+export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction & WithId
+export function lease(paramsOrTx: ILeaseParams & WithSender | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId
 export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & WithId {
-  const type = TRANSACTION_TYPE.LEASE;
-  const version = paramsOrTx.version || 2;
-  const seedsAndIndexes = convertToPairs(seed);
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx);
+  const type = TRANSACTION_TYPE.LEASE
+  const version = paramsOrTx.version || 2
+  const seedsAndIndexes = convertToPairs(seed)
+  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
   const tx: ILeaseTransaction & WithId = {
     type,
@@ -23,13 +23,13 @@ export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & W
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
-    id: ''
-  };
+    id: '',
+  }
 
-  const bytes = binary.serializeTx(tx);
+  const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i));
-  tx.id = hashBytes(bytes);
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  tx.id = hashBytes(bytes)
 
   return tx
 }
