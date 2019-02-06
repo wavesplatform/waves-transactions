@@ -6,6 +6,7 @@
 export { massTransfer } from './transactions/mass-transfer'
 export { reissue } from './transactions/reissue'
 export { burn } from './transactions/burn'
+export { exchange } from './transactions/exchange'
 export { lease } from './transactions/lease'
 export { cancelLease } from './transactions/cancel-lease'
 export { data } from './transactions/data'
@@ -31,6 +32,7 @@ export {
   IReissueParams,
   IBurnTransaction,
   IBurnParams,
+  IExchangeTransaction,
   ILeaseTransaction,
   ILeaseParams,
   ICancelLeaseTransaction,

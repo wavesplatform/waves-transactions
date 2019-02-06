@@ -170,6 +170,19 @@ export interface IBurnTransaction<LONG = string | number> extends ITransaction<L
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
+export interface IExchangeTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+  type: TRANSACTION_TYPE.EXCHANGE
+  order1: IOrder
+  order2: IOrder
+  price: LONG
+  amount: LONG
+  buyMatcherFee: LONG
+  sellMatcherFee:LONG
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
 export interface ILeaseTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
   type: TRANSACTION_TYPE.LEASE
   amount: LONG
