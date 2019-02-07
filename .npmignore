@@ -3,3 +3,6 @@ test
 usage
 docs
 tslint.json
+.idea
+coverage
+sandbox.spec.ts

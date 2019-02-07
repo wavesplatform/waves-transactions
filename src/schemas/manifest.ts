@@ -4,6 +4,7 @@ import IIssueTransaction from './IIssueTransaction.json'
 import ITransferTransaction from './ITransferTransaction.json'
 import IReissueTransaction from './IReissueTransaction.json'
 import IBurnTransaction from './IBurnTransaction.json'
+import IExchangeTransaction from './IExchangeTransaction.json'
 import ILeaseTransaction from './ILeaseTransaction.json'
 import ICancelLeaseTransaction from './ICancelLeaseTransaction.json'
 import IMassTransferTransaction from './IMassTransferTransaction.json'
@@ -29,6 +30,7 @@ export default {
   ITransferTransaction,
   IReissueTransaction,
   IBurnTransaction,
+  IExchangeTransaction,
   ILeaseTransaction,
   ICancelLeaseTransaction,
   IMassTransferTransaction,
@@ -46,5 +48,5 @@ export default {
   IMassTransferParams,
   ISetScriptParams,
   ISetAssetScriptParams,
-  IDataParams,
+  IDataParams
 }

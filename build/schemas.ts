@@ -10,6 +10,7 @@ export const TYPES = [
   'ITransferTransaction',
   'IReissueTransaction',
   'IBurnTransaction',
+  'IExchangeTransaction',
   'ILeaseTransaction',
   'ICancelLeaseTransaction',
   'IMassTransferTransaction',
