@@ -1,7 +1,7 @@
 import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
 import { hashBytes, signBytes } from '@waves/waves-crypto'
-import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
+import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 
 
@@ -21,6 +21,7 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
     alias: paramsOrTx.alias,
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
+    chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
     id: '',
   }

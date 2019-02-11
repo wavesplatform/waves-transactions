@@ -1,5 +1,5 @@
 import { broadcast, burn, exchange, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from '../src'
-import { address, publicKey } from '@waves/waves-crypto'
+import { address, publicKey, randomUint8Array } from '@waves/waves-crypto'
 import { waitForTx } from '../src/generic'
 import {
   IBurnParams,
@@ -193,6 +193,13 @@ describe('Blockchain interaction', () => {
       expect(resp2.type).toEqual(13)
 
     }, timeout)
+  })
+
+  it('Should create alias for address', async()=>{
+    const aliasStr: string = [...randomUint8Array(10)].map(n => n.toString(16)).join('')
+    const aliasTx = alias({alias:aliasStr, chainId: 'T'}, seed)
+    const resp = await broadcast(aliasTx, apiBase)
+    expect(resp.type).toEqual(10)
   })
 
   it('Should perform exchange transaction', async ()=>{
