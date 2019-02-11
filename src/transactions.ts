@@ -199,8 +199,9 @@ export interface ICancelLeaseTransaction<LONG = string | number> extends ITransa
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * Library requires chainId to be present in this transaction, even thought node returns json without it
  */
-export interface IAliasTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender {
+export interface IAliasTransaction<LONG = string | number> extends ITransaction<LONG>, WithSender, WithChainId {
   type: TRANSACTION_TYPE.ALIAS
   alias: string
 }
@@ -323,7 +324,10 @@ export interface WithChainIdParam {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG> {
+export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG>, WithChainIdParam {
+  /**
+   * Alias string should look like `alias:${chainId}:${aliasStr}`
+   */
   alias: string
 }
 
