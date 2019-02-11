@@ -16,10 +16,8 @@ export function cancelOrder(params: ICancelOrderParams, seed: string): ICancelOr
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, params)
 
   const cancelOrderBody: ICancelOrder = {
-    senderPublicKey,
     sender: senderPublicKey,
     orderId: params.orderId,
-    timestamp: t,
     signature: signBytes(
       concat(BASE58_STRING(senderPublicKey), BASE58_STRING(params.orderId)),
       seed

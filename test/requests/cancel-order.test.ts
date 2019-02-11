@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from '@waves/waves-crypto'
-import { cancelOrder } from '../src'
-import { cancelOrderParamsToBytes } from '../src/transactions/cancel-order'
-import { cancelOrderMinimalParams } from './minimalParams'
+import { cancelOrder } from '../../src/index'
+import { cancelOrderParamsToBytes } from '../../src/requests/cancel-order'
+import { cancelOrderMinimalParams } from '../minimalParams'
 
 describe('cancel-order', () => {
 
