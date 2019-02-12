@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { binary } from '@waves/marshall'
-import { order } from '../src'
-import { orderMinimalParams } from './minimalParams'
+import { order } from '../../src/index'
+import { orderMinimalParams } from '../minimalParams'
 
 describe('order', () => {
 

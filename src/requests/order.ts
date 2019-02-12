@@ -76,7 +76,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
     price,
     amount,
     timestamp: t,
-    expiration: expiration || t + 1728000000,
+    expiration: expiration || t + 29 * 24 * 60 * 60 * 1000,
     matcherFee: matcherFee || 300000,
     matcherPublicKey,
     senderPublicKey,
