@@ -19,6 +19,9 @@
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/ILeaseTransaction<LONG>"
     },
     {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IExchangeTransaction<string|number>"
+    },
+    {
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/ICancelLeaseTransaction<LONG>"
     },
     {
@@ -66,11 +69,17 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
+        },
+        "chainId": {
+          "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+          "type": "number"
         }
       },
       "required": [
         "alias",
+        "chainId",
         "fee",
         "proofs",
         "senderPublicKey",
@@ -137,6 +146,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {
@@ -212,6 +222,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         }
       },
@@ -267,6 +278,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {
@@ -324,6 +336,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {
@@ -380,6 +393,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         }
       },
@@ -398,6 +412,174 @@
       "type": "number",
       "enum": [
         8
+      ]
+    },
+    "IExchangeTransaction<string|number>": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.EXCHANGE"
+        },
+        "order1": {
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IOrder<string|number>"
+        },
+        "order2": {
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IOrder<string|number>"
+        },
+        "price": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "buyMatcherFee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "sellMatcherFee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "ITransaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "buyMatcherFee",
+        "fee",
+        "order1",
+        "order2",
+        "price",
+        "proofs",
+        "sellMatcherFee",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TRANSACTION_TYPE.EXCHANGE": {
+      "type": "number",
+      "enum": [
+        7
+      ]
+    },
+    "IOrder<string|number>": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "number"
+        },
+        "orderType": {
+          "enum": [
+            "buy",
+            "sell"
+          ],
+          "type": "string"
+        },
+        "assetPair": {
+          "type": "object",
+          "properties": {
+            "amountAsset": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "priceAsset": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          },
+          "required": [
+            "amountAsset",
+            "priceAsset"
+          ]
+        },
+        "price": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "expiration": {
+          "type": "number"
+        },
+        "matcherFee": {
+          "type": "number"
+        },
+        "matcherPublicKey": {
+          "type": "string"
+        },
+        "proofs": {
+          "description": "ITransaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "assetPair",
+        "expiration",
+        "matcherFee",
+        "matcherPublicKey",
+        "orderType",
+        "price",
+        "proofs",
+        "senderPublicKey",
+        "timestamp"
       ]
     },
     "ICancelLeaseTransaction<LONG>": {
@@ -428,6 +610,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {
@@ -492,6 +675,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         }
       },
@@ -559,6 +743,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {
@@ -614,6 +799,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         }
       },
@@ -700,6 +886,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {
@@ -783,6 +970,7 @@
           }
         },
         "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
           "type": "string"
         },
         "chainId": {

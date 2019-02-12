@@ -14,7 +14,7 @@ describe('cancel-order', () => {
 
 
   it('should get correct signature', () => {
-    const tx = cancelOrder({ ...cancelOrderMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), cancelOrderParamsToBytes(tx), tx.signature)).toBeTruthy()
+    const co = cancelOrder({ ...cancelOrderMinimalParams }, stringSeed)
+    expect(verifySignature(publicKey(stringSeed), cancelOrderParamsToBytes(co), co.signature)).toBeTruthy()
   })
 })

@@ -41,6 +41,7 @@
       }
     },
     "senderPublicKey": {
+      "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
       "type": "string"
     }
   },
@@ -82,12 +83,22 @@
           "type": "object",
           "properties": {
             "amountAsset": {
-              "type": "string"
+              "type": [
+                "null",
+                "string"
+              ]
             },
             "priceAsset": {
-              "type": "string"
+              "type": [
+                "null",
+                "string"
+              ]
             }
-          }
+          },
+          "required": [
+            "amountAsset",
+            "priceAsset"
+          ]
         },
         "price": {
           "type": [
@@ -113,9 +124,6 @@
         "matcherPublicKey": {
           "type": "string"
         },
-        "senderPublicKey": {
-          "type": "string"
-        },
         "proofs": {
           "description": "ITransaction signatures",
           "minItems": 0,
@@ -124,6 +132,10 @@
           "items": {
             "type": "string"
           }
+        },
+        "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
+          "type": "string"
         }
       },
       "required": [

@@ -1,4 +1,13 @@
-import { WithProofs, TTxParams, IOrderParams, TTx, IOrder, IBasicParams, ICancelOrderParams, ICancelOrder } from './transactions'
+import {
+  WithProofs,
+  TTxParams,
+  IOrderParams,
+  TTx,
+  IOrder,
+  IBasicParams,
+  ICancelOrderParams,
+  WithSender
+} from './transactions'
 import { TSeedTypes } from './types'
 import { publicKey } from '@waves/waves-crypto'
 import axios from 'axios'
@@ -7,9 +16,7 @@ export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U):
   Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
     .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
 
-type ParamsForSender =  TTxParams | TTx | IOrderParams | IOrder | ICancelOrderParams | ICancelOrder
-
-export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: ParamsForSender) {
+export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: Partial<WithSender>) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
     throw new Error('Please provide either seed or senderPublicKey')
   else {

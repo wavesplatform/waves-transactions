@@ -331,7 +331,7 @@ export interface WithChainIdParam {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG> {
+export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG>, WithChainIdParam {
   alias: string
 }
 
@@ -412,7 +412,7 @@ export interface IOrderParams<LONG = string | number> {
   expiration?: number
 }
 
-export interface ICancelOrderParams extends Partial<WithSender> {
+export interface ICancelOrderParams {
   orderId: string
 }
 

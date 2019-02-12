@@ -29,6 +29,7 @@
       }
     },
     "senderPublicKey": {
+      "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
       "type": "string"
     }
   },

@@ -73,7 +73,8 @@
 						<h4>LONG</h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used</p>
+								<p>Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+								Library requires chainId to be present in this transaction, even thought node returns json without it</p>
 							</div>
 						</div>
 					</li>
@@ -86,7 +87,7 @@
 						<a href="itransaction.html" class="tsd-signature-type">ITransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span>
 					</li>
 					<li>
-						<a href="withsender.html" class="tsd-signature-type">WithSender</a>
+						<a href="withchainid.html" class="tsd-signature-type">WithChainId</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">IAliasTransaction</span>
@@ -103,6 +104,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialiastransaction.html#alias" class="tsd-kind-icon">alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ialiastransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ialiastransaction.html#fee" class="tsd-kind-icon">fee</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ialiastransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ialiastransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
@@ -122,9 +124,27 @@
 					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:205</li>
+							<li>Defined in transactions.ts:211</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="chainid" class="tsd-anchor"></a>
+					<h3>chain<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="withchainid.html">WithChainId</a>.<a href="withchainid.html#chainid">chainId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:51</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Network byte.
+								E.g.,
+							87 is used for Waves mainnet, 84 for Waves testnet</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="fee" class="tsd-anchor"></a>
@@ -133,7 +153,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:62</li>
+							<li>Defined in transactions.ts:69</li>
 						</ul>
 					</aside>
 				</section>
@@ -144,7 +164,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="withproofs.html">WithProofs</a>.<a href="withproofs.html#proofs">proofs</a></p>
 						<ul>
-							<li>Defined in transactions.ts:35</li>
+							<li>Defined in transactions.ts:42</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,9 +188,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="withsender.html">WithSender</a>.<a href="withsender.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in transactions.ts:84</li>
+							<li>Defined in transactions.ts:33</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Account public key. This account will pay fee and this account&#39;s script will be executed if exists</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="timestamp" class="tsd-anchor"></a>
@@ -179,7 +204,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:61</li>
+							<li>Defined in transactions.ts:68</li>
 						</ul>
 					</aside>
 				</section>
@@ -190,7 +215,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#type">type</a></p>
 						<ul>
-							<li>Defined in transactions.ts:204</li>
+							<li>Defined in transactions.ts:210</li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +226,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#version">version</a></p>
 						<ul>
-							<li>Defined in transactions.ts:63</li>
+							<li>Defined in transactions.ts:70</li>
 						</ul>
 					</aside>
 				</section>
@@ -224,6 +249,9 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="ialiastransaction.html#alias" class="tsd-kind-icon">alias</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="ialiastransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="ialiastransaction.html#fee" class="tsd-kind-icon">fee</a>

@@ -1,5 +1,5 @@
 import { broadcast, burn, exchange, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from '../src'
-import { address, publicKey, randomUint8Array } from '@waves/waves-crypto'
+import { address, publicKey, randomUint8Array, } from '@waves/waves-crypto'
 import { waitForTx } from '../src/generic'
 import {
   IBurnParams,
@@ -11,6 +11,7 @@ import {
 import { order, cancelOrder } from '../src'
 import { cancelSubmittedOrder, submitOrder } from '../src/general'
 import { alias } from '../src/transactions/alias'
+import { binary, json } from '@waves/marshall'
 
 /**
  * Before running test ensure test account has WAVES!!
@@ -24,7 +25,6 @@ const matcherUrl = 'https://matcher.testnet.wavesnodes.com/'
 const timeout = 120000
 
 describe('Blockchain interaction', () => {
-
 
 
   describe('Assets', () => {
@@ -195,56 +195,64 @@ describe('Blockchain interaction', () => {
     }, timeout)
   })
 
-  it('Should create alias for address', async()=>{
+  it('Should create alias for address', async () => {
     const aliasStr: string = [...randomUint8Array(10)].map(n => n.toString(16)).join('')
-    const aliasTx = alias({alias:aliasStr, chainId: 'T'}, seed)
+    const aliasTx = alias({ alias: aliasStr, chainId: 'T' }, seed)
     const resp = await broadcast(aliasTx, apiBase)
     expect(resp.type).toEqual(10)
   })
 
-  it('Should perform exchange transaction', async ()=>{
-   // ISSUE ASSET
-    let account2 = 'exchange test';
-    let assetId: string;
-    // const txParams: IIssueParams = {
-    //   name: 'Test token',
-    //   description: 'no description',
-    //   //decimals: 3,
-    //   quantity: 100000000000,
-    //   chainId,
-    //   reissuable: true,
-    // }
-    //
-    // const issueTx = issue(txParams, seed)
-    // await broadcast(issueTx, apiBase)
-    // // GIVE WAVES TO TEST ACC
-    // const transferTx = transfer({recipient: address(account2, 'T'), amount:100000000}, seed)
-    // await broadcast(transferTx, apiBase)
-    //
-    // //WAIT BOTH TX TO COMPLETE
-    // await waitForTx(issueTx.id, timeout, apiBase)
-    // await waitForTx(transferTx.id, timeout, apiBase)
+  it('Should perform exchange transaction', async () => {
+    // ISSUE ASSET
+    let account2 = 'exchange test'
+    let assetId: string
+    const txParams: IIssueParams = {
+      name: 'Test token',
+      description: 'no description',
+      //decimals: 3,
+      quantity: 100000000000,
+      chainId,
+      reissuable: true,
+    }
+
+    const issueTx = issue(txParams, seed)
+    assetId = issueTx.id
+    await broadcast(issueTx, apiBase)
+    // GIVE WAVES TO TEST ACC
+    const transferTx = transfer({recipient: address(account2, 'T'), amount:100000000}, seed)
+    await broadcast(transferTx, apiBase)
+
+    //WAIT BOTH TX TO COMPLETE
+    await waitForTx(issueTx.id, timeout, apiBase)
+    await waitForTx(transferTx.id, timeout, apiBase)
     /////////////////////////
 
-    assetId = 'qmhEv7NeL39kDiWBVfzZh6aT1ZwzpD7y1CFxvmiH78U'
+    //assetId = 'qmhEv7NeL39kDiWBVfzZh6aT1ZwzpD7y1CFxvmiH78U'
 
     const order1 = order({
+      //matcherPublicKey,
       matcherPublicKey: publicKey(seed),
       orderType: 'buy',
+      matcherFee: 300000,
       amountAsset: assetId,
       priceAsset: null,
-      amount: 100000000,
+      amount: 1,
       price: 100000000
     }, account2)
 
     const order2 = order({
+      //matcherPublicKey,
       matcherPublicKey: publicKey(seed),
       orderType: 'sell',
+      matcherFee: 300000,
       amountAsset: assetId,
       priceAsset: null,
-      amount: 100000000,
-      price:100000000
-    },seed)
+      amount: 1,
+      price: 100000000
+    }, seed)
+
+    //await submitOrder(order1, matcherUrl)
+    //await submitOrder(order2, matcherUrl)
 
     const exchangeTx = exchange({
       type: 7,
@@ -252,22 +260,23 @@ describe('Blockchain interaction', () => {
       order1,
       order2,
       price: 100000000,
-      amount: 100000000,
+      amount: 1,
       buyMatcherFee: order1.matcherFee,
       sellMatcherFee: order2.matcherFee,
       timestamp: Date.now(),
       proofs: [],
-      fee: 100000,
+      fee: 300000,
       senderPublicKey: publicKey(seed)
     }, seed)
 
-    await broadcast(exchangeTx, apiBase)
+    const resp = await broadcast(exchangeTx, apiBase)
+    console.log(resp)
   }, timeout)
 })
 
 describe('Matcher requests', () => {
 
-  const assetId = 'GVmtioaQfyackGbeFSrLTMJsD69D8pcBe2UjAth61ny3';
+  const assetId = 'GVmtioaQfyackGbeFSrLTMJsD69D8pcBe2UjAth61ny3'
 
   it('should submit and cancel order', async () => {
     const oParams = {
@@ -284,8 +293,36 @@ describe('Matcher requests', () => {
     const submitResp = await submitOrder(ord, matcherUrl)
     expect(submitResp.status).toEqual('OrderAccepted')
 
-    const co = cancelOrder({orderId: ord.id}, seed)
-    const cancelResp = await cancelSubmittedOrder(co,ord.assetPair.amountAsset, ord.assetPair.priceAsset, matcherUrl)
+    const co = cancelOrder({ orderId: ord.id }, seed)
+    const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, matcherUrl)
     expect(cancelResp.status).toEqual('OrderCanceled')
   })
+
+  it('order validation', async () => {
+    const order1 = order({
+      matcherPublicKey,
+      //matcherPublicKey: publicKey(seed),
+      orderType: 'buy',
+      matcherFee: 700000,
+      amountAsset: assetId,
+      priceAsset: null,
+      amount: 1,
+      price: 100000000
+    }, seed)
+
+    const order2 = order({
+      matcherPublicKey,
+      //matcherPublicKey: publicKey(seed),
+      orderType: 'sell',
+      matcherFee: 700000,
+      amountAsset: assetId,
+      priceAsset: null,
+      amount: 1,
+      price: 100000000
+    }, seed)
+    await submitOrder(order1, matcherUrl)
+    await submitOrder(order2, matcherUrl)
+
+  })
+
 })
