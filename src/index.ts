@@ -37,6 +37,8 @@ export {
   ILeaseParams,
   ICancelLeaseTransaction,
   ICancelLeaseParams,
+  ITransferTransaction,
+  ITransferParams,
   IMassTransferTransaction,
   IMassTransferParams,
   ISetAssetScriptTransaction,
