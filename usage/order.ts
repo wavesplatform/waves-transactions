@@ -1,6 +1,6 @@
 import { order } from '../dist/index'
 
-const seed = 'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'
+const seed = 'example seed phrase'
 
 const params = {
   amount: 100000000, //1 waves

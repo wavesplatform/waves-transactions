@@ -19,8 +19,11 @@ const txs = [
 const _DOCS = `/**
  * Creates and signs [[<!-- @echo TRANSACTION_TYPE -->]].
  *
+ * If no senderPublicKey is set, it will be derived from seed.
+ * In case sender and signer are different, you need to pass senderPublicKey explicitly.
+ *
  * You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
- * Also you can use already signed [[<!-- @echo TRANSACTION_TYPE -->]] as a second argument.
+ * Also you can use already formed [[<!-- @echo TRANSACTION_TYPE -->]] instead of params.
  * 
  * ### Usage
  * \`\`\`js
@@ -47,7 +50,7 @@ function use(filename: string) {
   var file = readFileSync(filename, { encoding: 'utf8' })
   const regex = /import\s+\{\s*(\w+)\s*\}\s*from\s+('|")[\w\.\/]+('|")/gm
   file = file.replace(regex, (s, a) => {
-    return `const { ${a} } = require('waves-transactions')`
+    return `const { ${a} } = require('@waves/waves-transactions')`
   })
 
   runInNewContext(file, box)

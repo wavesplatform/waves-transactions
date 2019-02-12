@@ -216,40 +216,43 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/alias.ts:47</li>
+									<li>Defined in transactions/alias.ts:51</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/ialiastransaction.html">IAliasTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/ialiastransaction.html">IAliasTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/ialiastransaction.html">IAliasTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { alias } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { alias } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">alias</span>: <span class="hljs-string">'MyNewAlias'</span>,
+  <span class="hljs-attr">chainId</span>: <span class="hljs-string">'W'</span>,
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000,</span>
-  <span class="hljs-comment">//chainId: 'W',</span>
 }
 
 <span class="hljs-keyword">const</span> signedAliasTx = alias(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"EjNehmfVkqDR6FeKBsrhrQX7kKrmG14QUiBQgjxDEVLJ"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DVG7QeggfB74ipxfRMbr96duxrNpYwxnFyNQNZcoG8T6"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">10</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"alias"</span>: <span class="hljs-string">"MyNewAlias"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848251</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413905</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"56THgRHtxVoxoPxQxqhaU9yq5n4g5qnpErvnX6wKDwcKwVBVSUGoZuQ8P6j3scxTg72sosXXZVDUDVGRJjPwXPtN"</span>
+    <span class="hljs-string">"21EUgp3ohR3oRpKH8BSW9KBJUJCisGNgLqHj6pJdA94cx2bu7JCg8KVwiiZZA8tajNUw5ZYSmzEfj6oRaxFYUvT1"</span>
   ]
 }</code></pre>
 							</div>
@@ -270,7 +273,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/alias.ts:48</li>
+									<li>Defined in transactions/alias.ts:52</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -337,23 +340,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/burn.ts:48</li>
+									<li>Defined in transactions/burn.ts:52</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/iburntransaction.html">IBurnTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/iburntransaction.html">IBurnTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/iburntransaction.html">IBurnTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { burn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { burn } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">assetId</span>: <span class="hljs-string">'4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC'</span>,
   <span class="hljs-attr">quantity</span>: <span class="hljs-number">100</span>,
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000,</span>
   <span class="hljs-comment">//chainId: 'W',</span>
@@ -362,17 +368,17 @@
 <span class="hljs-keyword">const</span> signedBurnTx = burn(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"5FEXeovEfLVDyzyfW3qJ6YHnRFKEJX6tuNRVw5HNQYeR"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9Wy8czJ5FSSrhEsL4eZD59n1vzi84wuhoV5CeQM9aDQr"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">6</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC"</span>,
   <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848122</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413591</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"cNUxcZMmfYvXaSqnP782igoDHzd872txnC4rfQAB7PJwq5x9y7vYt6h47FdQGP7cLc9UFh86ojfsRUQTU2M4KNb"</span>
+    <span class="hljs-string">"4ieNeezuHZtpWGzKR3hJs2txQ5uhzs6buxRnK2cmzjJpQCHHJ3A9pE5E5j5tX5d2dBrVUZuEjTweqhM4DRZuvQto"</span>
   ]
 }</code></pre>
 							</div>
@@ -393,7 +399,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/burn.ts:49</li>
+									<li>Defined in transactions/burn.ts:53</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -423,22 +429,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/cancel-lease.ts:47</li>
+									<li>Defined in transactions/cancel-lease.ts:51</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/icancelleasetransaction.html">ICancelLeaseTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/icancelleasetransaction.html">ICancelLeaseTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/icancelleasetransaction.html">ICancelLeaseTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { cancelLease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { cancelLease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">leaseId</span>: <span class="hljs-string">'2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg'</span>,
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000,</span>
   <span class="hljs-comment">//chainId: 'W'</span>
@@ -447,16 +456,16 @@
 <span class="hljs-keyword">const</span> signedCancelLeaseTx = cancelLease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"78vCW4EBq8kksJJYzDHHy9cgBQaCzB1yuoZugdDTuKQ6"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"87ks2HTyUvzyAjHU7Vz96Y8qW4bVb5TDZr9yN438kYJV"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">9</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"leaseId"</span>: <span class="hljs-string">"2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848146</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413699</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2FZ2Zh1BK9G6Ae6UY1dk8Mf7TNQDsQNRB8dKD9xUWPNpvJ6MPVzT82SGjrxJA1WfLN6bKq4KN4i7KW7osWvsPR22"</span>
+    <span class="hljs-string">"2QkmgkuVGVK86ozZb6s1ByYMM1kvGky8RiS8DBSKMqxrkf2v1ZgNPUK8MbjMBJi6QLS2qKtt9gzMRLH8oJwJ2g94"</span>
   ]
 }</code></pre>
 							</div>
@@ -477,7 +486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/cancel-lease.ts:48</li>
+									<li>Defined in transactions/cancel-lease.ts:52</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -658,19 +667,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/data.ts:110</li>
+									<li>Defined in transactions/data.ts:114</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/idatatransaction.html">IDataTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/idatatransaction.html">IDataTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/idatatransaction.html">IDataTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { data } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { data } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">data</span>: [
@@ -679,6 +690,7 @@
     { <span class="hljs-attr">key</span>: <span class="hljs-string">'stringVal'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'hello'</span> },
     { <span class="hljs-attr">key</span>: <span class="hljs-string">'binaryVal'</span>, <span class="hljs-attr">value</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>] },
   ],
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000 + bytes.length * 100000</span>
 }
@@ -686,14 +698,14 @@
 <span class="hljs-keyword">const</span> signedDataTx = data(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"J3hMjJxPzMBtMGD2ZdsbxkDjwwbmrBbk1Z814u4qoUeA"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"89zPoypaqJx799xbNziE3FPuM7ShmX1cfqWorSVbkFqC"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">12</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848166</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413789</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2uxt6KGQsFbF3P3mVsci4HcSx4gk3kBu5iSyMrQ5kq4VboWG1eHjkm6TFrotuqjV4qm1t84bqfNpngNK7ezdV7vr"</span>
+    <span class="hljs-string">"3HzJksFBompKFEuXKCkPooqmokrH8etyCuczBvwqLe8TLaNDuQumwJDTYGozzmux8iR1eE8ToGe4Zycyyb75j4EV"</span>
   ],
   <span class="hljs-attr">"data"</span>: [
     {
@@ -736,7 +748,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/data.ts:111</li>
+									<li>Defined in transactions/data.ts:115</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -795,24 +807,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/issue.ts:55</li>
+									<li>Defined in transactions/issue.ts:59</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/iissuetransaction.html">IIssueTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/iissuetransaction.html">IIssueTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/iissuetransaction.html">IIssueTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { issue } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { issue } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">name</span>: <span class="hljs-string">'SCAM TOKEN'</span>,
   <span class="hljs-attr">description</span>: <span class="hljs-string">'Awesome token that will tokenize tokenization tokenized'</span>,
   <span class="hljs-attr">quantity</span>: <span class="hljs-number">1000000</span>,
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//reissuable: false</span>
   <span class="hljs-comment">//decimals: 8</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
@@ -823,20 +838,20 @@
 <span class="hljs-keyword">const</span> signedIssueTx = issue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"CGDhE2cQH6BsFxCSvjymd1nQGUCAGCHWCjdsWovZyB5R"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"71ntaQVhvjnincKLhBTMqvVpBDFF6KTZBKkLQFr5TYmN"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">3</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"SCAM TOKEN"</span>,
   <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Awesome token that will tokenize tokenization tokenized"</span>,
   <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">1000000</span>,
   <span class="hljs-attr">"decimals"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848182</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413817</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4VdJp2SPUu476r3dfCxkPXBgv5mcJKncRkckdxq6hL4y1E8fSNYQLS7CECEcrU1Di7Lwgv8qw1dWqt9H2kLzModL"</span>
+    <span class="hljs-string">"5iedjpu1v8PMnt3extpHgQSCHsZEcefBZTWTwZxqZXnJuJZrYjAkTYpg46UbvmVbYU7QJbj48EVXYT51u6msNZ9F"</span>
   ]
 }</code></pre>
 							</div>
@@ -857,7 +872,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/issue.ts:56</li>
+									<li>Defined in transactions/issue.ts:60</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -887,23 +902,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/lease.ts:47</li>
+									<li>Defined in transactions/lease.ts:51</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/ileasetransaction.html">ILeaseTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/ileasetransaction.html">ILeaseTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/ileasetransaction.html">ILeaseTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { lease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { lease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">amount</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs'</span>,
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000,</span>
 }
@@ -911,16 +929,16 @@
 <span class="hljs-keyword">const</span> signedLeaseTx = lease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"BZHYPjKyzQa99u3vE6XqMLn6wFtrAoUYcKv8Adai6MV5"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"3DXgQa6BAWrS723yhc1gNcUXmw7TgxotUctLTGrEETwT"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848198</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413843</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"EHrzWxMtfuNCqJWTWA7yrdYXyXQAn5QDqycj8ptG2mk62wYfikXh5QqYZ2Q1PHHsdAwGwKxGhZhjsiav7Wsa4SD"</span>
+    <span class="hljs-string">"67KCiNY5bB1EX5y674dKqnczzygA9JHDWi3eawv2TNQkG9s6u8W72XdCqtSuqgRUNk4RkZgtP41UYqpHu7hgGgDF"</span>
   ]
 }</code></pre>
 							</div>
@@ -941,7 +959,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/lease.ts:48</li>
+									<li>Defined in transactions/lease.ts:52</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -971,19 +989,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/mass-transfer.ts:64</li>
+									<li>Defined in transactions/mass-transfer.ts:68</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/imasstransfertransaction.html">IMassTransferTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/imasstransfertransaction.html">IMassTransferTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/imasstransfertransaction.html">IMassTransferTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { massTransfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { massTransfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">transfers</span>: [
@@ -996,6 +1016,7 @@
       <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3PPnqZznWJbPG2Z1Y35w8tZzskiq5AMfUXr'</span>,
     },
   ],
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000 + transfers.length * 50000,</span>
 }
@@ -1003,10 +1024,10 @@
 <span class="hljs-keyword">const</span> signedMassTransferTx = massTransfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9dQmFietocP3rtcaZzWFnRiWE5CWxFeRtvHfQGGVkcxq"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4aApj8CjV8cZJe7eJUCFyY5PwZ2iRBnTzGSvnMFoJqUQ"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">11</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"transfers"</span>: [
     {
       <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
@@ -1018,10 +1039,10 @@
     }
   ],
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">200000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848212</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413861</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5WigmFrtxfHGXjL9vtvqkFJE1jEuPt5kUNZEUfyXRfAkVRidvkzUcEeEsbEtJuEu9g5gcTYxAU6LHyZHYqaazXnA"</span>
+    <span class="hljs-string">"3RRmjBDgizWFJSHyU5yLKMFCaD9jpcy3tZTzmMjS6p9coGTnMrxjA8MBw8FjnLttwP9zhtpRHp7S12fXS5aAfuxh"</span>
   ]
 }</code></pre>
 							</div>
@@ -1042,7 +1063,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/mass-transfer.ts:65</li>
+									<li>Defined in transactions/mass-transfer.ts:69</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1162,24 +1183,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/reissue.ts:51</li>
+									<li>Defined in transactions/reissue.ts:55</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/ireissuetransaction.html">IReissueTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/ireissuetransaction.html">IReissueTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/ireissuetransaction.html">IReissueTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { reissue } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { reissue } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">quantity</span>: <span class="hljs-number">10000</span>,
   <span class="hljs-attr">assetId</span>: <span class="hljs-string">'3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx'</span>,
   <span class="hljs-attr">reissuable</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000000,</span>
   <span class="hljs-comment">//chainId: 'W'</span>
@@ -1188,18 +1212,18 @@
 <span class="hljs-keyword">const</span> signedReissueTx = reissue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GQ4R4SPSMJQMybtjfNDW6FBkWE6suferTW5u2ABcVqyk"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4d3XL7d6zKt19Sotwm1XSiSQ1aSCWLTmHeGgmiBk4BLE"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">5</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"3toqCSpAHShatE75UFKxqymuWFr8nxuxD7UcLjdxVFLx"</span>,
   <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">10000</span>,
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848229</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413877</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4PA41pxKJ6TqTDPi9uDT1MHf1vE2dHBaMRfj1wokzEsRWBUbtVfHttyCL5w93Ck6MZM2upbXgvDZ3LMymt6LB4eL"</span>
+    <span class="hljs-string">"5kHxhMPcw1452Yc8hXxJXHyQDcficjvqv5p1NsVLKgFmzBymJZ2m9mcM2QtgjvddrFUdWs6Tf3Wgu2VMBCnNxKhd"</span>
   ]
 }</code></pre>
 							</div>
@@ -1220,7 +1244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/reissue.ts:52</li>
+									<li>Defined in transactions/reissue.ts:56</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1331,22 +1355,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/set-script.ts:46</li>
+									<li>Defined in transactions/set-script.ts:50</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/isetscripttransaction.html">ISetScriptTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/isetscripttransaction.html">ISetScriptTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/isetscripttransaction.html">ISetScriptTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { setScript } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { setScript } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-attr">script</span>: <span class="hljs-string">'AQa3b8tH'</span>, <span class="hljs-comment">//true</span>
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000,</span>
   <span class="hljs-comment">//chainId: 'W'</span>
@@ -1355,15 +1382,15 @@
 <span class="hljs-keyword">const</span> signedSetScriptTx = setScript(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"H4JNEpaQgxnkNsAfBb6VgA2bbkDMpEsnxuPEu5zEg1Ja"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4cz7vgMrcwx9m46hTadf2MTysTPs6fQE289vu9Vfdpbg"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">13</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">1000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848263</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413922</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2SuTygXTKTSUHP4cZWegHPm3gYpkNEw99ySsk16tCj5sS2Jo2rM7zvyhz9ZvJRJMUDedy396MAj2MGYpAxsU7Eey"</span>
+    <span class="hljs-string">"3oaCUS6qxrZzke7J3a2x6k8pBXRpXqZCcmWi3nbJ4dFHJTahCFuHix5DpAQEj7AGBmCEoAYKWKjBmiNKAtT9Mrj1"</span>
   ],
   <span class="hljs-attr">"script"</span>: <span class="hljs-string">"base64:AQa3b8tH"</span>
 }</code></pre>
@@ -1385,7 +1412,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/set-script.ts:47</li>
+									<li>Defined in transactions/set-script.ts:51</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1485,19 +1512,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/transfer.ts:51</li>
+									<li>Defined in transactions/transfer.ts:55</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and signs <a href="interfaces/itransfertransaction.html">ITransferTransaction</a>.</p>
 								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
 								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
-								Also you can use already signed <a href="interfaces/itransfertransaction.html">ITransferTransaction</a> as a second argument.</p>
+								Also you can use already formed <a href="interfaces/itransfertransaction.html">ITransferTransaction</a> instead of params.</p>
 								<h3 id="usage">Usage</h3>
-								<pre><code class="language-js"><span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'waves-transactions'</span>)
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>)
 
-<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'</span>
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">'example seed phrase'</span>
 
 <span class="hljs-comment">//Transfering 1 WAVES</span>
 <span class="hljs-keyword">const</span> params = {
@@ -1506,6 +1535,7 @@
   <span class="hljs-comment">//feeAssetId: undefined</span>
   <span class="hljs-comment">//assetId: undefined</span>
   <span class="hljs-comment">//attachment: undefined</span>
+  <span class="hljs-comment">//senderPublicKey: 'by default derived from seed',</span>
   <span class="hljs-comment">//timestamp: Date.now(),</span>
   <span class="hljs-comment">//fee: 100000,</span>
 }
@@ -1513,17 +1543,17 @@
 <span class="hljs-keyword">const</span> signedTransferTx = transfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"EDwa8kur8VTwkjPEb5aSP4ohqzJryvMca6szBsdyDuhs"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"FNaaFxWN6o2ym8wCkPcmVHcfrRd5Tgv1MSUTGbtvKdpU"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"G62H1XE5rnaCgCCURV5pWwQHzWezZB7VkkVgqthdKgkj"</span>,
+  <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549967848238</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1549980413889</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"397RRue1QCSqeAbaNA5Mssmx6zTzrHLXuPGtHuCNhDzg3wUyPPgmEyyCcmBc7ksrME7ZRxTSTbVkjtED5ZLLspcZ"</span>
+    <span class="hljs-string">"26okvhq8QJxm5bABLFnUHnE1ieMk8YjRqBcK92Cj3KzYP3XwZNx5xW7JuNnKUQh6vookEoFLzJvAjcwRaAKykZpr"</span>
   ]
 }</code></pre>
 							</div>
@@ -1544,7 +1574,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/transfer.ts:52</li>
+									<li>Defined in transactions/transfer.ts:56</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

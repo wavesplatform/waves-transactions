@@ -36,14 +36,8 @@ const seed = 'some example seed phrase'
 const signedTranserTx = transfer({ 
   amount: 1,
   recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
-  timestamp: 1536917842558, //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now()
-
-  //Every function from the list above has a set of required and optional params
-  //senderPublicKey: 'Cq5itmx4wbYuogySAoUp58MimLLkQrFFLr1tpJy2BYp1', // By default it is derived from seed, 
-  // but if you don't want to sign transaction you have to provide it
-  //fee: 100000, //Fee is always optional, in case fee is not provided, it will be calculated for you
-  //additionalFee: 400000, //If fee is not set, this value will be added to the auto calculated value
-  //feeAssetId: undefined
+  //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
+  timestamp: 1536917842558 
 }, seed)
 ```
 
@@ -65,6 +59,16 @@ Output will be a signed transfer transaction:
     '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'
   ]
 }
+```
+
+You can also create transaction, but not sign it:
+```javascript
+const unsignedTransferTx = transfer({ 
+  amount: 1,
+  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  //senderPublicKey is required if you omit seed
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq' 
+})
 ```
 
 Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:

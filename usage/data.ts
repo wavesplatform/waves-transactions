@@ -1,6 +1,6 @@
 import { data } from '../dist/index'
 
-const seed = 'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'
+const seed = 'example seed phrase'
 
 const params = {
   data: [
@@ -9,6 +9,7 @@ const params = {
     { key: 'stringVal', value: 'hello' },
     { key: 'binaryVal', value: [1, 2, 3, 4] },
   ],
+  //senderPublicKey: 'by default derived from seed',
   //timestamp: Date.now(),
   //fee: 100000 + bytes.length * 100000
 }
