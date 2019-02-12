@@ -270,7 +270,7 @@ describe('Blockchain interaction', () => {
     }, seed)
 
     const resp = await broadcast(exchangeTx, apiBase)
-    console.log(resp)
+    expect(resp.type).toEqual(7)
   }, timeout)
 })
 
