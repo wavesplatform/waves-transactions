@@ -149,6 +149,7 @@
 								<li class="tsd-kind-function"><a href="globals.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#submitorder" class="tsd-kind-icon">submit<wbr>Order</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#transfer" class="tsd-kind-icon">transfer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#verify" class="tsd-kind-icon">verify</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -243,16 +244,16 @@
 <span class="hljs-keyword">const</span> signedAliasTx = alias(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"fxeoAdy8cQ2et8ZFHcfHL2RJ9Tkk6M2q9pGVF6J6n8z"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9jSLwrWGND9o2CyPviHhEYp8p1apgv7H5HChzPywyMi3"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">10</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"alias"</span>: <span class="hljs-string">"MyNewAlias"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039624</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536454</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"62ZUjCWpYqUJJcGZxcjw1eNRj3fgaMewTfDoCr3NczCpGQk5uj6i8pFyucAcukQXjHwxwvL5vsuK9bP2YMwCNCN3"</span>
+    <span class="hljs-string">"o3miacUZmJT9rmyPPjcj9DrwoNvkK1hDPD6srtvT2xbR1kFs5SPJYTXAQesUtGufXyd2KVyQLY6ter6qAL4QXBk"</span>
   ]
 }</code></pre>
 							</div>
@@ -302,7 +303,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:69</li>
+									<li>Defined in general.ts:84</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -368,7 +369,7 @@
 <span class="hljs-keyword">const</span> signedBurnTx = burn(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9F1bb1ep8q3iLkK91yf2rCEaSB9omZh7onw2PQsDzw2V"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GvWEVunY6qR4X4sZXhZX7ZypUoW3bt9sEXxvP3UGWd9z"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">6</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -376,9 +377,9 @@
   <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039493</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536314</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5LqSAEZ7A98WAy3brLh7Pj3B3twFPAd1pnbAH3uQ4QQUA9Db78ScynynGRpYx2xVc4jjNtN2f4MRiyxjekhsppmy"</span>
+    <span class="hljs-string">"2HtLMHFpJP64sbyiL7UWe1Z8HW5y4oJxKvFQWRYftpHey3frxFWAWovLL9cg1BfZtCHVTVeaoiL4zrpYbq4T7tNj"</span>
   ]
 }</code></pre>
 							</div>
@@ -456,16 +457,16 @@
 <span class="hljs-keyword">const</span> signedCancelLeaseTx = cancelLease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"3rUEHt5pFgdCbVYAtrYLT7GQ5kGCDETtG9Mcy3PxN8AY"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"436zNPh9SNMR8tcbKnqcstafdspkF2qE6F5iTaVxbaEV"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">9</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"leaseId"</span>: <span class="hljs-string">"2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039519</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536346</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4J52Uc6iygC4smmcVU6ry9AvzV2HoDzttVeJCGPgVHpdjtpxjkKqmn6hxsPcC2E9kcYZUi2YPY2CJhJAXCZr26XA"</span>
+    <span class="hljs-string">"4FD9zADpo5gHgR4eYUMBrhwr9gzzVPQGWJ9eZZZSf99tPqDzfKrN8nRjADxCWE4zuMxSMu8gFmpkzhVJNCoSYSGq"</span>
   ]
 }</code></pre>
 							</div>
@@ -566,7 +567,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:101</li>
+									<li>Defined in general.ts:116</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -698,14 +699,14 @@
 <span class="hljs-keyword">const</span> signedDataTx = data(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"999wS7jvGATk8ede9aykAQM9AHMw4kTwu6fnvdj5DgZs"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"6tQQwCf6uetnxdUi7SreHkFChQCAfcgv3nHV4u9Sw9pk"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">12</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039540</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536366</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3svZVdyFHmTJVF3AEycpKy24G6Y4XvdgMoNeiRk5kfXBBLcMuxMcgZug5ahYPBMsBV5wMiB4qD3tPYk9UvcAw9bR"</span>
+    <span class="hljs-string">"64A93aY4hMXzGZrA4JHY4wWw7PEetn3r33DQLjCtByjHdSLvx72UBnbZpyQNs57Q23dAPVQxcfXhkrbG5Rffd6zm"</span>
   ],
   <span class="hljs-attr">"data"</span>: [
     {
@@ -838,7 +839,7 @@
 <span class="hljs-keyword">const</span> signedIssueTx = issue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"2GJ7w1R3H7G6tKQUsGpGucT3wmreVixvjar46GJM99oZ"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"EMincE6sBCooTde1hiuYArpTeZ6XTPaMJBiwNL8pxcLh"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">3</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -848,10 +849,10 @@
   <span class="hljs-attr">"decimals"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039556</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536385</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3cAX5nfVbxBch3yqwLMBDBKQ7aAhSuhqcPpF342KZaDEuRkeS97KJYGhThHATi9PLwhoDJUgdhXjvNJwJvSP6Joh"</span>
+    <span class="hljs-string">"VRfvuSMkV3TSgSxMyTHuR26tXP3d5D12uEM1P7EnYMPek1ERa8Xy2UAyQiExY4b7415NcwFqEqi46ycBQh2pJgk"</span>
   ]
 }</code></pre>
 							</div>
@@ -929,16 +930,16 @@
 <span class="hljs-keyword">const</span> signedLeaseTx = lease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"7xD5sw66kGo8Q8dQL243uTadJj4AifjSMePwipaC5JLt"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"2FrwHJFthtecphknPuKFEqSoKPqumVyzoQY5YF4nByuL"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039572</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536400</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2vKbqhyjECHKpjd77pr71cdMEzqB6nhna2jaYL6M1GxwSoWynmnJziUXT57og11vKUcAxyhS99YdH4vJMZcRGrT2"</span>
+    <span class="hljs-string">"4LqAw3cHr1W2dZGzVHQMpyNgkiGH1AnRVX8R9wkpz4ZCk6GEo1y83cpsmM2Gj39v97EW2XTnk8NX4pZpta4we9Cb"</span>
   ]
 }</code></pre>
 							</div>
@@ -1024,7 +1025,7 @@
 <span class="hljs-keyword">const</span> signedMassTransferTx = massTransfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"BuUXCtW1R4unaYjmuoojSAUQufVfnq8YuGC2oGMrWoBV"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"2NfNHLd5oC77VkDmn69rK6UqBKS991viVP782ngh4XjF"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">11</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1039,10 +1040,10 @@
     }
   ],
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">200000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039585</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536413</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4NXKjU46ztiedwD77ioBneQouWXYX7wKUFmSvex75sZUE8srfpxvFiTgFL5z677bMvxUnH1jHRkAFVHFNziZF4aE"</span>
+    <span class="hljs-string">"jopxNuWgFVqkTNdGFTzXBhSVrJfgkJ5SWjvfyMXzjPhYEds4mu1XsumjyirPwi7GCTBsBCDARPEnbiwrqwUtGM2"</span>
   ]
 }</code></pre>
 							</div>
@@ -1212,7 +1213,7 @@
 <span class="hljs-keyword">const</span> signedReissueTx = reissue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"E3e7nNmyg6NpB6q28YsBi44cK9yipx5AAK9zYAYSsixv"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9onA8gJcH92vi28JnQb6GK91o1VbuxFV2RD762wCjaRW"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">5</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1221,9 +1222,9 @@
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039603</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536432</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3Z2uXYWgkd6rV8qLp6s3AEQHsjx1wZNdKQnnZmjYm6DaSU2MmUH5xrDcd3mKajziwLHGaKHcvaZKQioNehpKv8B1"</span>
+    <span class="hljs-string">"4E1eiLYKcuDr5ws9AwZgqnKMWDwetEkNBpz3PceZXsVmb5by5qbTwM6ENzKSBCH5RutVvt3omP659B19mFkx5WzV"</span>
   ]
 }</code></pre>
 							</div>
@@ -1273,7 +1274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:59</li>
+									<li>Defined in general.ts:61</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1382,15 +1383,15 @@
 <span class="hljs-keyword">const</span> signedSetScriptTx = setScript(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"2VqqbjW54yRyp6JAWVfa9UaT3zZT2Zti7odNUWqzxEQk"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"EErPki7RRAPChwHAKt5EWiBoAAe26Ng19TabHNY8de8t"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">13</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">1000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039636</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536465</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4NCxdNfwZGxnns4zkNJhbF8CmEB6fKCZxsxXjoFAeH7qSYBWfyWw4UTYydkb68Zk4VLNmob4CC86iicFcG55QEmf"</span>
+    <span class="hljs-string">"5GNLMqJ4y4Ydr6Dp53nRyBZpppXAfLmpAxzBrPj8F3ySmgpPYGSSqCSPxk4XVFuk2A4h1tcZDtKR3ZhVL7T1z7j1"</span>
   ],
   <span class="hljs-attr">"script"</span>: <span class="hljs-string">"base64:AQa3b8tH"</span>
 }</code></pre>
@@ -1441,7 +1442,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:49</li>
+									<li>Defined in general.ts:51</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1474,7 +1475,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:84</li>
+									<li>Defined in general.ts:99</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1543,7 +1544,7 @@
 <span class="hljs-keyword">const</span> signedTransferTx = transfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"BHzzWevJ5udAjQj8s1UbYCLd2Z3RFLUumSmXrfzqdANP"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"Cn17Q7JphqmzWu3qrjbEdVfijfqjgp4J9RPe46adLM6x"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1551,9 +1552,9 @@
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550047039612</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1550048536442</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5pyfMaMyCKGAYYpEpuG6Fou4CCVGNHKUtJv373FbkoczdWp8ZzuJFtA9bSf2sLi76nw96rkx14WEN9zn1XWMu8oT"</span>
+    <span class="hljs-string">"4Dyz1iB6en2LNU9jRH9yLnZ6bWoybVaLA7Fff12XTDdRkUpzy7GKB6QFBNLPudHP8zrhCwgxqbQ5y2CDpoA8dQtB"</span>
   ]
 }</code></pre>
 							</div>
@@ -1593,6 +1594,46 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="verify" class="tsd-anchor"></a>
+					<h3>verify</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">verify<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><a href="globals.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iorder.html" class="tsd-signature-type">IOrder</a>, proofN<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, publicKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in general.ts:72</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Verifies signature of transaction or order</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <a href="globals.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iorder.html" class="tsd-signature-type">IOrder</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> proofN: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>proof index. Takes first proof by default</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> publicKey: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>takes senderPublicKey by default</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Object literals</h2>
@@ -1602,7 +1643,7 @@
 					<div class="tsd-signature tsd-kind-icon">tx<wbr>Type<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in general.ts:30</li>
+							<li>Defined in general.ts:32</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -1611,8 +1652,6 @@
 						<div class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in general.ts:31</li>
-								<li>Defined in general.ts:32</li>
 								<li>Defined in general.ts:33</li>
 								<li>Defined in general.ts:34</li>
 								<li>Defined in general.ts:35</li>
@@ -1622,6 +1661,8 @@
 								<li>Defined in general.ts:39</li>
 								<li>Defined in general.ts:40</li>
 								<li>Defined in general.ts:41</li>
+								<li>Defined in general.ts:42</li>
+								<li>Defined in general.ts:43</li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -1644,7 +1685,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:31</li>
+											<li>Defined in general.ts:33</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1664,7 +1705,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:32</li>
+											<li>Defined in general.ts:34</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1684,7 +1725,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:33</li>
+											<li>Defined in general.ts:35</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1704,7 +1745,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:34</li>
+											<li>Defined in general.ts:36</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1724,7 +1765,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:35</li>
+											<li>Defined in general.ts:37</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1744,7 +1785,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:36</li>
+											<li>Defined in general.ts:38</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1764,7 +1805,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:37</li>
+											<li>Defined in general.ts:39</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1784,7 +1825,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:38</li>
+											<li>Defined in general.ts:40</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1804,7 +1845,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:39</li>
+											<li>Defined in general.ts:41</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1824,7 +1865,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:40</li>
+											<li>Defined in general.ts:42</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1844,7 +1885,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:41</li>
+											<li>Defined in general.ts:43</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2080,6 +2121,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#transfer" class="tsd-kind-icon">transfer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#verify" class="tsd-kind-icon">verify</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#txtypemap" class="tsd-kind-icon">tx<wbr>Type<wbr>Map</a>

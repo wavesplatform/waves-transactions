@@ -1,13 +1,14 @@
 import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { reissue, signTx, data, burn } from '../src'
-import { broadcast, serialize } from '../src/general'
-import { reissueMinimalParams, burnMinimalParams } from './minimalParams'
+import { broadcast, serialize, verify } from '../src/general'
+import { reissueMinimalParams, burnMinimalParams, orderMinimalParams } from './minimalParams'
 import { TTx } from '../src'
 import { exampleTxs } from './exampleTxs'
+import { order } from '../src/requests/order'
+
+const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
 describe('signTx', () => {
-
-  const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
   const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as TTx)
   txs.forEach(tx => {
@@ -63,4 +64,11 @@ it('should send tx to node', async () => {
 
   await expect(broadcast(result, 'https://nodes.wavesplatform.com/')).rejects
     .toEqual(new Error('Transaction is not allowed by account-script'))
+})
+
+it('verify signatures of txs and orders', async () => {
+  const ord = order(orderMinimalParams, stringSeed)
+  const tx = burn(burnMinimalParams, [null, stringSeed])
+  expect(verify(ord)).toEqual(true)
+  expect(verify(tx, 1)).toEqual(true)
 })
