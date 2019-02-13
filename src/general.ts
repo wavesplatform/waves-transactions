@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { binary, json } from '@waves/marshall'
+import { verifySignature } from '@waves/waves-crypto'
 import {
   IAliasTransaction,
   IBurnTransaction, ICancelLeaseTransaction, ICancelOrder, IDataTransaction,
@@ -21,7 +23,7 @@ import { alias } from './transactions/alias'
 import { setScript } from './transactions/set-script'
 import { isOrder } from './generic'
 import { setAssetScript } from './transactions/set-asset-script'
-import { binary, json } from '@waves/marshall'
+
 
 export interface WithTxType {
   type: TRANSACTION_TYPE
@@ -59,6 +61,19 @@ export function signTx(tx: TTx | TTxParams & WithTxType, seed: TSeedTypes): TTx 
 export function serialize(obj: TTx | IOrder): Uint8Array {
   if (isOrder(obj)) return binary.serializeOrder(obj)
   return binary.serializeTx(obj)
+}
+
+/**
+ * Verifies signature of transaction or order
+ * @param obj
+ * @param proofN - proof index. Takes first proof by default
+ * @param publicKey - takes senderPublicKey by default
+ */
+export function verify(obj: TTx | IOrder, proofN = 0, publicKey?: string): boolean {
+  publicKey = publicKey || obj.senderPublicKey
+  const bytes = serialize(obj)
+  const signature = obj.version == null ? (obj as any).signature : obj.proofs[proofN]
+  return verifySignature(publicKey, bytes, signature)
 }
 
 /**
