@@ -309,7 +309,7 @@ export interface IBasicParams<LONG = string | number> {
   /**
    * If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:
    * 1. Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.
-   * 2. You want only to create tx, not to sign it. Therefore no seed is provided.
+   * 2. You to create tx without proof. Therefore no seed is provided.
    */
   senderPublicKey?: string
   /**
