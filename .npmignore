@@ -6,3 +6,4 @@ tslint.json
 .idea
 coverage
 sandbox.spec.ts
+build

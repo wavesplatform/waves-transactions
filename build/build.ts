@@ -37,7 +37,7 @@ async function build() {
     // await copy(p('../README.md'), p('tmp/dist/README.md'))
     await copy(p('tmp/dist'), p('../dist'))
     await copy(p('tmp/docs'), p('../docs'))
-    //await remove(p('tmp'))
+    await remove(p('tmp'))
   } catch (error) {
     console.log(error)
   }
