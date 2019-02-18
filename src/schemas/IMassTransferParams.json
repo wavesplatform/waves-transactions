@@ -12,7 +12,10 @@
       "type": "string"
     },
     "assetId": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "fee": {
       "description": "Transaction fee. If not set, fee will be calculated automatically",
