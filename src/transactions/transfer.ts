@@ -17,11 +17,12 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     type,
     version,
     senderPublicKey,
-    assetId:paramsOrTx.assetId,
+    assetId: paramsOrTx.assetId === 'WAVES' ? null : paramsOrTx.assetId,
     recipient: paramsOrTx.recipient,
     amount: paramsOrTx.amount,
     attachment: paramsOrTx.attachment || '',
     fee: fee(paramsOrTx, 100000),
+    feeAssetId: paramsOrTx.feeAssetId === 'WAVES' ? null : paramsOrTx.feeAssetId,
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',
@@ -29,7 +30,7 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
 
   const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i))
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
 
   return tx

@@ -20,7 +20,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
     type,
     version,
     senderPublicKey,
-    assetId: paramsOrTx.assetId,
+    assetId: paramsOrTx.assetId === 'WAVES' ? null : paramsOrTx.assetId,
     transfers: paramsOrTx.transfers,
     fee: fee(paramsOrTx, 100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
