@@ -18,7 +18,7 @@ export { setAssetScript } from './transactions/set-asset-script'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { contractInvocation } from './transactions/contract-invocation'
-export { signTx, broadcast, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
+export { signTx, broadcast, verify, serialize, submitOrder, cancelSubmittedOrder, getAddressBalance, getAddressDataByKey } from './general'
 export { waitForTx } from './generic'
 
 // Export interfaces

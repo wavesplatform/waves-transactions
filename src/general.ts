@@ -90,6 +90,17 @@ export function broadcast(tx: TTx, nodeUrl: string) {
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
 
 }
+export function getAddressBalance(address: string, apiBase: string) {
+  return axios.get(`addresses/balance/${address}`, { baseURL: apiBase })
+    .then(x => x.data)
+    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+}
+
+export function getAddressDataByKey(address: string, key: string, apiBase: string) {
+  return axios.get(`addresses/data/${address}/${key}`, { baseURL: apiBase })
+    .then(x => x.data)
+    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+}
 
 /**
  * Sends order to matcher
