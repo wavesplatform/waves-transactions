@@ -103,7 +103,7 @@ export function addressBalance(address: string, nodeUrl: string): Promise<number
 }
 
 /**
- * Retrieve information about waves account balance
+ * Get data from account dictionary by key
  * @param address - waves address as base58 string
  * @param key - dictionary key
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
