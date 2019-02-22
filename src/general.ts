@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { binary, json } from '@waves/marshall'
+import { binary, json, serializePrimitives } from '@waves/marshall'
 import { verifySignature } from '@waves/waves-crypto'
 import {
   IAliasTransaction,
@@ -89,6 +89,42 @@ export function broadcast(tx: TTx, nodeUrl: string) {
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
 
+}
+
+/**
+ * Retrieve information about waves account balance
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
+ */
+export function addressBalance(address: string, nodeUrl: string): Promise<number> {
+  return axios.get(`addresses/balance/${address}`, { baseURL: nodeUrl })
+    .then(x => x.data && x.data.balance)
+    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+}
+
+/**
+ * Retrieve information about waves account balance
+ * @param address - waves address as base58 string
+ * @param key - dictionary key
+ * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
+ */
+export function addressDataByKey(address: string, key: string, nodeUrl: string): Promise<number | Uint8Array | string | null> {
+  return axios.get(`addresses/data/${address}/${key}`, { baseURL: nodeUrl })
+    .then(x => {
+      switch (x.data.type) {
+        case 'integer':
+        case 'string':
+          return x.data.value
+        case 'binary':
+          return serializePrimitives.BASE64_STRING(x.data.value)
+        case 'boolean':
+          return x.data.value === 'true'
+      }
+      return null
+    })
+    .catch(e => e.response && e.response.status === 404 ?
+      Promise.resolve(null) :
+      Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
 }
 
 /**
