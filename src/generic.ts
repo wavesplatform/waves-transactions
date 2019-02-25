@@ -12,9 +12,9 @@ import { TSeedTypes } from './types'
 import { publicKey } from '@waves/waves-crypto'
 import axios from 'axios'
 
-export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f:(v: T)=> U): Record<K, U> =>
-  Object.entries<T>(obj).map(([k,v]) => [k, f(v)] as [string, U])
-    .reduce((acc, [k,v]) => ({...acc as any, [k]: v}), {} as Record<K,U>)
+export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f: (v: T) => U): Record<K, U> =>
+  Object.entries<T>(obj).map(([k, v]) => [k, f(v)] as [string, U])
+    .reduce((acc, [k, v]) => ({ ...acc as any, [k]: v }), {} as Record<K, U>)
 
 export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: Partial<WithSender>) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
@@ -67,21 +67,32 @@ export const delay = (timeout: number): CancellablePromise<{}> => {
     t.resolve = resolve
     t.id = setTimeout(() => resolve(), timeout)
   }) as any
-  (<any>p).cancel = () => { t.resolve(); clearTimeout(t.id) }
+  (<any>p).cancel = () => {
+    t.resolve()
+    clearTimeout(t.id)
+  }
   return p
 }
 
 export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<TTx> => {
-  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
-    .then(x => x.data).catch(_ => delay(1000).then(_ => promise()))
+  let expired = false
+  const to = delay(timeout)
+  to.then(() => expired = true)
 
-  const t = delay(timeout)
-  const r = await Promise.race([t.then(x => Promise.reject('timeout')), promise()]) as TTx
-  t.cancel()
-  return r
+  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
+    .then(x => {
+      to.cancel()
+      return x.data
+    })
+    .catch(_ => delay(1000)
+      .then(_ => expired ?
+        Promise.reject('tx wait stopped: timeout') :
+        promise()))
+
+  return promise()
 }
 
-export function networkByte(p: number|string|undefined, def: number): number {
+export function networkByte(p: number | string | undefined, def: number): number {
   switch (typeof p) {
     case 'string':
       return p.charCodeAt(0)
@@ -92,7 +103,7 @@ export function networkByte(p: number|string|undefined, def: number): number {
   }
 }
 
-export function fee(params: IBasicParams, def: number){
+export function fee(params: IBasicParams, def: number) {
   if (params.fee) return params.fee
   if (!params.additionalFee) return def
   return def + params.additionalFee
