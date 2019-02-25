@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ICancelLeaseParams | waves-transactions</title>
+	<title>ISponsorshipParams | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="icancelleaseparams.html">ICancelLeaseParams</a>
+					<a href="isponsorshipparams.html">ISponsorshipParams</a>
 				</li>
 			</ul>
-			<h1>Interface ICancelLeaseParams&lt;LONG&gt;</h1>
+			<h1>Interface ISponsorshipParams&lt;LONG&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -84,12 +84,9 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<a href="ibasicparams.html" class="tsd-signature-type">IBasicParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span>
-					</li>
-					<li>
-						<a href="withchainidparam.html" class="tsd-signature-type">WithChainIdParam</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ICancelLeaseParams</span>
+								<span class="target">ISponsorshipParams</span>
 							</li>
 						</ul>
 					</li>
@@ -102,12 +99,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icancelleaseparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icancelleaseparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icancelleaseparams.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icancelleaseparams.html#leaseid" class="tsd-kind-icon">lease<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icancelleaseparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icancelleaseparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="isponsorshipparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isponsorshipparams.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="isponsorshipparams.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isponsorshipparams.html#minsponsoredassetfee" class="tsd-kind-icon">min<wbr>Sponsored<wbr>Asset<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="isponsorshipparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="isponsorshipparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -132,22 +129,18 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="chainid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chain<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="assetid" class="tsd-anchor"></a>
+					<h3>asset<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">asset<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="withchainidparam.html">WithChainIdParam</a>.<a href="withchainidparam.html#chainid">chainId</a></p>
 						<ul>
-							<li>Defined in transactions.ts:345</li>
+							<li>Defined in transactions.ts:473</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Network byte. Could beb set as number or as char.
-								If set as char(string), charCodeAt(0) will be used. E.g.,
-								&#39;W&#39; will be converted to &#39;87&#39;
-							If not set, 87 will be used as default</p>
+							<p>AssetID of sponsored token</p>
 						</div>
 					</div>
 				</section>
@@ -168,14 +161,19 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="leaseid" class="tsd-anchor"></a>
-					<h3>lease<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">lease<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="minsponsoredassetfee" class="tsd-anchor"></a>
+					<h3>min<wbr>Sponsored<wbr>Asset<wbr>Fee</h3>
+					<div class="tsd-signature tsd-kind-icon">min<wbr>Sponsored<wbr>Asset<wbr>Fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LONG</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:367</li>
+							<li>Defined in transactions.ts:477</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Minimal fee amount in sponsored asset. To disable sponsorship set it to 0</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="senderpublickey" class="tsd-anchor"></a>
@@ -228,25 +226,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="icancelleaseparams.html" class="tsd-kind-icon">ICancel<wbr>Lease<wbr>Params</a>
+						<a href="isponsorshipparams.html" class="tsd-kind-icon">ISponsorship<wbr>Params</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icancelleaseparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icancelleaseparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icancelleaseparams.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="isponsorshipparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="icancelleaseparams.html#leaseid" class="tsd-kind-icon">lease<wbr>Id</a>
+								<a href="isponsorshipparams.html#assetid" class="tsd-kind-icon">asset<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icancelleaseparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+								<a href="isponsorshipparams.html#fee" class="tsd-kind-icon">fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="isponsorshipparams.html#minsponsoredassetfee" class="tsd-kind-icon">min<wbr>Sponsored<wbr>Asset<wbr>Fee</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icancelleaseparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="isponsorshipparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="isponsorshipparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 						</ul>
 					</li>

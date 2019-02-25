@@ -1,4 +1,15 @@
-import { broadcast, burn, exchange, issue, massTransfer, reissue, setAssetScript, setScript, transfer } from '../src'
+import {
+  broadcast,
+  burn,
+  exchange,
+  issue,
+  massTransfer,
+  reissue,
+  setAssetScript,
+  setScript,
+  transfer,
+  sponsorship
+} from '../src'
 import { address, publicKey, randomUint8Array, } from '@waves/waves-crypto'
 import { waitForTx } from '../src/generic'
 import {
@@ -25,7 +36,6 @@ const matcherUrl = 'https://matcher.testnet.wavesnodes.com/'
 const timeout = 120000
 
 describe('Blockchain interaction', () => {
-
 
   describe('Assets', () => {
     let assetId = ''
@@ -195,6 +205,27 @@ describe('Blockchain interaction', () => {
     }, timeout)
   })
 
+  describe('Sponsorship', () => {
+    let assetId = 'ELjR9srYT4UDaBRSqo9D544YGQ8AwYkn7fjrmxWEo9en'
+
+    it('Should set sponsorship', async () => {
+      const sponTx = sponsorship({ assetId, minSponsoredAssetFee: 100 }, seed)
+      await broadcast(sponTx, apiBase)
+      await waitForTx(sponTx.id, timeout, apiBase)
+
+      const ttx = transfer({ recipient: address(seed, 'T'), amount: 1000, feeAssetId: assetId }, seed)
+      await broadcast(ttx, apiBase)
+    }, timeout)
+
+    it('Should remove sponsorship', async () => {
+      const sponTx = sponsorship({ assetId, minSponsoredAssetFee: 0 }, seed)
+      await broadcast(sponTx, apiBase)
+      await waitForTx(sponTx.id, timeout, apiBase)
+      const ttx = transfer({ recipient: address(seed, 'T'), amount: 1000, feeAssetId: assetId }, seed)
+      await expect(broadcast(ttx, apiBase)).rejects
+    }, timeout)
+  })
+
   it('Should create alias for address', async () => {
     const aliasStr: string = [...randomUint8Array(10)].map(n => n.toString(16)).join('')
     const aliasTx = alias({ alias: aliasStr, chainId: 'T' }, seed)
@@ -219,7 +250,7 @@ describe('Blockchain interaction', () => {
     assetId = issueTx.id
     await broadcast(issueTx, apiBase)
     // GIVE WAVES TO TEST ACC
-    const transferTx = transfer({recipient: address(account2, 'T'), amount:100000000}, seed)
+    const transferTx = transfer({ recipient: address(account2, 'T'), amount: 100000000 }, seed)
     await broadcast(transferTx, apiBase)
 
     //WAIT BOTH TX TO COMPLETE
@@ -272,6 +303,8 @@ describe('Blockchain interaction', () => {
     const resp = await broadcast(exchangeTx, apiBase)
     expect(resp.type).toEqual(7)
   }, timeout)
+
+
 })
 
 describe('Matcher requests', () => {

@@ -3,9 +3,19 @@ import { binary, json, serializePrimitives } from '@waves/marshall'
 import { verifySignature } from '@waves/waves-crypto'
 import {
   IAliasTransaction,
-  IBurnTransaction, ICancelLeaseTransaction, ICancelOrder, IDataTransaction,
-  IIssueTransaction, ILeaseTransaction, IMassTransferTransaction,
-  IOrder, IReissueTransaction, ISetAssetScriptTransaction, ISetScriptTransaction, ITransferTransaction,
+  IBurnTransaction,
+  ICancelLeaseTransaction,
+  ICancelOrder,
+  IDataTransaction, IExchangeTransaction,
+  IIssueTransaction,
+  ILeaseTransaction,
+  IMassTransferTransaction,
+  IOrder,
+  IReissueTransaction,
+  ISetAssetScriptTransaction,
+  ISetScriptTransaction,
+  ISponsorshipTransaction,
+  ITransferTransaction,
   TRANSACTION_TYPE,
   TTx,
   TTxParams
@@ -23,6 +33,8 @@ import { alias } from './transactions/alias'
 import { setScript } from './transactions/set-script'
 import { isOrder } from './generic'
 import { setAssetScript } from './transactions/set-asset-script'
+import { exchange } from './transactions/exchange'
+import { sponsorship } from './transactions/sponsorship'
 
 
 export interface WithTxType {
@@ -41,6 +53,8 @@ export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxT
   [TRANSACTION_TYPE.DATA]: { sign: (x, seed) => data(x as IDataTransaction, seed) },
   [TRANSACTION_TYPE.SET_SCRIPT]: { sign: (x, seed) => setScript(x as ISetScriptTransaction, seed) },
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed) },
+  [TRANSACTION_TYPE.SPONSORSHIP]: { sign: (x, seed) => sponsorship(x as ISponsorshipTransaction, seed) },
+  [TRANSACTION_TYPE.EXCHANGE]: { sign: (x, seed) => exchange(x as IExchangeTransaction, seed) }
 }
 
 /**

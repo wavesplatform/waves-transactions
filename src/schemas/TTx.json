@@ -31,6 +31,9 @@
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/ISetScriptTransaction<LONG>"
     },
     {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/ISponsorshipTransaction<LONG>"
+    },
+    {
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IDataTransaction<LONG>"
     },
     {
@@ -766,6 +769,60 @@
       "type": "number",
       "enum": [
         13
+      ]
+    },
+    "ISponsorshipTransaction<LONG>": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.SPONSORSHIP"
+        },
+        "minSponsoredAssetFee": {
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/LONG",
+          "description": "Minimal fee amount in sponsored asset. To disable sponsorship set it to 0"
+        },
+        "assetId": {
+          "description": "AssetID of sponsored token",
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "fee": {
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/LONG"
+        },
+        "version": {
+          "type": "number"
+        },
+        "proofs": {
+          "description": "ITransaction signatures",
+          "minItems": 0,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "senderPublicKey": {
+          "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
+          "type": "string"
+        }
+      },
+      "required": [
+        "assetId",
+        "fee",
+        "minSponsoredAssetFee",
+        "proofs",
+        "senderPublicKey",
+        "timestamp",
+        "type",
+        "version"
+      ]
+    },
+    "TRANSACTION_TYPE.SPONSORSHIP": {
+      "type": "number",
+      "enum": [
+        14
       ]
     },
     "IDataTransaction<LONG>": {

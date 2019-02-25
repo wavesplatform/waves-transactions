@@ -84,6 +84,7 @@ export type TTx<LONG = string | number> =
   | ICancelLeaseTransaction<LONG>
   | IMassTransferTransaction<LONG>
   | ISetScriptTransaction<LONG>
+  | ISponsorshipTransaction<LONG>
   | IDataTransaction<LONG>
   | ISetAssetScriptTransaction<LONG>
   | IContractInvocationTransaction<LONG>
@@ -230,6 +231,21 @@ export interface DataEntry {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
+export interface ISponsorshipTransaction<LONG = string | number> extends ITransaction<LONG> {
+  type: TRANSACTION_TYPE.SPONSORSHIP
+  /**
+   * Minimal fee amount in sponsored asset. To disable sponsorship set it to 0
+   */
+  minSponsoredAssetFee: LONG
+  /**
+   * AssetID of sponsored token
+   */
+  assetId: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
 export interface IDataTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: TRANSACTION_TYPE.DATA
   data: DataEntry[]
@@ -291,6 +307,7 @@ export type TTxParams<LONG = string | number> =
   | IReissueParams<LONG>
   | ISetAssetScriptParams<LONG>
   | ISetScriptParams<LONG>
+  | ISponsorshipParams<LONG>
   | ITransferParams<LONG>
 
 /**
@@ -449,6 +466,20 @@ export interface ISetScriptParams<LONG = string | number> extends IBasicParams<L
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
+export interface ISponsorshipParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * AssetID of sponsored token
+   */
+  assetId: string
+  /**
+   * Minimal fee amount in sponsored asset. To disable sponsorship set it to 0
+   */
+  minSponsoredAssetFee: LONG
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
 export interface ITransferParams<LONG = string | number> extends IBasicParams<LONG> {
   recipient: string
   amount: LONG
@@ -480,3 +511,4 @@ export interface IContractInvocationParams<LONG = string | number> extends IBasi
     amount: LONG
   }
 }
+

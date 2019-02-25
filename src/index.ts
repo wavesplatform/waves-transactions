@@ -15,6 +15,7 @@ export { transfer } from './transactions/transfer'
 export { alias } from './transactions/alias'
 export { setScript } from './transactions/set-script'
 export { setAssetScript } from './transactions/set-asset-script'
+export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { contractInvocation } from './transactions/contract-invocation'
@@ -45,6 +46,8 @@ export {
   IMassTransferParams,
   ISetAssetScriptTransaction,
   ISetScriptParams,
+  ISponsorshipTransaction,
+  ISponsorshipParams,
   IDataTransaction,
   IDataParams,
   ISetScriptTransaction,

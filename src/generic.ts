@@ -86,7 +86,7 @@ export const waitForTx = async (txId: string, timeout: number, apiBase: string):
     })
     .catch(_ => delay(1000)
       .then(_ => expired ?
-        Promise.reject('tx wait stopped: timeout') :
+        Promise.reject(new Error('Tx wait stopped: timeout')) :
         promise()))
 
   return promise()

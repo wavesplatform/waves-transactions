@@ -14,6 +14,7 @@ const txs = [
   { file: 'transfer', interface: 'ITransferTransaction' },
   { file: 'alias', interface: 'IAliasTransaction' },
   { file: 'set-script', interface: 'ISetScriptTransaction' },
+  { file: 'sponsorship', interface: 'ISponsorshipTransaction' }
 ]
 
 const _DOCS = `/**
@@ -39,10 +40,10 @@ const _DOCS = `/**
 function use(filename: string) {
   const box: any = {
     output: undefined,
-    require: (r:any) =>
+    require: (r: any) =>
       require(r),
     console: {
-      log: (str:any) => {
+      log: (str: any) => {
         box.output = { id: str.id, ...str }
       },
     },
@@ -71,7 +72,7 @@ txs.forEach(t => {
     OUTPUT: x.output,
   })
 
-  pp.preprocessFile(`./src/transactions/${t.file}.ts`, `./src/transactions/${t.file}.ts`, { DOCS }, (err:any) => {
+  pp.preprocessFile(`./src/transactions/${t.file}.ts`, `./src/transactions/${t.file}.ts`, { DOCS }, (err: any) => {
     console.log(err)
   })
 })
