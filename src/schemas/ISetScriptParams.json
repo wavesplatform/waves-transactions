@@ -25,7 +25,7 @@
       "type": "number"
     },
     "chainId": {
-      "description": "Network byte. Could beb set as number or as char.\nIf set as char(string), charCodeAt(0) will be used. E.g.,\n'W' will be converted to '87'\nIf not set, 87 will be used as default",
+      "description": "Network byte. Could be set as number or as char.\nIf set as char(string), charCodeAt(0) will be used. E.g.,\n'W' will be converted to '87'\nIf not set, 87 will be used as default",
       "type": [
         "string",
         "number"

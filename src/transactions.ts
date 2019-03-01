@@ -337,7 +337,7 @@ export interface IBasicParams<LONG = string | number> {
 
 export interface WithChainIdParam {
   /**
-   * Network byte. Could beb set as number or as char.
+   * Network byte. Could be set as number or as char.
    * If set as char(string), charCodeAt(0) will be used. E.g.,
    * 'W' will be converted to '87'
    * If not set, 87 will be used as default

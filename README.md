@@ -97,3 +97,18 @@ So now there are two proofs:
   ]
 }
 ```
+
+### Broadcast
+To send transaction you can use either node [REST API](https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast) or [broadcast](https://wavesplatform.github.io/waves-transactions/globals.html#broadcast) helper function:
+```javascript
+const {broadcast} =  require('@waves/waves-transaction');
+const nodeUrl = 'https://nodes.wavesplatform.com';
+
+broadcast(signedTx, nodeUrl).then(resp => console.log(resp))
+```
+You can send tx to any waves node you like:. E.g.:
+* https://testnodes.wavesnodes.com - waves TESTNET nodes hosted by Wavesplatform
+* https://nodes.wavesplatform.com - waves MAINNET nodes hosted by Wavesplatform
+#### Important!!!
+Most transactions require chainId as parameter, e.g: [IBurnParams](https://wavesplatform.github.io/waves-transactions/interfaces/iburnparams.html). By default chainId is 'W', which means MAINNET. To make transaction in TESTNET be sure to pass chainId if it is present in params interface and then send it to TESTNET node
+

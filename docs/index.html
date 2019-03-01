@@ -137,6 +137,18 @@
     <span class="hljs-string">'CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z'</span>
   ]
 }</code></pre>
+				<h3 id="broadcast">Broadcast</h3>
+				<p>To send transaction you can use either node <a href="https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast">REST API</a> or <a href="https://wavesplatform.github.io/waves-transactions/globals.html#broadcast">broadcast</a> helper function:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> {broadcast} =  <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transaction'</span>);
+<span class="hljs-keyword">const</span> nodeUrl = <span class="hljs-string">'https://nodes.wavesplatform.com'</span>;
+
+broadcast(signedTx, nodeUrl).then(<span class="hljs-function"><span class="hljs-params">resp</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(resp))</code></pre>
+				<p>You can send tx to any waves node you like:. E.g.:</p>
+				<ul>
+					<li><a href="https://testnodes.wavesnodes.com">https://testnodes.wavesnodes.com</a> - waves TESTNET nodes hosted by Wavesplatform</li>
+					<li><a href="https://nodes.wavesplatform.com">https://nodes.wavesplatform.com</a> - waves MAINNET nodes hosted by Wavesplatform<h4 id="important-">Important!!!</h4>
+					Most transactions require chainId as parameter, e.g: <a href="https://wavesplatform.github.io/waves-transactions/interfaces/iburnparams.html">IBurnParams</a>. By default chainId is &#39;W&#39;, which means MAINNET. To make transaction in TESTNET be sure to pass chainId if it is present in params interface and then send it to TESTNET node</li>
+				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
