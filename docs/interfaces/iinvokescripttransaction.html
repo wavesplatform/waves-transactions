@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IContractInvocationTransaction | waves-transactions</title>
+	<title>IInvokeScriptTransaction | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="icontractinvocationtransaction.html">IContractInvocationTransaction</a>
+					<a href="iinvokescripttransaction.html">IInvokeScriptTransaction</a>
 				</li>
 			</ul>
-			<h1>Interface IContractInvocationTransaction&lt;LONG&gt;</h1>
+			<h1>Interface IInvokeScriptTransaction&lt;LONG&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -89,7 +89,7 @@
 						<a href="withchainid.html" class="tsd-signature-type">WithChainId</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">IContractInvocationTransaction</span>
+								<span class="target">IInvokeScriptTransaction</span>
 							</li>
 						</ul>
 					</li>
@@ -102,16 +102,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationtransaction.html#call" class="tsd-kind-icon">call</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationtransaction.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icontractinvocationtransaction.html#payment" class="tsd-kind-icon">payment</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="icontractinvocationtransaction.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="icontractinvocationtransaction.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iinvokescripttransaction.html#call" class="tsd-kind-icon">call</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iinvokescripttransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iinvokescripttransaction.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iinvokescripttransaction.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iinvokescripttransaction.html#payment" class="tsd-kind-icon">payment</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iinvokescripttransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iinvokescripttransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iinvokescripttransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="iinvokescripttransaction.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iinvokescripttransaction.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -237,7 +237,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transaction_type.html#contract_invocation" class="tsd-signature-type">CONTRACT_INVOCATION</a></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/transaction_type.html#invoke_script" class="tsd-signature-type">INVOKE_SCRIPT</a></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="itransaction.html">ITransaction</a>.<a href="itransaction.html#type">type</a></p>
 						<ul>
@@ -271,37 +271,37 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="icontractinvocationtransaction.html" class="tsd-kind-icon">IContract<wbr>Invocation<wbr>Transaction</a>
+						<a href="iinvokescripttransaction.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Transaction</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="icontractinvocationtransaction.html#call" class="tsd-kind-icon">call</a>
+								<a href="iinvokescripttransaction.html#call" class="tsd-kind-icon">call</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icontractinvocationtransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
+								<a href="iinvokescripttransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="icontractinvocationtransaction.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a>
+								<a href="iinvokescripttransaction.html#contractaddress" class="tsd-kind-icon">contract<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icontractinvocationtransaction.html#fee" class="tsd-kind-icon">fee</a>
+								<a href="iinvokescripttransaction.html#fee" class="tsd-kind-icon">fee</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="icontractinvocationtransaction.html#payment" class="tsd-kind-icon">payment</a>
+								<a href="iinvokescripttransaction.html#payment" class="tsd-kind-icon">payment</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icontractinvocationtransaction.html#proofs" class="tsd-kind-icon">proofs</a>
+								<a href="iinvokescripttransaction.html#proofs" class="tsd-kind-icon">proofs</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icontractinvocationtransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+								<a href="iinvokescripttransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icontractinvocationtransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="iinvokescripttransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="icontractinvocationtransaction.html#type" class="tsd-kind-icon">type</a>
+								<a href="iinvokescripttransaction.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="icontractinvocationtransaction.html#version" class="tsd-kind-icon">version</a>
+								<a href="iinvokescripttransaction.html#version" class="tsd-kind-icon">version</a>
 							</li>
 						</ul>
 					</li>

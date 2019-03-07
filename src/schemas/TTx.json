@@ -40,7 +40,7 @@
       "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/ISetAssetScriptTransaction<LONG>"
     },
     {
-      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IContractInvocationTransaction<LONG>"
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IInvokeScriptTransaction<LONG>"
     }
   ],
   "definitions": {
@@ -969,11 +969,11 @@
         15
       ]
     },
-    "IContractInvocationTransaction<LONG>": {
+    "IInvokeScriptTransaction<LONG>": {
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.CONTRACT_INVOCATION"
+          "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.INVOKE_SCRIPT"
         },
         "contractAddress": {
           "type": "string"
@@ -1047,7 +1047,7 @@
         "version"
       ]
     },
-    "TRANSACTION_TYPE.CONTRACT_INVOCATION": {
+    "TRANSACTION_TYPE.INVOKE_SCRIPT": {
       "type": "number",
       "enum": [
         16
