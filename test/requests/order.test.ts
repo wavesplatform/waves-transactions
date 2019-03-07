@@ -9,6 +9,8 @@ describe('order', () => {
 
   it('should build from minimal set of params', () => {
     const tx = order({ ...orderMinimalParams } as any, stringSeed)
+    delete orderMinimalParams.amountAsset
+    delete orderMinimalParams.priceAsset
     expect(tx).toMatchObject({ ...orderMinimalParams })
   })
 
