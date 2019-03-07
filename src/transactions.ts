@@ -16,7 +16,7 @@ export enum TRANSACTION_TYPE {
   SET_SCRIPT = 13,
   SPONSORSHIP = 14,
   SET_ASSET_SCRIPT = 15,
-  CONTRACT_INVOCATION = 16,
+  INVOKE_SCRIPT = 16,
 }
 
 export enum DATA_FIELD_TYPE {
@@ -87,7 +87,7 @@ export type TTx<LONG = string | number> =
   | ISponsorshipTransaction<LONG>
   | IDataTransaction<LONG>
   | ISetAssetScriptTransaction<LONG>
-  | IContractInvocationTransaction<LONG>
+  | IInvokeScriptTransaction<LONG>
 
 
 /**
@@ -254,8 +254,8 @@ export interface IDataTransaction<LONG = string | number> extends ITransaction<L
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IContractInvocationTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
-  type: TRANSACTION_TYPE.CONTRACT_INVOCATION
+export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
+  type: TRANSACTION_TYPE.INVOKE_SCRIPT
   contractAddress: string
   call: {
     function: string
@@ -298,7 +298,7 @@ export interface ICancelOrder {
 export type TTxParams<LONG = string | number> =
   | IAliasParams<LONG>
   | IBurnParams<LONG>
-  | IContractInvocationParams<LONG>
+  | IInvokeScriptParams<LONG>
   | ICancelLeaseParams<LONG>
   | IDataParams<LONG>
   | IIssueParams<LONG>
@@ -497,7 +497,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IContractInvocationParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   contractAddress: string
   call: {
     function: string
