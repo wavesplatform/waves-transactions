@@ -2,8 +2,8 @@ import {
   TRANSACTION_TYPE,
   WithId,
   WithSender,
-  IContractInvocationParams,
-  IContractInvocationTransaction
+  IInvokeScriptParams,
+  IInvokeScriptTransaction
 } from '../transactions'
 import { signBytes, hashBytes, } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
@@ -12,15 +12,15 @@ import { binary } from '@waves/marshall'
 
 
 /* @echo DOCS */
-export function contractInvocation(params: IContractInvocationParams, seed: TSeedTypes): IContractInvocationTransaction & WithId
-export function contractInvocation(paramsOrTx: IContractInvocationParams & WithSender | IContractInvocationTransaction, seed?: TSeedTypes): IContractInvocationTransaction & WithId
-export function contractInvocation(paramsOrTx: any, seed?: TSeedTypes): IContractInvocationTransaction & WithId {
-  const type = TRANSACTION_TYPE.CONTRACT_INVOCATION
+export function invokeScript(params: IInvokeScriptParams, seed: TSeedTypes): IInvokeScriptTransaction & WithId
+export function invokeScript(paramsOrTx: IInvokeScriptParams & WithSender | IInvokeScriptTransaction, seed?: TSeedTypes): IInvokeScriptTransaction & WithId
+export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptTransaction & WithId {
+  const type = TRANSACTION_TYPE.INVOKE_SCRIPT
   const version = paramsOrTx.version || 1
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: IContractInvocationTransaction & WithId = {
+  const tx: IInvokeScriptTransaction & WithId = {
     type,
     version,
     senderPublicKey,

@@ -1,7 +1,7 @@
 import {
   IAliasParams,
   IBurnParams,
-  ICancelLeaseParams, IContractInvocationParams, IDataParams, IIssueParams,
+  ICancelLeaseParams, IInvokeScriptParams, IDataParams, IIssueParams,
   ILeaseParams,
   IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
   TRANSACTION_TYPE,
@@ -26,7 +26,7 @@ export const cancelLeaseMinimalParams: ICancelLeaseParams = {
   leaseId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
 }
 
-export const contractInvocationMinimalParams: IContractInvocationParams = {
+export const invokeScriptMinimalParams: IInvokeScriptParams = {
   contractAddress: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
   call: {
     function: 'foo',
@@ -52,6 +52,8 @@ export const massTransferMinimalParams: IMassTransferParams = {
 
 export const orderMinimalParams: IOrderParams = {
   matcherPublicKey: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
+  amountAsset: null,
+  priceAsset: '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu',
   price: 10000,
   amount: 1233,
   orderType: 'buy',
@@ -115,5 +117,5 @@ export const minimalParams = {
   [TRANSACTION_TYPE.DATA]: dataMinimalParams,
   [TRANSACTION_TYPE.SET_SCRIPT]: setScriptMinimalParams,
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: setAssetScriptMinimalParams,
-  [TRANSACTION_TYPE.CONTRACT_INVOCATION]: contractInvocationMinimalParams,
+  [TRANSACTION_TYPE.INVOKE_SCRIPT]: invokeScriptMinimalParams,
 }

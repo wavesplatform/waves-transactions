@@ -18,7 +18,7 @@ export { setAssetScript } from './transactions/set-asset-script'
 export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
-export { contractInvocation } from './transactions/contract-invocation'
+export { invokeScript } from './transactions/invoke-script'
 export { signTx, broadcast, verify, serialize, submitOrder, cancelSubmittedOrder, addressBalance, addressDataByKey } from './general'
 export { waitForTx } from './generic'
 
@@ -52,8 +52,8 @@ export {
   IDataParams,
   ISetScriptTransaction,
   ISetAssetScriptParams,
-  IContractInvocationTransaction,
-  IContractInvocationParams,
+  IInvokeScriptTransaction,
+  IInvokeScriptParams,
   IOrder,
   IOrderParams,
   ICancelOrder,
