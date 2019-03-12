@@ -59,6 +59,8 @@ export {
   ICancelOrder,
   ICancelOrderParams,
   WithId,
+  WithSender,
+  WithProofs,
 } from './transactions'
 
 export {

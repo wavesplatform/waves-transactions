@@ -54,7 +54,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxT
   [TRANSACTION_TYPE.SET_SCRIPT]: { sign: (x, seed) => setScript(x as ISetScriptTransaction, seed) },
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed) },
   [TRANSACTION_TYPE.SPONSORSHIP]: { sign: (x, seed) => sponsorship(x as ISponsorshipTransaction, seed) },
-  [TRANSACTION_TYPE.EXCHANGE]: { sign: (x, seed) => exchange(x as IExchangeTransaction, seed) }
+  [TRANSACTION_TYPE.EXCHANGE]: { sign: (x, seed) => exchange(x as IExchangeTransaction, seed) },
 }
 
 /**
