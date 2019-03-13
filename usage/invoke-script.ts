@@ -8,11 +8,10 @@ const params: IInvokeScriptParams = {
     args: [{ type: 'binary', value: 'YWxpY2U=' }],
     function: 'foo',
   },
-  payment: [],
-  // payment: [{
-  //   amount: 7,
-  //   assetId: '73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK',
-  // }],
+  payment: [{
+    amount: 7,
+    assetId: '73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK', //null
+  }],
   contractAddress: '3Fb641A9hWy63K18KsBJwns64McmdEATgJd',
   chainId: 'D',
   fee: 100000,
@@ -20,7 +19,7 @@ const params: IInvokeScriptParams = {
   //senderPublicKey: 'by default derived from seed',
   //timestamp: Date.now(),
   //fee: 100000,
-  //chainId: 'W'
+  //chainId: 
 }
 
 const signedSetScriptTx = invokeScript(params, seed)

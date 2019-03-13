@@ -255,7 +255,7 @@ export interface IDataTransaction<LONG = string | number> extends ITransaction<L
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IInvokeScriptPayment<LONG = string | number> {
-  assetId: string
+  assetId: string | null
   amount: LONG
 }
 

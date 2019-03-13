@@ -1055,7 +1055,10 @@
       "type": "object",
       "properties": {
         "assetId": {
-          "type": "string"
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "amount": {
           "type": [

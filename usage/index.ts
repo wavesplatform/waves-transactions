@@ -14,7 +14,7 @@ const txs = [
   { file: 'transfer', interface: 'ITransferTransaction' },
   { file: 'alias', interface: 'IAliasTransaction' },
   { file: 'set-script', interface: 'ISetScriptTransaction' },
-  { file: 'sponsorship', interface: 'ISponsorshipTransaction' }
+  { file: 'sponsorship', interface: 'ISponsorshipTransaction' },
 ]
 
 const _DOCS = `/**
