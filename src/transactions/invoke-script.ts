@@ -26,8 +26,9 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     senderPublicKey,
     contractAddress: paramsOrTx.contractAddress,
     call: paramsOrTx.call,
-    payment: paramsOrTx.payment,
+    payment: paramsOrTx.payment || [],
     fee: fee(paramsOrTx, 1000000),
+    feeAssetId: paramsOrTx.feeAssetId,
     timestamp: Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
@@ -40,7 +41,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
   tx.id = hashBytes(bytes)
 
   //FixMe: for now node requires to have empty key field in args
-  tx.call.args = tx.call.args.map(arg => ({...arg, key: ''}))
+  tx.call.args = tx.call.args.map(arg => ({ ...arg, key: '' }))
 
   return tx
 }

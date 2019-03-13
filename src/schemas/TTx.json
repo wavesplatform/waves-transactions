@@ -978,6 +978,12 @@
         "contractAddress": {
           "type": "string"
         },
+        "feeAssetId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
         "call": {
           "type": "object",
           "properties": {
@@ -995,18 +1001,10 @@
           ]
         },
         "payment": {
-          "type": "object",
-          "properties": {
-            "assetId": {
-              "type": "string"
-            },
-            "amount": {
-              "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/LONG"
-            }
-          },
-          "required": [
-            "amount"
-          ]
+          "type": "array",
+          "items": {
+            "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/IInvokeScriptPayment<string|number>"
+          }
         },
         "timestamp": {
           "type": "number"
@@ -1051,6 +1049,27 @@
       "type": "number",
       "enum": [
         16
+      ]
+    },
+    "IInvokeScriptPayment<string|number>": {
+      "type": "object",
+      "properties": {
+        "assetId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "assetId"
       ]
     }
   },
