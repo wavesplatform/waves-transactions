@@ -13,7 +13,7 @@ describe('invokeScript', () => {
   })
 
   it('should build from minimal set of params with payment', () => {
-    const tx = invokeScript({ ...invokeScriptMinimalParams, payment:{amount:100} }, stringSeed)
+    const tx = invokeScript({ ...invokeScriptMinimalParams, payment: [{ amount: 100, assetId: null }] }, stringSeed)
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
   })
 
@@ -21,7 +21,6 @@ describe('invokeScript', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, a: 10000 } as any, stringSeed)
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
   })
-
 
   it('Should get correct signature', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams }, stringSeed)
@@ -31,13 +30,13 @@ describe('invokeScript', () => {
   it('Should sign already signed', () => {
     let tx = invokeScript({ ...invokeScriptMinimalParams }, stringSeed)
     tx = invokeScript(tx, stringSeed)
-    expect(verifySignature(publicKey(stringSeed),  binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
-    const tx = invokeScript({ ...invokeScriptMinimalParams, payment:{amount:100} }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed),  binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2),  binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
+    const tx = invokeScript({ ...invokeScriptMinimalParams, payment: [{ amount: 100, assetId: null }] }, [null, stringSeed, null, stringSeed2])
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
   })
 })

@@ -176,14 +176,14 @@ export interface IBurnTransaction<LONG = string | number> extends ITransaction<L
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IExchangeTransaction<LONG = string | number> extends ITransaction<LONG>{
+export interface IExchangeTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: TRANSACTION_TYPE.EXCHANGE
   order1: IOrder
   order2: IOrder
   price: LONG
   amount: LONG
   buyMatcherFee: LONG
-  sellMatcherFee:LONG
+  sellMatcherFee: LONG
 }
 
 /**
@@ -254,17 +254,23 @@ export interface IDataTransaction<LONG = string | number> extends ITransaction<L
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
+export interface IInvokeScriptPayment<LONG = string | number> {
+  assetId: string
+  amount: LONG
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
 export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
   type: TRANSACTION_TYPE.INVOKE_SCRIPT
   contractAddress: string
+  feeAssetId?: string | null
   call: {
     function: string
     args: any[]
   },
-  payment?: {
-    assetId?: string
-    amount: LONG
-  }
+  payment?: IInvokeScriptPayment[]
 }
 
 /**
@@ -348,7 +354,7 @@ export interface WithChainIdParam {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IAliasParams<LONG = string | number>  extends IBasicParams<LONG>, WithChainIdParam {
+export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   alias: string
 }
 
@@ -499,6 +505,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
  */
 export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   contractAddress: string
+  feeAssetId?: string | null
   call: {
     function: string
     args: {
@@ -506,9 +513,6 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
       value: string | number | boolean
     }[]
   },
-  payment?: {
-    assetId?: string
-    amount: LONG
-  }
+  payment?: IInvokeScriptPayment[]
 }
 

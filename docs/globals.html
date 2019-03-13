@@ -88,6 +88,7 @@
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/iexchangetransaction.html" class="tsd-kind-icon">IExchange<wbr>Transaction</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/iindexseedmap.html" class="tsd-kind-icon">IIndex<wbr>Seed<wbr>Map</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/iinvokescriptparams.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Params</a></li>
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/iinvokescriptpayment.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Payment</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/iinvokescripttransaction.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Transaction</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/iissueparams.html" class="tsd-kind-icon">IIssue<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/iissuetransaction.html" class="tsd-kind-icon">IIssue<wbr>Transaction</a></li>
@@ -204,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTx<wbr>Params<span class="tsd-signature-symbol">:</span> <a href="interfaces/ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:298</li>
+							<li>Defined in transactions.ts:304</li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:113</li>
+									<li>Defined in general.ts:115</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -258,7 +259,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:125</li>
+									<li>Defined in general.ts:127</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,16 +330,16 @@
 <span class="hljs-keyword">const</span> signedAliasTx = alias(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9r1Vhu7ymvBDAfhe5j73aFjZ2eAeb95dCWbjoEQxYfEK"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"CcSNPXqbbvXgdNUeoyd4dtGEg1JtwoGFuRA9WXGRZHuE"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">10</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"alias"</span>: <span class="hljs-string">"MyNewAlias"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817104</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832660</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3vBFHDRVMguofshHLq8b8YEVn8sokXNDE99T2N2gWS1ff3f3ios31Xis1tTvkRxKq73cGQakw36QE2Dido8aYteq"</span>
+    <span class="hljs-string">"24J77y8LNuSAeSv9jeRQB34atQNXM3cYGrSraAtawnPzYiSFGWQo5DewhyuCj4fx1xGgakZ7b9tgaC53pfd1tpLe"</span>
   ]
 }</code></pre>
 							</div>
@@ -388,7 +389,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:98</li>
+									<li>Defined in general.ts:100</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -454,7 +455,7 @@
 <span class="hljs-keyword">const</span> signedBurnTx = burn(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"ftENXdGHvrJef7Bat6BevCGLAg7ZH44GPxGLgBdtw9d"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DJWYKakFCjxEQ756mUzkNGv2e44cs1a69mNUSdPKXCdq"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">6</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -462,9 +463,9 @@
   <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385816957</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832525</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2m3arxBUDSKDsf9WEUfvDhEr5k839W6YKkcWWRwowbeUsif3fn9EZQfiU6Tm3jjN9DVQgc4aSU1Ae9FbKBmo9s2Z"</span>
+    <span class="hljs-string">"47aaG9RMWnpo56WorfCL1rGxz3d56zu6mReXSqWevU1kLoMZhQoce67C1LbtAad1WCd55nhVQsfjHqcmDMDnMCod"</span>
   ]
 }</code></pre>
 							</div>
@@ -542,16 +543,16 @@
 <span class="hljs-keyword">const</span> signedCancelLeaseTx = cancelLease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"5fRkyQgfvAejP9G9TYwzYeJmxMrdNRpQ9xNnoS3umsrD"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"HGUALzzQ1ukXpynV5oLTq8xdoh3QVSK7Yv4JkLcVcDys"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">9</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"leaseId"</span>: <span class="hljs-string">"2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385816984</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832551</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3Rhi5TkJtRGA8nT3swy6gTPobYFKzWKtWueDb1roJrUVDgkjfjDU7vsZA5A1Qfu34PWtEngkvshtPhXvvyvrJV2B"</span>
+    <span class="hljs-string">"3HomZWM6Ktjdr4JAutXQpzhmpC6JAs12aJ423scJ47DwVzwkDgpynM1ZMzNW6EmGvPxeVDUCj6vaR9SoW36KJpuu"</span>
   ]
 }</code></pre>
 							</div>
@@ -652,7 +653,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:166</li>
+									<li>Defined in general.ts:168</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -734,14 +735,14 @@
 <span class="hljs-keyword">const</span> signedDataTx = data(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"3WN8wUDu5Fppeyi6Qdhbyv9DeWXinFLmZrwNw2r4SAi1"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"AWKJGMmwaFZuvzAdswhwacZiAY7qKSixhbSnChq2DGzb"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">12</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817002</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832571</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4XRqxnRESmB9YFQA5V9xZdTRXZf1hTNo63WLH4t8m9UeQpAhbWTfQAEgwPiiP4UBbzL8kYMXnd4ME3QDKKPQ5Bfy"</span>
+    <span class="hljs-string">"2iTHp6bVop4zkVHXciSeYvoazsoQLcWcR6KdgW4ubuAAstUZkrGHe5SbbohyUmjqeGMBpKiiGof1P83kPfixNJ2D"</span>
   ],
   <span class="hljs-attr">"data"</span>: [
     {
@@ -924,7 +925,7 @@
 <span class="hljs-keyword">const</span> signedIssueTx = issue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"6t8BebNu1drx5QMRZKgSrP2fqi77Twg6JPYksVkX9VBd"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"AUNqpK1XxdLADW4o1tYR9ytSovPN2fqi17kBE8UfmAkD"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">3</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -934,10 +935,10 @@
   <span class="hljs-attr">"decimals"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817023</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832588</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4VcBVAfTGEnKyYpTUnN7QuW3HmcAi5YdoqU6kCspENVjjkH6hZ6QqvAGKh8zdjwC9kSy7VtAd7gD68AWLhjWeWYG"</span>
+    <span class="hljs-string">"U73vnYfkmbtqTF8gW5qgsHc74EV6aaAbCWUWqh5Ufa5w4HJFo8GUc9gq9karvdoWDxewW4h6jfhVPiVSm4TvwWL"</span>
   ]
 }</code></pre>
 							</div>
@@ -1015,16 +1016,16 @@
 <span class="hljs-keyword">const</span> signedLeaseTx = lease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DLcdAZz4mEkzm3jWSrMnWcrYYVkCyQd8TT6b21TnmjTH"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"BdBe3ek9epgJqx5vH1PeG97vAgJtoGUM9ds2bqg85AYi"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817041</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832604</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4hfPcRRmHfiC2yAwD6d9oew8Vi8Tq4fTGCmK6shQTeMUv8f3zrm1RGbd5J3N6o5349kRz8htwbkV1NTrnUTRQjmJ"</span>
+    <span class="hljs-string">"3mXLV4c4GSuJBTLMKVYLmRQiTvuD8HTH7rnwdNJQ5nQRv61iyY1Fn2kwziiwoFwvizTxgRRSWvhmDyPaUcGvFfA8"</span>
   ]
 }</code></pre>
 							</div>
@@ -1110,7 +1111,7 @@
 <span class="hljs-keyword">const</span> signedMassTransferTx = massTransfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DTeg8z57cnxkfX8gDKRHMoZRQJxjqniewcAH2V22ouzY"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"8XGeZ1gWYe2JRXV2jC8S1kohWz7CR1WRDjY9v6KYBztR"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">11</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1125,10 +1126,10 @@
     }
   ],
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">200000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817055</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832617</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"35yq7QokBv1QEG71Mdm9PGE1gRTz5Pw1HgGYSDn4ULk29Q5SpRBTd2teECvjQkf5dD1gFqvqthYBbnmpxnXMUGo9"</span>
+    <span class="hljs-string">"5HauwgLyGM4HNX86aqqFggGwb3WkVghv3obkXdRVythV7eh3pzvzAQiCWszxMGe2qsEtG4wgsRjivTFgA5Smi4uB"</span>
   ]
 }</code></pre>
 							</div>
@@ -1298,7 +1299,7 @@
 <span class="hljs-keyword">const</span> signedReissueTx = reissue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"HPJPnReuwmtngJhq5LPyL3RmCVRhQMQWuGjiFNy6pEKL"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"2CjhZRFV5r4fmnB1FQmZAoPVN6r2iFhMA4DV98wFVkNi"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">5</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1307,9 +1308,9 @@
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817081</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832638</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"39YRzNZyPjtcUrHeVRT9v35aiAfNFKBm6PtoHT3KYXwg2FuHdN8EcYf2D3UFUWr1udzWUHxxJbkiqeZ2NwJPjoRG"</span>
+    <span class="hljs-string">"4HPJzD32aYy3GtDoLpgVF1vnxvUVencHfTs8Pu3h6PKQ7qv7Tn3QPb1m62QjEHvUEVftBv43bQF54h6RvhUi8mQQ"</span>
   ]
 }</code></pre>
 							</div>
@@ -1359,7 +1360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:75</li>
+									<li>Defined in general.ts:77</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1468,15 +1469,15 @@
 <span class="hljs-keyword">const</span> signedSetScriptTx = setScript(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"BEoTW4JDf3R2AyrWsyaRTNwAM8vLsoBRchHL2R1meaup"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GbNqxJmMyDkp8nRm32pm4DbVe6JzLKTx6GEvCyUAqB5N"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">13</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">1000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817114</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832671</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3fdATQh6Mp2zw4d4tKKcy48ZwvNKxqQU6RcS9tfd6VMZbThNSBKkYkEL8ua5J9gHEbFPe36aQYYbA4q6zgDE3UgC"</span>
+    <span class="hljs-string">"4ri3K6KXovTUU8VJiwBFUXZ2T9oiJjMJEZDye5QZtMGpaBP8A9Nc7KZgXwEfEtKv5mbHM6q9ujpLnP7aKn2soW6U"</span>
   ],
   <span class="hljs-attr">"script"</span>: <span class="hljs-string">"base64:AQa3b8tH"</span>
 }</code></pre>
@@ -1527,7 +1528,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:65</li>
+									<li>Defined in general.ts:67</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1589,16 +1590,16 @@
 <span class="hljs-keyword">const</span> signedSponsorshipTx = sponsorship(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GVu74EK3JPKpjgppQBf6M5QGyskeSf79HXgg164hUkfA"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"ekXUwCFWyg1wzDZg2ASCWGTZc36jbSCiqCPmADFNCY1"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">14</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"minSponsoredAssetFee"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817135</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832683</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5cR6DXAzJpv13V54Sxq3u7emS3TdwWDJNcCURZNcrtGrRk8QVYjMkd251Q5jmYRfcDsPA52o3xTtiQhV9trACWX6"</span>
+    <span class="hljs-string">"5hWAZDpTfwbB91qdniyHMnptAm99x8XqGhnUb6r9v1NY9H5JYXJJUSjG3RowchHGJTzYhLD5Jhg5ftMHXnKUN71r"</span>
   ]
 }</code></pre>
 							</div>
@@ -1648,7 +1649,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:149</li>
+									<li>Defined in general.ts:151</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1717,7 +1718,7 @@
 <span class="hljs-keyword">const</span> signedTransferTx = transfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"7wsSYpxbvbrMULsfuisjtNRDK15aiRuqts4VEDVhJqRF"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"QJZNhAn9syy3xVDSpfwvnKVYPdeHDuQyxpCLVP8bXvT"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1725,9 +1726,9 @@
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552385817091</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1552491832648</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5WMNEnF6s4b2kV3NCU2mEnUeBbQVgkuKGCyn4mQsC8fRdE1hRaomHx9xiswDeYoy2ahrNQUHpfkZmNiHvTrLvsVH"</span>
+    <span class="hljs-string">"3DtTFKuot1nazPSzTCphmzYa9WfTxeTqvXUFAyz1SEC4jibGtNsBrYVHfS5KrCsgnfEHMdSKhge3gHeymfjcHqwa"</span>
   ]
 }</code></pre>
 							</div>
@@ -1777,7 +1778,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:86</li>
+									<li>Defined in general.ts:88</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1816,7 +1817,7 @@
 					<div class="tsd-signature tsd-kind-icon">tx<wbr>Type<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in general.ts:44</li>
+							<li>Defined in general.ts:45</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -1825,7 +1826,6 @@
 						<div class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in general.ts:45</li>
 								<li>Defined in general.ts:46</li>
 								<li>Defined in general.ts:47</li>
 								<li>Defined in general.ts:48</li>
@@ -1838,6 +1838,8 @@
 								<li>Defined in general.ts:55</li>
 								<li>Defined in general.ts:56</li>
 								<li>Defined in general.ts:57</li>
+								<li>Defined in general.ts:58</li>
+								<li>Defined in general.ts:59</li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -1857,12 +1859,13 @@
 								<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="interfaces/idatatransaction.html" class="tsd-signature-type">IDataTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissuetransaction.html" class="tsd-signature-type">IIssueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransfertransaction.html" class="tsd-signature-type">ITransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissuetransaction.html" class="tsd-signature-type">IReissueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileasetransaction.html" class="tsd-signature-type">ILeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransfertransaction.html" class="tsd-signature-type">IMassTransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiastransaction.html" class="tsd-signature-type">IAliasTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscripttransaction.html" class="tsd-signature-type">ISetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a>, seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iindexseedmap.html" class="tsd-signature-type">IIndexSeedMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withid.html" class="tsd-signature-type">WithId</a></li>
 								<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="interfaces/idatatransaction.html" class="tsd-signature-type">IDataTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissuetransaction.html" class="tsd-signature-type">IIssueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransfertransaction.html" class="tsd-signature-type">ITransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissuetransaction.html" class="tsd-signature-type">IReissueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileasetransaction.html" class="tsd-signature-type">ILeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransfertransaction.html" class="tsd-signature-type">IMassTransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiastransaction.html" class="tsd-signature-type">IAliasTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscripttransaction.html" class="tsd-signature-type">ISetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a>, seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iindexseedmap.html" class="tsd-signature-type">IIndexSeedMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withid.html" class="tsd-signature-type">WithId</a></li>
 								<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="interfaces/idatatransaction.html" class="tsd-signature-type">IDataTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissuetransaction.html" class="tsd-signature-type">IIssueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransfertransaction.html" class="tsd-signature-type">ITransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissuetransaction.html" class="tsd-signature-type">IReissueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileasetransaction.html" class="tsd-signature-type">ILeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransfertransaction.html" class="tsd-signature-type">IMassTransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiastransaction.html" class="tsd-signature-type">IAliasTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscripttransaction.html" class="tsd-signature-type">ISetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a>, seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iindexseedmap.html" class="tsd-signature-type">IIndexSeedMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withid.html" class="tsd-signature-type">WithId</a></li>
+								<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="interfaces/idatatransaction.html" class="tsd-signature-type">IDataTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissuetransaction.html" class="tsd-signature-type">IIssueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransfertransaction.html" class="tsd-signature-type">ITransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissuetransaction.html" class="tsd-signature-type">IReissueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileasetransaction.html" class="tsd-signature-type">ILeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransfertransaction.html" class="tsd-signature-type">IMassTransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiastransaction.html" class="tsd-signature-type">IAliasTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscripttransaction.html" class="tsd-signature-type">ISetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a>, seed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iindexseedmap.html" class="tsd-signature-type">IIndexSeedMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withid.html" class="tsd-signature-type">WithId</a></li>
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:45</li>
+											<li>Defined in general.ts:46</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1882,7 +1885,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:46</li>
+											<li>Defined in general.ts:47</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1902,7 +1905,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:47</li>
+											<li>Defined in general.ts:48</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1922,7 +1925,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:48</li>
+											<li>Defined in general.ts:49</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1942,7 +1945,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:49</li>
+											<li>Defined in general.ts:50</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1962,7 +1965,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:50</li>
+											<li>Defined in general.ts:51</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1982,7 +1985,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:51</li>
+											<li>Defined in general.ts:52</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2002,7 +2005,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:52</li>
+											<li>Defined in general.ts:53</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2022,7 +2025,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:53</li>
+											<li>Defined in general.ts:54</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2042,7 +2045,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:54</li>
+											<li>Defined in general.ts:55</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2062,7 +2065,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:55</li>
+											<li>Defined in general.ts:56</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2082,7 +2085,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:56</li>
+											<li>Defined in general.ts:57</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2102,7 +2105,7 @@
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in general.ts:57</li>
+											<li>Defined in general.ts:58</li>
 										</ul>
 									</aside>
 									<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2115,6 +2118,26 @@
 										</li>
 									</ul>
 									<h4 class="tsd-returns-title">Returns <a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>
+										<span class="tsd-signature-symbol"> &amp; </span>
+										<a href="interfaces/withid.html" class="tsd-signature-type">WithId</a>
+									</h4>
+								</li>
+								<li class="tsd-description">
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in general.ts:59</li>
+										</ul>
+									</aside>
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>x: <a href="interfaces/idatatransaction.html" class="tsd-signature-type">IDataTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissuetransaction.html" class="tsd-signature-type">IIssueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransfertransaction.html" class="tsd-signature-type">ITransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissuetransaction.html" class="tsd-signature-type">IReissueTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileasetransaction.html" class="tsd-signature-type">ILeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransfertransaction.html" class="tsd-signature-type">IMassTransferTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiastransaction.html" class="tsd-signature-type">IAliasTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscripttransaction.html" class="tsd-signature-type">ISetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/withtxtype.html" class="tsd-signature-type">WithTxType</a></h5>
+										</li>
+										<li>
+											<h5>seed: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/iindexseedmap.html" class="tsd-signature-type">IIndexSeedMap</a></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <a href="interfaces/iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>
 										<span class="tsd-signature-symbol"> &amp; </span>
 										<a href="interfaces/withid.html" class="tsd-signature-type">WithId</a>
 									</h4>
@@ -2185,6 +2208,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/iinvokescriptparams.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iinvokescriptpayment.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Payment</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/iinvokescripttransaction.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Transaction</a>

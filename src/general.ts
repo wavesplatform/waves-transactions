@@ -18,7 +18,8 @@ import {
   ITransferTransaction,
   TRANSACTION_TYPE,
   TTx,
-  TTxParams
+  TTxParams,
+  IInvokeScriptTransaction
 } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
@@ -35,7 +36,7 @@ import { isOrder } from './generic'
 import { setAssetScript } from './transactions/set-asset-script'
 import { exchange } from './transactions/exchange'
 import { sponsorship } from './transactions/sponsorship'
-
+import { invokeScript } from './transactions/invoke-script'
 
 export interface WithTxType {
   type: TRANSACTION_TYPE
@@ -55,6 +56,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxT
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: { sign: (x, seed) => setAssetScript(x as ISetAssetScriptTransaction, seed) },
   [TRANSACTION_TYPE.SPONSORSHIP]: { sign: (x, seed) => sponsorship(x as ISponsorshipTransaction, seed) },
   [TRANSACTION_TYPE.EXCHANGE]: { sign: (x, seed) => exchange(x as IExchangeTransaction, seed) },
+  [TRANSACTION_TYPE.INVOKE_SCRIPT]: { sign: (x, seed) => invokeScript(x as IInvokeScriptTransaction, seed) },
 }
 
 /**

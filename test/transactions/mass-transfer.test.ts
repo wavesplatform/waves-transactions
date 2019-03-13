@@ -17,7 +17,6 @@ describe('massTransfer', () => {
     expect(tx).toThrow('["transfers should be array"]')
   })
 
-
   it('Should get correct signature', () => {
     const tx = massTransfer({ ...massTransferMinimalParams }, stringSeed)
     expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()

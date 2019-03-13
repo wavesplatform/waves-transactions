@@ -60,7 +60,7 @@
     "url": "https://github.com/wavesplatform/waves-transactions.git"
   },
   "dependencies": {
-    "@waves/marshall": "0.4.1",
+    "@waves/marshall": "0.4.4",
     "@waves/waves-crypto": "^2.0.4",
     "ajv": "^6.5.5",
     "axios": "^0.18.0"
