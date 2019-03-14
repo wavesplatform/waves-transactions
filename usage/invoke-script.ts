@@ -5,7 +5,7 @@ const seed = 'create genesis wallet devnet-0'
 const params: IInvokeScriptParams = {
 
   call: {
-    args: [{ type: 'binary', value: 'YWxpY2U=' }],
+    args: [{ type: 'integer', value: 11 }],
     function: 'foo',
   },
   payment: [{
