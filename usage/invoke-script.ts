@@ -1,11 +1,14 @@
-import { invokeScript, IInvokeScriptParams } from '../dist/index'
+import { invokeScript, IInvokeScriptParams, broadcast } from '../dist/index'
 
 const seed = 'create genesis wallet devnet-0'
 
 const params: IInvokeScriptParams = {
 
   call: {
-    args: [{ type: 'integer', value: 11 }],
+    args: [{ type: 'integer', value: 1 }],
+    //args: [{ type: 'binary', value: '' }],
+    //args: [{ type: 'string', value: '' }],
+    //args: [{ type: 'boolean', value: '' }],
     function: 'foo',
   },
   payment: [{

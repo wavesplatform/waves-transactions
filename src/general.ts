@@ -104,7 +104,6 @@ export function broadcast(tx: TTx, nodeUrl: string) {
   })
     .then(x => x.data)
     .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
-
 }
 
 /**
