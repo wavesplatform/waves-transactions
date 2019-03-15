@@ -74,7 +74,7 @@ const unsignedTransferTx = transfer({
 Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:
 ```js
 const otherPartySeed = 'other party seed phrase'
-const transferSidnedWithTwoParties = transfer(signedTranserTx, seed)
+const transferSignedWithTwoParties = transfer(signedTranserTx, seed)
 ```
 
 So now there are two proofs:
