@@ -509,7 +509,7 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
   call: {
     function: string
     args: {
-      type: 'binary' | 'long' | 'boolean' | 'string',
+      type: 'binary' | 'integer' | 'boolean' | 'string',
       value: string | number | boolean
     }[]
   },
