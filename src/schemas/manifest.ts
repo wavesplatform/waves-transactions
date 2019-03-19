@@ -11,6 +11,7 @@ import IMassTransferTransaction from './IMassTransferTransaction.json'
 import ISetScriptTransaction from './ISetScriptTransaction.json'
 import ISetAssetScriptTransaction from './ISetAssetScriptTransaction.json'
 import IDataTransaction from './IDataTransaction.json'
+import ISponsorshipTransaction from './ISponsorshipTransaction.json'
 import IOrder from './IOrder.json'
 import IAliasParams from './IAliasParams.json'
 import IIssueParams from './IIssueParams.json'
@@ -23,6 +24,7 @@ import IMassTransferParams from './IMassTransferParams.json'
 import ISetScriptParams from './ISetScriptParams.json'
 import ISetAssetScriptParams from './ISetAssetScriptParams.json'
 import IDataParams from './IDataParams.json'
+import ISponsorshipParams from './ISponsorshipParams.json'
 export default {
   TTx,
   IAliasTransaction,
@@ -37,6 +39,7 @@ export default {
   ISetScriptTransaction,
   ISetAssetScriptTransaction,
   IDataTransaction,
+  ISponsorshipTransaction,
   IOrder,
   IAliasParams,
   IIssueParams,
@@ -48,5 +51,6 @@ export default {
   IMassTransferParams,
   ISetScriptParams,
   ISetAssetScriptParams,
-  IDataParams
+  IDataParams,
+  ISponsorshipParams
 }

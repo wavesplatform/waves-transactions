@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISponsorshipTransaction.json#/definitions/TRANSACTION_TYPE.SPONSORSHIP"
+    },
+    "minSponsoredAssetFee": {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISponsorshipTransaction.json#/definitions/LONG",
+      "description": "Minimal fee amount in sponsored asset. To disable sponsorship set it to 0"
+    },
+    "assetId": {
+      "description": "AssetID of sponsored token",
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISponsorshipTransaction.json#/definitions/LONG"
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "ITransaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senderPublicKey": {
+      "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assetId",
+    "fee",
+    "minSponsoredAssetFee",
+    "proofs",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TRANSACTION_TYPE.SPONSORSHIP": {
+      "type": "number",
+      "enum": [
+        14
+      ]
+    },
+    "LONG": {
+      "type": [
+        "string",
+        "number"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/ISponsorshipTransaction.json"
+}

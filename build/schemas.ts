@@ -17,6 +17,7 @@ export const TYPES = [
   'ISetScriptTransaction',
   'ISetAssetScriptTransaction',
   'IDataTransaction',
+  'ISponsorshipTransaction',
   'IOrder',
   'IAliasParams',
   'IIssueParams',
@@ -29,6 +30,7 @@ export const TYPES = [
   'ISetScriptParams',
   'ISetAssetScriptParams',
   'IDataParams',
+  'ISponsorshipParams'
 ]
 
 export function buildSchemas() {
