@@ -1,0 +1,113 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptTransaction.json#/definitions/TRANSACTION_TYPE.INVOKE_SCRIPT"
+    },
+    "dappAddress": {
+      "type": "string"
+    },
+    "feeAssetId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "call": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "type": "string"
+        },
+        "args": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "args",
+        "function"
+      ]
+    },
+    "payment": {
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptTransaction.json#/definitions/IInvokeScriptPayment<string|number>"
+      }
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "fee": {
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptTransaction.json#/definitions/LONG"
+    },
+    "version": {
+      "type": "number"
+    },
+    "proofs": {
+      "description": "ITransaction signatures",
+      "minItems": 0,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senderPublicKey": {
+      "description": "Account public key. This account will pay fee and this account's script will be executed if exists",
+      "type": "string"
+    },
+    "chainId": {
+      "description": "Network byte.\nE.g.,\n87 is used for Waves mainnet, 84 for Waves testnet",
+      "type": "number"
+    }
+  },
+  "required": [
+    "call",
+    "chainId",
+    "dappAddress",
+    "fee",
+    "proofs",
+    "senderPublicKey",
+    "timestamp",
+    "type",
+    "version"
+  ],
+  "definitions": {
+    "TRANSACTION_TYPE.INVOKE_SCRIPT": {
+      "type": "number",
+      "enum": [
+        16
+      ]
+    },
+    "IInvokeScriptPayment<string|number>": {
+      "type": "object",
+      "properties": {
+        "assetId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "assetId"
+      ]
+    },
+    "LONG": {
+      "type": [
+        "string",
+        "number"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptTransaction.json"
+}

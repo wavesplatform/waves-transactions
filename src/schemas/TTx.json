@@ -975,7 +975,7 @@
         "type": {
           "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/TTx.json#/definitions/TRANSACTION_TYPE.INVOKE_SCRIPT"
         },
-        "contractAddress": {
+        "dappAddress": {
           "type": "string"
         },
         "feeAssetId": {
@@ -1036,7 +1036,7 @@
       "required": [
         "call",
         "chainId",
-        "contractAddress",
+        "dappAddress",
         "fee",
         "proofs",
         "senderPublicKey",

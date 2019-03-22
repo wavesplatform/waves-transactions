@@ -24,7 +24,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     type,
     version,
     senderPublicKey,
-    contractAddress: paramsOrTx.contractAddress,
+    dappAddress: paramsOrTx.dappAddress,
     call: paramsOrTx.call,
     payment: paramsOrTx.payment || [],
     fee: fee(paramsOrTx, 1000000),

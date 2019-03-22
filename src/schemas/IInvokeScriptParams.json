@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "properties": {
+    "dappAddress": {
+      "type": "string"
+    },
+    "feeAssetId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "call": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "type": "string"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "binary",
+                  "boolean",
+                  "integer",
+                  "string"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "value"
+            ]
+          }
+        }
+      },
+      "required": [
+        "args",
+        "function"
+      ]
+    },
+    "payment": {
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptParams.json#/definitions/IInvokeScriptPayment<string|number>"
+      }
+    },
+    "fee": {
+      "description": "Transaction fee. If not set, fee will be calculated automatically",
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptParams.json#/definitions/LONG"
+    },
+    "additionalFee": {
+      "description": "If fee is not set, this value will be added to automatically calculated fee. E.x.:\nAccount is scripted and 400000 fee more is required.",
+      "type": "number"
+    },
+    "senderPublicKey": {
+      "description": "If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:\n1. Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.\n2. You to create tx without proof. Therefore no seed is provided.",
+      "type": "string"
+    },
+    "timestamp": {
+      "description": "Transaction timestamp. If not set current timestamp will be used. Date.now()",
+      "type": "number"
+    },
+    "chainId": {
+      "description": "Network byte. Could be set as number or as char.\nIf set as char(string), charCodeAt(0) will be used. E.g.,\n'W' will be converted to '87'\nIf not set, 87 will be used as default",
+      "type": [
+        "string",
+        "number"
+      ]
+    }
+  },
+  "required": [
+    "call",
+    "dappAddress"
+  ],
+  "definitions": {
+    "IInvokeScriptPayment<string|number>": {
+      "type": "object",
+      "properties": {
+        "assetId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "assetId"
+      ]
+    },
+    "LONG": {
+      "type": [
+        "string",
+        "number"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptParams.json"
+}
