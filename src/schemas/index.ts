@@ -33,7 +33,14 @@ export const schemaTypeMap: { [i: number]: { schema: any, paramsSchema: any, val
     paramsSchema: schemas.IBurnParams,
     validator: validators.IBurnTransaction,
     paramsValidator: validators.IBurnParams,
-  }, [TRANSACTION_TYPE.LEASE]: {
+  },
+  [TRANSACTION_TYPE.EXCHANGE]: {
+    schema: schemas.IExchangeTransaction,
+    paramsSchema: schemas.IExchangeTransaction,
+    validator: validators.IExchangeTransaction,
+    paramsValidator: validators.IExchangeTransaction,
+  },
+  [TRANSACTION_TYPE.LEASE]: {
     schema: schemas.ILeaseTransaction,
     paramsSchema: schemas.ILeaseParams,
     validator: validators.ILeaseTransaction,
@@ -70,17 +77,23 @@ export const schemaTypeMap: { [i: number]: { schema: any, paramsSchema: any, val
     validator: validators.ISetScriptTransaction,
     paramsValidator: validators.ISetScriptParams,
   },
+  [TRANSACTION_TYPE.SPONSORSHIP]: {
+    schema: schemas.ISponsorshipTransaction,
+    paramsSchema: schemas.ISponsorshipParams,
+    validator: validators.ISponsorshipTransaction,
+    paramsValidator: validators.ISponsorshipParams,
+  },
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: {
     schema: schemas.ISetAssetScriptTransaction,
     paramsSchema: schemas.ISetAssetScriptParams,
     validator: validators.ISetAssetScriptTransaction,
     paramsValidator: validators.ISetAssetScriptParams,
   },
-  [TRANSACTION_TYPE.ALIAS]: {
-    schema: schemas.IAliasTransaction,
-    paramsSchema: schemas.IAliasParams,
-    validator: validators.IAliasTransaction,
-    paramsValidator: validators.IAliasParams,
+  [TRANSACTION_TYPE.INVOKE_SCRIPT]: {
+    schema: schemas.IInvokeScriptTransaction,
+    paramsSchema: schemas.IInvokeScriptParams,
+    validator: validators.IInvokeScriptTransaction,
+    paramsValidator: validators.IInvokeScriptParams,
   },
 }
 

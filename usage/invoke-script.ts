@@ -15,7 +15,7 @@ const params: IInvokeScriptParams = {
     amount: 7,
     assetId: '73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK', //null
   }],
-  contractAddress: '3Fb641A9hWy63K18KsBJwns64McmdEATgJd',
+  dappAddress: '3Fb641A9hWy63K18KsBJwns64McmdEATgJd',
   chainId: 'D',
   fee: 100000,
   feeAssetId: '73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK',
