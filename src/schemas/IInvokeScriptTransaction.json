@@ -75,7 +75,7 @@
           "type": "string"
         },
         "args": {
-          "description": "Array of function arguments",
+          "description": "Array of function arguments. E.g.:\n{type: 'integer', value: 200} or\n{ type: 'binary', value: 'base64:AQa3b8tH'}",
           "type": "array",
           "items": {}
         }

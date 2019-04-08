@@ -265,7 +265,9 @@ export interface IInvokeScriptCall {
    */
   function: string
   /**
-   * Array of function arguments
+   * Array of function arguments. E.g.:
+   * {type: 'integer', value: 200} or
+   * { type: 'binary', value: 'base64:AQa3b8tH'}
    */
   args: any[]
 }
