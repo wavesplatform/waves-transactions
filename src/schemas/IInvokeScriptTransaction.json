@@ -14,20 +14,7 @@
       ]
     },
     "call": {
-      "type": "object",
-      "properties": {
-        "function": {
-          "type": "string"
-        },
-        "args": {
-          "type": "array",
-          "items": {}
-        }
-      },
-      "required": [
-        "args",
-        "function"
-      ]
+      "$ref": "https://raw.githubusercontent.com/wavesplatform/waves-transactions/master/src/schemas/IInvokeScriptTransaction.json#/definitions/IInvokeScriptCall"
     },
     "payment": {
       "type": "array",
@@ -78,6 +65,24 @@
       "type": "number",
       "enum": [
         16
+      ]
+    },
+    "IInvokeScriptCall": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "description": "Function name",
+          "type": "string"
+        },
+        "args": {
+          "description": "Array of function arguments",
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "args",
+        "function"
       ]
     },
     "IInvokeScriptPayment<string|number>": {

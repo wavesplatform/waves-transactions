@@ -259,6 +259,16 @@ export interface IInvokeScriptPayment<LONG = string | number> {
   amount: LONG
 }
 
+export interface IInvokeScriptCall {
+  /**
+   * Function name
+   */
+  function: string
+  /**
+   * Array of function arguments
+   */
+  args: any[]
+}
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
@@ -266,10 +276,7 @@ export interface IInvokeScriptTransaction<LONG = string | number> extends ITrans
   type: TRANSACTION_TYPE.INVOKE_SCRIPT
   dappAddress: string
   feeAssetId?: string | null
-  call: {
-    function: string
-    args: any[]
-  },
+  call: IInvokeScriptCall,
   payment?: IInvokeScriptPayment[]
 }
 

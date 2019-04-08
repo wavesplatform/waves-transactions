@@ -40,8 +40,5 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
   tx.id = hashBytes(bytes)
 
-  //FixMe: for now node requires to have empty key field in args
-  tx.call.args = tx.call.args.map(arg => ({ ...arg, key: '' }))
-
   return tx
 }
