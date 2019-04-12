@@ -103,7 +103,7 @@ So now there are two proofs:
 ### Broadcast
 To send transaction you can use either node [REST API](https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast) or [broadcast](https://wavesplatform.github.io/waves-transactions/globals.html#broadcast) helper function:
 ```javascript
-const {broadcast} =  require('@waves/waves-transaction');
+const {broadcast} =  require('@waves/waves-transactions');
 const nodeUrl = 'https://nodes.wavesplatform.com';
 
 broadcast(signedTx, nodeUrl).then(resp => console.log(resp))
