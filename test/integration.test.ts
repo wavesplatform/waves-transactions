@@ -11,7 +11,7 @@ import {
   sponsorship
 } from '../src'
 import { address, publicKey, randomUint8Array, } from '@waves/waves-crypto'
-import { waitForTx } from '../src/generic'
+import { waitForTx, waitForNBlockMined } from '../src/generic'
 import {
   IBurnParams,
   IIssueParams, IMassTransferParams,
@@ -88,9 +88,21 @@ describe('Blockchain interaction', () => {
         attachment: '3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw',
       }
 
-      const tx = transfer(transferParams, seed)
-      const resp = await broadcast(tx, apiBase)
-      expect(resp.type).toEqual(4)
+      const tx1 = transfer(transferParams, seed);
+
+      const tx2 = transfer(transferParams, seed);
+
+      const resp1 = await broadcast(tx1, apiBase);
+
+      await waitForTx(tx1.id, timeout, apiBase);
+
+      // const resp2 = await broadcast(tx2, apiBase);
+      //
+      // await waitForTx(tx2.id, timeout, apiBase);
+      //
+      // await waitForNBlockMined(2, timeout, apiBase);
+      expect(resp1.type).toEqual(4)
+      console.log(resp1);
     })
 
     it('Should masstransfer asset', async () => {

@@ -63,14 +63,17 @@ export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
 export const delay = (timeout: number): CancellablePromise<{}> => {
   const t: any = {}
+
   const p = new Promise((resolve, _) => {
     t.resolve = resolve
     t.id = setTimeout(() => resolve(), timeout)
   }) as any
+
   (<any>p).cancel = () => {
     t.resolve()
     clearTimeout(t.id)
   }
+  
   return p
 }
 
@@ -85,12 +88,48 @@ export const waitForTx = async (txId: string, timeout: number, apiBase: string):
       return x.data
     })
     .catch(_ => delay(1000)
-      .then(_ => expired ?
-        Promise.reject(new Error('Tx wait stopped: timeout')) :
-        promise()))
+    .then(_ => expired
+        ? Promise.reject(new Error('Tx wait stopped: timeout'))
+        : promise()))
 
   return promise()
 }
+
+export const waitForNBlockMined = async (blocksCount: number, timeout: number = 120000, apiBase: string): Promise<any> => {
+  let minedBlocksCount: number = 0;
+  let currentBlockchainHeight: number;
+
+  const getHeight = (): Promise<any> => {
+    return axios.get('/blocks/height', { baseURL: apiBase })
+      .then(res => res.data && res.data.height)
+      .then(height => {
+        if (!currentBlockchainHeight) {
+          currentBlockchainHeight = height;
+        }
+
+        return height;
+      })
+      .then(height => {
+        if (currentBlockchainHeight === height) {
+          return getHeight();
+        }
+
+        if (currentBlockchainHeight < height) {
+          minedBlocksCount += 1;
+
+          currentBlockchainHeight = height;
+        } 
+
+        if (minedBlocksCount === blocksCount) {
+          return height;
+        } else {
+          return getHeight();
+        }
+      });
+  }
+
+  return getHeight();
+};
 
 export function networkByte(p: number | string | undefined, def: number): number {
   switch (typeof p) {
