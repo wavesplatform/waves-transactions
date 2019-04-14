@@ -88,47 +88,48 @@ export const waitForTx = async (txId: string, timeout: number, apiBase: string):
       return x.data
     })
     .catch(_ => delay(1000)
-    .then(_ => expired
-        ? Promise.reject(new Error('Tx wait stopped: timeout'))
-        : promise()))
+      .then(_ => expired ?
+          Promise.reject(new Error('Tx wait stopped: timeout')) :
+          promise()))
 
   return promise()
 }
 
-export const waitForNBlockMined = async (blocksCount: number, timeout: number = 120000, apiBase: string): Promise<any> => {
-  let minedBlocksCount: number = 0;
-  let currentBlockchainHeight: number;
+export const waitForNBlockMined = async (blocksCount: number, timeout: number = 120000, apiBase: string) => {
+  let waitedHeight: number;
+  let lastHeight: number;
 
-  const getHeight = (): Promise<any> => {
-    return axios.get('/blocks/height', { baseURL: apiBase })
-      .then(res => res.data && res.data.height)
-      .then(height => {
-        if (!currentBlockchainHeight) {
-          currentBlockchainHeight = height;
-        }
+  let expired = false;
+  const to = delay(timeout);
+  to.then(() => expired = true);
 
-        return height;
-      })
-      .then(height => {
-        if (currentBlockchainHeight === height) {
-          return getHeight();
-        }
+  const getLastHeight = (): Promise<number> => {
+      return axios.get('/blocks/height', { baseURL: apiBase })
+          .then(res => res.data && res.data.height);
+  };
 
-        if (currentBlockchainHeight < height) {
-          minedBlocksCount += 1;
+  try {
+      lastHeight = await getLastHeight();
+      waitedHeight = lastHeight + blocksCount;
 
-          currentBlockchainHeight = height;
-        } 
+      while (lastHeight < waitedHeight) {
+          if (expired) {
+              throw new Error('waitForNBlockMined stopped: timeout expired');
+          }
 
-        if (minedBlocksCount === blocksCount) {
-          return height;
-        } else {
-          return getHeight();
-        }
-      });
+          const currentHeight = await getLastHeight();
+
+          if (lastHeight < currentHeight) {
+              lastHeight += currentHeight - lastHeight;
+          }
+
+          if (lastHeight === currentHeight) {  
+              await delay(5000);
+          }
+      }
+  } catch (error) {
+      throw error;
   }
-
-  return getHeight();
 };
 
 export function networkByte(p: number | string | undefined, def: number): number {
