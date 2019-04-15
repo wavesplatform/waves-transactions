@@ -76,9 +76,9 @@
 					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#masstransfer">Mass transfer</a></li>
 					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#setscript">Set script</a></li>
 					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#data">Data</a></li>
-					<li><a href="https://wavesplatform.github.io/waves-transactions/docs/globals.html#sponsorship">Sponsorship</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#sponsorship">Sponsorship</a></li>
 					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#setassetscript">Set asset script</a></li>
-					<li><a href="https://wavesplatform.github.io/waves-transactions/docs/globals.html#invokescript">InvokeScript</a></li>
+					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#invokescript">InvokeScript</a></li>
 					<li><a href="https://wavesplatform.github.io/waves-transactions/globals.html#order">Order</a></li>
 				</ul>
 				<p>Check full documentation on <a href="https://wavesplatform.github.io/waves-transactions/index.html">GitHub Pages</a>.</p>
@@ -141,7 +141,7 @@
 }</code></pre>
 				<h3 id="broadcast">Broadcast</h3>
 				<p>To send transaction you can use either node <a href="https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast">REST API</a> or <a href="https://wavesplatform.github.io/waves-transactions/globals.html#broadcast">broadcast</a> helper function:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> {broadcast} =  <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transaction'</span>);
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> {broadcast} =  <span class="hljs-built_in">require</span>(<span class="hljs-string">'@waves/waves-transactions'</span>);
 <span class="hljs-keyword">const</span> nodeUrl = <span class="hljs-string">'https://nodes.wavesplatform.com'</span>;
 
 broadcast(signedTx, nodeUrl).then(<span class="hljs-function"><span class="hljs-params">resp</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(resp))</code></pre>

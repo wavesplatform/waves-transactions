@@ -1,10 +1,10 @@
 import { issue } from '../dist/index'
 
-const seed = 'example seed phrase'
+const seed = 'seed phrase of fifteen words'
 
 const params = {
-  name: 'SCAM TOKEN',
-  description: 'Awesome token that will tokenize tokenization tokenized',
+  name: 'HotPotato TOKEN',
+  description: 'It is a gaming token',
   quantity: 1000000,
   //senderPublicKey: 'by default derived from seed',
   //reissuable: false
