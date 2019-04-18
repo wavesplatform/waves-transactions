@@ -20,6 +20,6 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should get balance', async () => {
-    await expect(utilityF.balance('3P22HSYExcKjPSLSK8ZEdysZwmWN42PDUfU', apiBase)).resolves.not.toBeFalsy()
+    await expect(utilityF.balance('3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)).resolves.not.toBeFalsy()
   }, 120000)
 })
