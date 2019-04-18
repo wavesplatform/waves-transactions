@@ -103,7 +103,7 @@ export class Seed {
 }
 
 
-export function generateNewSeed(length: number) {
+export function generateNewSeed(length = 15) {
   const random = Array.from({ length })
     .map(_ => randomUint8Array(4)
       .reduce((acc, next, i) => acc + next * 2 ** (i * 4), 0)
