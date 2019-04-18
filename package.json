@@ -14,7 +14,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "ts-node build/build.ts",
+    "build": "ts-node build/build.ts && webpack --config webpack.config.js --env",
     "prepublishOnly": "npm run build",
     "fix-style": "tslint --fix -c tslint.json '{src,test,usage}/**/*{.ts,.tsx}'",
     "test": "jest"
@@ -44,15 +44,16 @@
     "ncp": "^2.0.0",
     "preprocess": "^3.1.0",
     "rimraf": "^2.6.2",
+    "terser-webpack-plugin": "^1.2.3",
     "ts-jest": "^23.10.4",
     "ts-jsdoc": "^3.0.1",
-    "ts-loader": "^5.1.0",
+    "ts-loader": "^5.3.3",
     "ts-node": "^7.0.1",
     "typedoc": "^0.14.2",
     "typedoc-clarity-theme": "^1.1.0",
     "typescript": "^3.2.2",
     "typescript-json-schema": "^0.33.0",
-    "webpack": "^4.17.2",
+    "webpack": "^4.30.0",
     "webpack-cli": "^3.1.0"
   },
   "repository": {
