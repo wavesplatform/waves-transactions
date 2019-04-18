@@ -11,7 +11,7 @@ import {
   sponsorship
 } from '../src'
 import { address, publicKey, randomUint8Array, } from '@waves/waves-crypto'
-import { waitForTx } from '../src/generic'
+import { waitForTx } from '../src/nodeInteraction'
 import {
   IBurnParams,
   IIssueParams, IMassTransferParams,
@@ -54,7 +54,7 @@ describe('Blockchain interaction', () => {
       const resp = await broadcast(tx, apiBase)
       expect(resp.type).toEqual(3)
       assetId = tx.id
-      await waitForTx(assetId, timeout, apiBase)
+      await waitForTx(assetId, { apiBase, timeout })
     }, timeout)
 
     it('Should ReIssue token', async () => {
@@ -135,7 +135,7 @@ describe('Blockchain interaction', () => {
       const resp = await broadcast(tx, apiBase)
       expect(resp.type).toEqual(3)
       assetId = tx.id
-      await waitForTx(assetId, timeout, apiBase)
+      await waitForTx(assetId, { timeout, apiBase })
 
       const burnParams: IBurnParams = {
         assetId,
@@ -159,7 +159,7 @@ describe('Blockchain interaction', () => {
       const tx = setAssetScript(txParams, seed)
       const resp = await broadcast(tx, apiBase)
       expect(resp.type).toEqual(15)
-      await waitForTx(tx.id, timeout, apiBase)
+      await waitForTx(tx.id, { timeout, apiBase })
 
       const burnParams: IBurnParams = {
         assetId,
@@ -188,7 +188,7 @@ describe('Blockchain interaction', () => {
       const resp = await broadcast(tx, apiBase)
       expect(resp.type).toEqual(13)
 
-      await waitForTx(tx.id, timeout, apiBase)
+      await waitForTx(tx.id, { timeout, apiBase })
 
       const removeTxParams: ISetScriptParams = {
         senderPublicKey: publicKey(seed),
@@ -199,7 +199,7 @@ describe('Blockchain interaction', () => {
 
       const removeTx = setScript(removeTxParams, [null, 'bob', 'cooper'])
       const resp2 = await broadcast(removeTx, apiBase)
-      await waitForTx(removeTx.id, timeout, apiBase)
+      await waitForTx(removeTx.id, { timeout, apiBase })
       expect(resp2.type).toEqual(13)
 
     }, timeout)
@@ -211,7 +211,7 @@ describe('Blockchain interaction', () => {
     it('Should set sponsorship', async () => {
       const sponTx = sponsorship({ assetId, minSponsoredAssetFee: 100 }, seed)
       await broadcast(sponTx, apiBase)
-      await waitForTx(sponTx.id, timeout, apiBase)
+      await waitForTx(sponTx.id, { timeout, apiBase })
 
       const ttx = transfer({ recipient: address(seed, 'T'), amount: 1000, feeAssetId: assetId }, seed)
       await broadcast(ttx, apiBase)
@@ -220,7 +220,7 @@ describe('Blockchain interaction', () => {
     it('Should remove sponsorship', async () => {
       const sponTx = sponsorship({ assetId, minSponsoredAssetFee: 0 }, seed)
       await broadcast(sponTx, apiBase)
-      await waitForTx(sponTx.id, timeout, apiBase)
+      await waitForTx(sponTx.id, { timeout, apiBase })
       const ttx = transfer({ recipient: address(seed, 'T'), amount: 1000, feeAssetId: assetId }, seed)
       await expect(broadcast(ttx, apiBase)).rejects
     }, timeout)
@@ -255,8 +255,8 @@ describe('Blockchain interaction', () => {
       await broadcast(transferTx, apiBase)
 
       //WAIT BOTH TX TO COMPLETE
-      await waitForTx(issueTx.id, timeout, apiBase)
-      await waitForTx(transferTx.id, timeout, apiBase)
+      await waitForTx(issueTx.id, { timeout, apiBase })
+      await waitForTx(transferTx.id, { timeout, apiBase })
       /////////////////////////
 
       //assetId = 'qmhEv7NeL39kDiWBVfzZh6aT1ZwzpD7y1CFxvmiH78U'

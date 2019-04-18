@@ -59,39 +59,6 @@ export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefine
 export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
 
 
-export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
-
-export const delay = (timeout: number): CancellablePromise<{}> => {
-  const t: any = {}
-  const p = new Promise((resolve, _) => {
-    t.resolve = resolve
-    t.id = setTimeout(() => resolve(), timeout)
-  }) as any
-  (<any>p).cancel = () => {
-    t.resolve()
-    clearTimeout(t.id)
-  }
-  return p
-}
-
-export const waitForTx = async (txId: string, timeout: number, apiBase: string): Promise<TTx> => {
-  let expired = false
-  const to = delay(timeout)
-  to.then(() => expired = true)
-
-  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
-    .then(x => {
-      to.cancel()
-      return x.data
-    })
-    .catch(_ => delay(1000)
-      .then(_ => expired ?
-        Promise.reject(new Error('Tx wait stopped: timeout')) :
-        promise()))
-
-  return promise()
-}
-
 export function networkByte(p: number | string | undefined, def: number): number {
   switch (typeof p) {
     case 'string':

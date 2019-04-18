@@ -20,7 +20,7 @@ export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { invokeScript } from './transactions/invoke-script'
 export { signTx, broadcast, verify, serialize, submitOrder, cancelSubmittedOrder, addressBalance, addressDataByKey } from './general'
-export { waitForTx } from './generic'
+export { waitForTx } from './nodeInteraction'
 
 // Export interfaces
 export {
@@ -77,8 +77,10 @@ const libs = {
 }
 
 import * as seedUtils from './seedUtils'
+import * as nodeInteraction from './nodeInteraction'
 
 export {
   libs,
-  seedUtils
+  seedUtils,
+  nodeInteraction
 }
