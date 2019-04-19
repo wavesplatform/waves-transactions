@@ -1,4 +1,4 @@
-import { TTx } from './transactions'
+import { DataEntry, TTx } from './transactions'
 import axios from 'axios'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
@@ -112,6 +112,21 @@ export async function waitNBlocks(blocksCount: number,options: INodeRequestOptio
   return await waitForHeight(target, options)
 }
 
-export async function balance(address: string, apiBase: string) {
+export async function balance(address: string, apiBase: string): Promise<number> {
   return axios.get(`addresses/balance/${address}`, { baseURL: apiBase }).then(x => x.data.balance)
+}
+
+export async function balanceDetails(address: string, apiBase: string) {
+  return axios.get(`addresses/balance/details/${address}`, { baseURL: apiBase }).then(x => x.data)
+}
+
+export async function accountData(address: string, apiBase: string): Promise<Record<string, DataEntry>> {
+  const data: DataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: apiBase }).then(x => x.data)
+  return data.reduce((acc, item) => ({...acc, [item.key]: item}), {})
+}
+
+export async function accountDataByKey(address: string, key: string, apiBase: string): Promise<any> {
+  return axios.get(`addresses/data/${address}/${key}`,
+    { baseURL: apiBase, validateStatus: (status) => status === 404 || status >= 200 && status < 300 })
+    .then(resp => resp.status === 404 ? null : resp.data)
 }

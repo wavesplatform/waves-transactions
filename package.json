@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -45,7 +45,7 @@
     "preprocess": "^3.1.0",
     "rimraf": "^2.6.2",
     "terser-webpack-plugin": "^1.2.3",
-    "ts-jest": "^23.10.4",
+    "ts-jest": "^24.0.2",
     "ts-jsdoc": "^3.0.1",
     "ts-loader": "^5.3.3",
     "ts-node": "^7.0.1",
