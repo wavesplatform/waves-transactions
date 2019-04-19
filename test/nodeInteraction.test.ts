@@ -8,14 +8,18 @@ describe('Node interaction utility functions', () => {
   })
 
   it('Should wait 1 Block', async () => {
-    await utilityF.waitNBlocks(1, {apiBase})
+    await utilityF.waitNBlocks(1, { apiBase })
   }, 120000)
 
   it('Should fail to wait 2 blocks by timeout', async () => {
-    await expect(utilityF.waitNBlocks(2, {apiBase, timeout:5000})).rejects.not.toBeFalsy()
+    await expect(utilityF.waitNBlocks(2, { apiBase, timeout: 5000 })).rejects.not.toBeFalsy()
   }, 120000)
 
   it('Should get balance', async () => {
+    await expect(utilityF.assetBalance('3xdf6GESKGNP1oUyT8QXDgzTE11yi1sJGyVmjt7HHNEU', '3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)).resolves.not.toBeFalsy()
+  }, 120000)
+
+  it('Should get assetBalance', async () => {
     await expect(utilityF.balance('3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)).resolves.not.toBeFalsy()
   }, 120000)
 
@@ -28,14 +32,13 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should get accountData by key ', async () => {
-    const data = await utilityF.accountDataByKey('3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu','test', apiBase)
+    const data = await utilityF.accountDataByKey('3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', 'test', apiBase)
     expect(data).not.toBeFalsy()
   }, 120000)
 
   it('Should get accountData by key and return null on no data', async () => {
-    const data = await utilityF.accountDataByKey('3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu','test23', apiBase)
+    const data = await utilityF.accountDataByKey('test23', '3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)
     expect(data).toBeNull()
   }, 120000)
-
 
 })

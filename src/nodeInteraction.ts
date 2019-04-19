@@ -120,12 +120,16 @@ export async function balanceDetails(address: string, apiBase: string) {
   return axios.get(`addresses/balance/details/${address}`, { baseURL: apiBase }).then(x => x.data)
 }
 
+export async function assetBalance(assetId: string, address: string, apiBase: string) {
+  return axios.get(`assets/balance/${address}/${assetId}`, { baseURL: apiBase }).then(x => x.data.balance)
+}
+
 export async function accountData(address: string, apiBase: string): Promise<Record<string, DataEntry>> {
   const data: DataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: apiBase }).then(x => x.data)
   return data.reduce((acc, item) => ({...acc, [item.key]: item}), {})
 }
 
-export async function accountDataByKey(address: string, key: string, apiBase: string): Promise<any> {
+export async function accountDataByKey(key: string, address: string, apiBase: string): Promise<any> {
   return axios.get(`addresses/data/${address}/${key}`,
     { baseURL: apiBase, validateStatus: (status) => status === 404 || status >= 200 && status < 300 })
     .then(resp => resp.status === 404 ? null : resp.data)
