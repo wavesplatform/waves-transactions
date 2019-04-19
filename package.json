@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -19,6 +19,10 @@
     "fix-style": "tslint --fix -c tslint.json '{src,test,usage}/**/*{.ts,.tsx}'",
     "test": "jest"
   },
+  "files": [
+    "/dist",
+    "/src"
+  ],
   "author": {
     "name": "Yuriy Naydenov",
     "email": "ebceu44@gmail.com"
