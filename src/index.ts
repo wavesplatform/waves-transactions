@@ -19,8 +19,8 @@ export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { invokeScript } from './transactions/invoke-script'
-export { signTx, broadcast, verify, serialize, submitOrder, cancelSubmittedOrder, addressBalance, addressDataByKey } from './general'
-export { waitForTx } from './nodeInteraction'
+export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
+export { waitForTx, broadcast } from './nodeInteraction'
 
 // Export interfaces
 export {

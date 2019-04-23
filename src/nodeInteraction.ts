@@ -1,5 +1,6 @@
 import { DataEntry, TTx } from './transactions'
 import axios from 'axios'
+import * as json from '@waves/marshall/dist/jsonMethods'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -59,6 +60,11 @@ export async function waitForHeight(height: number, options?: INodeRequestOption
   return promise()
 }
 
+/**
+ * Resolves when specified txId is mined into block
+ * @param txId - waves address as base58 string
+ * @param options
+ */
 export async function waitForTx(txId: string, options?: INodeRequestOptions): Promise<TTx> {
   const { timeout, apiBase } = {...DEFAULT_NODE_REQUEST_OPTIONS, ...options}
 
@@ -78,6 +84,10 @@ export async function waitForTx(txId: string, options?: INodeRequestOptions): Pr
 
   return promise()
 }
+
+const process400 = (resp: any) => resp.status === 400 ? Promise.reject(resp.data) : resp;
+
+const validateStatus = (status: number) =>  status === 400 || status >= 200 && status < 300
 
 export async function waitForTxWithNConfirmations(txId: string, confirmations: number,
                                                   options: INodeRequestOptions ): Promise<TTx> {
@@ -112,25 +122,76 @@ export async function waitNBlocks(blocksCount: number,options: INodeRequestOptio
   return await waitForHeight(target, options)
 }
 
-export async function balance(address: string, apiBase: string): Promise<number> {
-  return axios.get(`addresses/balance/${address}`, { baseURL: apiBase }).then(x => x.data.balance)
+/**
+ * Get account effective balance
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function balance(address: string, nodeUrl: string): Promise<number> {
+  return axios.get(`addresses/balance/${address}`, { baseURL: nodeUrl, validateStatus })
+    .then(process400)
+    .then(x => x.data.balance)
 }
 
-export async function balanceDetails(address: string, apiBase: string) {
-  return axios.get(`addresses/balance/details/${address}`, { baseURL: apiBase }).then(x => x.data)
+/**
+ * Retrieve full information about waves account balance. Effective, generating etc
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function balanceDetails(address: string, nodeUrl: string) {
+  return axios.get(`addresses/balance/details/${address}`, { baseURL: nodeUrl, validateStatus })
+    .then(process400)
+    .then(x => x.data)
 }
 
-export async function assetBalance(assetId: string, address: string, apiBase: string) {
-  return axios.get(`assets/balance/${address}/${assetId}`, { baseURL: apiBase }).then(x => x.data.balance)
+/**
+ * Retrieve information about specific asset account balance
+ * @param assetId - id of asset
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function assetBalance(assetId: string, address: string, nodeUrl: string) {
+  return axios.get(`assets/balance/${address}/${assetId}`, { baseURL: nodeUrl, validateStatus })
+    .then(process400)
+    .then(x => x.data.balance)
 }
 
-export async function accountData(address: string, apiBase: string): Promise<Record<string, DataEntry>> {
-  const data: DataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: apiBase }).then(x => x.data)
+/**
+ * Get full account dictionary
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function accountData(address: string, nodeUrl: string): Promise<Record<string, DataEntry>> {
+  const data: DataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: nodeUrl, validateStatus })
+    .then(process400)
+    .then(x => x.data)
   return data.reduce((acc, item) => ({...acc, [item.key]: item}), {})
 }
 
-export async function accountDataByKey(key: string, address: string, apiBase: string): Promise<any> {
+
+/**
+ * Get data from account dictionary by key
+ * @param address - waves address as base58 string
+ * @param key - dictionary key
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function accountDataByKey(key: string, address: string, nodeUrl: string): Promise<any> {
   return axios.get(`addresses/data/${address}/${key}`,
-    { baseURL: apiBase, validateStatus: (status) => status === 404 || status >= 200 && status < 300 })
+    { baseURL: nodeUrl, validateStatus: (status) => status === 404 || validateStatus(status) })
+    .then(process400)
     .then(resp => resp.status === 404 ? null : resp.data)
+}
+
+/**
+ * Sends transaction to waves node
+ * @param tx - transaction to send
+ * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
+ */
+export function broadcast(tx: TTx, nodeUrl: string) {
+  return axios.post('transactions/broadcast', json.stringifyTx(tx), {
+    baseURL: nodeUrl,
+    headers: { 'content-type': 'application/json' },
+    validateStatus,
+  }).then(process400)
+    .then(x => x.data)
 }

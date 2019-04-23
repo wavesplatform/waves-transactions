@@ -1,6 +1,6 @@
 import { publicKey, verifySignature } from '@waves/waves-crypto'
-import { reissue, signTx, data, burn } from '../src'
-import { broadcast, serialize, verify, addressBalance, addressDataByKey } from '../src/general'
+import { reissue, signTx, data, burn, broadcast } from '../src'
+import { serialize, verify } from '../src/general'
 import { reissueMinimalParams, burnMinimalParams, orderMinimalParams } from './minimalParams'
 import { TTx } from '../src'
 import { exampleTxs } from './exampleTxs'
@@ -67,18 +67,6 @@ describe('Node interaction', () => {
 
     await expect(broadcast(result, nodeUrl)).rejects
       .toEqual(new Error('Transaction is not allowed by account-script'))
-  })
-
-  it('should retrieve address balance', async () => {
-    const balance = await addressBalance('3PGMh3vQekpTbvUAiKwdzhWsLaxoSBEcsFJ', nodeUrl);
-    expect(typeof balance).toBe('number')
-  })
-
-  it('should retrieve address data by key', async () => {
-    const data1 = await addressDataByKey('3PGMh3vQekpTbvUAiKwdzhWsLaxoSBEcsFJ', 'example', nodeUrl);
-    const data2 = await addressDataByKey('3P5Y26hscWLGxtq2MSMbVsJUx9ZrQHoJLP7', '3PQgaVmE7Zurn3xFMYtckah82PrWuaEcdhR', nodeUrl)
-    expect(data1).toBe(null)
-    expect(typeof data2).toBe('string')
   })
 
 })

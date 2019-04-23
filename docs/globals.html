@@ -136,8 +136,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function"><a href="globals.html#accountdata" class="tsd-kind-icon">account<wbr>Data</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#accountdatabykey" class="tsd-kind-icon">account<wbr>Data<wbr>ByKey</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#addressbalance" class="tsd-kind-icon">address<wbr>Balance</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#addressdatabykey" class="tsd-kind-icon">address<wbr>Data<wbr>ByKey</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#alias" class="tsd-kind-icon">alias</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#assetbalance" class="tsd-kind-icon">asset<wbr>Balance</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#balance" class="tsd-kind-icon">balance</a></li>
@@ -188,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cancellable<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in nodeInteraction.ts:4</li>
+							<li>Defined in nodeInteraction.ts:5</li>
 						</ul>
 					</aside>
 				</section>
@@ -239,22 +237,33 @@
 					<a name="accountdata" class="tsd-anchor"></a>
 					<h3>account<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">account<wbr>Data<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, apiBase<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="interfaces/dataentry.html" class="tsd-signature-type">DataEntry</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">account<wbr>Data<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="interfaces/dataentry.html" class="tsd-signature-type">DataEntry</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:127</li>
+									<li>Defined in nodeInteraction.ts:164</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get full account dictionary</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
 								</li>
 								<li>
-									<h5>apiBase: <span class="tsd-signature-type">string</span></h5>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask data from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="interfaces/dataentry.html" class="tsd-signature-type">DataEntry</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -265,79 +274,13 @@
 					<a name="accountdatabykey" class="tsd-anchor"></a>
 					<h3>account<wbr>Data<wbr>ByKey</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">account<wbr>Data<wbr>ByKey<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, apiBase<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">account<wbr>Data<wbr>ByKey<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:132</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>apiBase: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="addressbalance" class="tsd-anchor"></a>
-					<h3>address<wbr>Balance</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">address<wbr>Balance<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in general.ts:114</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Retrieve information about waves account balance</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>waves address as base58 string</p>
-									</div>
-								</li>
-								<li>
-									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>node address to ask balance from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="addressdatabykey" class="tsd-anchor"></a>
-					<h3>address<wbr>Data<wbr>ByKey</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">address<wbr>Data<wbr>ByKey<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in general.ts:126</li>
+									<li>Defined in nodeInteraction.ts:178</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -348,25 +291,25 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>waves address as base58 string</p>
-									</div>
-								</li>
-								<li>
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>dictionary key</p>
 									</div>
 								</li>
 								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
+								</li>
+								<li>
 									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>node address to ask balance from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+										<p>node address to ask data from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -408,16 +351,16 @@
 <span class="hljs-keyword">const</span> signedAliasTx = alias(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GWMCAnnQbPUpE9sg4vNgQgPXWGbyP4ojkjAJ7azohpLk"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"Ay1Rjjt8QcBq5mVa3A4Zx21Hx6xpA8nBgEnpCUciR794"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">10</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"alias"</span>: <span class="hljs-string">"MyNewAlias"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619803</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379776</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"QYDdNS2SgiZNRZgJ7pU4YPkkJtyjMhFaWkhZ2XXtcC6kJebynnDpvSEkDq1FtjaMkY6Atoev6SFt818baNA4Hbe"</span>
+    <span class="hljs-string">"VkDGmqvpJEYw1RwxeGNoztozzNyvJAYcbyrshaM5QKrqaUgGojfFx7XsAum2XAZyLoPpCirneBXfjEqoPJmeKLE"</span>
   ]
 }</code></pre>
 							</div>
@@ -461,25 +404,39 @@
 					<a name="assetbalance" class="tsd-anchor"></a>
 					<h3>asset<wbr>Balance</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">asset<wbr>Balance<span class="tsd-signature-symbol">(</span>assetId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, apiBase<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">asset<wbr>Balance<span class="tsd-signature-symbol">(</span>assetId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:123</li>
+									<li>Defined in nodeInteraction.ts:153</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve information about specific asset account balance</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>assetId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>id of asset</p>
+									</div>
 								</li>
 								<li>
 									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
 								</li>
 								<li>
-									<h5>apiBase: <span class="tsd-signature-type">string</span></h5>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask balance from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -490,22 +447,33 @@
 					<a name="balance" class="tsd-anchor"></a>
 					<h3>balance</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">balance<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, apiBase<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">balance<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:115</li>
+									<li>Defined in nodeInteraction.ts:130</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get account effective balance</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
 								</li>
 								<li>
-									<h5>apiBase: <span class="tsd-signature-type">string</span></h5>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask balance from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -516,22 +484,33 @@
 					<a name="balancedetails" class="tsd-anchor"></a>
 					<h3>balance<wbr>Details</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">balance<wbr>Details<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, apiBase<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">balance<wbr>Details<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:119</li>
+									<li>Defined in nodeInteraction.ts:141</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve full information about waves account balance. Effective, generating etc</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
 								</li>
 								<li>
-									<h5>apiBase: <span class="tsd-signature-type">string</span></h5>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask balance from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -548,7 +527,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:100</li>
+									<li>Defined in nodeInteraction.ts:190</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -614,7 +593,7 @@
 <span class="hljs-keyword">const</span> signedBurnTx = burn(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"6jWmxdLAy5d93Ameqq4Tp1YA49SSr9wixQdL4vodbjCi"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4eFqAQcYqoV9LnnKtTKxRe3BCf7X5rX56twPGfJmWgrt"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">6</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -622,9 +601,9 @@
   <span class="hljs-attr">"quantity"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619598</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379617</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"3MYofwGGrzVMDBeowDTSZZkiF22mkty2d12nNi7c8dQK8JH5AeE1eCj5c17LPgy4wdDAfMBAf5YEqkfcA8yabc5E"</span>
+    <span class="hljs-string">"R8N6pbotiLyy6edyDoBoSwNtjzyHVNoEnAdNJqSjD1wSvQKitnkE8EVTcsJ8E7qFDB5P2CuzxLyURukAJccTFWa"</span>
   ]
 }</code></pre>
 							</div>
@@ -702,16 +681,16 @@
 <span class="hljs-keyword">const</span> signedCancelLeaseTx = cancelLease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"FXDHthFvGWGheTUFA8Vm3TSodvjeWkenDUdkF7yRqNCf"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"E6dRwUohgbao32JmzFtc7rUyajTE4hUjZFRhkwFG1GAP"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">9</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"leaseId"</span>: <span class="hljs-string">"2fYhSNrXpyKgbtHzh5tnpvnQYuL7JpBFMBthPSGFrqqg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619638</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379648</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"gf3Ack2ZCDsjvArgjiDZ5KAuW6vUmE2E7f6Cv8zSt4jmdxifNiBZSP4zvRLV9rzwfhQ7MeNLiKnj3kBuhWCLniT"</span>
+    <span class="hljs-string">"5ZsYiM2DHSfZAhhv4BarfAFti6hMmNtHp3cM8rSrDz3CWo9mPtfk5XZ6V88q1B6gB4ycRknqkRpgctAwp7bWptNm"</span>
   ]
 }</code></pre>
 							</div>
@@ -812,7 +791,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:167</li>
+									<li>Defined in general.ts:118</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -862,7 +841,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:37</li>
+									<li>Defined in nodeInteraction.ts:38</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -917,14 +896,14 @@
 <span class="hljs-keyword">const</span> signedDataTx = data(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"9i9PbsjWjUCY8noeQeHjJti5EWT6vLGai9aY1CY3LKpe"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"AaAMfg28xw5r7XP4nqpnrxSB8EtRyUQmRiBm8pbSdrMb"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">12</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619660</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379671</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"2gyp4wtJ44TwYvfD8AjjhZBheueqQNqysghQCbYVkN7ibYuWQFiGrhh7EnZNJvRTFoEwZJCaTUgsLKmDwsMWBbdz"</span>
+    <span class="hljs-string">"283D8AqYBJoe3vh6vpn9xr8F4FgQLATqiCYbRRGZamUsCyFDVgBR5PLxQmBJsyrK5eHQCgoFy5M1fPkhpCuiFrYe"</span>
   ],
   <span class="hljs-attr">"data"</span>: [
     {
@@ -1108,7 +1087,7 @@
 <span class="hljs-built_in">console</span>.log(signedIssueTx)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"7fzos3cVhWqAF5KLZF7Avn3rX49218NmwiFCBqtfLdPm"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"3chj4rzKKSqpzLsSJbU1BFEyPLjTDiSbABJtT6uTfx1d"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">3</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"HRQUmzJKgHDGbsfS23kSA1VRuudy5MY3wGCroUmNhKuJ"</span>,
@@ -1118,10 +1097,10 @@
   <span class="hljs-attr">"decimals"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619690</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379688</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4VxQpkFv4X6AvUZmuqeEVxKmz2tgKVMEbbSzPcFGFzmtF531U1PnqqLmxovo5X6utDKX8zsW4UBE85orM6gDfo6W"</span>
+    <span class="hljs-string">"2NxCvjuziYH4Q5o2zUsVbTTkhj7w2b5EK5k1wXCtfuGmTdrhGLvuH3bdbcvktqBo1GtoDSXFyaTt5qjpEpunLvJr"</span>
   ]
 }</code></pre>
 							</div>
@@ -1199,16 +1178,16 @@
 <span class="hljs-keyword">const</span> signedLeaseTx = lease(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"3WXDmo1EBqSF2qWQDa9XWkncsVSojV12w3f1oBVvvr9Z"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"ACrdj1FWThvYLPXK17uT15dNfEZGG1LcNUQg4P4y4L5r"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">8</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"recipient"</span>: <span class="hljs-string">"3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619726</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379706</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5zZtnTpWLmcnJw87gEHf8iEQ1W6WVJMckUrBrKYYRkTHCQ5VmCw2AK9noudFrtPDBLs6RwLBD4152r5NUExFm5cp"</span>
+    <span class="hljs-string">"3sUg794MNXt5R9uFTjJF4yQpG91Wyd6RTt34F5xfsaH3o7DzRsA8wWjp7C4SnGfW9UYvDxzwHkafMBzGN1z8ECZe"</span>
   ]
 }</code></pre>
 							</div>
@@ -1294,7 +1273,7 @@
 <span class="hljs-keyword">const</span> signedMassTransferTx = massTransfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"7L4iAaxMAiMb9EZbnyA6AJ3pQyXbhHuhhhrWuw9QHudX"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"FUZUoyqukXCuUA6SQ47G1FfCqRRVnTZQhaL4W9J2pYC4"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">11</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1309,10 +1288,10 @@
     }
   ],
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">200000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619738</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379729</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5qzZpU4GdYE1dQKkRXJm4tWQpadNzzNh2BV9nvdd5727PcG8vjrudUPVjeWKLgUJo2x2EYXHVxpLQ8jDHFnbuhcZ"</span>
+    <span class="hljs-string">"53MZsPaz4A7D5T5uzr8GnMgLRtxJqdBHWXmXmWA6q2GNKRuxmYReZDTQ9rvvvUcf7WqempxXR89JzGGzwuRRg24Q"</span>
   ]
 }</code></pre>
 							</div>
@@ -1482,7 +1461,7 @@
 <span class="hljs-keyword">const</span> signedReissueTx = reissue(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4ZXshmcKCkhRfW1sSSt3HBuLiYmDv9GJz4G9CG2CDNzm"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"6FvkTFGG4M6g4ogmrg89Nk3QbtBquWumhZu3h4erZkpv"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">5</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1491,9 +1470,9 @@
   <span class="hljs-attr">"reissuable"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619749</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379739</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"64pBtRrNvc6Dmk5hzsW2xBDr22tWmMhdNg5DWNSvsWvtawzHX3KqxdJRn15ACu1BR4hVHKmKfZUuTnacgihtfQie"</span>
+    <span class="hljs-string">"3HazJ2fdNEVKddc15CbQyxvet1HLGp3LV7ui452yGwCZRL76DJ1mj9NwE77LGwnbb3oprBJh1hLstYavwJd3myz1"</span>
   ]
 }</code></pre>
 							</div>
@@ -1652,15 +1631,15 @@
 <span class="hljs-keyword">const</span> signedSetScriptTx = setScript(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"DTzB8e72eK31zh53NoDKCNh68Wy23tKZVnsANX4F9LUS"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4HQMecXY7iMPw11KUz9cEw6Hacektw194Muki8rkQAz4"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">13</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"chainId"</span>: <span class="hljs-number">87</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">1000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619818</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379787</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"qQCugQ2k8gbr2KXcgdZCPp6k7XjppDAnDZpnYwvDdwQXBAhotuqtaiMQeVbjUxUrsT8bBHE9yjBWpmvspcrmyPT"</span>
+    <span class="hljs-string">"24mcFMfXhcsmaKKdmpkiVEUoByCne8kpvjDfX3wAydA5WXMwPL175mgTfzGLmYzUMcSWacEXqu8R28xvMJxibuy3"</span>
   ],
   <span class="hljs-attr">"script"</span>: <span class="hljs-string">"base64:AQa3b8tH"</span>
 }</code></pre>
@@ -1773,16 +1752,16 @@
 <span class="hljs-keyword">const</span> signedSponsorshipTx = sponsorship(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"Ds7TX1SLuN9dC8J8NTA2BX2Pnq9kpa3x4noJc4shZg6E"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"4ewvUwabQAc1D9vKfwa5KM4vRhrRLdCx9yVsnKuVEpXE"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">14</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
   <span class="hljs-attr">"minSponsoredAssetFee"</span>: <span class="hljs-number">100</span>,
   <span class="hljs-attr">"assetId"</span>: <span class="hljs-string">"4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC"</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619831</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379805</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"4LhMbzdgH4Rbz2ndbeqATGJv5MhZ1RNxL4YnJmUHMf3pDX262imnrr15gnhZBBzzDbac3c2Lwrnb6vfUSeNsdTYv"</span>
+    <span class="hljs-string">"2uDzX37QBy247ApWkC8YVgJe2EVVpG64ZQAotZUstNHi1uTneA4VVPXsxEYJx2o4BeJnJV2ePZrzHPqpYaU9C69j"</span>
   ]
 }</code></pre>
 							</div>
@@ -1832,7 +1811,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in general.ts:150</li>
+									<li>Defined in general.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1901,7 +1880,7 @@
 <span class="hljs-keyword">const</span> signedTransferTx = transfer(params, seed)</code></pre>
 								<h3 id="output">Output</h3>
 								<pre><code class="language-json">{
-  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"GqcYvC27VpbuGp2HbxG6AB3ptumPNBrjuYeZLsAbzC24"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"G16i7TfFxSq4c9C3sk7zXnrsSUo6nEDuTkXksmwJy5Yv"</span>,
   <span class="hljs-attr">"type"</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">"version"</span>: <span class="hljs-number">2</span>,
   <span class="hljs-attr">"senderPublicKey"</span>: <span class="hljs-string">"3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg"</span>,
@@ -1909,9 +1888,9 @@
   <span class="hljs-attr">"amount"</span>: <span class="hljs-number">100000000</span>,
   <span class="hljs-attr">"attachment"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"fee"</span>: <span class="hljs-number">100000</span>,
-  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555680619766</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1555942379749</span>,
   <span class="hljs-attr">"proofs"</span>: [
-    <span class="hljs-string">"5JkCuSLk6JJ3UwvsDv3mE8yRA6Qk7GNpc7Droeb9g9aZ1JGkdP1qh7EkTVpqtBU5JDE2usvkgfRBE4fM1gMc677Z"</span>
+    <span class="hljs-string">"349E9nbeXeSuPgTaDLtbYtKR4dJfYnSNCTt4C43moNdFEB3axxbwLE42ZrvhqhEvNFgJx4KyHhKhgaH4cTB53SF6"</span>
   ]
 }</code></pre>
 							</div>
@@ -2001,7 +1980,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:42</li>
+									<li>Defined in nodeInteraction.ts:43</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2027,16 +2006,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:62</li>
+									<li>Defined in nodeInteraction.ts:68</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resolves when specified txId is mined into block</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>txId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="interfaces/inoderequestoptions.html" class="tsd-signature-type">INodeRequestOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2053,7 +2042,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:82</li>
+									<li>Defined in nodeInteraction.ts:92</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2082,7 +2071,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:107</li>
+									<li>Defined in nodeInteraction.ts:117</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2612,12 +2601,6 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#accountdatabykey" class="tsd-kind-icon">account<wbr>Data<wbr>ByKey</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#addressbalance" class="tsd-kind-icon">address<wbr>Balance</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#addressdatabykey" class="tsd-kind-icon">address<wbr>Data<wbr>ByKey</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#alias" class="tsd-kind-icon">alias</a>

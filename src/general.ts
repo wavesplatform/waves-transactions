@@ -92,55 +92,6 @@ export function verify(obj: TTx | IOrder, proofN = 0, publicKey?: string): boole
   return verifySignature(publicKey, bytes, signature)
 }
 
-/**
- * Sends transaction to waves node
- * @param tx - transaction to send
- * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
- */
-export function broadcast(tx: TTx, nodeUrl: string) {
-  return axios.post('transactions/broadcast', json.stringifyTx(tx), {
-    baseURL: nodeUrl,
-    headers: { 'content-type': 'application/json' },
-  })
-    .then(x => x.data)
-    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
-}
-
-/**
- * Retrieve information about waves account balance
- * @param address - waves address as base58 string
- * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
- */
-export function addressBalance(address: string, nodeUrl: string): Promise<number> {
-  return axios.get(`addresses/balance/${address}`, { baseURL: nodeUrl })
-    .then(x => x.data && x.data.balance)
-    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
-}
-
-/**
- * Get data from account dictionary by key
- * @param address - waves address as base58 string
- * @param key - dictionary key
- * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
- */
-export function addressDataByKey(address: string, key: string, nodeUrl: string): Promise<number | Uint8Array | string | null> {
-  return axios.get(`addresses/data/${address}/${key}`, { baseURL: nodeUrl })
-    .then(x => {
-      switch (x.data.type) {
-        case 'integer':
-        case 'string':
-          return x.data.value
-        case 'binary':
-          return serializePrimitives.BASE64_STRING(x.data.value)
-        case 'boolean':
-          return x.data.value === 'true'
-      }
-      return null
-    })
-    .catch(e => e.response && e.response.status === 404 ?
-      Promise.resolve(null) :
-      Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
-}
 
 /**
  * Sends order to matcher
