@@ -182,6 +182,19 @@ export async function accountDataByKey(key: string, address: string, nodeUrl: st
     .then(resp => resp.status === 404 ? null : resp.data)
 }
 
+
+/**
+ * Get account script info
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function scriptInfo(address: string, nodeUrl: string): Promise<any> {
+  return axios.get(`addresses/scriptInfo/${address}`,
+    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
+    .then(process400)
+    .then(resp => resp.data)
+}
+
 /**
  * Sends transaction to waves node
  * @param tx - transaction to send

@@ -56,7 +56,7 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should return correct error on invalid address for asset balance', async () => {
-    const resp = utilityF.assetBalance('3xdf6GESKGNP1oUyT8QXDgzTE11yi1sJGyVmjt7HHNEU', 'bad address', apiBase)
+    const resp = utilityF.assetBalance('invalidAddress', 'bad address', apiBase)
     await expect(resp).rejects.toMatchObject({error:102})
   }, 120000)
 
@@ -75,8 +75,13 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should give correct error on invalid address', async () => {
-    const data = utilityF.accountDataByKey('test23', '3MtXzccPrCAoKans9Tsp3qoFHiajPA4Uu', apiBase)
+    const data = utilityF.accountDataByKey('test23', 'invalidAddress', apiBase)
     await expect(data).rejects.toMatchObject({error:102})
+  }, 120000)
+
+  it('Should get account script info', async () => {
+    const data = await utilityF.scriptInfo( '3N749utyWVhhnCqWh6hbqsq5zMvqVSanamR', apiBase)
+    expect(data).toMatchObject({extraFee:400000})
   }, 120000)
 
 })
