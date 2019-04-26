@@ -20,14 +20,14 @@ export class Seed {
     privateKey: string
   }
 
-  constructor(phrase: string) {
+  constructor(phrase: string, chainId?: string) {
     if (phrase.length < 12) {
       throw new Error('Your seed length is less than allowed in config')
     }
 
 
     this.phrase = phrase
-    this.address = address(phrase)
+    this.address = address(phrase, chainId)
     this.keyPair = {
       privateKey: privateKey(phrase),
       publicKey: publicKey(phrase),
