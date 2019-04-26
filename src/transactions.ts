@@ -278,7 +278,7 @@ export interface IInvokeScriptTransaction<LONG = string | number> extends ITrans
   type: TRANSACTION_TYPE.INVOKE_SCRIPT
   dappAddress: string
   feeAssetId?: string | null
-  call: IInvokeScriptCall,
+  call?: IInvokeScriptCall,
   payment?: IInvokeScriptPayment[]
 }
 
@@ -515,7 +515,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
 export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   dappAddress: string
   feeAssetId?: string | null
-  call: {
+  call?: {
     function: string
     args: {
       type: 'binary' | 'integer' | 'boolean' | 'string',

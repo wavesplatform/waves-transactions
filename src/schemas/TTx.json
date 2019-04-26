@@ -1021,7 +1021,6 @@
         }
       },
       "required": [
-        "call",
         "chainId",
         "dappAddress",
         "fee",
