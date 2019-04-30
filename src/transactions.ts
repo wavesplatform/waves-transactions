@@ -496,6 +496,11 @@ export interface ISponsorshipParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ITransferParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Can be either address(base58 encoded 24 byte address) or alias.
+   * Alias should be used like 'alias:{chainId}:{alias}>'. E.g.:
+   * If we have alias 'foo', and we want TESTNET transaction, recipient should be 'alias:T:foo'
+   */
   recipient: string
   amount: LONG
   assetId?: string | null

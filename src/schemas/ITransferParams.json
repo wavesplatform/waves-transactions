@@ -2,6 +2,7 @@
   "type": "object",
   "properties": {
     "recipient": {
+      "description": "Can be either address(base58 encoded 24 byte address) or alias.\nAlias should be used like 'alias:{chainId}:{alias}>'. E.g.:\nIf we have alias 'foo', and we want TESTNET transaction, recipient should be 'alias:T:foo'",
       "type": "string"
     },
     "amount": {

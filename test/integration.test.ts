@@ -144,7 +144,7 @@ describe('Blockchain interaction', () => {
       }
       const burnTx = burn(burnParams, seed)
       const respPromise = broadcast(burnTx, apiBase)
-      await expect(respPromise).rejects.toEqual(new Error('Transaction is not allowed by token-script'))
+      await expect(respPromise).rejects.toMatchObject({error: 308})
 
     }, timeout + 20000)
 
@@ -232,6 +232,11 @@ describe('Blockchain interaction', () => {
       const aliasTx = alias({ alias: aliasStr, chainId: 'T' }, seed)
       const resp = await broadcast(aliasTx, apiBase)
       expect(resp.type).toEqual(10)
+      //TODO: INCORRECT alias tx id
+      await waitForTx(resp.id, {timeout, apiBase})
+      const ttx =  transfer({recipient:`alias:${chainId}:${aliasStr}`, amount:1000}, seed)
+      const ttxResp = await broadcast(ttx, apiBase)
+      expect(ttxResp.type).toEqual(4)
     }, timeout)
 
     it('Should perform exchange transaction', async () => {
