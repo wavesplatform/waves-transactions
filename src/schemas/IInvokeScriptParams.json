@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "dappAddress": {
+    "dApp": {
       "type": "string"
     },
     "feeAssetId": {
@@ -81,7 +81,7 @@
     }
   },
   "required": [
-    "dappAddress"
+    "dApp"
   ],
   "definitions": {
     "IInvokeScriptPayment<string|number>": {

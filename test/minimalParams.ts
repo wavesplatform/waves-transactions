@@ -27,7 +27,7 @@ export const cancelLeaseMinimalParams: ICancelLeaseParams = {
 }
 
 export const invokeScriptMinimalParams: IInvokeScriptParams = {
-  dappAddress: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+  dApp: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
   call: {
     function: 'foo',
     args: [{

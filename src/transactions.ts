@@ -276,7 +276,7 @@ export interface IInvokeScriptCall {
  */
 export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
   type: TRANSACTION_TYPE.INVOKE_SCRIPT
-  dappAddress: string
+  dApp: string
   feeAssetId?: string | null
   call?: IInvokeScriptCall,
   payment?: IInvokeScriptPayment[]
@@ -518,7 +518,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
-  dappAddress: string
+  dApp: string
   feeAssetId?: string | null
   call?: {
     function: string
