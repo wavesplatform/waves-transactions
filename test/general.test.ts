@@ -66,7 +66,7 @@ describe('Node interaction', () => {
     const result = data(dataParams, 'seed')
 
     await expect(broadcast(result, nodeUrl)).rejects
-      .toEqual(new Error('Transaction is not allowed by account-script'))
+      .toMatchObject({error: 307})
   })
 
 })

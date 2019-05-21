@@ -65,7 +65,7 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should get accountData by key ', async () => {
-    const data = await utilityF.accountDataByKey( 'test','3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)
+    const data = await utilityF.accountDataByKey( 'binary_value','3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)
     expect(data).not.toBeFalsy()
   }, 120000)
 
@@ -81,7 +81,7 @@ describe('Node interaction utility functions', () => {
 
   it('Should get account script info', async () => {
     const data = await utilityF.scriptInfo( '3N749utyWVhhnCqWh6hbqsq5zMvqVSanamR', apiBase)
-    expect(data).toMatchObject({extraFee:400000})
+    expect(data).toMatchObject({extraFee:0})
   }, 120000)
 
 })
