@@ -522,7 +522,7 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
   feeAssetId?: string | null
   call?: {
     function: string
-    args: {
+    args?: {
       type: 'binary' | 'integer' | 'boolean' | 'string',
       value: string | number | boolean
     }[]

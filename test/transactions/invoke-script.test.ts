@@ -2,6 +2,7 @@ import { publicKey, verifySignature } from '@waves/waves-crypto'
 import { invokeScriptMinimalParams } from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
 import { binary } from '@waves/marshall'
+import { IInvokeScriptParams } from '../../src'
 
 describe('invokeScript', () => {
 
@@ -15,6 +16,23 @@ describe('invokeScript', () => {
   it('should build from minimal set of params with payment', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, payment: [{ amount: 100, assetId: null }] }, stringSeed)
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
+  })
+
+  it('should build without args', () => {
+    const params: IInvokeScriptParams = {
+      dApp: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+      call: {
+        function: 'foo'
+      },
+    }
+    const tx = invokeScript(params, stringSeed)
+    expect(tx).toMatchObject({
+      dApp: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+      call: {
+        function: 'foo',
+        args: []
+      },
+    })
   })
 
   it('should build from minimal set of params with additional properties', () => {
@@ -35,7 +53,10 @@ describe('invokeScript', () => {
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
-    const tx = invokeScript({ ...invokeScriptMinimalParams, payment: [{ amount: 100, assetId: null }] }, [null, stringSeed, null, stringSeed2])
+    const tx = invokeScript({
+      ...invokeScriptMinimalParams,
+      payment: [{ amount: 100, assetId: null }]
+    }, [null, stringSeed, null, stringSeed2])
     expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
     expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
   })
