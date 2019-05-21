@@ -1,6 +1,6 @@
 import { DataEntry, TTx } from './transactions'
 import axios from 'axios'
-import * as json from '@waves/marshall/dist/jsonMethods'
+import { json } from '@waves/marshall'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -41,7 +41,7 @@ export const currentHeight = async (apiBase: string): Promise<number> => {
 }
 
 export async function waitForHeight(height: number, options?: INodeRequestOptions) {
-  const { timeout, apiBase } = {...DEFAULT_NODE_REQUEST_OPTIONS, ...options}
+  const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
@@ -66,7 +66,7 @@ export async function waitForHeight(height: number, options?: INodeRequestOption
  * @param options
  */
 export async function waitForTx(txId: string, options?: INodeRequestOptions): Promise<TTx> {
-  const { timeout, apiBase } = {...DEFAULT_NODE_REQUEST_OPTIONS, ...options}
+  const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
@@ -74,8 +74,8 @@ export async function waitForTx(txId: string, options?: INodeRequestOptions): Pr
 
   const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
     .then(x => {
-        to.cancel()
-        return x.data
+      to.cancel()
+      return x.data
     })
     .catch(_ => delay(1000)
       .then(_ => expired ?
@@ -85,39 +85,41 @@ export async function waitForTx(txId: string, options?: INodeRequestOptions): Pr
   return promise()
 }
 
-const process400 = (resp: any) => resp.status === 400 ? Promise.reject(resp.data) : resp;
+const process400 = (resp: any) => resp.status === 400
+  ? Promise.reject(Object.assign(new Error(), resp.data))
+  : resp
 
-const validateStatus = (status: number) =>  status === 400 || status >= 200 && status < 300
+const validateStatus = (status: number) => status === 400 || status >= 200 && status < 300
 
 export async function waitForTxWithNConfirmations(txId: string, confirmations: number,
-                                                  options: INodeRequestOptions ): Promise<TTx> {
+                                                  options: INodeRequestOptions): Promise<TTx> {
 
 
-  const { timeout } = {...DEFAULT_NODE_REQUEST_OPTIONS, ...options}
+  const { timeout } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  let tx = await waitForTx(txId, options);
+  let tx = await waitForTx(txId, options)
 
   let txHeight = (tx as any).height
   let currentHeight = (tx as any).height
 
-  while (txHeight + confirmations > currentHeight){
+  while (txHeight + confirmations > currentHeight) {
     if (expired) throw new Error('Tx wait stopped: timeout')
-    await waitForHeight(txHeight + confirmations, options);
-    tx = await waitForTx(txId, options);
+    await waitForHeight(txHeight + confirmations, options)
+    tx = await waitForTx(txId, options)
     txHeight = (tx as any).height
   }
 
   return tx
 }
 
-export async function waitNBlocks(blocksCount: number,options: INodeRequestOptions = DEFAULT_NODE_REQUEST_OPTIONS){
-  const { apiBase } = {...DEFAULT_NODE_REQUEST_OPTIONS, ...options}
+export async function waitNBlocks(blocksCount: number, options: INodeRequestOptions = DEFAULT_NODE_REQUEST_OPTIONS) {
+  const { apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
   const height = await currentHeight(apiBase)
-  const target = height + blocksCount;
+  const target = height + blocksCount
   // console.log(`current height: ${height} target: ${target}`)
   return await waitForHeight(target, options)
 }
@@ -165,7 +167,7 @@ export async function accountData(address: string, nodeUrl: string): Promise<Rec
   const data: DataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: nodeUrl, validateStatus })
     .then(process400)
     .then(x => x.data)
-  return data.reduce((acc, item) => ({...acc, [item.key]: item}), {})
+  return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
 }
 
 

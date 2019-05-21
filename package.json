@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.6.1",
+  "version": "3.7.0",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -43,7 +43,7 @@
     "@types/node": "^10.12.3",
     "copy-webpack-plugin": "^4.5.2",
     "jest": "^24.7.1",
-    "jsdoc-to-markdown": "^4.0.1",
+    "jsdoc-to-markdown": "^5.0.0",
     "nativescript-typedoc-theme": "0.0.7",
     "ncp": "^2.0.0",
     "preprocess": "^3.1.0",
@@ -67,7 +67,6 @@
   "dependencies": {
     "@waves/marshall": "^0.7.2",
     "@waves/waves-crypto": "^2.0.4",
-    "ajv": "^6.5.5",
     "axios": "^0.18.0"
   }
 }
