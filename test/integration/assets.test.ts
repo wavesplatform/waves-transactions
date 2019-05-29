@@ -160,8 +160,7 @@ describe('Assets', () => {
       const aliasTx = alias({ alias: aliasStr, chainId: 'T' }, MASTER_SEED)
       const resp = await broadcast(aliasTx, API_BASE)
       expect(resp.type).toEqual(10)
-      //TODO: INCORRECT alias tx id
-      await waitForTx(resp.id, { timeout: TIMEOUT, apiBase: API_BASE })
+      await waitForTx(aliasTx.id, { timeout: TIMEOUT, apiBase: API_BASE })
       const ttx = transfer({ recipient: `alias:${CHAIN_ID}:${aliasStr}`, amount: 1000 }, MASTER_SEED)
       const ttxResp = await broadcast(ttx, API_BASE)
       expect(ttxResp.type).toEqual(4)

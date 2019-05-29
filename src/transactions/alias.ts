@@ -29,7 +29,9 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
+
+  const idBytes = [bytes[0], ...bytes.slice(36, -16)]
+  tx.id = hashBytes(Uint8Array.from(idBytes))
 
   return tx
 }
