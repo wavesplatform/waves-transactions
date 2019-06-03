@@ -25,7 +25,7 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & W
     decimals: paramsOrTx.decimals == null ? 8 : paramsOrTx.decimals,
     reissuable: paramsOrTx.reissuable || false,
     fee: fee(paramsOrTx, 100000000),
-    timestamp: Date.now(),
+    timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
     id: '',

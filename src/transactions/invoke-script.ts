@@ -29,7 +29,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     payment: paramsOrTx.payment || [],
     fee: fee(paramsOrTx, 1000000),
     feeAssetId: paramsOrTx.feeAssetId,
-    timestamp: Date.now(),
+    timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
     id: '',
