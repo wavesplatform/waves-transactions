@@ -222,7 +222,7 @@ export interface IMassTransferTransaction<LONG = string | number> extends ITrans
   assetId?: string | null
 }
 
-export interface DataEntry {
+export interface IDataEntry {
   key: string
   type: DATA_FIELD_TYPE
   value: string | number | boolean
@@ -248,7 +248,7 @@ export interface ISponsorshipTransaction<LONG = string | number> extends ITransa
  */
 export interface IDataTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: TRANSACTION_TYPE.DATA
-  data: DataEntry[]
+  data: IDataEntry[]
 }
 
 /**
@@ -299,6 +299,21 @@ export interface IOrder<LONG = string | number> extends WithProofs, WithSender {
   matcherFee: number
   matcherPublicKey: string
 }
+
+export interface IOrderV1<LONG = string | number> extends IOrder<LONG > {
+  version: 1 | undefined
+}
+
+export interface IOrderV2<LONG = string | number> extends IOrder<LONG > {
+  version: 2
+}
+
+export interface IOrderV3<LONG = string | number> extends IOrder<LONG > {
+  version: 3
+  matcherFeeAssetId?: string | null
+}
+
+export type TOrder = IOrderV1 | IOrderV2 | IOrderV3
 
 /**
  * CancelOrder object. When this object is sent to matcher, order with 'orderId' will be canceled
@@ -386,7 +401,7 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-  data: Array<DataEntry | TypelessDataEntry>
+  data: Array<IDataEntry | TypelessDataEntry>
 }
 
 /**

@@ -1,4 +1,4 @@
-import { DataEntry, TTx } from './transactions'
+import { IDataEntry, TTx } from './transactions'
 import axios from 'axios'
 import { json } from '@waves/marshall'
 
@@ -163,8 +163,8 @@ export async function assetBalance(assetId: string, address: string, nodeUrl: st
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountData(address: string, nodeUrl: string): Promise<Record<string, DataEntry>> {
-  const data: DataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: nodeUrl, validateStatus })
+export async function accountData(address: string, nodeUrl: string): Promise<Record<string, IDataEntry>> {
+  const data: IDataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: nodeUrl, validateStatus })
     .then(process400)
     .then(x => x.data)
   return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
