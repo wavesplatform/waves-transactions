@@ -457,6 +457,7 @@ export interface IOrderParams<LONG = string | number> {
   matcherFee?: number
   timestamp?: number
   expiration?: number
+  matcherFeeAssetId?: string | null
 }
 
 export interface ICancelOrderParams {
