@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { binary, json, serializePrimitives } from '@waves/marshall'
+import { binary, json } from '@waves/marshall'
 import { verifySignature } from '@waves/waves-crypto'
 import {
   IAliasTransaction,
@@ -10,7 +10,6 @@ import {
   IIssueTransaction,
   ILeaseTransaction,
   IMassTransferTransaction,
-  IOrder,
   IReissueTransaction,
   ISetAssetScriptTransaction,
   ISetScriptTransaction,
@@ -19,7 +18,7 @@ import {
   TRANSACTION_TYPE,
   TTx,
   TTxParams,
-  IInvokeScriptTransaction
+  IInvokeScriptTransaction, TOrder
 } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
@@ -74,7 +73,7 @@ export function signTx(tx: TTx | TTxParams & WithTxType, seed: TSeedTypes): TTx 
  * Converts transaction or order object to Uint8Array
  * @param obj transaction or order
  */
-export function serialize(obj: TTx | IOrder): Uint8Array {
+export function serialize(obj: TTx | TOrder): Uint8Array {
   if (isOrder(obj)) return binary.serializeOrder(obj)
   return binary.serializeTx(obj)
 }
@@ -85,7 +84,7 @@ export function serialize(obj: TTx | IOrder): Uint8Array {
  * @param proofN - proof index. Takes first proof by default
  * @param publicKey - takes senderPublicKey by default
  */
-export function verify(obj: TTx | IOrder, proofN = 0, publicKey?: string): boolean {
+export function verify(obj: TTx | TOrder, proofN = 0, publicKey?: string): boolean {
   publicKey = publicKey || obj.senderPublicKey
   const bytes = serialize(obj)
   const signature = obj.version == null ? (obj as any).signature : obj.proofs[proofN]
@@ -98,7 +97,7 @@ export function verify(obj: TTx | IOrder, proofN = 0, publicKey?: string): boole
  * @param ord - transaction to send
  * @param matcherUrl - matcher address to send order to. E.g. https://matcher.wavesplatform.com/
  */
-export function submitOrder(ord: IOrder, matcherUrl: string) {
+export function submitOrder(ord: TOrder, matcherUrl: string) {
   return axios.post('matcher/orderbook', json.stringifyOrder(ord), {
     baseURL: matcherUrl,
     headers: { 'content-type': 'application/json' },

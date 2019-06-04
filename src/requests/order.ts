@@ -1,6 +1,6 @@
 import { signBytes, hashBytes } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
-import { IOrder, IOrderParams, WithId, WithSender } from '../transactions'
+import { IOrder, IOrderParams, TOrder, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
@@ -24,7 +24,7 @@ import { binary } from '@waves/marshall'
  *   matcherPublicKey: '7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy',
  *   orderType: 'buy'
  * }
- * 
+ *
  *
  * const signedOrder = order(params, seed)
  * ```
@@ -50,9 +50,9 @@ import { binary } from '@waves/marshall'
  * ```
  *
  */
-export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): IOrder & WithId
-export function order(paramsOrOrder: IOrderParams & WithSender | IOrder, seed?: TSeedTypes): IOrder & WithId
-export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
+export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): TOrder & WithId
+export function order(paramsOrOrder: IOrderParams & WithSender | TOrder, seed?: TSeedTypes): TOrder & WithId
+export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
@@ -66,7 +66,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
 
   // Use old versionless order only if it is set to null explicitly
   const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version || 2
-  const ord: IOrder & WithId = {
+  const ord: TOrder & WithId = {
     orderType,
     version,
     assetPair: {
@@ -84,13 +84,17 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): IOrder & WithId {
     id: '',
   }
 
+  if (ord.version === 3) {
+    ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId
+  }
+
   const bytes = binary.serializeOrder(ord)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(ord, signBytes(bytes, s),i))
+  seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(bytes, s), i))
   ord.id = hashBytes(bytes)
 
-  // for versionless order use signature instead of proofs
-  if (ord.version === undefined) (ord as any).signature = ord.proofs[0]
+  // OrderV1 uses signature instead of proofs
+  if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs[0]
 
   return ord
 }

@@ -14,7 +14,7 @@ import { concat, hashBytes, signBytes } from '@waves/waves-crypto'
 import {
   IDataTransaction,
   TRANSACTION_TYPE,
-  DataEntry,
+  IDataEntry,
   DATA_FIELD_TYPE,
   IDataParams,
   WithId,
@@ -61,7 +61,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     BYTE(TRANSACTION_TYPE.DATA),
     BYTE(1),
     BASE58_STRING(senderPublicKey),
-    COUNT(SHORT)((x: DataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
+    COUNT(SHORT)((x: IDataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
     LONG(_timestamp)
   )
 
@@ -75,7 +75,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     timestamp: _timestamp,
     proofs: paramsOrTx.proofs || [],
     id: '',
-    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: DataEntry | TypelessDataEntry) => {
+    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: IDataEntry | TypelessDataEntry) => {
       if ((<any>x).type) return x
       else {
         const type = mapType(x.value)[0]

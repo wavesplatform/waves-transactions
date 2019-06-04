@@ -1,16 +1,10 @@
 import {
   WithProofs,
-  TTxParams,
-  IOrderParams,
-  TTx,
-  IOrder,
   IBasicParams,
-  ICancelOrderParams,
-  WithSender
+  WithSender, TOrder
 } from './transactions'
 import { TSeedTypes } from './types'
 import { publicKey } from '@waves/waves-crypto'
-import axios from 'axios'
 
 export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f: (v: T) => U): Record<K, U> =>
   Object.entries<T>(obj).map(([k, v]) => [k, f(v)] as [string, U])
@@ -56,7 +50,7 @@ export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefine
   }
 }
 
-export const isOrder = (p: any): p is IOrder => (<IOrder>p).assetPair !== undefined
+export const isOrder = (p: any): p is TOrder => (<TOrder>p).assetPair !== undefined
 
 
 export function networkByte(p: number | string | undefined, def: number): number {
