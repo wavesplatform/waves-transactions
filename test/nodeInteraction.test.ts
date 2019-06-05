@@ -84,4 +84,8 @@ describe('Node interaction utility functions', () => {
     expect(data).toMatchObject({extraFee:0})
   }, 120000)
 
+  it('Should get invokeTx state changes', async () => {
+    const data = await utilityF.stateChanges( '8FAociHmAzdhvzviuc39H8SPzu7hFTppmf9J2pxGPTq4', apiBase)
+    expect(Array.isArray(data.data)).toBe(true)
+  }, 120000)
 })

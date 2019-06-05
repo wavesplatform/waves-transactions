@@ -177,7 +177,7 @@ export async function accountData(address: string, nodeUrl: string): Promise<Rec
  * @param key - dictionary key
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountDataByKey(key: string, address: string, nodeUrl: string): Promise<any> {
+export async function accountDataByKey(key: string, address: string, nodeUrl: string): Promise<IDataEntry> {
   return axios.get(`addresses/data/${address}/${key}`,
     { baseURL: nodeUrl, validateStatus: (status) => status === 404 || validateStatus(status) })
     .then(process400)
@@ -195,6 +195,28 @@ export async function scriptInfo(address: string, nodeUrl: string): Promise<any>
     { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
     .then(process400)
     .then(resp => resp.data)
+}
+
+
+export interface IStateChangeResponse {
+  data: IDataEntry[],
+  transfers: {
+    address: string,
+    amount: number,
+    assetId: string | null
+  }[]
+}
+
+/**
+ * Get invokeScript tx state changes
+ * @param transactionId - invokeScript transaction id as base58 string
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function stateChanges(transactionId: string, nodeUrl: string): Promise<IStateChangeResponse> {
+  return axios.get(`debug/stateChanges/info/${transactionId}`,
+    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
+    .then(process400)
+    .then(resp => resp.data && resp.data.stateChanges)
 }
 
 /**
