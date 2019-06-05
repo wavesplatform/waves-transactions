@@ -94,7 +94,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   ord.id = hashBytes(bytes)
 
   // OrderV1 uses signature instead of proofs
-  if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs[0]
+  if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs && ord.proofs[0]
 
   return ord
 }
