@@ -69,7 +69,9 @@ export {
   WithProofs,
 } from './transactions'
 
-export { WithTxType} from './general'
+export { WithTxType } from './general'
+
+export { INodeRequestOptions } from './nodeInteraction'
 
 export {
   TSeedTypes, TOption
