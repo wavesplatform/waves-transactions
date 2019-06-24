@@ -69,6 +69,8 @@ export {
   WithProofs,
 } from './transactions'
 
+export { WithTxType} from './general'
+
 export {
   TSeedTypes, TOption
 } from './types'

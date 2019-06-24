@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.10.1",
+  "version": "3.10.2",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -24,13 +24,16 @@
     "/src"
   ],
   "author": {
-    "name": "Yuriy Naydenov",
-    "email": "ebceu44@gmail.com"
+    "name": "wavesplatform"
   },
   "contributors": [
     {
       "name": "Sergey B",
       "email": "siemarell@gmail.com"
+    },
+    {
+      "name": "Yuriy Naydenov",
+      "email": "ebceu44@gmail.com"
     }
   ],
   "license": "MIT",
