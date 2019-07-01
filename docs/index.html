@@ -93,6 +93,13 @@
   <span class="hljs-attr">recipient</span>: <span class="hljs-string">'3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2'</span>,
   <span class="hljs-comment">//Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs</span>
   timestamp: <span class="hljs-number">1536917842558</span> 
+}, seed)
+
+<span class="hljs-comment">// or using alias</span>
+
+<span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">'alias:W:aliasForMyAddress'</span>
 }, seed)</code></pre>
 				<p>Output will be a signed transfer transaction:</p>
 				<pre><code class="language-js">{

@@ -41,6 +41,13 @@ const signedTranserTx = transfer({
   //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
   timestamp: 1536917842558 
 }, seed)
+
+// or using alias
+
+const signedTranserTx = transfer({ 
+  amount: 1,
+  recipient: 'alias:W:aliasForMyAddress'
+}, seed)
 ```
 
 Output will be a signed transfer transaction:

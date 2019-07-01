@@ -269,8 +269,12 @@ export interface IInvokeScriptCall {
    * {type: 'integer', value: 200} or
    * { type: 'binary', value: 'base64:AQa3b8tH'}
    */
-  args: any[]
+  args: {
+    type: 'binary' | 'integer' | 'boolean' | 'string',
+    value: string | number | boolean
+  }[]
 }
+
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
@@ -300,15 +304,15 @@ export interface IOrder<LONG = string | number> extends WithProofs, WithSender {
   matcherPublicKey: string
 }
 
-export interface IOrderV1<LONG = string | number> extends IOrder<LONG > {
+export interface IOrderV1<LONG = string | number> extends IOrder<LONG> {
   version: 1 | undefined
 }
 
-export interface IOrderV2<LONG = string | number> extends IOrder<LONG > {
+export interface IOrderV2<LONG = string | number> extends IOrder<LONG> {
   version: 2
 }
 
-export interface IOrderV3<LONG = string | number> extends IOrder<LONG > {
+export interface IOrderV3<LONG = string | number> extends IOrder<LONG> {
   version: 3
   matcherFeeAssetId?: string | null
 }
