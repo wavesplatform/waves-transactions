@@ -65,7 +65,7 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should get accountData by key ', async () => {
-    const data = await utilityF.accountDataByKey( 'binary_value','3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)
+    const data = await utilityF.accountDataByKey( 'string_value','3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)
     expect(data).not.toBeFalsy()
   }, 120000)
 
@@ -85,7 +85,7 @@ describe('Node interaction utility functions', () => {
   }, 120000)
 
   it('Should get invokeTx state changes', async () => {
-    const data = await utilityF.stateChanges( '8FAociHmAzdhvzviuc39H8SPzu7hFTppmf9J2pxGPTq4', apiBase)
+    const data = await utilityF.stateChanges( 'CNo4Zy72KEAo4pnpVL5FQrBujwhqhYgBogwQ1RS8uWkD', apiBase)
     expect(Array.isArray(data.data)).toBe(true)
   }, 120000)
 })

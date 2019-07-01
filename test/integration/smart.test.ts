@@ -1,9 +1,27 @@
-import { broadcast, ISetScriptParams, setScript, waitForTx } from '../../src'
+import { broadcast, ISetScriptParams, massTransfer, setScript, waitForTx } from '../../src'
 import { address, publicKey } from '@waves/waves-crypto'
-import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE } from './config'
-import { data, invokeScript, transfer } from '../../src'
+import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
+import { data, invokeScript } from '../../src'
 
 describe('Smart features', () => {
+  let account1: string, account2: string
+  const wvs = 10 ** 8
+
+  beforeAll(async () => {
+    const nonce = randomHexString(6)
+
+    account1 = 'account1' + nonce
+    account2 = 'account2' + nonce
+    const mtt = massTransfer({
+      transfers: [
+        { recipient: address(account1, CHAIN_ID), amount: 1 * wvs },
+        { recipient: address(account2, CHAIN_ID), amount: 1100000 }
+      ]
+    }, MASTER_SEED)
+    await broadcast(mtt, API_BASE)
+    await waitForTx(mtt.id, {apiBase: API_BASE, timeout: TIMEOUT})
+    console.log('Smart test setup successful\n Accounts nonce = ' + nonce)
+  }, TIMEOUT)
 
   describe('Data transactions', () => {
     it('Should set data of all types', async () => {
@@ -25,7 +43,7 @@ describe('Smart features', () => {
           type: 'binary',
           value: 'AwZd0cYf'
         }]
-      }, MASTER_SEED)
+      }, account1)
 
       await broadcast(dataTx, API_BASE)
     })
@@ -40,7 +58,7 @@ describe('Smart features', () => {
         script,
       }
 
-      const tx = setScript(txParams, MASTER_SEED)
+      const tx = setScript(txParams, account1)
 
       const resp = await broadcast(tx, API_BASE)
       expect(resp.type).toEqual(13)
@@ -48,7 +66,7 @@ describe('Smart features', () => {
       await waitForTx(tx.id, { timeout: TIMEOUT, apiBase: API_BASE })
 
       const removeTxParams: ISetScriptParams = {
-        senderPublicKey: publicKey(MASTER_SEED),
+        senderPublicKey: publicKey(account1),
         chainId: CHAIN_ID,
         script: null,
         additionalFee: 400000,
@@ -63,46 +81,48 @@ describe('Smart features', () => {
   })
 
   describe('dApp', () => {
-    const dappSeed = 'dapp test seed phrase'
-    const dappAddress = address(dappSeed, CHAIN_ID)
+
 
     it('Should set dapp account', async () => {
-      // Fund acc
-      const ttx = transfer({ amount: 100000000, recipient: dappAddress }, MASTER_SEED)
-      await broadcast(ttx, API_BASE)
-      await waitForTx(ttx.id, { timeout: TIMEOUT, apiBase: API_BASE })
-      console.log('dApp account has been funded')
       // Set script
       // This script has one function 'foo'. It accepts integer and sends you this integer amount of waves
-      const script = 'AAIDAAAAAAAAAAAAAAABAAAAAWkBAAAAA2ZvbwAAAAEAAAABYQkBAAAAC1RyYW5zZmVyU2V0AAAAAQkABEwAAAACCQEAAAAOU2NyaXB0VHJhbnNmZXIAAAADCAUAAAABaQAAAAZjYWxsZXIFAAAAAWEFAAAABHVuaXQFAAAAA25pbAAAAAAAAAAAArC/pA=='
+      /*
+      {-# STDLIB_VERSION 3 #-}
+      {-# CONTENT_TYPE DAPP #-}
+      {-# SCRIPT_TYPE ACCOUNT #-}
+
+      @Callable(i)
+      func foo(a: Int) = {
+          TransferSet([ScriptTransfer(i.caller, a, unit)])
+      }
+      */
+      const script = 'AAIDAAAAAAAAAAAAAAABAAAAAAFhAAAAAAAAAAAKAAAAAQAAAAFpAQAAAANmb28AAAABAAAAAWEJAQAAAAtUcmFuc2ZlclNldAAAAAEJAARMAAAAAgkBAAAADlNjcmlwdFRyYW5zZmVyAAAAAwgFAAAAAWkAAAAGY2FsbGVyBQAAAAFhBQAAAAR1bml0BQAAAANuaWwAAAAAcF35+A=='
       const txParams: ISetScriptParams = {
         chainId: CHAIN_ID,
-        script,
-        additionalFee: 400000
+        script
       }
-      const tx = setScript(txParams, dappSeed)
+      const tx = setScript(txParams, account2)
       await broadcast(tx, API_BASE)
       await waitForTx(tx.id, { timeout: TIMEOUT, apiBase: API_BASE })
       console.log('dApp account script has been set')
     }, TIMEOUT)
 
     it('should call function', async () => {
+      const dappAddress = address(account2, CHAIN_ID)
+
       const invokeTx = invokeScript({
           chainId: CHAIN_ID,
           dApp: dappAddress,
           call: {
-            function: 'foo', args: [{ type: 'integer', value: 90000000 }]
+            function: 'foo', args: [{ type: 'integer', value: 10000 }]
           }
         },
-        MASTER_SEED)
+        account1)
 
-      try {
         await broadcast(invokeTx, API_BASE)
-      } catch (e) {
-        console.log(e)
-      }
+
 
     }, TIMEOUT)
-
   })
+
 })
