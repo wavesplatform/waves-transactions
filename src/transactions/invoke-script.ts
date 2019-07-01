@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import {
   TRANSACTION_TYPE,
   WithId,

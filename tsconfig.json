@@ -22,11 +22,11 @@
   ],
   "typedocOptions": {
     "name": "waves-transactions",
-    "mode": "file",
+    "mode": "modules",
     "out": "docs",
     "theme": "./node_modules/typedoc-clarity-theme",
     "ignoreCompilerErrors": true,
-    "exclude": "**/**/*+(generic|index|txToJson|validation).ts",
+    "exclude": "**/**/*+(generic|dictionary).ts",
     "excludePrivate": true,
     "excludeExternals": true,
     "excludeNotExported": true,

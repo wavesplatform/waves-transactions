@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import { TypelessDataEntry } from './transactions/data'
 
 export enum TRANSACTION_TYPE {

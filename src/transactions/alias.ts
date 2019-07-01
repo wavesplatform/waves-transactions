@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
 import { hashBytes, signBytes } from '@waves/waves-crypto'

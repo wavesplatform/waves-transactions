@@ -1,3 +1,7 @@
+/**
+ * @module index
+ */
+
 export type TOption<T> = T | undefined | null
 
 export interface IIndexSeedMap {

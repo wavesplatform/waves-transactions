@@ -1,3 +1,6 @@
+/**
+ * @module seedUtils
+ */
 import {
   address,
   privateKey,

@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
 import { signBytes, hashBytes } from '@waves/waves-crypto'

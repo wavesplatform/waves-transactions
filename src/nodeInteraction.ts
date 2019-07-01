@@ -1,3 +1,7 @@
+/**
+ * @module nodeInteraction
+ */
+
 import { IDataEntry, TTx } from './transactions'
 import axios from 'axios'
 import { json } from '@waves/marshall'

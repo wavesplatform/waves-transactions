@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import axios from 'axios'
 import { binary, json } from '@waves/marshall'
 import { verifySignature } from '@waves/waves-crypto'

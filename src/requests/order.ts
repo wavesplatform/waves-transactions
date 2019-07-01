@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import { signBytes, hashBytes } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
 import { IOrder, IOrderParams, TOrder, WithId, WithSender } from '../transactions'

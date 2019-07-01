@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import {serializePrimitives} from '@waves/marshall'
 const {
   BASE58_STRING,

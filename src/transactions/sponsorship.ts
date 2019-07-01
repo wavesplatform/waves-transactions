@@ -1,3 +1,6 @@
+/**
+ * @module index
+ */
 import { TRANSACTION_TYPE, WithId, WithSender, ISponsorshipParams, ISponsorshipTransaction } from '../transactions'
 import { signBytes, hashBytes } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'

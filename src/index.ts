@@ -1,5 +1,6 @@
-// Copyright (c) 2018 Yuriy Naydenov
-// 
+/**
+ * @module index
+ */
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
@@ -19,7 +20,7 @@ export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { invokeScript } from './transactions/invoke-script'
-export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
+export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, WithTxType } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 
 // Export interfaces
@@ -68,8 +69,6 @@ export {
   WithSender,
   WithProofs,
 } from './transactions'
-
-export { WithTxType } from './general'
 
 export { INodeRequestOptions } from './nodeInteraction'
 
