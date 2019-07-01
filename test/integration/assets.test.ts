@@ -10,10 +10,10 @@ import {
   reissue, setAssetScript, transfer,
   waitForTx
 } from '../../src'
-import { address, publicKey, randomUint8Array } from '@waves/waves-crypto'
-import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE } from './config'
+import { address, publicKey } from '@waves/waves-crypto'
+import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
 
-const randomHexString = (l: number) => [...randomUint8Array(l)].map(n => n.toString(16)).join('')
+
 
 describe('Assets', () => {
   let account1: string, account2: string
