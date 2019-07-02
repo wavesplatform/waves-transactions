@@ -4,7 +4,7 @@
 import { TRANSACTION_TYPE, IMassTransferTransaction, IMassTransferParams, WithId, WithSender } from '../transactions'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
-import { blake2b, signBytes } from '@waves/waves-crypto'
+import { base58Encode, blake2b, signBytes } from '@waves/waves-crypto'
 import { binary } from '@waves/marshall'
 
 
@@ -35,7 +35,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
-  tx.id = blake2b(bytes)
+  tx.id = base58Encode(blake2b(bytes))
 
   return tx
 }

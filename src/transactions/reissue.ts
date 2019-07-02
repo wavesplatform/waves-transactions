@@ -2,7 +2,7 @@
  * @module index
  */
 import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId, WithSender } from '../transactions'
-import { signBytes, blake2b } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode } from '@waves/waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -34,7 +34,7 @@ export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes),i))
-  tx.id = blake2b(bytes)
+  tx.id = base58Encode(blake2b(bytes))
 
   return tx
 }

@@ -129,7 +129,7 @@ export function generateNewSeed(length = 15) {
 export function strengthenPassword(password: string, rounds: number = 5000): string {
   while (rounds--) {
     const bytes = serializePrimitives.STRING(password)
-    password = base16Encode(base58Decode(sha256(bytes)))
+    password = base16Encode(sha256(bytes))
   }
   return password
 }

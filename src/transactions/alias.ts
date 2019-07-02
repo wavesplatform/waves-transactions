@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { blake2b, signBytes } from '@waves/waves-crypto'
+import { base58Encode, blake2b, signBytes } from '@waves/waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 
@@ -34,7 +34,7 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
 
   const idBytes = [bytes[0], ...bytes.slice(36, -16)]
-  tx.id = blake2b(Uint8Array.from(idBytes))
+  tx.id = base58Encode(blake2b(Uint8Array.from(idBytes)))
 
   return tx
 }

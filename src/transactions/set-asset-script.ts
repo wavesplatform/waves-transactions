@@ -8,7 +8,7 @@ import {
   WithId,
   WithSender
 } from '../transactions'
-import { signBytes, blake2b, } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode, } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -39,7 +39,7 @@ export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): ISetAssetScr
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
-  tx.id = blake2b(bytes)
+  tx.id = base58Encode(blake2b(bytes))
 
   return tx
 }
