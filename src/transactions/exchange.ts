@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, IExchangeTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { signBytes, hashBytes } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
 import { TSeedTypes } from '../types'
 
@@ -14,7 +14,7 @@ export function exchange(tx: IExchangeTransaction, seed?: TSeedTypes): IExchange
 
   const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
 
-  return {...tx, id: hashBytes(bytes)}
+  return {...tx, id: base58Encode(blake2b(bytes))}
 }

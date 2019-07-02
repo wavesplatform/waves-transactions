@@ -2,7 +2,7 @@
  * @module index
  */
 import { TRANSACTION_TYPE, ISetScriptTransaction, ISetScriptParams, WithId, WithSender } from '../transactions'
-import { signBytes, hashBytes, } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode, } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -31,8 +31,8 @@ export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransac
 
   const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(bytes, s),i))
-  tx.id = hashBytes(bytes)
+  seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes),i))
+  tx.id = base58Encode(blake2b(bytes))
 
   return tx
 }

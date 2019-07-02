@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import { signBytes, hashBytes } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
 import { IOrder, IOrderParams, TOrder, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'
@@ -88,13 +88,13 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   }
 
   if (ord.version === 3) {
-    ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId
+    ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
   }
 
   const bytes = binary.serializeOrder(ord)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(bytes, s), i))
-  ord.id = hashBytes(bytes)
+  seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
+  ord.id = base58Encode(blake2b(bytes))
 
   // OrderV1 uses signature instead of proofs
   if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs && ord.proofs[0]

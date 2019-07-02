@@ -2,7 +2,7 @@
  * @module index
  */
 import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender } from '../transactions'
-import { signBytes, hashBytes } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode } from '@waves/waves-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -31,8 +31,8 @@ export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & W
 
   const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
+  tx.id = base58Encode(blake2b(bytes))
 
   return tx
 }
