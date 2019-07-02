@@ -5,11 +5,13 @@ import {
   address,
   privateKey,
   publicKey,
-  randomUint8Array,
-  libs,
-  byteArrayToHexString,
-  hexStringToByteArray,
-  sha256
+  randomBytes,
+  //libs,
+  aesDecrypt,
+  aesEncrypt,
+  bytesToString,
+  base16Decode,
+  sha256, base16Encode, stringToBytes, base64Encode, base64Decode, base58Decode
 } from '@waves/waves-crypto'
 import dictionary from './dictionary'
 import { serializePrimitives, parsePrimitives } from '@waves/marshall'
@@ -108,7 +110,7 @@ export class Seed {
 
 export function generateNewSeed(length = 15) {
   const random = Array.from({ length })
-    .map(_ => randomUint8Array(4)
+    .map(_ => randomBytes(4)
       .reduce((acc, next, i) => acc + next * 2 ** (i * 4), 0)
     )
 
@@ -127,7 +129,7 @@ export function generateNewSeed(length = 15) {
 export function strengthenPassword(password: string, rounds: number = 5000): string {
   while (rounds--) {
     const bytes = serializePrimitives.STRING(password)
-    password = byteArrayToHexString(sha256(bytes))
+    password = base16Encode(base58Decode(sha256(bytes)))
   }
   return password
 }
@@ -143,7 +145,8 @@ export function encryptSeed(seed: string, password: string, encryptionRounds?: n
   }
 
   password = strengthenPassword(password, encryptionRounds)
-  return libs.CryptoJS.AES.encrypt(seed, password).toString()
+  return base64Encode(aesEncrypt(seed, password))
+  //return libs.CryptoJS.AES.encrypt(seed, password).toString()
 
 }
 
@@ -158,8 +161,8 @@ export function decryptSeed(encryptedSeed: string, password: string, encryptionR
   }
 
   password = strengthenPassword(password, encryptionRounds)
-  const hexSeed = libs.CryptoJS.AES.decrypt(encryptedSeed, password)
-  const byteSeed = hexStringToByteArray(hexSeed.toString())
+  const byteSeed = aesDecrypt(base64Decode(encryptedSeed), stringToBytes(password))//libs.CryptoJS.AES.decrypt(encryptedSeed, password)
+  //const byteSeed = base16Decode(hexSeed.toString())
   return parsePrimitives.P_STRING_FIXED(byteSeed.length)(Uint8Array.from(byteSeed)).value
 }
 

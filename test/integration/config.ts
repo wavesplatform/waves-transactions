@@ -1,4 +1,4 @@
-import { randomUint8Array } from '@waves/waves-crypto'
+import { randomBytes } from '@waves/waves-crypto'
 
 /**
  * Before running test ensure MASTER_SEED has at leas 10 WAVES!!
@@ -12,4 +12,4 @@ export const MATCHER_URL = 'https://matcher.testnet.wavesnodes.com/'
 
 export const TIMEOUT = 200000
 
-export const randomHexString = (l: number) => [...randomUint8Array(l)].map(n => n.toString(16)).join('')
+export const randomHexString = (l: number) => [...randomBytes(l)].map(n => n.toString(16)).join('')

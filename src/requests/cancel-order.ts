@@ -21,8 +21,8 @@ export function cancelOrder(params: ICancelOrderParams, seed: string): ICancelOr
     sender: senderPublicKey,
     orderId: params.orderId,
     signature: signBytes(
-      concat(BASE58_STRING(senderPublicKey), BASE58_STRING(params.orderId)),
-      seed
+      seed,
+      concat(BASE58_STRING(senderPublicKey), BASE58_STRING(params.orderId))
     ),
   }
 

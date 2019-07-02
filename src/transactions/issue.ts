@@ -2,7 +2,7 @@
  * @module index
  */
 import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId, WithSender } from '../transactions'
-import { signBytes, hashBytes } from '@waves/waves-crypto'
+import { signBytes, blake2b } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -36,8 +36,8 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & W
 
   const bytes = binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(bytes, s), i))
-  tx.id = hashBytes(bytes)
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
+  tx.id = blake2b(bytes)
 
   return tx
 }
