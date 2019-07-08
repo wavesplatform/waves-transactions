@@ -6,7 +6,7 @@ import {
   WithId,
   WithSender,
   IInvokeScriptParams,
-  IInvokeScriptTransaction
+  IInvokeScriptTransaction, IInvokeScriptPayment
 } from '../transactions'
 import { signBytes, blake2b, base58Encode, } from '@waves/waves-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
@@ -29,9 +29,9 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     senderPublicKey,
     dApp: paramsOrTx.dApp,
     call: paramsOrTx.call && {args: [], ...paramsOrTx.call},
-    payment: paramsOrTx.payment || [],
+    payment: mapPayment(paramsOrTx.payment),
     fee: fee(paramsOrTx, 500000),
-    feeAssetId: paramsOrTx.feeAssetId,
+    feeAssetId: paramsOrTx.feeAssetId === 'WAVES' ? null : paramsOrTx.feeAssetId,
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
@@ -45,3 +45,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
 
   return tx
 }
+
+const mapPayment = (payments?: IInvokeScriptPayment[]): IInvokeScriptPayment[] => payments == null
+  ? []
+  : payments.map(pmt => ({...pmt, assetId: pmt.assetId === 'WAVES' ? null : pmt.assetId}))

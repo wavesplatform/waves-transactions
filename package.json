@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "3.12.1",
+  "version": "3.12.2",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -37,9 +37,6 @@
     }
   ],
   "license": "MIT",
-  "peerDependencies": {
-    "typescript": "^3.2.2"
-  },
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/jest": "^23.3.9",
@@ -59,7 +56,7 @@
     "typedoc": "^0.14.2",
     "typedoc-clarity-theme": "^1.1.0",
     "typedoc-plugin-external-module-name": "^2.1.0",
-    "typescript": "^3.2.2",
+    "typescript": "^3.5.2",
     "typescript-json-schema": "^0.33.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.1.0"

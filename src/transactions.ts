@@ -550,6 +550,9 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
       value: string | number | boolean
     }[]
   },
-  payment?: IInvokeScriptPayment[]
+  payment?: {
+    assetId?: string | null
+    amount: number
+  }[]
 }
 
