@@ -21,7 +21,7 @@ import {
   TRANSACTION_TYPE,
   TTx,
   TTxParams,
-  IInvokeScriptTransaction, TOrder
+  IInvokeScriptTransaction, TOrder, WithTxType
 } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
@@ -40,9 +40,6 @@ import { exchange } from './transactions/exchange'
 import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
 
-export interface WithTxType {
-  type: TRANSACTION_TYPE
-}
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
   [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction, seed) },

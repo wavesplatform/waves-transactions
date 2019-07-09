@@ -1,8 +1,6 @@
 /**
  * @module index
  */
-import { TypelessDataEntry } from './transactions/data'
-
 export enum TRANSACTION_TYPE {
   GENESIS = 1,
   PAYMENT = 2,
@@ -60,6 +58,10 @@ export interface WithId {
    * Transaction ID. 32 bytes hash encoded as base58 string
    */
   id: string
+}
+
+export interface WithTxType {
+  type: TRANSACTION_TYPE
 }
 
 /**
@@ -229,6 +231,11 @@ export interface IDataEntry {
   key: string
   type: DATA_FIELD_TYPE
   value: string | number | boolean
+}
+
+export interface ITypelessDataEntry {
+  key: string
+  value: string | number | boolean | Buffer | Uint8Array | number[]
 }
 
 /**
@@ -408,7 +415,7 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-  data: Array<IDataEntry | TypelessDataEntry>
+  data: Array<IDataEntry | ITypelessDataEntry>
 }
 
 /**

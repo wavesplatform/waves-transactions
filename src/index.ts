@@ -20,7 +20,7 @@ export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { invokeScript } from './transactions/invoke-script'
-export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, WithTxType } from './general'
+export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 
 // Export interfaces
@@ -68,9 +68,11 @@ export {
   WithId,
   WithSender,
   WithProofs,
+  WithTxType,
+  WithChainId,
 } from './transactions'
 
-export { INodeRequestOptions } from './nodeInteraction'
+export { INodeRequestOptions, IStateChangeResponse } from './nodeInteraction'
 
 export {
   TSeedTypes, TOption

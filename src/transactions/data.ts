@@ -21,17 +21,11 @@ import {
   DATA_FIELD_TYPE,
   IDataParams,
   WithId,
-  WithSender
+  WithSender, ITypelessDataEntry
 } from '../transactions'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
-
-export interface TypelessDataEntry {
-  key: string
-  value: string | number | boolean | Buffer | Uint8Array | number[]
-}
-
 
 
 const typeMap: any = {
@@ -64,7 +58,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     BYTE(TRANSACTION_TYPE.DATA),
     BYTE(1),
     BASE58_STRING(senderPublicKey),
-    COUNT(SHORT)((x: IDataEntry | TypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
+    COUNT(SHORT)((x: IDataEntry | ITypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
     LONG(_timestamp)
   )
 
@@ -78,7 +72,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     timestamp: _timestamp,
     proofs: paramsOrTx.proofs || [],
     id: '',
-    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: IDataEntry | TypelessDataEntry) => {
+    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: IDataEntry | ITypelessDataEntry) => {
       if ((<any>x).type) return x
       else {
         const type = mapType(x.value)[0]

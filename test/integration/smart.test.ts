@@ -2,6 +2,7 @@ import { broadcast, ISetScriptParams, massTransfer, setScript, waitForTx } from 
 import { address, publicKey } from '@waves/waves-crypto'
 import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
 import { data, invokeScript } from '../../src'
+import { DATA_FIELD_TYPE } from '../../src/transactions'
 
 describe('Smart features', () => {
   let account1: string, account2: string
@@ -40,7 +41,7 @@ describe('Smart features', () => {
           value: Uint8Array.from([1, 2, 3])
         }, {
           key: 'binary_value_as_base64',
-          type: 'binary',
+          type: DATA_FIELD_TYPE.BINARY,
           value: 'AwZd0cYf'
         }]
       }, account1)
