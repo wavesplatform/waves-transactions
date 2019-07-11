@@ -7,7 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist/min'),
         filename: 'waves-transactions.min.js',
         library: 'WavesTransactions',
-        //libraryTarget: 'commonjs'
+        libraryTarget: 'umd'
     },
     plugins: [],
     resolve: {
