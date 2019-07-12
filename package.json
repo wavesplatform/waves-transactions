@@ -14,8 +14,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "preversion": "npm run build",
+    "postversion": "npm publish",
+    "postpublish": "git push origin head",
     "build": "ts-node build/build.ts && webpack --config webpack.config.js --env",
-    "prepublishOnly": "npm run build",
     "fix-style": "tslint --fix -c tslint.json '{src,test,usage}/**/*{.ts,.tsx}'",
     "test": "jest"
   },
