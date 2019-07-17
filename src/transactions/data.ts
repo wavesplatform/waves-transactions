@@ -13,7 +13,7 @@ const {
   SHORT,
   STRING,
 } = serializePrimitives
-import { concat, blake2b, signBytes, base58Encode } from '@waves/waves-crypto'
+import { concat, blake2b, signBytes, base58Encode } from '@waves/ts-lib-crypto'
 import {
   IDataTransaction,
   TRANSACTION_TYPE,
@@ -90,4 +90,4 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
   tx.id = base58Encode(blake2b(bytes1))
 
   return tx
-} 
+}

@@ -1,4 +1,4 @@
-import { publicKey, verifySignature } from '@waves/waves-crypto'
+import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { reissue, signTx, data, burn, broadcast } from '../src'
 import { serialize, verify } from '../src/general'
 import { reissueMinimalParams, burnMinimalParams, orderMinimalParams } from './minimalParams'

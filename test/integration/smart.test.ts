@@ -1,5 +1,5 @@
 import { broadcast, ISetScriptParams, massTransfer, setScript, waitForTx } from '../../src'
-import { address, publicKey } from '@waves/waves-crypto'
+import { address, publicKey } from '@waves/ts-lib-crypto'
 import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
 import { data, invokeScript } from '../../src'
 import { DATA_FIELD_TYPE } from '../../src/transactions'

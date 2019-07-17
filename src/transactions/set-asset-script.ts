@@ -8,7 +8,7 @@ import {
   WithId,
   WithSender
 } from '../transactions'
-import { signBytes, blake2b, base58Encode, } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
