@@ -80,7 +80,7 @@ export {
 } from './types'
 
 // internal libraries access
-import * as crypto from '@waves/waves-crypto'
+import * as crypto from '@waves/ts-lib-crypto'
 import * as marshall from '@waves/marshall'
 
 const libs = {

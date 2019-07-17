@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import { concat, signBytes } from '@waves/waves-crypto'
+import { concat, signBytes } from '@waves/ts-lib-crypto'
 import { serializePrimitives } from '@waves/marshall'
 const {BASE58_STRING} = serializePrimitives
 import { getSenderPublicKey, convertToPairs } from '../generic'

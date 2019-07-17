@@ -1,4 +1,4 @@
-import { verifySignature, publicKey, } from '@waves/waves-crypto'
+import { verifySignature, publicKey, } from '@waves/ts-lib-crypto'
 import { setScript } from '../../src'
 import { ISetScriptTransaction } from '../../src/transactions'
 import { binary } from '@waves/marshall'

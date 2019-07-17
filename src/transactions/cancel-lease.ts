@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { signBytes, blake2b, base58Encode } from '@waves/waves-crypto'
+import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 

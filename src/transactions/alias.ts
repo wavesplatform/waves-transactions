@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, IAliasParams, IAliasTransaction, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
-import { base58Encode, blake2b, signBytes } from '@waves/waves-crypto'
+import { base58Encode, blake2b, signBytes } from '@waves/ts-lib-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 

@@ -10,7 +10,7 @@ import {
   reissue, setAssetScript, transfer,
   waitForTx
 } from '../../src'
-import { address, publicKey } from '@waves/waves-crypto'
+import { address, publicKey } from '@waves/ts-lib-crypto'
 import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
 
 

@@ -1,4 +1,4 @@
-import { publicKey, verifySignature } from '@waves/waves-crypto'
+import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { transfer } from '../../src'
 import { transferMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
