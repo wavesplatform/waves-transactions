@@ -23,6 +23,7 @@ export { invokeScript } from './transactions/invoke-script'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 
+
 // Export interfaces
 export {
   ITransaction,
@@ -89,9 +90,12 @@ const libs = {
 
 import * as seedUtils from './seedUtils'
 import * as nodeInteraction from './nodeInteraction'
+import * as validators from './validators'
 
 export {
   libs,
   seedUtils,
-  nodeInteraction
+  nodeInteraction,
+  validators
 }
+
