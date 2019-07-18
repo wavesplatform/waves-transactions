@@ -5,13 +5,12 @@ import {
   address,
   privateKey,
   publicKey,
-  randomBytes,
   sha256,
   base16Encode,
   encryptSeed,
-  decryptSeed
+  decryptSeed,
+  randomSeed
 } from '@waves/ts-lib-crypto'
-import dictionary from './dictionary'
 import { serializePrimitives } from '@waves/marshall'
 
 export class Seed {
@@ -107,20 +106,7 @@ export class Seed {
 
 
 export function generateNewSeed(length = 15) {
-  const random = Array.from({ length })
-    .map(_ => randomBytes(4)
-      .reduce((acc, next, i) => acc + next * 2 ** (i * 4), 0)
-    )
-
-  const wordCount = dictionary.length
-  const phrase = []
-
-  for (let i = 0; i < length; i++) {
-    const wordIndex = random[i] % wordCount
-    phrase.push(dictionary[wordIndex])
-  }
-
-  return phrase.join(' ')
+  return randomSeed(length)
 }
 
 
