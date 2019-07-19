@@ -235,7 +235,7 @@ export interface IDataEntry {
 
 export interface ITypelessDataEntry {
   key: string
-  value: string | number | boolean | Buffer | Uint8Array | number[]
+  value: string | number | boolean | Uint8Array | number[]
 }
 
 /**
