@@ -1,4 +1,6 @@
 import { validators } from '../../src/index'
+import { validate } from '../../src/validators'
+import { TRANSACTION_TYPE } from '../../src/transactions';
 
 describe('Validators', () => {
     
@@ -86,6 +88,25 @@ describe('Validators', () => {
             expect(validators.isValidAddress('3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fa')).toBe(false)
         })
         
+        it('Valid Waves Alias', () => {
+            expect(validators.isValidAlias('alias:W:test')).toBe(true)
+            expect(validators.isValidAlias('alias:T:test1')).toBe(true)
+            expect(validators.isValidAlias('alias:T:helloisalongaliasfortestwith30')).toBe(true)
+            expect(validators.isValidAlias('test1')).toBe(false)
+            expect(validators.isValidAlias('alias:W:tes')).toBe(false)
+            expect(validators.isValidAlias('alias:W:helloisalongaliasfortestmorethan30simbols')).toBe(false)
+            expect(validators.isValidAlias('alias:W:truealias:wrongalias')).toBe(false)
+            expect(validators.isValidAlias('alias:W:WrongAlias')).toBe(false)
+    
+        })
+        
+        it('Is recipient', () => {
+            expect(validators.isRecipient('alias:W:test')).toBe(true)
+            expect(validators.isRecipient('3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj')).toBe(true)
+            expect(validators.isRecipient('4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj')).toBe(false)
+            expect(validators.isRecipient('test')).toBe(false)
+        })
+        
         it('Bytes Length', () => {
             const is2 = validators.bytesLength(2)
             const is5 = validators.bytesLength(5)
@@ -99,24 +120,168 @@ describe('Validators', () => {
             expect(is5([])).toBe(false)
             
             expect(is8({ 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, length: 8 })).toBe(true)
-            expect(is8({length: 8 })).toBe(true)
-            expect(is8(Uint8Array.from({length: 8 }))).toBe(true)
+            expect(is8({ length: 8 })).toBe(true)
+            expect(is8(Uint8Array.from({ length: 8 }))).toBe(true)
+        })
+        
+        it('Base58 validator', () => {
+            expect(validators.isBase58('')).toBe(true)
+            expect(validators.isBase58('2M251qL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kd1')).toBe(true)
+            expect(validators.isBase58('base58:2M251qL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kd1')).toBe(false)
+            expect(validators.isBase58(null)).toBe(false)
+        })
+        
+        it('Base64 validator', () => {
+            expect(validators.isBase64('')).toBe(true)
+            expect(validators.isBase64('K0HJI42oXrHh')).toBe(true)
+            expect(validators.isBase64('base64:K0HJI42oXrHh')).toBe(true)
+            expect(validators.isBase64('base64:')).toBe(true)
+            expect(validators.isBase64(null)).toBe(false)
+        })
+        
+        it('isByteArray', () => {
+            expect(validators.isByteArray('')).toBe(false)
+            expect(validators.isByteArray(null)).toBe(false)
+            expect(validators.isByteArray([])).toBe(true)
+            expect(validators.isByteArray({})).toBe(false)
+            expect(validators.isByteArray({ length: 5 })).toBe(false)
+            expect(validators.isByteArray([1, 2, 3, 4])).toBe(true)
+            expect(validators.isByteArray([1, 2, 3, 4, 665])).toBe(false)
+            expect(validators.isByteArray([1, 2, 3, 4, new Number(665)])).toBe(false)
+            expect(validators.isByteArray([1, 2, 3, 4, new Number(5)])).toBe(true)
+            expect(validators.isByteArray(new Uint8Array([1, 2, 3, 4, 665]))).toBe(true)
+        })
+        
+        it('Is Array', () => {
+            expect(validators.isArray(null)).toBe(false)
+            expect(validators.isArray('')).toBe(false)
+            expect(validators.isArray('trololo')).toBe(false)
+            expect(validators.isArray(new Uint8Array([1, 2, 3]))).toBe(false)
+            expect(validators.isArray([])).toBe(true)
+            expect(validators.isArray([1, 2, 100, 1000])).toBe(true)
+        })
+        
+        it('If Else', () => {
+            const cond = validators.ifElse(validators.isArray, (value: Array<unknown>) => value[0], () => 'null')
+            expect(cond([300])).toBe(300);
+            expect(cond(null)).toBe('null');
+            
+        })
+        
+        it('pipe', () => {
+            
+            const process = validators.pipe(
+                (value: unknown) => ({ 1: value }),
+                (value: unknown) => ({ 2: value }),
+                (value: unknown) => ({ 3: value }),
+            )
+            
+            const result = process('test');
+            
+            expect(result[3][2][1]).toBe('test')
+        })
+        
+        it('prop', () => {
+            expect(validators.prop('test')(null)).toBeUndefined()
+            expect(validators.prop('test')({ test: 1 })).toBe(1)
+        })
+        
+        it('validate pipe', () => {
+            
+            const process = validators.validatePipe(
+                validators.isRequired(true),
+                validators.isNumber,
+                validators.isEq(5),
+            )
+            
+            expect(process(null)).toBe(false)
+            expect(process(0)).toBe(false)
+            expect(process('5')).toBe(false)
+            expect(process(5)).toBe(true)
+            expect(process(Number(5))).toBe(true)
+        })
+        
+        it('is public key', () => {
+            expect(validators.isPublicKey(null)).toBe(false)
+            expect(validators.isPublicKey('')).toBe(false)
+            expect(validators.isPublicKey('moZHag4WASMh4YgBNzxmb8qSdBf')).toBe(false)
+            expect(validators.isPublicKey('3mM3tuGyLKhzZLoqYmoZHag4WASMh4YgBNzxmb8qSdBf')).toBe(true)
+            expect(validators.isPublicKey('3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBf')).toBe(true)
+            
+        })
+        
+        it('Validate attachment', () => {
+            expect(validators.isAttachment(null)).toBe(true)
+            expect(validators.isAttachment([])).toBe(true)
+            expect(validators.isAttachment(undefined)).toBe(true)
+            expect(validators.isAttachment('3mM3')).toBe(true)
+            expect(validators.isAttachment(':3mM3')).toBe(false)
+            expect(validators.isAttachment('3mM3tuGyLKhzZLoqY3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBfmoZHagAWASMh4YgBNzxmb8qSdBf3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBf3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBf3mM3tuGyLKhzZLoqY3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBfmoZHagAWASMh4YgBNzxmb8qSdBf3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBf3mM3tuGyLKhzZLoqYmoZHagAWASMh4YgBNzxmb8qSdBf')).toBe(false)
+        })
+        
+        it('Validate assetId', () => {
+            expect(validators.isAssetId('474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu')).toBe(true)
+            expect(validators.isAssetId(null)).toBe(true)
+            expect(validators.isAssetId('WAVES')).toBe(true)
+        })
+        
+        it('Validate by schema', () => {
+            
+            const schema = {
+                recipient: validators.isRecipient,
+                amount: validators.isNumberLike,
+                bool: validators.orEq([true, false])
+            };
+            
+            const getError = (key: string) => key
+            const validator = validators.validateByShema(schema, getError)
+            
+            expect(validator({
+                recipient: '3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj',
+                amount: 10,
+                bool: true
+            })).toBe(true)
+    
+            expect(() => validator({ recipient: 1 })).toThrow('recipient')
+            
+            expect(() => validator({
+                recipient: '3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj',
+                amount: undefined
+            })).toThrow('amount')
+    
+            expect(() => validator({
+                recipient: '3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj',
+                amount: '2',
+                bool: 1
+            })).toThrow('bool')
+            
+            const a: any = null;
+            
+            expect(() => validator(a)).toThrow('recipient')
         })
     })
     
-    it('Base58 validator', () => {
-        expect(validators.isBase58('')).toBe(true)
-        expect(validators.isBase58('2M251qL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kd1')).toBe(true)
-        expect(validators.isBase58('base58:2M251qL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kd1')).toBe(false)
-        expect(validators.isBase58(null)).toBe(false)
+    describe('Tx validators', () => {
+        
+        it('transfer', () => {
+            const transfer = {
+                type: TRANSACTION_TYPE.TRANSFER,
+                version: 2,
+                senderPublicKey: '2M25DqL2W4rGFLCFadgATboS8EPqyWAN3DjH12AH5Kdr',
+                assetId: 'WAVES',
+                recipient: 'alias:W:test',
+                amount: 100000,
+                attachment: null,
+                fee: 100000,
+                feeAssetId: 'WAVES',
+                timestamp: Date.now(),
+            } as any
+   
+            
+            expect(() => validate.transfer(transfer)).not.toThrow()
+            expect(() => validate.transfer({ ...transfer, type: 1 })).toThrow()
+            expect(() => validate.transfer({ ...transfer, version: 3 })).toThrow()
+        })
     })
-    
-    it('Base64 validator', () => {
-        expect(validators.isBase64('')).toBe(true)
-        expect(validators.isBase64('K0HJI42oXrHh')).toBe(true)
-        expect(validators.isBase64('base64:K0HJI42oXrHh')).toBe(true)
-        expect(validators.isBase64('base64:')).toBe(true)
-        expect(validators.isBase64(null)).toBe(false)
-    })
-    
 })
+

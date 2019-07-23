@@ -3,7 +3,8 @@
  */
 import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId } from '../generic'
+import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 
@@ -20,17 +21,19 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     type,
     version,
     senderPublicKey,
-    assetId: paramsOrTx.assetId === 'WAVES' ? null : paramsOrTx.assetId,
+    assetId: normalizeAssetId(paramsOrTx.assetId),
     recipient: paramsOrTx.recipient,
     amount: paramsOrTx.amount,
     attachment: paramsOrTx.attachment || '',
     fee: fee(paramsOrTx, 100000),
-    feeAssetId: paramsOrTx.feeAssetId === 'WAVES' ? null : paramsOrTx.feeAssetId,
+    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
-
+  
+  validate.transfer(tx)
+  
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))

@@ -9,7 +9,7 @@ import {
 } from '../src/transactions'
 
 export const aliasMinimalParams: IAliasParams = {
-  alias: 'MyTestAlias',
+  alias: 'mytestalias',
 }
 
 export const burnMinimalParams: IBurnParams = {
