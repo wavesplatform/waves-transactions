@@ -9,7 +9,7 @@ import { binary } from '@waves/marshall'
 
 
 /**
- * Creates and signs [[Order]].
+ * Creates and signs [[TOrder]].
  *
  * You can use this function with multiple seeds. In this case it will sign order accordingly and will add one proof per seed.
  * Also you can use already signed [[Order]] as a second agrument.
