@@ -26,7 +26,7 @@ import {
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
-
+import { validate } from '../validators'
 
 const typeMap: any = {
   integer: ['integer', 0, LONG],
@@ -84,6 +84,9 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
       }
     }),
   }
+  
+  validate.data(tx)
+  
   const bytes1 = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes1),i))

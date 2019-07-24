@@ -9,15 +9,17 @@ import {
     validateByShema,
     ifElse,
     isValidAliasName,
-    defaultValue
+    defaultValue, isPublicKey
 } from './validators'
 
 
 const aliasScheme = {
     type: isEq(TRANSACTION_TYPE.ALIAS),
     version: orEq([undefined, 0, 1, 2]),
+    senderPublicKey: isPublicKey,
     alias: isValidAliasName,
     fee: isNumberLike,
+    chainId: isNumber,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
  };

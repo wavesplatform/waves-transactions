@@ -12,6 +12,7 @@ import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
+import { validate } from '../validators'
 
 
 /* @echo DOCS */
@@ -38,6 +39,8 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     id: '',
   }
 
+  validate.invokeScript(tx)
+  
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))

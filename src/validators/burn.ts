@@ -8,19 +8,21 @@ import {
     getError,
     validateByShema,
     ifElse,
-    isValidAliasName,
-    defaultValue
+    defaultValue,
+    isAssetId,
+    isPublicKey
 } from './validators'
 
-
 const burnScheme = {
-    type: isEq(TRANSACTION_TYPE.ALIAS),
+    type: isEq(TRANSACTION_TYPE.BURN),
+    senderPublicKey: isPublicKey,
     version: orEq([undefined, 0, 1, 2]),
-    burn: isValidAliasName,
+    assetId: isAssetId,
+    quantity: isNumberLike,
+    chainId: isNumber,
     fee: isNumberLike,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
  };
-
 
 export const burnValidator = validateByShema(burnScheme, getError)

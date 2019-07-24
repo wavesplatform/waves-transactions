@@ -10,12 +10,13 @@ import {
     isArray,
     getError,
     validateByShema,
-    ifElse, defaultValue
+    ifElse, defaultValue, isPublicKey
 } from './validators'
 
 
 const transferScheme = {
     type: isEq(TRANSACTION_TYPE.TRANSFER),
+    senderPublicKey: isPublicKey,
     version: orEq([undefined, 0, 1, 2]),
     assetId: isAssetId,
     feeAssetId: isAssetId,

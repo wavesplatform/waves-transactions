@@ -6,6 +6,7 @@ import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { base58Encode, blake2b, signBytes } from '@waves/ts-lib-crypto'
 import { binary } from '@waves/marshall'
+import { validate } from '../validators'
 
 
 /* @echo DOCS */
@@ -32,6 +33,8 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
     id: '', //TODO: invalid id for masstransfer tx
   }
 
+  validate.massTransfer(tx)
+  
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))

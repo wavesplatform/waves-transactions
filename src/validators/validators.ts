@@ -1,4 +1,4 @@
-import { base58Decode, base64Decode, keccak, blake2b } from '@waves/ts-lib-crypto'
+import { base58Decode, base64Decode, keccak, blake2b, stringToBytes } from '@waves/ts-lib-crypto'
 
 
 const TX_DEFAULTS = {
@@ -50,6 +50,8 @@ export const isEq = <T>(reference: T) => (value: unknown) => {
             return Number(value) === Number(reference)
         case isString(value) && isString(reference):
             return String(reference) === String(value)
+        case isBoolean(value) && isBoolean(reference):
+            return Boolean(value) === Boolean(reference)
         default:
             return reference === value;
     }
@@ -64,6 +66,8 @@ export const isString = (value: unknown) => typeof value === 'string' || value i
 export const isNumber = (value: unknown) => (typeof value === 'number' || value instanceof Number) && !isNaN(Number(value))
 
 export const isNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && !!(value || value === 0)
+
+export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean)
 
 export const isByteArray = (value: unknown) => {
     if (!value) {
@@ -96,6 +100,7 @@ export const isBase58 = (value: unknown) => {
 
 export const isBase64 = (value: unknown) => {
     try {
+        value = (value as string).replace(/^base64:/,'')
         base64Decode(value as string);
     } catch (e) {
         return false;
@@ -173,7 +178,7 @@ export const isPublicKey = validatePipe(
 )
 
 export const isAssetId = ifElse(
-    orEq([null, 'WAVES']),
+    orEq(['', null, undefined, 'WAVES']),
     defaultValue(true),
     isPublicKey
 );
@@ -195,6 +200,46 @@ export const isAttachment = ifElse(
             ),
             defaultValue(false)
         )
+    )
+)
+
+const validateType = {
+    integer: isNumberLike,
+    boolean: isBoolean,
+    string: isString,
+    binary: isBase64,
+};
+
+export const isValidDataPair = (data: { type: keyof typeof validateType, value: unknown }) =>
+    !!(validateType[data.type] && validateType[data.type](data.value))
+
+export const isValidData = validatePipe(
+    isRequired(true),
+    pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+    isValidDataPair
+)
+
+export const isValidAssetName = validatePipe(
+    isRequired(true),
+    isString,
+    pipe(
+        stringToBytes,
+        prop('length'),
+        ifElse(
+            gte(ASSETS.NAME_MIN_BYTES),
+            lte(ASSETS.NAME_MAX_BYTES),
+            defaultValue(false)
+        )
+    )
+)
+
+export const isValidAssetDescription = ifElse(
+    isRequired(false),
+    defaultValue(true),
+    pipe(
+        stringToBytes,
+        prop('length'),
+        lte(ASSETS.DESCRIPTION_MAX_BYTES),
     )
 )
 
