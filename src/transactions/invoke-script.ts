@@ -9,7 +9,7 @@ import {
   IInvokeScriptTransaction, IInvokeScriptPayment
 } from '../transactions'
 import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte, normalizeAssetId } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
@@ -32,7 +32,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     call: paramsOrTx.call && {args: [], ...paramsOrTx.call},
     payment: mapPayment(paramsOrTx.payment),
     fee: fee(paramsOrTx, 500000),
-    feeAssetId: paramsOrTx.feeAssetId === 'WAVES' ? null : paramsOrTx.feeAssetId,
+    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
