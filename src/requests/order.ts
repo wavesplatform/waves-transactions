@@ -6,10 +6,11 @@ import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generi
 import { IOrder, IOrderParams, TOrder, WithId, WithSender } from '../transactions'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
+import { validate } from '../validators'
 
 
 /**
- * Creates and signs [[Order]].
+ * Creates and signs [[TOrder]].
  *
  * You can use this function with multiple seeds. In this case it will sign order accordingly and will add one proof per seed.
  * Also you can use already signed [[Order]] as a second agrument.
@@ -65,7 +66,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   const t = timestamp || Date.now()
 
   const seedsAndIndexes = convertToPairs(seed)
-  const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
+  const senderPublicKey = paramsOrOrder.senderPublicKey || getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
 
   // Use old versionless order only if it is set to null explicitly
   const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version || 2
@@ -94,6 +95,9 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   const bytes = binary.serializeOrder(ord)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
+  
+  validate.order(ord)
+  
   ord.id = base58Encode(blake2b(bytes))
 
   // OrderV1 uses signature instead of proofs

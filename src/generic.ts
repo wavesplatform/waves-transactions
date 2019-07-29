@@ -69,3 +69,8 @@ export function fee(params: IBasicParams, def: number) {
   if (!params.additionalFee) return def
   return def + params.additionalFee
 }
+
+export function normalizeAssetId(assetId: string | null) {
+  assetId = assetId || null;
+  return assetId === 'WAVES' ? null : assetId;
+}

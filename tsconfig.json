@@ -26,7 +26,7 @@
     "out": "docs",
     "theme": "./node_modules/typedoc-clarity-theme",
     "ignoreCompilerErrors": true,
-    "exclude": "**/**/*+(generic|dictionary).ts",
+    "exclude": "**/validators/**",
     "excludePrivate": true,
     "excludeExternals": true,
     "excludeNotExported": true,

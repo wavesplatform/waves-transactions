@@ -39,6 +39,7 @@ import { setAssetScript } from './transactions/set-asset-script'
 import { exchange } from './transactions/exchange'
 import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
+import { serializeCustomData, TSignedData } from './requests/custom-data'
 
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
@@ -91,6 +92,10 @@ export function verify(obj: TTx | TOrder, proofN = 0, publicKey?: string): boole
   return verifySignature(publicKey, bytes, signature)
 }
 
+export function verifyCustomData(data: TSignedData): boolean {
+  const bytes = serializeCustomData(data)
+  return verifySignature(data.publicKey, bytes, data.signature)
+}
 
 /**
  * Sends order to matcher

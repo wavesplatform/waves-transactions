@@ -19,9 +19,11 @@ export { setAssetScript } from './transactions/set-asset-script'
 export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
+export { customData } from './requests/custom-data'
 export { invokeScript } from './transactions/invoke-script'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
+
 
 // Export interfaces
 export {
@@ -89,9 +91,12 @@ const libs = {
 
 import * as seedUtils from './seedUtils'
 import * as nodeInteraction from './nodeInteraction'
+import * as validators from './validators'
 
 export {
   libs,
   seedUtils,
-  nodeInteraction
+  nodeInteraction,
+  validators
 }
+
