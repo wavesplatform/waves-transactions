@@ -9,7 +9,6 @@ import {
   validateByShema,
   ifElse,
   defaultValue,
-  isAssetId,
   isPublicKey,
   isValidAssetName,
   isValidAssetDescription,
@@ -18,7 +17,7 @@ import {
 
 const issueScheme = {
   type: isEq(TRANSACTION_TYPE.ISSUE),
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 2]),
   senderPublicKey: isPublicKey,
   name: isValidAssetName,
   description: isValidAssetDescription,

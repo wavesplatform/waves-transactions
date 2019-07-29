@@ -168,7 +168,7 @@ export const isValidAlias = validatePipe(
     )
 )
 
-export const isPublicKey = validatePipe(
+export const isHash = validatePipe(
     isRequired(true),
     isBase58,
     pipe(
@@ -177,10 +177,13 @@ export const isPublicKey = validatePipe(
     )
 )
 
+export const isPublicKey = isHash
+
+
 export const isAssetId = ifElse(
     orEq(['', null, undefined, 'WAVES']),
     defaultValue(true),
-    isPublicKey
+    isHash
 );
 
 export const isAttachment = ifElse(

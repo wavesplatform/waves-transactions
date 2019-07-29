@@ -13,6 +13,11 @@ import { reissueValidator as reissue } from './reissue';
 import { issueValidator as issue } from './issue';
 import { leaseValidator as lease } from './lease';
 import { invokeValidator as invokeScript } from './invoke-script';
+import { exchangeValidator as exchange } from './exchange';
+
+import { orderValidator as order } from './order';
+import { cancelOrderValidator as cancelOrder } from './cancel-order';
+import { customDataValidator as customData } from './custom-data';
 
 
 export const validate = {
@@ -29,4 +34,9 @@ export const validate = {
     lease,
     setScript,
     invokeScript,
+    exchange,
+    
+    cancelOrder,
+    customData,
+    order
 }

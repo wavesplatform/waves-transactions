@@ -336,6 +336,7 @@ export interface ICancelOrder {
   sender: string
   orderId: string
   signature: string
+  hash: string
 }
 
 //////////////params
@@ -476,6 +477,8 @@ export interface IOrderParams<LONG = string | number> {
 
 export interface ICancelOrderParams {
   orderId: string
+  signature?: string
+  senderPublicKey?: string
 }
 
 /**

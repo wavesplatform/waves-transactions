@@ -60,7 +60,7 @@ export const orderMinimalParams: IOrderParams = {
 }
 
 export const cancelOrderMinimalParams: ICancelOrderParams = {
-  orderId: '3B3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+  orderId: '47YGqHdHtNPjcjE69E9EX9aD9bpC8PRKr4kp5AcZKHFq',
 }
 
 export const dataMinimalParams: IDataParams = {

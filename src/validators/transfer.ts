@@ -17,7 +17,7 @@ import {
 const transferScheme = {
     type: isEq(TRANSACTION_TYPE.TRANSFER),
     senderPublicKey: isPublicKey,
-    version: orEq([undefined, 0, 1, 2]),
+    version: orEq([undefined, 2]),
     assetId: isAssetId,
     feeAssetId: isAssetId,
     recipient: isRecipient,
