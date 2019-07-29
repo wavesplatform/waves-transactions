@@ -18,6 +18,7 @@ import { exchangeValidator as exchange } from './exchange';
 import { orderValidator as order } from './order';
 import { cancelOrderValidator as cancelOrder } from './cancel-order';
 import { customDataValidator as customData } from './custom-data';
+import { authValidator as auth } from './auth';
 
 
 export const validate = {
@@ -38,5 +39,6 @@ export const validate = {
     
     cancelOrder,
     customData,
-    order
+    order,
+    auth
 }
