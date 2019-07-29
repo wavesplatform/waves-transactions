@@ -3,7 +3,7 @@
  */
 import axios from 'axios'
 import { binary, json } from '@waves/marshall'
-import { verifySignature } from '@waves/ts-lib-crypto'
+import { address, verifySignature } from '@waves/ts-lib-crypto'
 import {
   IAliasTransaction,
   IBurnTransaction,
@@ -21,7 +21,7 @@ import {
   TRANSACTION_TYPE,
   TTx,
   TTxParams,
-  IInvokeScriptTransaction, TOrder, WithTxType
+  IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams
 } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
@@ -40,6 +40,7 @@ import { exchange } from './transactions/exchange'
 import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
 import { serializeCustomData, TSignedData } from './requests/custom-data'
+import { serializeAuthData } from './requests/auth';
 
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
@@ -95,6 +96,13 @@ export function verify(obj: TTx | TOrder, proofN = 0, publicKey?: string): boole
 export function verifyCustomData(data: TSignedData): boolean {
   const bytes = serializeCustomData(data)
   return verifySignature(data.publicKey, bytes, data.signature)
+}
+
+export function verifyAuthData(authData: { signature: string, publicKey: string, address: string }, params: IAuthParams, chainId?: string|number): boolean {
+  chainId = chainId || 'W'
+  const bytes = serializeAuthData(params)
+  const myAddress = address({ publicKey: authData.publicKey }, chainId)
+  return myAddress === authData.address && verifySignature(authData.publicKey, bytes, authData.signature)
 }
 
 /**
