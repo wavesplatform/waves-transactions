@@ -21,7 +21,7 @@ import {
   TRANSACTION_TYPE,
   TTx,
   TTxParams,
-  IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams
+  IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams, IVerifyAuthData
 } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
@@ -98,7 +98,7 @@ export function verifyCustomData(data: TSignedData): boolean {
   return verifySignature(data.publicKey, bytes, data.signature)
 }
 
-export function verifyAuthData(authData: { signature: string, publicKey: string, address: string }, params: IAuthParams, chainId?: string|number): boolean {
+export function verifyAuthData(authData: IVerifyAuthData, params: IAuthParams, chainId?: string|number): boolean {
   chainId = chainId || 'W'
   const bytes = serializeAuthData(params)
   const myAddress = address({ publicKey: authData.publicKey }, chainId)

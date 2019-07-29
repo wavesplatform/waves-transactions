@@ -487,6 +487,12 @@ export interface IAuthParams {
   publicKey?: string
 }
 
+export interface IVerifyAuthData {
+  signature: string,
+  publicKey: string,
+  address: string
+}
+
 export interface IAuth {
   data: string
   host: string
