@@ -20,8 +20,9 @@ export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
 export { customData } from './requests/custom-data'
+export { auth } from './requests/auth'
 export { invokeScript } from './transactions/invoke-script'
-export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder } from './general'
+export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 
 
