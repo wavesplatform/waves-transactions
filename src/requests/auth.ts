@@ -7,11 +7,12 @@ const {STRING} = serializePrimitives
 import { getSenderPublicKey, convertToPairs } from '../generic'
 import { IAuthParams, IAuth } from '../transactions'
 import { validate } from '../validators'
+import { LEN, SHORT } from '@waves/marshall/dist/serializePrimitives';
 
 export const serializeAuthData = (auth: {host: string, data: string}) => concat(
-    STRING('WavesWalletAuthentication'),
-    STRING(auth.host),
-    STRING(auth.data),
+    LEN(SHORT)(STRING)('WavesWalletAuthentication'),
+    LEN(SHORT)(STRING)(auth.host || ''),
+    LEN(SHORT)(STRING)(auth.data || ''),
 )
 
 export function auth(params: IAuthParams, seed?: string, chainId?: string|number): IAuth {
