@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IStateChangeResponse | waves-transactions</title>
+	<title>ICustomDataV1 | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,13 +52,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/nodeinteraction.html">nodeInteraction</a>
+					<a href="../modules/index.html">index</a>
 				</li>
 				<li>
-					<a href="nodeinteraction.istatechangeresponse.html">IStateChangeResponse</a>
+					<a href="index.icustomdatav1.html">ICustomDataV1</a>
 				</li>
 			</ul>
-			<h1>Interface IStateChangeResponse</h1>
+			<h1>Interface ICustomDataV1</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IStateChangeResponse</span>
+						<span class="target">ICustomDataV1</span>
 					</li>
 				</ul>
 			</section>
@@ -80,8 +80,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodeinteraction.istatechangeresponse.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodeinteraction.istatechangeresponse.html#transfers" class="tsd-kind-icon">transfers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="index.icustomdatav1.html#binary" class="tsd-kind-icon">binary</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="index.icustomdatav1.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="index.icustomdatav1.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,22 +91,37 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="data" class="tsd-anchor"></a>
-					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="index.idataentry.html" class="tsd-signature-type">IDataEntry</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="binary" class="tsd-anchor"></a>
+					<h3>binary</h3>
+					<div class="tsd-signature tsd-kind-icon">binary<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in nodeInteraction.ts:206</li>
+							<li>Defined in requests/custom-data.ts:15</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>base64 encoded UInt8Array</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="publickey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> public<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in requests/custom-data.ts:17</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="transfers" class="tsd-anchor"></a>
-					<h3>transfers</h3>
-					<div class="tsd-signature tsd-kind-icon">transfers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in nodeInteraction.ts:207</li>
+							<li>Defined in requests/custom-data.ts:11</li>
 						</ul>
 					</aside>
 				</section>
@@ -120,10 +136,10 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_generic_.html">"generic"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/index.html">index</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/nodeinteraction.html">node<wbr>Interaction</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -133,66 +149,24 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="nodeinteraction.inoderequestoptions.html" class="tsd-kind-icon">INode<wbr>Request<wbr>Options</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="nodeinteraction.istatechangeresponse.html" class="tsd-kind-icon">IState<wbr>Change<wbr>Response</a>
+						<a href="index.icustomdatav1.html" class="tsd-kind-icon">ICustom<wbr>Data<wbr>V1</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="nodeinteraction.istatechangeresponse.html#data" class="tsd-kind-icon">data</a>
+								<a href="index.icustomdatav1.html#binary" class="tsd-kind-icon">binary</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="nodeinteraction.istatechangeresponse.html#transfers" class="tsd-kind-icon">transfers</a>
+								<a href="index.icustomdatav1.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="index.icustomdatav1.html#version" class="tsd-kind-icon">version</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../modules/nodeinteraction.html#cancellablepromise" class="tsd-kind-icon">Cancellable<wbr>Promise</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#accountdata" class="tsd-kind-icon">account<wbr>Data</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#accountdatabykey" class="tsd-kind-icon">account<wbr>Data<wbr>ByKey</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#assetbalance" class="tsd-kind-icon">asset<wbr>Balance</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#balance" class="tsd-kind-icon">balance</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#balancedetails" class="tsd-kind-icon">balance<wbr>Details</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#broadcast" class="tsd-kind-icon">broadcast</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#currentheight" class="tsd-kind-icon">current<wbr>Height</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#scriptinfo" class="tsd-kind-icon">script<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#statechanges" class="tsd-kind-icon">state<wbr>Changes</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#waitforheight" class="tsd-kind-icon">wait<wbr>For<wbr>Height</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#waitfortx" class="tsd-kind-icon">wait<wbr>For<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#waitfortxwithnconfirmations" class="tsd-kind-icon">wait<wbr>For<wbr>TxWithNConfirmations</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/nodeinteraction.html#waitnblocks" class="tsd-kind-icon">waitNBlocks</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

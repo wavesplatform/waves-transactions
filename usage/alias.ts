@@ -3,7 +3,7 @@ import { alias } from '../dist/index'
 const seed = 'example seed phrase'
 
 const params = {
-  alias: 'MyNewAlias',
+  alias: 'new_alias',
   chainId: 'W',
   //senderPublicKey: 'by default derived from seed',
   //timestamp: Date.now(),
