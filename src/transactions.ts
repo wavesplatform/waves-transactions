@@ -481,6 +481,21 @@ export interface ICancelOrderParams {
   senderPublicKey?: string
 }
 
+export interface IAuthParams {
+  data: string
+  host: string
+  publicKey?: string
+}
+
+export interface IAuth {
+  data: string
+  host: string
+  address: string
+  publicKey: string
+  hash: string
+  signature: string
+}
+
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
