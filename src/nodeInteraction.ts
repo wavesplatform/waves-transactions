@@ -166,9 +166,11 @@ export async function assetBalance(assetId: string, address: string, nodeUrl: st
  * Get full account dictionary
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ * @param regex - URL encoded (percent-encoded) regular expression to filter keys (https://www.tutorialspoint.com/scala/scala_regular_expressions.htm)
  */
-export async function accountData(address: string, nodeUrl: string): Promise<Record<string, IDataEntry>> {
-  const data: IDataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: nodeUrl, validateStatus })
+export async function accountData(address: string, nodeUrl: string, regex?: string): Promise<Record<string, IDataEntry>> {
+  const matches = regex ? '?matches=' + encodeURI(regex) : ''
+  const data: IDataEntry[] = await axios.get(`addresses/data/${address}${matches}`, { baseURL: nodeUrl, validateStatus })
     .then(process400)
     .then(x => x.data)
   return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
