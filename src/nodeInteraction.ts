@@ -162,15 +162,42 @@ export async function assetBalance(assetId: string, address: string, nodeUrl: st
     .then(x => x.data.balance)
 }
 
+export interface IAccountDataRequestOptions {
+  address: string
+  match?: string | RegExp
+}
 /**
  * Get full account dictionary
- * @param address - waves address as base58 string
+ * @param options - waves address and optional match regular expression. If match is present keys will be filtered by this regexp
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountData(address: string, nodeUrl: string): Promise<Record<string, IDataEntry>> {
-  const data: IDataEntry[] = await axios.get(`addresses/data/${address}`, { baseURL: nodeUrl, validateStatus })
+export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, IDataEntry>>
+export async function accountData(address: string, nodeUrl: string): Promise<Record<string, IDataEntry>>
+export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, IDataEntry>> {
+  let address;
+  let match;
+  if (typeof options === 'string'){
+    address = options
+    match = undefined
+  }else {
+    address = options.address
+    match = options.match && encodeURIComponent(typeof options.match === 'string'
+      ? options.match
+      : options.match.source)
+  }
+
+  const url = `addresses/data/${address}`
+  const config = {
+    baseURL: nodeUrl,
+    params: {
+      matches: match
+    },
+    validateStatus
+  }
+  const data: IDataEntry[] = await axios.get(url, config)
     .then(process400)
     .then(x => x.data)
+
   return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
 }
 
