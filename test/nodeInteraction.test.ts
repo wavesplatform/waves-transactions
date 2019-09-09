@@ -24,7 +24,7 @@ describe('Node interaction utility functions', () => {
       ],
       timestamp: 100000,
     }
-    const result = data(dataParams, 'seed')
+    const result = data(dataParams, 'seed seed')
 
     await expect(broadcast(result, apiBase)).rejects.toMatchObject({ "error": 303})
   })
@@ -62,6 +62,14 @@ describe('Node interaction utility functions', () => {
 
   it('Should get accountData ', async () => {
     await expect(utilityF.accountData('3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)).resolves.not.toBeFalsy()
+  }, 120000)
+
+  it('Should get accountData and filter it by regexp', async () => {
+    const data = await utilityF.accountData({
+      address: '3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu',
+      match: 'binary.*'
+    }, apiBase)
+    expect(Object.keys(data).length).toEqual(2)
   }, 120000)
 
   it('Should get accountData by key ', async () => {
