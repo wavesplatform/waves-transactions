@@ -33,6 +33,18 @@ describe('Node interaction utility functions', () => {
     return expect(utilityF.currentHeight(apiBase)).resolves.toBeGreaterThan(0)
   })
 
+  it('Should get transaction by id', async () => {
+    const id = 'EdhLuhUMX22gKxGxKZxLcVsygMC9nBCBbSuAxFhbZumQ'
+    const tx = await utilityF.transactionById(id, apiBase)
+    expect(tx.id).toEqual(id)
+  })
+
+  it('Should return null on not existing tx', async () => {
+    const id = 'EdhLuhUMX22gKxGxKZxLcVsygMC9nBCBbSuAxFbZumQ'
+    const tx = await utilityF.transactionById(id, apiBase)
+    expect(tx).toEqual(null)
+  })
+
   it('Should wait 1 Block', async () => {
     await utilityF.waitNBlocks(1, { apiBase })
   }, 120000)

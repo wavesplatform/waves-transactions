@@ -2,7 +2,7 @@
  * @module nodeInteraction
  */
 
-import { IDataEntry, TTx } from './transactions'
+import { IDataEntry, ITransaction, TTx, WithId } from './transactions'
 import axios from 'axios'
 import { json } from '@waves/marshall'
 
@@ -130,6 +130,18 @@ export async function waitNBlocks(blocksCount: number, options: INodeRequestOpti
 
 /**
  * Get account effective balance
+ * @param txId - transaction ID as base58 string
+ * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function transactionById(txId: string, nodeUrl: string): Promise<ITransaction & WithId & { height: number }> {
+  return axios.get(`transactions/info/${txId}`, {
+    baseURL: nodeUrl,
+    validateStatus: (status) => status === 404 || validateStatus(status)
+  }).then(resp => resp.data.error === 311 ? null : resp.data)
+}
+
+/**
+ * Get account effective balance
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
@@ -166,6 +178,7 @@ export interface IAccountDataRequestOptions {
   address: string
   match?: string | RegExp
 }
+
 /**
  * Get full account dictionary
  * @param options - waves address and optional match regular expression. If match is present keys will be filtered by this regexp
@@ -174,12 +187,12 @@ export interface IAccountDataRequestOptions {
 export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, IDataEntry>>
 export async function accountData(address: string, nodeUrl: string): Promise<Record<string, IDataEntry>>
 export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, IDataEntry>> {
-  let address;
-  let match;
-  if (typeof options === 'string'){
+  let address
+  let match
+  if (typeof options === 'string') {
     address = options
     match = undefined
-  }else {
+  } else {
     address = options.address
     match = options.match && encodeURIComponent(typeof options.match === 'string'
       ? options.match
