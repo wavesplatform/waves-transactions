@@ -55,7 +55,7 @@
     "ts-jsdoc": "^3.0.1",
     "ts-loader": "^5.3.3",
     "ts-node": "^7.0.1",
-    "typedoc": "^0.15.0",
+    "typedoc": "^0.14.2",
     "typedoc-clarity-theme": "^1.1.0",
     "typedoc-plugin-external-module-name": "^2.1.0",
     "typescript": "^3.5.2",
