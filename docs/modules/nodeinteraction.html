@@ -92,6 +92,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#currentheight" class="tsd-kind-icon">current<wbr>Height</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#scriptinfo" class="tsd-kind-icon">script<wbr>Info</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#statechanges" class="tsd-kind-icon">state<wbr>Changes</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#transactionbyid" class="tsd-kind-icon">transaction<wbr>ById</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#waitforheight" class="tsd-kind-icon">wait<wbr>For<wbr>Height</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#waitfortx" class="tsd-kind-icon">wait<wbr>For<wbr>Tx</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#waitfortxwithnconfirmations" class="tsd-kind-icon">wait<wbr>For<wbr>TxWithNConfirmations</a></li>
@@ -127,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:174</li>
+									<li>Defined in nodeInteraction.ts:187</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -155,7 +156,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:175</li>
+									<li>Defined in nodeInteraction.ts:188</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:211</li>
+									<li>Defined in nodeInteraction.ts:224</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -224,7 +225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:159</li>
+									<li>Defined in nodeInteraction.ts:171</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,7 +268,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:136</li>
+									<li>Defined in nodeInteraction.ts:148</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:147</li>
+									<li>Defined in nodeInteraction.ts:159</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,7 +342,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:258</li>
+									<li>Defined in nodeInteraction.ts:271</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -401,7 +402,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:224</li>
+									<li>Defined in nodeInteraction.ts:237</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -438,7 +439,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:246</li>
+									<li>Defined in nodeInteraction.ts:259</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -462,6 +463,43 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/nodeinteraction.istatechangeresponse.html" class="tsd-signature-type">IStateChangeResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="transactionbyid" class="tsd-anchor"></a>
+					<h3>transaction<wbr>ById</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">transaction<wbr>ById<span class="tsd-signature-symbol">(</span>txId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.itransaction.html" class="tsd-signature-type">ITransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withid.html" class="tsd-signature-type">WithId</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in nodeInteraction.ts:136</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get account effective balance</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>txId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>transaction ID as base58 string</p>
+									</div>
+								</li>
+								<li>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask balance from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/index.itransaction.html" class="tsd-signature-type">ITransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withid.html" class="tsd-signature-type">WithId</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -644,6 +682,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="nodeinteraction.html#statechanges" class="tsd-kind-icon">state<wbr>Changes</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="nodeinteraction.html#transactionbyid" class="tsd-kind-icon">transaction<wbr>ById</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="nodeinteraction.html#waitforheight" class="tsd-kind-icon">wait<wbr>For<wbr>Height</a>
