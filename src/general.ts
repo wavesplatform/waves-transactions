@@ -108,10 +108,26 @@ export function verifyAuthData(authData: { signature: string, publicKey: string,
 /**
  * Sends order to matcher
  * @param ord - transaction to send
+ * @param options - matcher address to send order to. E.g. https://matcher.wavesplatform.com/. Optional 'market' flag to send market order
+ */
+export function submitOrder(ord: TOrder, options: {matcherUrl: string, market?: boolean}): Promise<any>
+/**
+ * Sends order to matcher
+ * @param ord - transaction to send
  * @param matcherUrl - matcher address to send order to. E.g. https://matcher.wavesplatform.com/
  */
-export function submitOrder(ord: TOrder, matcherUrl: string) {
-  return axios.post('matcher/orderbook', json.stringifyOrder(ord), {
+export function submitOrder(ord: TOrder, matcherUrl: string): Promise<any>
+export function submitOrder(ord: TOrder, opts: any) {
+  let endpoint, matcherUrl: string
+  if ( typeof opts === 'string' ){
+    matcherUrl = opts
+    endpoint = 'matcher/orderbook'
+  }else {
+    matcherUrl = opts.matcherUrl
+    endpoint = opts.market ? 'matcher/orderbook/market' : 'matcher/orderbook'
+  }
+
+  return axios.post(endpoint, json.stringifyOrder(ord), {
     baseURL: matcherUrl,
     headers: { 'content-type': 'application/json' },
   })
