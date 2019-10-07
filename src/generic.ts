@@ -3,14 +3,14 @@ import {
   IBasicParams,
   WithSender, TOrder
 } from './transactions'
-import { TSeedTypes } from './types'
+import { TPrivateKey, TSeedTypes } from './types'
 import { publicKey } from '@waves/ts-lib-crypto'
 
 export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f: (v: T) => U): Record<K, U> =>
   Object.entries<T>(obj).map(([k, v]) => [k, f(v)] as [string, U])
     .reduce((acc, [k, v]) => ({ ...acc as any, [k]: v }), {} as Record<K, U>)
 
-export function getSenderPublicKey(seedsAndIndexes: [string, number?][], params: Partial<WithSender>) {
+export function getSenderPublicKey(seedsAndIndexes: [string | TPrivateKey, number?][], params: Partial<WithSender>) {
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
     throw new Error('Please provide either seed or senderPublicKey')
   else {
@@ -33,18 +33,17 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
   return tx
 }
 
-export function convertToPairs(seedObj?: TSeedTypes): [string, number | undefined][] {
+export function convertToPairs(seedObj?: TSeedTypes): [string | TPrivateKey, number | undefined][] {
   //Due to typescript duck typing, 'string' type satisfies IIndexSeedMap interface. Because of this we should typecheck against string first
   if (seedObj == null) {
     return []
-  }
-  else if (typeof seedObj === 'string') {
+  } else if (typeof seedObj === 'string') {
     return [[seedObj, undefined]]
-  }
-  else if (Array.isArray(seedObj)) {
+  } else if ('privateKey' in seedObj) {
+    return [[seedObj, undefined]]
+  } else if (Array.isArray(seedObj)) {
     return seedObj.map((s, i) => [s, i] as [string, number]).filter(([s, _]) => s)
-  }
-  else {
+  } else {
     const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort()
     return keys.map(k => [seedObj[k], k] as [string, number])
   }
@@ -71,6 +70,6 @@ export function fee(params: IBasicParams, def: number) {
 }
 
 export function normalizeAssetId(assetId: string | null) {
-  assetId = assetId || null;
-  return assetId === 'WAVES' ? null : assetId;
+  assetId = assetId || null
+  return assetId === 'WAVES' ? null : assetId
 }

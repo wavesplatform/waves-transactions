@@ -5,7 +5,8 @@ import { binary } from '@waves/marshall'
 
 describe('alias', () => {
 
-  const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
+  const stringSeed = 'adsa'
+  const privateKey = {privateKey: 'YkoCJDT4eLtCv5ynNAc4gmZo8ELM9bEbBXsEtGTWrCc'}
 
   it('should build from minimal set of params', () => {
     const tx = alias({ ...aliasMinimalParams }, stringSeed)
@@ -27,6 +28,11 @@ describe('alias', () => {
     let tx = alias({ ...aliasMinimalParams }, stringSeed)
     tx = alias(tx, stringSeed)
     expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+  })
+
+  it('Should get correct signature with private key', () => {
+    let tx = alias({ ...aliasMinimalParams }, privateKey)
+    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {

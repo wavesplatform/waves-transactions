@@ -8,4 +8,5 @@ export interface IIndexSeedMap {
   [key: number]: string
 }
 
-export type TSeedTypes = string | TOption<string>[] | IIndexSeedMap
+export type TPrivateKey = { privateKey: string }
+export type TSeedTypes = string | TOption<string | TPrivateKey>[] | IIndexSeedMap | TPrivateKey

@@ -24,6 +24,27 @@ describe('Matcher requests', () => {
     expect(cancelResp.status).toEqual('OrderCanceled')
   }, TIMEOUT)
 
+
+  it('should submit and cancel market order', async () => {
+    const oParams = {
+      orderType: 'buy' as 'buy',
+      matcherPublicKey: MATCHER_PUBLIC_KEY,
+      price: 10000000000000,
+      amount: 1000,
+      matcherFee: 700000,
+      priceAsset: null,
+      amountAsset: assetId
+    }
+
+    const ord = order(oParams, MASTER_SEED)
+    const submitResp = await submitOrder(ord, {market: true, matcherUrl: MATCHER_URL})
+    expect(submitResp.status).toEqual('OrderAccepted')
+
+    const co = cancelOrder({ orderId: ord.id }, MASTER_SEED)
+    const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
+    expect(cancelResp.status).toEqual('OrderCanceled')
+  }, TIMEOUT)
+
   it('order validation', async () => {
     const order1 = order({
       matcherPublicKey: MATCHER_PUBLIC_KEY,
