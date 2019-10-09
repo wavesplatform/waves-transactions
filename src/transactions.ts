@@ -572,12 +572,12 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
     function: string
     args?: {
       type: 'binary' | 'integer' | 'boolean' | 'string',
-      value: string | number | boolean
+      value: string | LONG | boolean
     }[]
   },
   payment?: {
     assetId?: string | null
-    amount: number
+    amount: LONG
   }[]
 }
 
