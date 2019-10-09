@@ -242,6 +242,43 @@ export async function scriptInfo(address: string, nodeUrl: string): Promise<any>
     .then(resp => resp.data)
 }
 
+/**
+ * Get account script meta, i.e., available callable functions
+ * @param address - waves address as base58 string
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function scriptMeta(address: string, nodeUrl: string): Promise<any> {
+  return axios.get(`addresses/scriptInfo/${address}/meta`,
+    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
+    .then(process400)
+    .then(resp => resp.data)
+}
+
+/**
+ * Get miner’s reward status and total supply
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function rewards(nodeUrl: string): Promise<any>
+/**
+ * Get miner’s reward status at height and total supply
+ * @param height - block number to get info
+ * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
+ */
+export async function rewards(height: number, nodeUrl: string): Promise<any>
+export async function rewards(...args: [number, string] | [string]): Promise<any> {
+  let endpoint = `blockchain/rewards/`
+  let nodeUrl: string;
+  if (args[1] !== undefined) {
+    endpoint += args[0].toString()
+    nodeUrl = args[1]
+  } else {
+    nodeUrl = args[0] as string
+  }
+  return axios.get(endpoint,
+    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
+    .then(process400)
+    .then(resp => resp.data)
+}
 
 export interface IStateChangeResponse {
   data: IDataEntry[],

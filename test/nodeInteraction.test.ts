@@ -104,6 +104,17 @@ describe('Node interaction utility functions', () => {
     expect(data).toMatchObject({extraFee:0})
   }, 120000)
 
+  it('Should get account script meta', async () => {
+    const data = await utilityF.scriptMeta( '3N749utyWVhhnCqWh6hbqsq5zMvqVSanamR', apiBase)
+    console.log(data)
+    expect(data).toMatchObject({address:'3N749utyWVhhnCqWh6hbqsq5zMvqVSanamR'})
+  }, 120000)
+
+  it('Should reward info', async () => {
+    const data = await utilityF.rewards('https://nodes-stagenet.wavesnodes.com')
+    expect(data).toHaveProperty('currentReward')
+  }, 120000)
+
   it('Should get invokeTx state changes', async () => {
     const data = await utilityF.stateChanges( 'CNo4Zy72KEAo4pnpVL5FQrBujwhqhYgBogwQ1RS8uWkD', apiBase)
     expect(Array.isArray(data.data)).toBe(true)
