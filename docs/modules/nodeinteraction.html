@@ -90,7 +90,9 @@
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#balancedetails" class="tsd-kind-icon">balance<wbr>Details</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="nodeinteraction.html#broadcast" class="tsd-kind-icon">broadcast</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#currentheight" class="tsd-kind-icon">current<wbr>Height</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#rewards" class="tsd-kind-icon">rewards</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#scriptinfo" class="tsd-kind-icon">script<wbr>Info</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#scriptmeta" class="tsd-kind-icon">script<wbr>Meta</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#statechanges" class="tsd-kind-icon">state<wbr>Changes</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#transactionbyid" class="tsd-kind-icon">transaction<wbr>ById</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="nodeinteraction.html#waitforheight" class="tsd-kind-icon">wait<wbr>For<wbr>Height</a></li>
@@ -342,7 +344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:272</li>
+									<li>Defined in nodeInteraction.ts:309</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,6 +401,66 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="rewards" class="tsd-anchor"></a>
+					<h3>rewards</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">rewards<span class="tsd-signature-symbol">(</span>nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">rewards<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in nodeInteraction.ts:261</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get miner’s reward status and total supply</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask data from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in nodeInteraction.ts:267</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get miner’s reward status at height and total supply</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>height: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>block number to get info</p>
+									</div>
+								</li>
+								<li>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask data from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
 					<a name="scriptinfo" class="tsd-anchor"></a>
 					<h3>script<wbr>Info</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
@@ -436,6 +498,43 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="scriptmeta" class="tsd-anchor"></a>
+					<h3>script<wbr>Meta</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">script<wbr>Meta<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, nodeUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in nodeInteraction.ts:250</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get account script meta, i.e., available callable functions</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>waves address as base58 string</p>
+									</div>
+								</li>
+								<li>
+									<h5>nodeUrl: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>node address to ask data from. E.g. <a href="https://nodes.wavesplatform.com/">https://nodes.wavesplatform.com/</a></p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
 					<a name="statechanges" class="tsd-anchor"></a>
 					<h3>state<wbr>Changes</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
@@ -445,7 +544,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in nodeInteraction.ts:260</li>
+									<li>Defined in nodeInteraction.ts:297</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -684,7 +783,13 @@
 						<a href="nodeinteraction.html#currentheight" class="tsd-kind-icon">current<wbr>Height</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="nodeinteraction.html#rewards" class="tsd-kind-icon">rewards</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="nodeinteraction.html#scriptinfo" class="tsd-kind-icon">script<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="nodeinteraction.html#scriptmeta" class="tsd-kind-icon">script<wbr>Meta</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="nodeinteraction.html#statechanges" class="tsd-kind-icon">state<wbr>Changes</a>
