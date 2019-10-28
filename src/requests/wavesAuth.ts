@@ -10,7 +10,7 @@ import { validate } from '../validators'
 import { LEN, SHORT } from '@waves/marshall/dist/serializePrimitives';
 import { TSeedTypes } from '../types';
 
-export const serializeAuthData = (auth: {publicKey: string; timestamp: number}) => concat(
+export const serializeWavesAuthData = (auth: {publicKey: string; timestamp: number}) => concat(
     LEN(SHORT)(BASE58_STRING)(auth.publicKey),
     LEN(SHORT)(LONG)(auth.timestamp),
 )
@@ -29,7 +29,7 @@ export function wavesAuth(params: IWavesAuthParams, seed?: TSeedTypes, chainId?:
     address: address({ publicKey }, chainId)
   }
   
-  const bytes = serializeAuthData(rx)
+  const bytes = serializeWavesAuthData(rx)
   
   rx.signature = seedsAndIndexes.map(([seed]) => signBytes(seed, bytes))[0] || ''
   rx.hash =  base58Encode(blake2b(Uint8Array.from(bytes)))

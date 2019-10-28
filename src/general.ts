@@ -41,7 +41,7 @@ import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
 import { serializeCustomData, TSignedData } from './requests/custom-data'
 import { serializeAuthData } from './requests/auth';
-import { serializeAuthData as wavesSerializeAuthData } from './requests/wavesAuth';
+import { serializeWavesAuthData } from './requests/wavesAuth';
 
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
@@ -108,7 +108,7 @@ export function verifyAuthData(authData: { signature: string, publicKey: string,
 
 export function verifyWavesAuthData(authData: { signature: string, publicKey: string, address: string, timestamp: number }, params: {publicKey: string, timestamp: number}, chainId?: string|number): boolean {
   chainId = chainId || 'W'
-  const bytes = wavesSerializeAuthData(params)
+  const bytes = serializeWavesAuthData(params)
   const myAddress = address({ publicKey: authData.publicKey }, chainId)
   return myAddress === authData.address && verifySignature(authData.publicKey, bytes, authData.signature)
 }
