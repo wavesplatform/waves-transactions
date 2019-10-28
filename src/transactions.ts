@@ -481,6 +481,19 @@ export interface ICancelOrderParams {
   senderPublicKey?: string
 }
 
+export interface IWavesAuthParams {
+  timestamp?: number
+  publicKey?: string
+}
+
+export interface IWavesAuth {
+  timestamp: number
+  address: string
+  publicKey: string
+  hash: string
+  signature: string
+}
+
 export interface IAuthParams {
   data: string
   host: string
