@@ -7,12 +7,11 @@ const {LONG, BASE58_STRING} = serializePrimitives
 import { getSenderPublicKey, convertToPairs } from '../generic'
 import { IWavesAuthParams, IWavesAuth } from '../transactions'
 import { validate } from '../validators'
-import { LEN, SHORT } from '@waves/marshall/dist/serializePrimitives';
 import { TSeedTypes } from '../types';
 
 export const serializeWavesAuthData = (auth: {publicKey: string; timestamp: number}) => concat(
-    LEN(SHORT)(BASE58_STRING)(auth.publicKey),
-    LEN(SHORT)(LONG)(auth.timestamp),
+    BASE58_STRING(auth.publicKey),
+    LONG(auth.timestamp),
 )
 
 export function wavesAuth(params: IWavesAuthParams, seed?: TSeedTypes, chainId?: string|number): IWavesAuth {
