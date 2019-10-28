@@ -14,7 +14,13 @@ describe('custom-data', () => {
     expect(d.hash).toEqual(base58Encode(blake2b(serializeCustomData(d))))
     expect(verifyCustomData(d)).toBe(true)
   })
-
+  
+  it('get v1 data', () => {
+    const p = { version: 1 as 1, binary: '0J/RgNC40LLQtdGCINC80LjRgAo=' }
+    const d = customData(p)
+    expect(d).toMatchObject(p)
+    expect(d.hash).toEqual(base58Encode(blake2b(serializeCustomData(d))))
+  })
 
   it('sign v2', () => {
     const d = customData({

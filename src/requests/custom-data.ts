@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import { signBytes, blake2b, base58Encode, publicKey, concat } from '@waves/ts-lib-crypto'
+import { signBytes, blake2b, base58Encode, publicKey, concat, TSeed } from '@waves/ts-lib-crypto'
 import { schemas, serializePrimitives } from '@waves/marshall'
 import { IDataEntry } from '../transactions'
 import { serializerFromSchema } from '@waves/marshall/dist/serialize'
@@ -29,7 +29,7 @@ export type TSignedData = TCustomData & {
   /**
    * base58 public key
    */
-  publicKey: string
+  publicKey: string | undefined
   /**
    * base58 encoded blake2b(serialized data)
    */
@@ -37,22 +37,23 @@ export type TSignedData = TCustomData & {
   /**
    * base58 encoded signature
    */
-  signature: string
+  signature: string | undefined
 }
 
 /**
  * Signs [[TCustomData]]
  */
-export function customData(cData: TCustomData, seed: string): TSignedData {
+export function customData(cData: TCustomData, seed?: TSeed): TSignedData {
 
   validate.customData(cData)
   
   let bytes = serializeCustomData(cData)
 
   const hash = base58Encode(blake2b(bytes))
-  const pk = publicKey(seed)
+  
+  const pk = cData.publicKey ? cData.publicKey : seed && publicKey(seed);
 
-  const signature = signBytes(seed, bytes)
+  const signature = seed && signBytes(seed, bytes);
 
   return {...cData, hash, publicKey: pk, signature}
 }

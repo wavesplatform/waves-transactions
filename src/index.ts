@@ -4,6 +4,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import { serializeCustomData } from './requests/custom-data';
+
 export { massTransfer } from './transactions/mass-transfer'
 export { reissue } from './transactions/reissue'
 export { burn } from './transactions/burn'
@@ -19,10 +21,11 @@ export { setAssetScript } from './transactions/set-asset-script'
 export { sponsorship } from './transactions/sponsorship'
 export { order } from './requests/order'
 export { cancelOrder } from './requests/cancel-order'
-export { customData } from './requests/custom-data'
+export { customData, serializeCustomData } from './requests/custom-data'
 export { auth } from './requests/auth'
+export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
-export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData } from './general'
+export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 
 

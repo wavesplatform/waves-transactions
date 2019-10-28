@@ -21,7 +21,7 @@ import {
   TRANSACTION_TYPE,
   TTx,
   TTxParams,
-  IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams
+  IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams, IWavesAuthParams
 } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
@@ -41,6 +41,7 @@ import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
 import { serializeCustomData, TSignedData } from './requests/custom-data'
 import { serializeAuthData } from './requests/auth';
+import { serializeAuthData as wavesSerializeAuthData } from './requests/wavesAuth';
 
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
@@ -95,12 +96,19 @@ export function verify(obj: TTx | TOrder, proofN = 0, publicKey?: string): boole
 
 export function verifyCustomData(data: TSignedData): boolean {
   const bytes = serializeCustomData(data)
-  return verifySignature(data.publicKey, bytes, data.signature)
+  return verifySignature(data.publicKey as string, bytes, data.signature as string)
 }
 
 export function verifyAuthData(authData: { signature: string, publicKey: string, address: string }, params: IAuthParams, chainId?: string|number): boolean {
   chainId = chainId || 'W'
   const bytes = serializeAuthData(params)
+  const myAddress = address({ publicKey: authData.publicKey }, chainId)
+  return myAddress === authData.address && verifySignature(authData.publicKey, bytes, authData.signature)
+}
+
+export function verifyWavesAuthData(authData: { signature: string, publicKey: string, address: string, timestamp: number }, params: {publicKey: string, timestamp: number}, chainId?: string|number): boolean {
+  chainId = chainId || 'W'
+  const bytes = wavesSerializeAuthData(params)
   const myAddress = address({ publicKey: authData.publicKey }, chainId)
   return myAddress === authData.address && verifySignature(authData.publicKey, bytes, authData.signature)
 }
