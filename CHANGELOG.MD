@@ -1,3 +1,5 @@
+## v3.22
+- added `wavesAuth`
 ## v3.21
 - added `scriptMeta` and `rewards` functions
 ## v3.20
