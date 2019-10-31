@@ -3,11 +3,10 @@
  */
 import { base58Encode, blake2b, concat, signBytes, address } from '@waves/ts-lib-crypto'
 import { serializePrimitives } from '@waves/marshall'
-const {STRING} = serializePrimitives
+const {STRING, LEN, SHORT} = serializePrimitives
 import { getSenderPublicKey, convertToPairs } from '../generic'
 import { IAuthParams, IAuth } from '../transactions'
 import { validate } from '../validators'
-import { LEN, SHORT } from '@waves/marshall/dist/serializePrimitives';
 
 export const serializeAuthData = (auth: {host: string, data: string}) => concat(
     LEN(SHORT)(STRING)('WavesWalletAuthentication'),
@@ -16,12 +15,12 @@ export const serializeAuthData = (auth: {host: string, data: string}) => concat(
 )
 
 export function auth(params: IAuthParams, seed?: string, chainId?: string|number): IAuth {
-  
+
   const seedsAndIndexes = convertToPairs(seed)
   const publicKey = params.publicKey || getSenderPublicKey(seedsAndIndexes, {senderPublicKey: undefined})
-  
+
   validate.auth(params)
-  
+
   const rx = {
     hash: '',
     signature: '',
@@ -30,9 +29,9 @@ export function auth(params: IAuthParams, seed?: string, chainId?: string|number
     publicKey,
     address: address({ publicKey }, chainId)
   }
-  
+
   const bytes = serializeAuthData(rx)
-  
+
   rx.signature = ( seed != null && signBytes(seed, bytes)) || ''
   rx.hash =  base58Encode(blake2b(Uint8Array.from(bytes)))
 

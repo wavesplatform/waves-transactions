@@ -27,6 +27,7 @@ export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
+export { makeTx } from './make-tx'
 
 
 // Export interfaces

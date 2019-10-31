@@ -4,7 +4,7 @@
 import { signBytes, blake2b, base58Encode, publicKey, concat, TSeed } from '@waves/ts-lib-crypto'
 import { schemas, serializePrimitives } from '@waves/marshall'
 import { IDataEntry } from '../transactions'
-import { serializerFromSchema } from '@waves/marshall/dist/serialize'
+import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 
 export interface ICustomDataV1 {
@@ -13,7 +13,7 @@ export interface ICustomDataV1 {
    * base64 encoded UInt8Array
    */
   binary: string // base64
-  
+
   publicKey?: string
 }
 
@@ -46,11 +46,11 @@ export type TSignedData = TCustomData & {
 export function customData(cData: TCustomData, seed?: TSeed): TSignedData {
 
   validate.customData(cData)
-  
+
   let bytes = serializeCustomData(cData)
 
   const hash = base58Encode(blake2b(bytes))
-  
+
   const pk = cData.publicKey ? cData.publicKey : seed && publicKey(seed);
 
   const signature = seed && signBytes(seed, bytes);
@@ -62,7 +62,7 @@ export function serializeCustomData(d: TCustomData){
   if (d.version === 1) {
     return concat([255, 255, 255, 1], serializePrimitives.BASE64_STRING(d.binary))
   } else if (d.version === 2) {
-    const ser = serializerFromSchema(schemas.txFields.data[1])
+    const ser = binary.serializerFromSchema(schemas.txFields.data[1])
     return concat([255, 255, 255, 2], ser(d.data))
   } else {
     throw new Error(`Invalid CustomData version: ${d!.version}`)

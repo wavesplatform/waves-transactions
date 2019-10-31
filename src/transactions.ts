@@ -2,8 +2,6 @@
  * @module index
  */
 export enum TRANSACTION_TYPE {
-  GENESIS = 1,
-  PAYMENT = 2,
   ISSUE = 3,
   TRANSFER = 4,
   REISSUE = 5,

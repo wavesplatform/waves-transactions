@@ -1,3 +1,5 @@
+## v3.23
+- added `makeTx`
 ## v3.22
 - added `wavesAuth`
 ## v3.21
