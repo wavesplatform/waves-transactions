@@ -1,5 +1,6 @@
 ## v3.23
 - added `makeTx`
+- TRANSACTION_TYPE changed to `const` from `enum`
 ## v3.22
 - added `wavesAuth`
 ## v3.21

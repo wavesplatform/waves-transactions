@@ -21,7 +21,7 @@ import {
   DATA_FIELD_TYPE,
   IDataParams,
   WithId,
-  WithSender, ITypelessDataEntry
+  WithSender, ITypelessDataEntry, TDataFiledType
 } from '../transactions'
 import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
@@ -37,7 +37,7 @@ const typeMap: any = {
   _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T): [DATA_FIELD_TYPE, number, (value:T)=>Uint8Array] =>
+const mapType = <T>(value: T): [TDataFiledType, number, (value:T)=>Uint8Array] =>
   typeMap[typeof value] || typeMap['_']
 
 
@@ -84,9 +84,9 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
       }
     }),
   }
-  
+
   validate.data(tx)
-  
+
   const bytes1 = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes1),i))

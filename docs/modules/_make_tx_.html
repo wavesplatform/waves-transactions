@@ -69,8 +69,10 @@
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_make_tx_.html#transactionparamstype" class="tsd-kind-icon">Transaction<wbr>Params<wbr>Type</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_make_tx_.html#transactiontype" class="tsd-kind-icon">Transaction<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_make_tx_.html#ttransaction" class="tsd-kind-icon">TTransaction</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_make_tx_.html#ttxparamswithtype" class="tsd-kind-icon">TTx<wbr>Params<wbr>With<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_make_tx_.html#txparamstypemap" class="tsd-kind-icon">Tx<wbr>Params<wbr>Type<wbr>Map</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_make_tx_.html#txtypemap" class="tsd-kind-icon">Tx<wbr>Type<wbr>Map</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -85,24 +87,54 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-					<a name="transactionparamstype" class="tsd-anchor"></a>
-					<h3>Transaction<wbr>Params<wbr>Type</h3>
-					<div class="tsd-signature tsd-kind-icon">Transaction<wbr>Params<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionParamsType&lt;T&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in make-tx.ts:61</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-					<a name="transactiontype" class="tsd-anchor"></a>
-					<h3>Transaction<wbr>Type</h3>
-					<div class="tsd-signature tsd-kind-icon">Transaction<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionType&lt;T&gt;</span></div>
+					<a name="ttransaction" class="tsd-anchor"></a>
+					<h3>TTransaction</h3>
+					<div class="tsd-signature tsd-kind-icon">TTransaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TxTypeMap[T]</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in make-tx.ts:45</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
+					<a name="ttxparamswithtype" class="tsd-anchor"></a>
+					<h3>TTx<wbr>Params<wbr>With<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">TTx<wbr>Params<wbr>With<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TxParamsTypeMap[T]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in make-tx.ts:63</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
+					<a name="txparamstypemap" class="tsd-anchor"></a>
+					<h3>Tx<wbr>Params<wbr>Type<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">Tx<wbr>Params<wbr>Type<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in make-tx.ts:65</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
+					<a name="txtypemap" class="tsd-anchor"></a>
+					<h3>Tx<wbr>Type<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">Tx<wbr>Type<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in make-tx.ts:47</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -111,13 +143,13 @@
 					<a name="maketx" class="tsd-anchor"></a>
 					<h3>make<wbr>Tx</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">make<wbr>Tx&lt;T&gt;<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TransactionParamsType&lt;T&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol"> | </span><a href="_make_tx_.html#transactiontype" class="tsd-signature-type">TransactionType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_make_tx_.html#transactiontype" class="tsd-signature-type">TransactionType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withid.html" class="tsd-signature-type">WithId</a></li>
+						<li class="tsd-signature tsd-kind-icon">make<wbr>Tx&lt;T&gt;<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TxParamsTypeMap[T]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TxTypeMap[T]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_make_tx_.html#ttransaction" class="tsd-signature-type">TTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withid.html" class="tsd-signature-type">WithId</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in make-tx.ts:81</li>
+									<li>Defined in make-tx.ts:85</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -128,16 +160,16 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="../enums/index.transaction_type.html" class="tsd-signature-type">TRANSACTION_TYPE</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="index.html#ttransactiontype" class="tsd-signature-type">TTransactionType</a></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <span class="tsd-signature-type">TransactionParamsType&lt;T&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol"> | </span><a href="_make_tx_.html#transactiontype" class="tsd-signature-type">TransactionType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>params: <span class="tsd-signature-type">TxParamsTypeMap[T]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/index.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TxTypeMap[T]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_make_tx_.html#transactiontype" class="tsd-signature-type">TransactionType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							<h4 class="tsd-returns-title">Returns <a href="_make_tx_.html#ttransaction" class="tsd-signature-type">TTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> &amp; </span>
 								<a href="../interfaces/index.withid.html" class="tsd-signature-type">WithId</a>
 							</h4>
@@ -172,10 +204,16 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_make_tx_.html#transactionparamstype" class="tsd-kind-icon">Transaction<wbr>Params<wbr>Type</a>
+						<a href="_make_tx_.html#ttransaction" class="tsd-kind-icon">TTransaction</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_make_tx_.html#transactiontype" class="tsd-kind-icon">Transaction<wbr>Type</a>
+						<a href="_make_tx_.html#ttxparamswithtype" class="tsd-kind-icon">TTx<wbr>Params<wbr>With<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="_make_tx_.html#txparamstypemap" class="tsd-kind-icon">Tx<wbr>Params<wbr>Type<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="_make_tx_.html#txtypemap" class="tsd-kind-icon">Tx<wbr>Type<wbr>Map</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="_make_tx_.html#maketx" class="tsd-kind-icon">make<wbr>Tx</a>
