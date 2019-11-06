@@ -2,6 +2,8 @@ import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { burn } from '../../src'
 import { burnMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
+import * as wavesProto from '@waves/protobuf-serialization'
+import { parseProtoBytes, serializeToProtoBytes } from '../../src/proto-serialize'
 
 describe('burn', () => {
 
@@ -10,6 +12,9 @@ describe('burn', () => {
   it('should build from minimal set of params', () => {
     const tx = burn({ ...burnMinimalParams } as any, stringSeed)
     expect(tx).toMatchObject({ ...burnMinimalParams })
+    const bytes = serializeToProtoBytes(tx)
+    const parsed = parseProtoBytes(bytes)
+    const a = 20
   })
 
 

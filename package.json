@@ -42,6 +42,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/jest": "^23.3.9",
+    "@types/long": "^4.0.0",
     "@types/node": "^10.12.3",
     "copy-webpack-plugin": "^4.5.2",
     "jest": "^24.7.1",
@@ -69,7 +70,9 @@
   },
   "dependencies": {
     "@waves/marshall": "^0.9.1",
+    "@waves/protobuf-serialization": "^0.2.0",
     "@waves/ts-lib-crypto": "^1.4.1",
-    "axios": "^0.19.0"
+    "axios": "^0.19.0",
+    "long": "^4.0.0"
   }
 }

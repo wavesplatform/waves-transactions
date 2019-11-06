@@ -75,6 +75,7 @@ export interface ITransaction<LONG = string | number> extends WithProofs, WithSe
   timestamp: number
   fee: LONG
   version: number
+  chainId: number | undefined
 }
 
 /**
