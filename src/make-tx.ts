@@ -25,7 +25,7 @@ import {
   ISponsorshipTransaction,
   ITransferParams,
   ITransferTransaction,
-  TRANSACTION_TYPE, WithId, WithSender
+  TRANSACTION_TYPE, TTransactionType, WithId, WithSender
 } from './transactions'
 import { issue } from './transactions/issue'
 import { transfer } from './transactions/transfer'
@@ -42,43 +42,47 @@ import { sponsorship } from './transactions/sponsorship'
 import { exchange } from './transactions/exchange'
 import { invokeScript } from './transactions/invoke-script'
 
-export type TransactionType<T> =
-  T extends TRANSACTION_TYPE.ISSUE ? IIssueTransaction :
-    T extends TRANSACTION_TYPE.TRANSFER ? ITransferTransaction :
-      T extends TRANSACTION_TYPE.REISSUE ? IReissueTransaction :
-        T extends TRANSACTION_TYPE.BURN ? IBurnTransaction :
-          T extends TRANSACTION_TYPE.LEASE ? ILeaseTransaction :
-            T extends TRANSACTION_TYPE.CANCEL_LEASE ? ICancelLeaseTransaction :
-              T extends TRANSACTION_TYPE.ALIAS ? IAliasTransaction :
-                T extends TRANSACTION_TYPE.MASS_TRANSFER ? IMassTransferTransaction :
-                  T extends TRANSACTION_TYPE.DATA ? IDataTransaction :
-                    T extends TRANSACTION_TYPE.SET_SCRIPT ? ISetScriptTransaction :
-                      T extends TRANSACTION_TYPE.SET_ASSET_SCRIPT ? ISetAssetScriptTransaction :
-                        T extends TRANSACTION_TYPE.SPONSORSHIP ? ISponsorshipTransaction :
-                          T extends TRANSACTION_TYPE.EXCHANGE ? IExchangeTransaction :
-                            T extends TRANSACTION_TYPE.INVOKE_SCRIPT ? IInvokeScriptTransaction :
-                              never;
-export type TransactionParamsType<T> =
-  T extends TRANSACTION_TYPE.ISSUE ? IIssueParams & { type: T }:
-    T extends TRANSACTION_TYPE.TRANSFER ? ITransferParams & { type: T }:
-      T extends TRANSACTION_TYPE.REISSUE ? IReissueParams & { type: T }:
-        T extends TRANSACTION_TYPE.BURN ? IBurnParams & { type: T }:
-          T extends TRANSACTION_TYPE.LEASE ? ILeaseParams & { type: T }:
-            T extends TRANSACTION_TYPE.CANCEL_LEASE ? ICancelLeaseParams & { type: T }:
-              T extends TRANSACTION_TYPE.ALIAS ? IAliasParams & { type: T }:
-                T extends TRANSACTION_TYPE.MASS_TRANSFER ? IMassTransferParams & { type: T }:
-                  T extends TRANSACTION_TYPE.DATA ? IDataParams & { type: T }:
-                    T extends TRANSACTION_TYPE.SET_SCRIPT ? ISetAssetScriptParams& { type: T } :
-                      T extends TRANSACTION_TYPE.SET_ASSET_SCRIPT ? ISetAssetScriptParams & { type: T }:
-                        T extends TRANSACTION_TYPE.SPONSORSHIP ? ISponsorshipParams & { type: T }:
-                          T extends TRANSACTION_TYPE.EXCHANGE ? IExchangeTransaction& { type: T } :
-                            T extends TRANSACTION_TYPE.INVOKE_SCRIPT ? IInvokeScriptParams & { type: T }:
-                              never;
+export type TTransaction<T extends TTransactionType> = TxTypeMap[T]
+
+export type TxTypeMap = {
+  [TRANSACTION_TYPE.ISSUE]: IIssueTransaction
+  [TRANSACTION_TYPE.TRANSFER]: ITransferTransaction
+  [TRANSACTION_TYPE.REISSUE]: IReissueTransaction
+  [TRANSACTION_TYPE.BURN]: IBurnTransaction
+  [TRANSACTION_TYPE.LEASE]: ILeaseTransaction
+  [TRANSACTION_TYPE.CANCEL_LEASE]: ICancelLeaseTransaction
+  [TRANSACTION_TYPE.ALIAS]: IAliasTransaction
+  [TRANSACTION_TYPE.MASS_TRANSFER]: IMassTransferTransaction
+  [TRANSACTION_TYPE.DATA]: IDataTransaction
+  [TRANSACTION_TYPE.SET_SCRIPT]: ISetScriptTransaction
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: ISetAssetScriptTransaction
+  [TRANSACTION_TYPE.SPONSORSHIP]: ISponsorshipTransaction
+  [TRANSACTION_TYPE.EXCHANGE]: IExchangeTransaction
+  [TRANSACTION_TYPE.INVOKE_SCRIPT]: IInvokeScriptTransaction
+}
+export type TTxParamsWithType<T extends TTransactionType> = TxParamsTypeMap[T]
+
+export type TxParamsTypeMap = {
+  [TRANSACTION_TYPE.ISSUE]: IIssueParams & { type: typeof TRANSACTION_TYPE.ISSUE }
+  [TRANSACTION_TYPE.TRANSFER]: ITransferParams & { type: typeof TRANSACTION_TYPE.TRANSFER }
+  [TRANSACTION_TYPE.REISSUE]: IReissueParams & { type: typeof TRANSACTION_TYPE.REISSUE }
+  [TRANSACTION_TYPE.BURN]: IBurnParams & { type: typeof TRANSACTION_TYPE.BURN }
+  [TRANSACTION_TYPE.LEASE]: ILeaseParams & { type: typeof TRANSACTION_TYPE.LEASE }
+  [TRANSACTION_TYPE.CANCEL_LEASE]: ICancelLeaseParams & { type: typeof TRANSACTION_TYPE.CANCEL_LEASE }
+  [TRANSACTION_TYPE.ALIAS]: IAliasParams & { type: typeof TRANSACTION_TYPE.ALIAS }
+  [TRANSACTION_TYPE.MASS_TRANSFER]: IMassTransferParams & { type: typeof TRANSACTION_TYPE.MASS_TRANSFER }
+  [TRANSACTION_TYPE.DATA]: IDataParams & { type: typeof TRANSACTION_TYPE.DATA }
+  [TRANSACTION_TYPE.SET_SCRIPT]: ISetAssetScriptParams & { type: typeof TRANSACTION_TYPE.SET_SCRIPT }
+  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: ISetAssetScriptParams & { type: typeof TRANSACTION_TYPE.SET_ASSET_SCRIPT }
+  [TRANSACTION_TYPE.SPONSORSHIP]: ISponsorshipParams & { type: typeof TRANSACTION_TYPE.SPONSORSHIP }
+  [TRANSACTION_TYPE.EXCHANGE]: IExchangeTransaction & { type: typeof TRANSACTION_TYPE.EXCHANGE }
+  [TRANSACTION_TYPE.INVOKE_SCRIPT]: IInvokeScriptParams & { type: typeof TRANSACTION_TYPE.INVOKE_SCRIPT }
+}
 
 /**
  * Makes transaction from params. Validates all fields and calculates id
  */
-export function makeTx<T extends TRANSACTION_TYPE>(params:( TransactionParamsType<T> & WithSender) | TransactionType<T>):TransactionType<T> & WithId {
+export function makeTx<T extends TTransactionType>(params: TTxParamsWithType<T> & WithSender): TTransaction<T> & WithId {
   if (params.type === TRANSACTION_TYPE.ISSUE) {
     return issue(params as any) as any
   } else if (params.type === TRANSACTION_TYPE.TRANSFER) {
