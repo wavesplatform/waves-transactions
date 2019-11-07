@@ -2,6 +2,7 @@ import { publicKey, verifySignature, base64Decode } from '@waves/ts-lib-crypto'
 import { alias } from '../../src'
 import { aliasMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
+import { protoBytesToTx, txToProtoBytes } from '../../src/proto-serialize'
 
 describe('alias', () => {
 
@@ -9,7 +10,10 @@ describe('alias', () => {
   const privateKey = {privateKey: 'YkoCJDT4eLtCv5ynNAc4gmZo8ELM9bEbBXsEtGTWrCc'}
 
   it('should build from minimal set of params', () => {
+
     const tx = alias({ ...aliasMinimalParams }, stringSeed)
+    const bytes = txToProtoBytes(tx)
+    const parsed = protoBytesToTx(bytes)
     expect(tx).toMatchObject({ ...aliasMinimalParams })
   })
 
