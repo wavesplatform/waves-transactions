@@ -1,6 +1,25 @@
 import * as wavesProto from '@waves/protobuf-serialization'
-import { base58Decode, base58Encode } from '@waves/ts-lib-crypto'
-import { ITransaction, TOrder, TTx } from './transactions'
+import { base58Decode, base58Encode, stringToBytes, base64Decode } from '@waves/ts-lib-crypto'
+import { binary, schemas } from '@waves/marshall'
+import {
+  IAliasTransaction,
+  IBurnTransaction,
+  ICancelLeaseTransaction,
+  IDataEntry,
+  IDataTransaction,
+  IExchangeTransaction, IInvokeScriptTransaction,
+  IIssueTransaction,
+  ILeaseTransaction,
+  IMassTransferItem,
+  IMassTransferTransaction,
+  IOrder,
+  IReissueTransaction, ISetAssetScriptTransaction,
+  ISetScriptTransaction, ISponsorshipTransaction,
+  ITransaction,
+  ITransferTransaction,
+  TOrder,
+  TTx
+} from './transactions'
 import { isOrder } from './generic'
 import Long from 'long'
 
@@ -23,7 +42,7 @@ export function parseProtoBytes(bytes: Uint8Array) {
   }
 }
 
-const convert = ({ senderPublicKey, fee, timestamp, type, version, chainId, ...rest }: TTx) => {
+const convertCommon = ({ senderPublicKey, fee, timestamp, type, version, chainId, ...rest }: TTx) => {
   const typename = nameByType[type]
   return {
     version,
@@ -31,15 +50,110 @@ const convert = ({ senderPublicKey, fee, timestamp, type, version, chainId, ...r
     chainId,
     senderPublicKey: base58Decode(senderPublicKey),
     timestamp: Long.fromValue(timestamp),
-    fee: Long.fromValue(fee),
+    fee: amountToProto(fee, (rest as any).feeAssetId),
     data: typename,
-    [typename]: convertTxData(typename, rest)
   }
 }
 
-const convertTxData = (typename: keyof typeof typeByName, data: any) => {
-  return null as any
-}
+const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionData => ({
+  name: stringToBytes(t.name),
+  description: stringToBytes(t.description),
+  amount: Long.fromValue(t.quantity),
+  decimals: t.decimals,
+  reissuable: t.reissuable,
+  script: t.script == null ? null : scriptToProto(t.script),
+})
+const getTransferData = (t: ITransferTransaction): wavesProto.waves.ITransferTransactionData => ({
+  recipient: recipientToProto(t.recipient),
+  amount: amountToProto(t.amount, t.assetId),
+  attachment: t.attachment == null ? null : base58Decode(t.attachment)
+})
+const getReissueData = (t: IReissueTransaction): wavesProto.waves.IReissueTransactionData => ({
+  assetAmount: amountToProto(t.quantity, t.assetId),
+  reissuable: t.reissuable,
+})
+const getBurnData = (t: IBurnTransaction): wavesProto.waves.IBurnTransactionData => ({
+  assetAmount: amountToProto(t.quantity, t.assetId)
+})
+const getExchangeData = (t: IExchangeTransaction): wavesProto.waves.IExchangeTransactionData => ({
+  amount: Long.fromValue(t.amount),
+  price: Long.fromValue(t.price),
+  buyMatcherFee: Long.fromValue(t.buyMatcherFee),
+  sellMatcherFee: Long.fromValue(t.sellMatcherFee),
+  orders: [orderToProto(t.order1), orderToProto(t.order2)],
+})
+const getLeaseData = (t: ILeaseTransaction): wavesProto.waves.ILeaseTransactionData => ({
+  recipient: recipientToProto(t.recipient),
+  amount: Long.fromValue(t.amount)
+})
+const getCancelLeaseData = (t: ICancelLeaseTransaction): wavesProto.waves.ILeaseCancelTransactionData => ({
+  leaseId: base58Decode(t.leaseId)
+})
+const getAliasData = (t: IAliasTransaction): wavesProto.waves.ICreateAliasTransactionData => ({ alias: t.alias })
+const getMassTransferData = (t: IMassTransferTransaction): wavesProto.waves.IMassTransferTransactionData => ({
+  assetId: t.assetId == null ? null : base58Decode(t.assetId),
+  attachment: base58Decode(t.attachment),
+  transfers: t.transfers.map(massTransferItemToProto)
+})
+const getDataTxData = (t: IDataTransaction): wavesProto.waves.IDataTransactionData => ({
+  data: t.data.map(dataEntryToProto)
+})
+const getSetScriptData = (t: ISetScriptTransaction): wavesProto.waves.ISetScriptTransactionData => ({
+  script: t.script == null ? null : scriptToProto(t.script)
+})
+const getSponsorData = (t: ISponsorshipTransaction): wavesProto.waves.ISponsorFeeTransactionData => ({
+  minFee: amountToProto(t.minSponsoredAssetFee, t.assetId)
+})
+const getSetAssetScriptData = (t: ISetAssetScriptTransaction): wavesProto.waves.ISetAssetScriptTransactionData => ({
+  assetId: base58Decode(t.assetId),
+  script: t.script == null ? null : scriptToProto(t.script)
+})
+const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => ({
+  dApp: recipientToProto(t.dApp),
+  functionCall: t.call == null ? null : binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call), //todo: export function call from marshall and use it directly
+  payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
+})
+
+const orderToProto = (o: IOrder): wavesProto.waves.IOrder => ({
+  chainId: (o as any).chainId,
+  senderPublicKey: base58Decode(o.senderPublicKey),
+  matcherPublicKey: base58Decode(o.matcherPublicKey),
+  assetPair: {
+    amountAssetId: o.assetPair.amountAsset == null ? null : base58Decode(o.assetPair.amountAsset),
+    priceAssetId: o.assetPair.priceAsset == null ? null : base58Decode(o.assetPair.priceAsset)
+  },
+  orderSide: o.orderType === "buy" ? wavesProto.waves.Order.Side.BUY :  wavesProto.waves.Order.Side.SELL,
+  amount: Long.fromValue(o.amount),
+  price: Long.fromValue(o.price),
+  timestamp: Long.fromValue(o.timestamp),
+  expiration: Long.fromValue(o.expiration),
+  matcherFee: amountToProto(o.matcherFee, null),
+  version: o.version,
+  proofs: o.proofs.map(base58Decode),
+})
+const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({
+  alias: r.startsWith('alias') ? r : undefined,
+  address: !r.startsWith('alias') ? base58Decode(r) : undefined
+})
+const amountToProto = (a: string | number, assetId?: string | null): wavesProto.waves.IAmount => ({
+  amount: Long.fromValue(a),
+  assetId: assetId == null ? null : base58Decode(assetId)
+})
+const massTransferItemToProto = (mti: IMassTransferItem): wavesProto.waves.MassTransferTransactionData.ITransfer => ({
+  address: recipientToProto(mti.recipient),
+  amount: Long.fromValue(mti.amount)
+})
+const dataEntryToProto = (de: IDataEntry): wavesProto.waves.DataTransactionData.IDataEntry => ({
+  key: de.key,
+  intValue: de.type === 'integer' ? Long.fromValue(de.value as number) : undefined,
+  boolValue: de.type === 'boolean' ? de.value as boolean : undefined,
+  binaryValue: de.type === 'binary' ? base64Decode(de.value as string) : undefined,
+  stringValue: de.type === 'string' ? de.value as string : undefined,
+})
+const scriptToProto = (s: string): wavesProto.waves.IScript => ({
+  bytes: base64Decode(s)
+})
+
 const nameByType = {
   1: "genesis" as "genesis",
   2: "payment" as "payment",
