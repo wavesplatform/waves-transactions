@@ -59,7 +59,7 @@ export {
   ISponsorshipParams,
   IDataTransaction,
   IDataParams,
-  IDataEntry,
+  TDataEntry,
   ISetScriptTransaction,
   ISetAssetScriptParams,
   IInvokeScriptTransaction,

@@ -21,8 +21,8 @@ export const TRANSACTION_TYPE = {
 export const DATA_FIELD_TYPE = {
   INTEGER: 'integer' as 'integer',
   BOOLEAN: 'boolean' as 'boolean',
-  BINARY :'binary' as 'binary',
-  STRING :'string' as 'string',
+  BINARY: 'binary' as 'binary',
+  STRING: 'string' as 'string',
 }
 
 export type TTransactionType = typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE]
@@ -75,7 +75,6 @@ export interface ITransaction<LONG = string | number> extends WithProofs, WithSe
   timestamp: number
   fee: LONG
   version: number
-  chainId: number | undefined
 }
 
 /**
@@ -230,10 +229,27 @@ export interface IMassTransferTransaction<LONG = string | number> extends ITrans
   assetId?: string | null
 }
 
-export interface IDataEntry {
+export type TDataEntry = IBooleanDataEntry | IIntegerDataEntry | IStringDataEntry | IBinaryDataEntry
+
+export interface IBooleanDataEntry {
   key: string
-  type: TDataFiledType
-  value: string | number | boolean
+  type: typeof DATA_FIELD_TYPE.BOOLEAN
+  value: boolean
+}
+export interface IIntegerDataEntry<LONG = string | number> {
+  key: string
+  type: typeof DATA_FIELD_TYPE.INTEGER
+  value: LONG
+}
+export interface IStringDataEntry {
+  key: string
+  type: typeof DATA_FIELD_TYPE.STRING
+  value: string
+}
+export interface IBinaryDataEntry {
+  key: string
+  type: typeof DATA_FIELD_TYPE.BINARY
+  value: string
 }
 
 export interface ITypelessDataEntry {
@@ -261,7 +277,7 @@ export interface ISponsorshipTransaction<LONG = string | number> extends ITransa
  */
 export interface IDataTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.DATA
-  data: IDataEntry[]
+  data: TDataEntry[]
 }
 
 /**
@@ -419,7 +435,7 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-  data: Array<IDataEntry | ITypelessDataEntry>
+  data: Array<TDataEntry | ITypelessDataEntry>
 }
 
 /**

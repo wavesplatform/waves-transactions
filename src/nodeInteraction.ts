@@ -2,7 +2,7 @@
  * @module nodeInteraction
  */
 
-import { IDataEntry, ITransaction, TTx, WithId } from './transactions'
+import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
 import axios from 'axios'
 import { json } from '@waves/marshall'
 import { transfer } from './transactions/transfer'
@@ -185,9 +185,9 @@ export interface IAccountDataRequestOptions {
  * @param options - waves address and optional match regular expression. If match is present keys will be filtered by this regexp
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, IDataEntry>>
-export async function accountData(address: string, nodeUrl: string): Promise<Record<string, IDataEntry>>
-export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, IDataEntry>> {
+export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataEntry>>
+export async function accountData(address: string, nodeUrl: string): Promise<Record<string, TDataEntry>>
+export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataEntry>> {
   let address
   let match
   if (typeof options === 'string') {
@@ -208,7 +208,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
     },
     validateStatus
   }
-  const data: IDataEntry[] = await axios.get(url, config)
+  const data: TDataEntry[] = await axios.get(url, config)
     .then(process400)
     .then(x => x.data)
 
@@ -222,7 +222,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
  * @param key - dictionary key
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountDataByKey(key: string, address: string, nodeUrl: string): Promise<IDataEntry> {
+export async function accountDataByKey(key: string, address: string, nodeUrl: string): Promise<TDataEntry> {
   return axios.get(`addresses/data/${address}/${key}`,
     { baseURL: nodeUrl, validateStatus: (status) => status === 404 || validateStatus(status) })
     .then(process400)
@@ -281,7 +281,7 @@ export async function rewards(...args: [number, string] | [string]): Promise<any
 }
 
 export interface IStateChangeResponse {
-  data: IDataEntry[],
+  data: TDataEntry[],
   transfers: {
     address: string,
     amount: number,

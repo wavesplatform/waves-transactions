@@ -17,7 +17,7 @@ import { concat, blake2b, signBytes, base58Encode } from '@waves/ts-lib-crypto'
 import {
   IDataTransaction,
   TRANSACTION_TYPE,
-  IDataEntry,
+  TDataEntry,
   DATA_FIELD_TYPE,
   IDataParams,
   WithId,
@@ -58,7 +58,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     BYTE(TRANSACTION_TYPE.DATA),
     BYTE(1),
     BASE58_STRING(senderPublicKey),
-    COUNT(SHORT)((x: IDataEntry | ITypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
+    COUNT(SHORT)((x: TDataEntry | ITypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(paramsOrTx.data),
     LONG(_timestamp)
   )
 
@@ -72,7 +72,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     timestamp: _timestamp,
     proofs: paramsOrTx.proofs || [],
     id: '',
-    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: IDataEntry | ITypelessDataEntry) => {
+    data: paramsOrTx.data && (paramsOrTx.data as any).map((x: TDataEntry | ITypelessDataEntry) => {
       if ((<any>x).type) return x
       else {
         const type = mapType(x.value)[0]
