@@ -27,7 +27,7 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & W
     script: paramsOrTx.script == null ? undefined : base64Prefix(paramsOrTx.script)!,
     decimals: paramsOrTx.decimals == null ? 8 : paramsOrTx.decimals,
     reissuable: paramsOrTx.reissuable || false,
-    fee: fee(paramsOrTx, 100000000),
+    fee: paramsOrTx.quantity === 1 ? fee(paramsOrTx, 1000000) : fee(paramsOrTx, 100000000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
@@ -35,7 +35,7 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & W
   }
 
   validate.issue(tx)
-  
+
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))

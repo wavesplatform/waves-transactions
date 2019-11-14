@@ -12,6 +12,11 @@ describe('issue', () => {
     expect(tx).toMatchObject({ ...issueMinimalParams })
   })
 
+  it('should build from minimal set of params with quantity 1', () => {
+    const tx = issue({ ...issueMinimalParams, quantity: 1 }, stringSeed)
+    expect(tx.fee).toEqual(1000000)
+  })
+
   it('should build with asset script', () => {
     const tx = issue({ ...issueMinimalParams, script:'AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA==' }, stringSeed)
     expect(tx).toMatchObject({ ...issueMinimalParams })

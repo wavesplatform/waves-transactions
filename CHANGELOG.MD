@@ -1,3 +1,5 @@
+## v3.24
+- Issue fee now defaults to 0.01 waves if quantity = 1
 ## v3.23
 - added `makeTx`
 - TRANSACTION_TYPE changed to `const` from `enum`

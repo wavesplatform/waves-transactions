@@ -1,5 +1,5 @@
 import { exampleTxs } from './exampleTxs'
-import {  TTx } from '../src'
+import { TTx } from '../src'
 import { makeTx } from '../src'
 
 describe('makes tx', () => {

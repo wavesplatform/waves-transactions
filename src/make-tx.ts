@@ -19,7 +19,7 @@ import {
   IReissueParams,
   IReissueTransaction,
   ISetAssetScriptParams,
-  ISetAssetScriptTransaction,
+  ISetAssetScriptTransaction, ISetScriptParams,
   ISetScriptTransaction,
   ISponsorshipParams,
   ISponsorshipTransaction,
@@ -72,7 +72,7 @@ export type TxParamsTypeMap = {
   [TRANSACTION_TYPE.ALIAS]: IAliasParams
   [TRANSACTION_TYPE.MASS_TRANSFER]: IMassTransferParams
   [TRANSACTION_TYPE.DATA]: IDataParams
-  [TRANSACTION_TYPE.SET_SCRIPT]: ISetAssetScriptParams
+  [TRANSACTION_TYPE.SET_SCRIPT]: ISetScriptParams
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: ISetAssetScriptParams
   [TRANSACTION_TYPE.SPONSORSHIP]: ISponsorshipParams
   [TRANSACTION_TYPE.EXCHANGE]: IExchangeTransaction
@@ -82,7 +82,7 @@ export type TxParamsTypeMap = {
 /**
  * Makes transaction from params. Validates all fields and calculates id
  */
-export function makeTx<T extends TTransactionType>(params: (TTxParamsWithType<T> & WithSender | TTransaction<T>)): TTransaction<T> & WithId {
+export function makeTx<T extends TTransactionType>(params: TTxParamsWithType<T> & WithSender): TTransaction<T> & WithId {
   switch (params.type) {
     case TRANSACTION_TYPE.ISSUE:
       return issue(params as any) as any
