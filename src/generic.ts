@@ -14,7 +14,7 @@ export function getSenderPublicKey(seedsAndIndexes: [string | TPrivateKey, numbe
   if (seedsAndIndexes.length === 0 && params.senderPublicKey == null)
     throw new Error('Please provide either seed or senderPublicKey')
   else {
-    return params.senderPublicKey || publicKey(seedsAndIndexes[0][0])
+    return params.senderPublicKey == null ? publicKey(seedsAndIndexes[0][0]) : params.senderPublicKey
   }
 }
 

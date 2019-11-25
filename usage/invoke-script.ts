@@ -1,14 +1,14 @@
-import { invokeScript, IInvokeScriptParams, broadcast } from '../dist/index'
+import { invokeScript } from '../dist/index'
 
 const seed = 'create genesis wallet devnet-0'
 
-const params: IInvokeScriptParams = {
+const params = {
 
   call: {
     args: [{ type: 'integer', value: 1 }],
-    //args: [{ type: 'binary', value: '' }],
-    //args: [{ type: 'string', value: '' }],
-    //args: [{ type: 'boolean', value: '' }],
+    //args: [{ type: 'binary', value: 'base64:AAA=' }],
+    //args: [{ type: 'string', value: 'foo' }],
+    //args: [{ type: 'boolean', value: true }],
     function: 'foo',
   },
   payment: [{
@@ -22,9 +22,9 @@ const params: IInvokeScriptParams = {
   //senderPublicKey: 'by default derived from seed',
   //timestamp: Date.now(),
   //fee: 100000,
-  //chainId: 
+  //chainId:
 }
 
-const signedSetScriptTx = invokeScript(params, seed)
-console.log(JSON.stringify(signedSetScriptTx))
+const signedInvokeScriptTx = invokeScript(params, seed)
+console.log(signedInvokeScriptTx)
 

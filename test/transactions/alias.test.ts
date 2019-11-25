@@ -25,7 +25,7 @@ describe('alias', () => {
 
   it('Should get correct signature', () => {
     const tx = alias({ ...aliasMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(verifySignature(publicKey(privateKey), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
   })
 
   it('Should sign already signed', () => {

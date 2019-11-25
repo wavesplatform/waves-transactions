@@ -11,7 +11,7 @@ import { binary } from '@waves/marshall'
 /* @echo DOCS */
 export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId
 export function transfer(paramsOrTx: ITransferParams & WithSender | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction & WithId
-export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction {
+export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction & WithId {
   const type = TRANSACTION_TYPE.TRANSFER
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
@@ -31,9 +31,9 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
-  
+
   validate.transfer(tx)
-  
+
   const bytes = binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))

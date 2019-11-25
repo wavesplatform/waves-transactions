@@ -10,20 +10,20 @@ Using this library you can easily create and sign transactions for Waves blockch
 It also allows you to multi-sign existing transactions or create them without signature at all.
 
 This library is a set of transaction constructing functions:
-* [Alias](https://wavesplatform.github.io/waves-transactions/globals.html#alias)
-* [Issue](https://wavesplatform.github.io/waves-transactions/globals.html#issue)
-* [Reissue](https://wavesplatform.github.io/waves-transactions/globals.html#reissue)
-* [Burn](https://wavesplatform.github.io/waves-transactions/globals.html#burn)
-* [Lease](https://wavesplatform.github.io/waves-transactions/globals.html#lease)
-* [Cancel lease](https://wavesplatform.github.io/waves-transactions/globals.html#cancellease)
-* [Transfer](https://wavesplatform.github.io/waves-transactions/globals.html#transfer)
-* [Mass transfer](https://wavesplatform.github.io/waves-transactions/globals.html#masstransfer)
-* [Set script](https://wavesplatform.github.io/waves-transactions/globals.html#setscript)
-* [Data](https://wavesplatform.github.io/waves-transactions/globals.html#data)
-* [Sponsorship](https://wavesplatform.github.io/waves-transactions/globals.html#sponsorship)
-* [Set asset script](https://wavesplatform.github.io/waves-transactions/globals.html#setassetscript)
-* [InvokeScript](https://wavesplatform.github.io/waves-transactions/globals.html#invokescript)
-* [Order](https://wavesplatform.github.io/waves-transactions/globals.html#order)
+* [Alias](https://wavesplatform.github.io/waves-transactions/modules/index.html#alias)
+* [Issue](https://wavesplatform.github.io/waves-transactions/modules/index.html#issue)
+* [Reissue](https://wavesplatform.github.io/waves-transactions/modules/index.html#reissue)
+* [Burn](https://wavesplatform.github.io/waves-transactions/modules/index.html#burn)
+* [Lease](https://wavesplatform.github.io/waves-transactions/modules/index.html#lease)
+* [Cancel lease](https://wavesplatform.github.io/waves-transactions/modules/index.html#cancellease)
+* [Transfer](https://wavesplatform.github.io/waves-transactions/modules/index.html#transfer)
+* [Mass transfer](https://wavesplatform.github.io/waves-transactions/modules/index.html#masstransfer)
+* [Set script](https://wavesplatform.github.io/waves-transactions/modules/index.html#setscript)
+* [Data](https://wavesplatform.github.io/waves-transactions/modules/index.html#data)
+* [Sponsorship](https://wavesplatform.github.io/waves-transactions/modules/index.html#sponsorship)
+* [Set asset script](https://wavesplatform.github.io/waves-transactions/modules/index.html#setassetscript)
+* [InvokeScript](https://wavesplatform.github.io/waves-transactions/modules/index.html#invokescript)
+* [Order](https://wavesplatform.github.io/waves-transactions/modules/index.html#order)
 
 Check full documentation on [GitHub Pages](https://wavesplatform.github.io/waves-transactions/index.html).
 
