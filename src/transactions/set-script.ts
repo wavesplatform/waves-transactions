@@ -7,6 +7,7 @@ import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
@@ -14,7 +15,7 @@ export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScrip
 export function setScript(paramsOrTx: ISetScriptParams & WithSender | ISetScriptTransaction, seed?: TSeedTypes): ISetScriptTransaction & WithId
 export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransaction & WithId {
   const type = TRANSACTION_TYPE.SET_SCRIPT
-  const version = paramsOrTx.version || 1
+  const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
@@ -32,8 +33,8 @@ export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransac
   }
 
   validate.setScript(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes),i))
   tx.id = base58Encode(blake2b(bytes))

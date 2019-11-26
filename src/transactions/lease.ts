@@ -7,6 +7,7 @@ import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
@@ -14,7 +15,7 @@ export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction
 export function lease(paramsOrTx: ILeaseParams & WithSender | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId
 export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & WithId {
   const type = TRANSACTION_TYPE.LEASE
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -31,8 +32,8 @@ export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & W
   }
 
   validate.lease(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

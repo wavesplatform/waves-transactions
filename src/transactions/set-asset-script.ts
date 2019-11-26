@@ -13,6 +13,7 @@ import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
@@ -20,7 +21,7 @@ export function setAssetScript(params: ISetAssetScriptParams, seed: TSeedTypes):
 export function setAssetScript(paramsOrTx: ISetAssetScriptParams & WithSender | ISetAssetScriptTransaction, seed?: TSeedTypes): ISetAssetScriptTransaction & WithId
 export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): ISetAssetScriptTransaction & WithId {
   const type = TRANSACTION_TYPE.SET_ASSET_SCRIPT
-  const version = paramsOrTx.version || 1
+  const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script == null) throw new Error('Asset script cannot be empty')
@@ -37,10 +38,10 @@ export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): ISetAssetScr
     id: '',
     script: base64Prefix(paramsOrTx.script),
   }
-  
+
   validate.setAssetScript(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

@@ -7,6 +7,7 @@ import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
@@ -29,10 +30,10 @@ export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTra
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
-  
+
   validate.sponsorship(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

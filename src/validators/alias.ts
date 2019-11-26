@@ -15,7 +15,7 @@ import {
 
 const aliasScheme = {
     type: isEq(TRANSACTION_TYPE.ALIAS),
-    version: orEq([undefined, 2]),
+    version: orEq([undefined, 2, 3]),
     senderPublicKey: isPublicKey,
     alias: isValidAliasName,
     fee: isNumberLike,

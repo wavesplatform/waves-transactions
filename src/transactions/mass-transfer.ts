@@ -7,6 +7,7 @@ import { TSeedTypes } from '../types'
 import { base58Encode, blake2b, signBytes } from '@waves/ts-lib-crypto'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
@@ -34,8 +35,8 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
   }
 
   validate.massTransfer(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

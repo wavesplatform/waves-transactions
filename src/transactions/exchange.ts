@@ -14,16 +14,17 @@ import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId } from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 /* @echo DOCS */
 export function exchange(paramsOrTx: IExchangeTransaction, seed?: TSeedTypes): IExchangeTransaction & WithId {
-  
+
   const type = TRANSACTION_TYPE.EXCHANGE
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
-  
-  
+
+
   const tx: IExchangeTransaction & WithId = {
     type,
     version,
@@ -39,10 +40,10 @@ export function exchange(paramsOrTx: IExchangeTransaction, seed?: TSeedTypes): I
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
-  
+
   validate.exchange(tx)
 
-  const bytes = binary.serializeTx(tx)
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
 

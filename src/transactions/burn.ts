@@ -7,6 +7,7 @@ import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
@@ -14,7 +15,7 @@ export function burn(params: IBurnParams, seed: TSeedTypes): IBurnTransaction & 
 export function burn(paramsOrTx: IBurnParams & WithSender | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId
 export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & WithId {
   const type = TRANSACTION_TYPE.BURN
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -30,10 +31,10 @@ export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & Wit
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
-  
+
   validate.burn(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

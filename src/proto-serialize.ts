@@ -230,7 +230,7 @@ const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScr
   payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
 })
 
-const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
+export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
   const common = getCommonFields(t)
   let txData
   switch (t.type) {

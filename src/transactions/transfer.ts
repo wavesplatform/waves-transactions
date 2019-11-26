@@ -7,13 +7,14 @@ import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId } f
 import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
+import { txToProtoBytes } from '../proto-serialize'
 
 /* @echo DOCS */
 export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId
 export function transfer(paramsOrTx: ITransferParams & WithSender | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction & WithId
 export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction & WithId {
   const type = TRANSACTION_TYPE.TRANSFER
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -34,7 +35,7 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
 
   validate.transfer(tx)
 
-  const bytes = binary.serializeTx(tx)
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

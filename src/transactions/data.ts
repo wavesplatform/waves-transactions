@@ -27,6 +27,7 @@ import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
 
 const typeMap: any = {
   integer: ['integer', 0, LONG],
@@ -46,7 +47,7 @@ export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & 
 export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId
 export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & WithId  {
   const type = TRANSACTION_TYPE.DATA
-  const version = paramsOrTx.version || 1
+  const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -87,7 +88,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
 
   validate.data(tx)
 
-  const bytes1 = binary.serializeTx(tx)
+  const bytes1 = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes1),i))
   tx.id = base58Encode(blake2b(bytes1))

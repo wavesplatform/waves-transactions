@@ -14,7 +14,7 @@ import {
 
 const leaseScheme = {
   type: isEq(TRANSACTION_TYPE.LEASE),
-  version: orEq([undefined, 2]),
+  version: orEq([undefined, 2, 3]),
   senderPublicKey: isPublicKey,
   recipient: isRecipient,
   amount: isNumberLike,
