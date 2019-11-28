@@ -17,7 +17,7 @@ import { validate } from '../validators'
  *
  * ### Usage
  * ```js
- * const { order } = require('waves-transactions')
+ * const { order } = require('@waves/waves-transactions')
  *
  * const seed = 'b716885e9ba64442b4f1263c8e2d8671e98b800c60ec4dc2a27c83e5f9002b18'
  *
@@ -95,9 +95,9 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   const bytes = binary.serializeOrder(ord)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
-  
+
   validate.order(ord)
-  
+
   ord.id = base58Encode(blake2b(bytes))
 
   // OrderV1 uses signature instead of proofs
