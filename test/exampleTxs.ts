@@ -167,14 +167,14 @@ export const invokeScriptTx = {
     ]
   },
   "dApp": "3P8M8XGF2uzDazV5fzdKNxrbC3YqCWScKxw",
-  "feeAssetId": null,
+  // "feeAssetId": null,
   "proofs": [
     "3rq5gJ7q1zMmn41eAiUM9ThLCEQgHfK1fk2DvCefWHZWDWdxHi1T5Xmd5UuT33FZiw46FJDy2sokhzLduoC7izbj"
   ],
   "payment": [
     {
       "amount": 100500000,
-      "assetId": null
+      "assetId": ""
     }
   ],
   "id": "E1fPNBHLTRrd1k1iZbnxjc2CjTcwYpuoBf5rBAVB6TMN",

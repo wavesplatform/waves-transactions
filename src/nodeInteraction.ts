@@ -314,3 +314,7 @@ export function broadcast<T extends TTx>(tx: T, nodeUrl: string): Promise<T> {
   }).then(process400)
     .then(x => x.data)
 }
+
+declare let a: {b: string} | undefined
+
+
