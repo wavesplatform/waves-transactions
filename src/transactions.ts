@@ -87,7 +87,7 @@ export type TTx<LONG = string | number> =
   | IReissueTransaction<LONG>
   | IBurnTransaction<LONG>
   | ILeaseTransaction<LONG>
-  | IExchangeTransaction
+  | IExchangeTransaction<LONG>
   | ICancelLeaseTransaction<LONG>
   | IMassTransferTransaction<LONG>
   | ISetScriptTransaction<LONG>

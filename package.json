@@ -44,6 +44,7 @@
     "@types/jest": "^23.3.9",
     "@types/long": "^4.0.0",
     "@types/node": "^10.12.3",
+    "@waves/blockchain-api": "0.0.2",
     "copy-webpack-plugin": "^4.5.2",
     "jest": "^24.7.1",
     "jsdoc-to-markdown": "^5.0.0",

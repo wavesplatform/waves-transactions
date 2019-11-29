@@ -45,41 +45,50 @@ describe('transactions v3', () => {
 
 
   describe('broadcasts new transactions', () => {
-    const itx = issue({ quantity: 1000, description: 'my token', name: 'my token', chainId: 'D' }, SEED)
+    // const itx = issue({ quantity: 1000, description: 'my token', name: 'my token', chainId: 'D' }, SEED)
     const ttx = transfer({ amount: 10000, recipient: libs.crypto.address(SEED, "D") }, SEED)
-    const reitx = reissue({
-      assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
-      quantity: 100,
-      chainId: 'D',
-      reissuable: true
-    }, SEED)
-    const btx = burn({ assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm', quantity: 2, chainId: 'D' }, SEED)
-    const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }] }, SEED)
-    const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED, "D") }, SEED)
-    const canltx = cancelLease({ leaseId: ltx.id, chainId: 'D' }, SEED)
-    const atx = alias({ alias: 'super-alias', chainId: 'D' }, SEED)
-    const ssTx = setScript({ script: null, chainId: 'D' }, SEED)
-    const sastx = setAssetScript({
-      assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
-      chainId: 'D',
-      script: 'base64:AwZd0cYf'
-    }, SEED)
-    const spontx = sponsorship({
-      assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
-      minSponsoredAssetFee: 1000
-    }, SEED)
-    const istx = invokeScript({ dApp: libs.crypto.address(SEED, "D"), chainId: 'D', call: { function: 'foo' } }, SEED);
-    [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach( t => {
-      it(`Broadcasts ${t.type}`, async () => {
-        try {
-          await broadcast(t, NODE_URL)
+    // const reitx = reissue({
+    //   assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
+    //   quantity: 100,
+    //   chainId: 'D',
+    //   reissuable: true
+    // }, SEED)
+    // const btx = burn({ assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm', quantity: 2, chainId: 'D' }, SEED)
+    // const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }] }, SEED)
+    // const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED, "D") }, SEED)
+    // const canltx = cancelLease({ leaseId: ltx.id, chainId: 'D' }, SEED)
+    // const atx = alias({ alias: 'super-alias', chainId: 'D' }, SEED)
+    // const ssTx = setScript({ script: null, chainId: 'D' }, SEED)
+    // const sastx = setAssetScript({
+    //   assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
+    //   chainId: 'D',
+    //   script: 'base64:AwZd0cYf'
+    // }, SEED)
+    // const spontx = sponsorship({
+    //   assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
+    //   minSponsoredAssetFee: 1000
+    // }, SEED)
+    // const istx = invokeScript({ dApp: libs.crypto.address(SEED, "D"), chainId: 'D', call: { function: 'foo' } }, SEED);
+    // [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach(t => {
+    //   it(`Broadcasts ${t.type}`, async () => {
+    //     try {
+    //       await broadcast(t, NODE_URL)
+    //
+    //     } catch (e) {
+    //       console.error(e)
+    //     }
+    //   })
+    // })
 
-        }catch (e) {
-          console.error(e)
-        }
-      })
+    it('sends transfer', async () => {
+
+      try {
+
+        await broadcast(ttx, NODE_URL)
+      } catch (e) {
+        console.error(e)
+      }
     })
-    // await broadcast(ttx, NODE_URL)
     // await broadcast(itx, NODE_URL)
     // await broadcast(reitx, NODE_URL)
     // await broadcast(atx, NODE_URL)
