@@ -116,13 +116,13 @@ export function verifyWavesAuthData(authData: { signature: string, publicKey: st
 /**
  * Sends order to matcher
  * @param ord - transaction to send
- * @param options - matcher address to send order to. E.g. https://matcher.wavesplatform.com/. Optional 'market' flag to send market order
+ * @param options - matcher address to send order to. E.g. https://matcher.waves.exchange/ Optional 'market' flag to send market order
  */
 export function submitOrder(ord: TOrder, options: {matcherUrl: string, market?: boolean}): Promise<any>
 /**
  * Sends order to matcher
  * @param ord - transaction to send
- * @param matcherUrl - matcher address to send order to. E.g. https://matcher.wavesplatform.com/
+ * @param matcherUrl - matcher address to send order to. E.g. https://matcher.waves.exchange/
  */
 export function submitOrder(ord: TOrder, matcherUrl: string): Promise<any>
 export function submitOrder(ord: TOrder, opts: any) {
@@ -149,7 +149,7 @@ export function submitOrder(ord: TOrder, opts: any) {
  * @param co - signed cancelOrder object
  * @param amountAsset - amount asset of the order to be canceled
  * @param priceAsset - price asset of the order to be canceled
- * @param matcherUrl - matcher address to send order cancel to. E.g. https://matcher.wavesplatform.com/
+ * @param matcherUrl - matcher address to send order cancel to. E.g. https://matcher.waves.exchange/
  */
 export function cancelSubmittedOrder(co: ICancelOrder, amountAsset: string | null, priceAsset: string | null, matcherUrl: string) {
   return axios.post(`matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`, JSON.stringify(co), {
