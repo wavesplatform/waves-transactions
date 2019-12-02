@@ -33,7 +33,7 @@ export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTra
 
   validate.sponsorship(tx)
 
-  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
+  const bytes = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))

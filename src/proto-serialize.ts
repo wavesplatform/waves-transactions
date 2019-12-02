@@ -32,7 +32,7 @@ import Long from 'long'
 import { lease } from './transactions/lease'
 
 export function txToProtoBytes(obj: TTx): Uint8Array {
-  return wavesProto.waves.Transaction.encode(txToProto(obj)).finish()
+  return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
 }
 
 export function protoBytesToTx(bytes: Uint8Array): TTx {
@@ -231,6 +231,7 @@ const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScr
 })
 
 export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
+
   const common = getCommonFields(t)
   let txData
   switch (t.type) {

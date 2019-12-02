@@ -30,8 +30,9 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
+    chainId: 'D',
     id: '',
-  }
+  } as any
 
   validate.transfer(tx)
 
