@@ -216,7 +216,7 @@ const getCommonFields = ({ senderPublicKey, fee, timestamp, type, version, ...re
   let chainId = (rest as any).chainId
   if (chainId == null) {
     const r: any = rest
-    let recipient = r.recipient || r.dApp || (r.transfers && r.transfers[0] && r.transfers[0].address)
+    let recipient = r.recipient || r.dApp || (r.transfers && r.transfers[0] && r.transfers[0].recipient)
     if (recipient) {
       chainId = chainIdFromRecipient(recipient)
     }
