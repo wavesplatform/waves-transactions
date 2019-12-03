@@ -72,6 +72,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     fee: fee(paramsOrTx, computedFee),
     timestamp: _timestamp,
     proofs: paramsOrTx.proofs || [],
+    chainId: paramsOrTx.chainId,
     id: '',
     data: paramsOrTx.data && (paramsOrTx.data as any).map((x: TDataEntry | ITypelessDataEntry) => {
       if ((<any>x).type) return x

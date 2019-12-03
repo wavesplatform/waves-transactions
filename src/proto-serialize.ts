@@ -5,7 +5,9 @@ import {
   stringToBytes,
   base64Decode,
   bytesToString,
-  base64Encode
+  base64Encode,
+  concat,
+  keccak, blake2b
 } from '@waves/ts-lib-crypto'
 import { binary, schemas } from '@waves/marshall'
 import {
@@ -25,11 +27,55 @@ import {
   ITransaction,
   ITransferTransaction,
   TOrder, TRANSACTION_TYPE, TTransactionType,
-  TTx
+  TTx, TTypedData
 } from './transactions'
-import { base64Prefix, fee, isOrder } from './generic'
+import { base64Prefix, chainIdFromRecipient, fee, isOrder } from './generic'
 import Long from 'long'
 import { lease } from './transactions/lease'
+import { libs } from './index'
+import { ifElse } from './validators'
+
+const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: number): string => {
+  if (recipient.alias) {
+    return recipient.alias
+  }
+  const rawAddress = concat([1], [chainId], recipient!.publicKeyHash!)
+  const checkSum = keccak(blake2b(rawAddress)).slice(0, 4)
+  return base58Encode(concat(rawAddress, checkSum))
+}
+
+const attachmentFromProto = (a: wavesProto.waves.IAttachment | undefined | null, preProtoVersion: boolean) => {
+  if (a == null) return
+  switch (true) {
+    case a.hasOwnProperty('intValue'):
+      return {
+        type: 'integer',
+        value: a.intValue
+      }
+    case a.hasOwnProperty('boolValue'):
+      return {
+        type: 'boolean',
+        value: a.boolValue
+      }
+    case a.hasOwnProperty('binaryValue'):
+      if (preProtoVersion) {
+        return base58Encode(a.binaryValue!)
+      } else {
+        return {
+          type: 'binary',
+          value: base64Encode(a.binaryValue!)
+        }
+      }
+    case a.hasOwnProperty('stringValue'):
+      return {
+        type: 'string',
+        value: a.stringValue
+      }
+    default:
+      throw new Error(`Failed to convert attachment ${JSON.stringify(a)}`)
+  }
+}
+
 
 export function txToProtoBytes(obj: TTx): Uint8Array {
   return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
@@ -44,6 +90,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
     senderPublicKey: base58Encode(t.senderPublicKey),
     timestamp: t.timestamp.toNumber(),
     fee: t.fee!.amount!.toNumber(),
+    // chainId: t.chainId
   }
   if (t.fee!.hasOwnProperty('assetId')) {
     res.feeAssetId = base58Encode(t.fee!.assetId!)
@@ -54,8 +101,8 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
   }
   switch (t.data) {
     case 'issue':
-      res.name = bytesToString(t.issue!.name!)
-      res.description = bytesToString(t.issue!.description!)
+      res.name = t.issue!.name!
+      res.description = t.issue!.description!
       res.quantity = t.issue!.amount!.toString()
       res.decimals = t.issue!.decimals
       res.reissuable = t.issue!.reissuable
@@ -65,9 +112,9 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       break
     case 'transfer':
       res.amount = t.transfer!.amount!.amount!.toString()
-      res.recipient = t.transfer!.recipient!.alias ? t.transfer!.recipient!.alias : base58Encode(t.transfer!.recipient!.address!)
+      res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId)
       if (t.transfer!.hasOwnProperty('attachment')) {
-        res.attachment = t.transfer!.attachment == null ? null : base58Encode(t.transfer!.attachment)
+        res.attachment = attachmentFromProto(t.transfer!.attachment, t.version < 3)
       }
       if (t.transfer!.hasOwnProperty('assetId')) {
         res.assetId = t.transfer!.amount!.assetId == null ? null : base58Encode(t.transfer!.amount!.assetId)
@@ -91,7 +138,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       res.order2 = orderFromProto(t.exchange!.orders![1])
       break
     case "lease":
-      res.recipient = t.lease!.recipient!.alias ? t.lease!.recipient!.alias : base58Encode(t.lease!.recipient!.address!)
+      res.recipient = recipientFromProto(t.lease!.recipient!, t.chainId)
       res.amount = t.lease!.amount!.toString()
       break
     case "leaseCancel":
@@ -104,10 +151,10 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       if (t.massTransfer!.hasOwnProperty('assetId')) {
         res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
       }
-      res.attachment = t.massTransfer!.attachment == null ? null : base58Encode(t.massTransfer!.attachment)
+      res.attachment = attachmentFromProto(t.massTransfer!.attachment!, t.version < 2)
       res.transfers = t.massTransfer!.transfers!.map(({ amount, address }) => ({
         amount: amount!.toString(),
-        recipient: address!.alias ? address!.alias : base58Encode(address!.address!)
+        recipient: recipientFromProto(address!, t.chainId)
       }))
       break
     case "dataTransaction":
@@ -134,7 +181,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       res.script = base64Prefix(base64Encode(t.setAssetScript!.script!.bytes!))
       break
     case "invokeScript":
-      res.dApp = t.invokeScript!.dApp!.alias ? t.invokeScript!.dApp!.alias : base58Encode(t.invokeScript!.dApp!.address!)
+      res.dApp = recipientFromProto(t.invokeScript!.dApp!, t.chainId)
       if (t.invokeScript!.functionCall! != null) {
         res.call = binary.parserFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.invokeScript!.functionCall!).value //todo: export function call from marshall and use it directly
       }
@@ -161,10 +208,18 @@ export function protoBytesToOrder(bytes: Uint8Array) {
 
 const getCommonFields = ({ senderPublicKey, fee, timestamp, type, version, ...rest }: TTx) => {
   const typename = nameByType[type]
+  let chainId = (rest as any).chainId
+  if (chainId == null) {
+    const r: any = rest
+    let recipient = r.recipient || r.dApp || (r.transfers && r.transfers[0] && r.transfers[0].address)
+    if (recipient) {
+      chainId = chainIdFromRecipient(recipient)
+    }
+  }
   return {
     version,
     type,
-    chainId: (rest as any).chainId,
+    chainId,
     senderPublicKey: base58Decode(senderPublicKey),
     timestamp: Long.fromValue(timestamp),
     fee: amountToProto(fee, (rest as any).feeAssetId),
@@ -172,8 +227,8 @@ const getCommonFields = ({ senderPublicKey, fee, timestamp, type, version, ...re
   }
 }
 const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionData => ({
-  name: stringToBytes(t.name),
-  description: stringToBytes(t.description),
+  name: t.name,
+  description: t.description,
   amount: Long.fromValue(t.quantity),
   decimals: t.decimals,
   reissuable: t.reissuable,
@@ -182,14 +237,14 @@ const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionD
 const getTransferData = (t: ITransferTransaction): wavesProto.waves.ITransferTransactionData => ({
   recipient: recipientToProto(t.recipient),
   amount: amountToProto(t.amount, t.assetId),
-  attachment: t.attachment == null ? null : base58Decode(t.attachment)
+  attachment: attachmentToProto(t.attachment)
 })
 const getReissueData = (t: IReissueTransaction): wavesProto.waves.IReissueTransactionData => ({
   assetAmount: amountToProto(t.quantity, t.assetId),
   reissuable: t.reissuable,
 })
 const getBurnData = (t: IBurnTransaction): wavesProto.waves.IBurnTransactionData => ({
-  assetAmount: amountToProto(t.quantity, t.assetId)
+  assetAmount: amountToProto(t.quantity || (t as any).amount, t.assetId)
 })
 const getExchangeData = (t: IExchangeTransaction): wavesProto.waves.IExchangeTransactionData => ({
   amount: Long.fromValue(t.amount),
@@ -208,7 +263,7 @@ const getCancelLeaseData = (t: ICancelLeaseTransaction): wavesProto.waves.ILease
 const getAliasData = (t: IAliasTransaction): wavesProto.waves.ICreateAliasTransactionData => ({ alias: t.alias })
 const getMassTransferData = (t: IMassTransferTransaction): wavesProto.waves.IMassTransferTransactionData => ({
   assetId: t.assetId == null ? null : base58Decode(t.assetId),
-  attachment: base58Decode(t.attachment),
+  attachment: attachmentToProto(t.attachment),
   transfers: t.transfers.map(massTransferItemToProto)
 })
 const getDataTxData = (t: IDataTransaction): wavesProto.waves.IDataTransactionData => ({
@@ -319,7 +374,7 @@ const orderFromProto = (po: wavesProto.waves.IOrder): TOrder => ({
 
 const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({
   alias: r.startsWith('alias') ? r : undefined,
-  address: !r.startsWith('alias') ? base58Decode(r) : undefined
+  publicKeyHash: !r.startsWith('alias') ? base58Decode(r).slice(2, -4) : undefined
 })
 const amountToProto = (a: string | number, assetId?: string | null): wavesProto.waves.IAmount => ({
   amount: Long.fromValue(a),
@@ -336,6 +391,22 @@ const dataEntryToProto = (de: TDataEntry): wavesProto.waves.DataTransactionData.
   binaryValue: de.type === 'binary' ? base64Decode((de.value.startsWith('base64:') ? de.value.slice(7) : de.value)) : undefined,
   stringValue: de.type === 'string' ? de.value : undefined,
 })
+const attachmentToProto = (a?: TTypedData | string): wavesProto.waves.IAttachment | undefined => {
+  if (a == null) return
+  let result: wavesProto.waves.IAttachment = {}
+  if (typeof a === 'string') {
+    result.binaryValue = base58Decode(a)
+  } else if (a.type === 'integer') {
+    result.intValue = Long.fromValue(a.value)
+  } else if (a.type === 'boolean') {
+    result.boolValue = a.value
+  } else if (a.type === 'binary') {
+    result.binaryValue = base64Decode((a.value.startsWith('base64:') ? a.value.slice(7) : a.value))
+  } else if (a.type === 'string') {
+    result.stringValue = a.value
+  } else throw new Error(`Invalid attachment: ${JSON.stringify(a)}`)
+  return result
+}
 const scriptToProto = (s: string): wavesProto.waves.IScript => ({
   bytes: base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
 })
@@ -357,6 +428,7 @@ const nameByType = {
   14: "sponsorFee" as "sponsorFee",
   15: "setAssetScript" as "setAssetScript",
   16: "invokeScript" as "invokeScript",
+  17: "updateAssetInfo" as "updateAssetInfo"
 }
 const typeByName = {
   "genesis": 1 as 1,
@@ -375,5 +447,6 @@ const typeByName = {
   "sponsorFee": 14 as 14,
   "setAssetScript": 15 as 15,
   "invokeScript": 16 as 16,
+  "updateAssetInfo": 17 as 17,
 }
 

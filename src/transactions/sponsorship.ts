@@ -27,6 +27,7 @@ export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTra
     assetId: paramsOrTx.assetId,
     fee: fee(paramsOrTx, 100000000),
     timestamp: paramsOrTx.timestamp || Date.now(),
+    chainId: paramsOrTx.chainId,
     proofs: paramsOrTx.proofs || [],
     id: '',
   }

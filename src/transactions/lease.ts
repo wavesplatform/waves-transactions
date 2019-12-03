@@ -28,6 +28,7 @@ export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & W
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
+    chainId: paramsOrTx.chainId,
     id: '',
   }
 

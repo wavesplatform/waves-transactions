@@ -38,6 +38,7 @@ export function exchange(paramsOrTx: IExchangeTransaction, seed?: TSeedTypes): I
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
+    chainId: paramsOrTx.chainId,
     id: '',
   }
 
