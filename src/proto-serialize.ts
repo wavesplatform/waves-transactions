@@ -256,7 +256,7 @@ const getExchangeData = (t: IExchangeTransaction): wavesProto.waves.IExchangeTra
   price: Long.fromValue(t.price),
   buyMatcherFee: Long.fromValue(t.buyMatcherFee),
   sellMatcherFee: Long.fromValue(t.sellMatcherFee),
-  orders: [orderToProto(t.order1), orderToProto(t.order2)],
+  orders: [orderToProto({chainId: t.chainId, ...t.order1}), orderToProto({chainId: t.chainId, ...t.order2})],
 })
 const getLeaseData = (t: ILeaseTransaction): wavesProto.waves.ILeaseTransactionData => ({
   recipient: recipientToProto(t.recipient),
@@ -343,8 +343,8 @@ export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
   }
   return { ...common, [common.data]: txData }
 }
-const orderToProto = (o: IOrder): wavesProto.waves.IOrder => ({
-  chainId: (o as any).chainId,
+const orderToProto = (o: IOrder & {chainId: number}): wavesProto.waves.IOrder => ({
+  chainId: o.chainId,
   senderPublicKey: base58Decode(o.senderPublicKey),
   matcherPublicKey: base58Decode(o.matcherPublicKey),
   assetPair: {
