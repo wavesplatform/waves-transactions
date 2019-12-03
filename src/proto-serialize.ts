@@ -42,7 +42,7 @@ const invokeScriptCallSchema = {
 
 const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: number): string => {
   if (recipient.alias) {
-    return recipient.alias
+    return `alias:${String.fromCharCode(chainId)}:${recipient.alias}`
   }
   const rawAddress = concat([1], [chainId], recipient!.publicKeyHash!)
   const checkSum = keccak(blake2b(rawAddress)).slice(0, 4)
@@ -188,7 +188,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
     case "invokeScript":
       res.dApp = recipientFromProto(t.invokeScript!.dApp!, t.chainId)
       if (t.invokeScript!.functionCall! != null) {
-        res.call = binary.parserFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.invokeScript!.functionCall!).value //todo: export function call from marshall and use it directly
+        res.call = binary.parserFromSchema(invokeScriptCallSchema)(t.invokeScript!.functionCall!).value //todo: export function call from marshall and use it directly
       }
       res.payment = t.invokeScript!.payments!.map(p => ({
         amount: p.amount!.toString(),
