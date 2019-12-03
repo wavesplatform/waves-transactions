@@ -9,7 +9,7 @@ import {
   concat,
   keccak, blake2b
 } from '@waves/ts-lib-crypto'
-import { binary, schemas } from '@waves/marshall'
+import { binary, schemas, serializePrimitives, parsePrimitives } from '@waves/marshall'
 import {
   IAliasTransaction,
   IBurnTransaction,
@@ -32,8 +32,13 @@ import {
 import { base64Prefix, chainIdFromRecipient, fee, isOrder } from './generic'
 import Long from 'long'
 import { lease } from './transactions/lease'
-import { libs } from './index'
-import { ifElse } from './validators'
+
+const invokeScriptCallSchema = {
+  ...schemas.txFields.functionCall[1], withLength: {
+    toBytes: serializePrimitives.SHORT,
+    fromBytes: parsePrimitives.P_SHORT
+  }
+}
 
 const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: number): string => {
   if (recipient.alias) {
@@ -279,11 +284,14 @@ const getSetAssetScriptData = (t: ISetAssetScriptTransaction): wavesProto.waves.
   assetId: base58Decode(t.assetId),
   script: t.script == null ? null : scriptToProto(t.script)
 })
-const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => ({
-  dApp: recipientToProto(t.dApp),
-  functionCall: t.call == null ? null : binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call), //todo: export function call from marshall and use it directly
-  payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
-})
+const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => {
+  let functionCall = t.call == null ? null : binary.serializerFromSchema(invokeScriptCallSchema)(t.call)
+  return {
+    dApp: recipientToProto(t.dApp),
+    functionCall,
+    payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
+  }
+}
 
 export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
 
@@ -373,7 +381,7 @@ const orderFromProto = (po: wavesProto.waves.IOrder): TOrder => ({
 })
 
 const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({
-  alias: r.startsWith('alias') ? r : undefined,
+  alias: r.startsWith('alias') ? r.slice(8) : undefined,
   publicKeyHash: !r.startsWith('alias') ? base58Decode(r).slice(2, -4) : undefined
 })
 const amountToProto = (a: string | number, assetId?: string | null): wavesProto.waves.IAmount => ({
