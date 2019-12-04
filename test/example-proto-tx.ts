@@ -220,27 +220,6 @@ export const txs = {
         "timestamp": 1575363459929
       }
   },
-  "TransferTransaction (type 4)": {
-    Bytes: "CncIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPCBkEKFgoUh1bxE8kLS9/ZE8YNLlD+2vGFWYwSJAogfwEA+X/yAVhhgADGfwHKJ/0Bp4AB/4d6/xEdMPCAWYAQZBoBHg==",
-    Json:
-      {
-        "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
-        "amount": 100,
-        "fee": 100000,
-        "type": 4,
-        "version": 3,
-        "chainId": 84,
-        "attachment": "X",
-        "sender": "3MvziWZmo7qqQc748i2m9RS62azVVnwrybM",
-        "feeAssetId": null,
-        "proofs": [],
-        "assetId": "9YmfbN8eJv5gTFh1NaqWgbexduhkdr3tCzCrUckyxBgB",
-        "recipient": "3N2Fh9dh86aXooHHV2dX4mPLpDSofee6rQU",
-        "feeAsset": null,
-        "id": "4g6qaFYwMLhgDqsH1rorxwEkYoJ7KbBrjkR7TQFqD9M1",
-        "timestamp": 1575363459929
-      }
-  },
   "MassTransferTransaction (type 11)": {
     Bytes: "CrUCCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgUQwMOTByDZ9urX7C0oAvoG/QESGgoWChQ+BAWJlYZzWfNWECnb6D8sHI4skRBkEhoKFgoU4KfqPdYV2T6wdBhwITMtIie9GzMQZBIKCgYSBGtyaDAQZBIYChQSEncuN3BfcnhxY3lmYXV2ZXdobhBkEhoKFgoUk05JVw9y8SM0WeyXOO80sQmsJ4oQZBIaChYKFNDqLtxHJz8ZiVrdgfXn+DO3ICDqEGQSJAogEh54cHhjZHRna2EwX28uZHVzZG8xN2Z6bTZoYjlnZmQQZBIaChYKFH6Kj7gE7Hy6fKU5MmwSPc5uJRW8EGQSCwoHEgUtZTZvdhBkEhYKEhIQdG56eDBrZ0B0Y2UyZGR2dhBk",
     Json:
@@ -346,3 +325,178 @@ export const txs = {
       }
   }
 }
+export const transfers = [
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 3,
+      "attachment": null,
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "5xFGikD2WfKbTvKknHAjPouhNNzDeRKJoGeynHcmxoAJ",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGGAoMEgp0ZXN0X2FsaWFzEgMQkE4aAwiQTg==",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 3,
+      "attachment": { "type": "integer", "value": 10000 },
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "BoHA5hak7ByZDAWNH8qkHUdkVz6Y1BnY33ppeK4GGssx",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGFwoMEgp0ZXN0X2FsaWFzEgMQkE4aAhAB",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 3,
+      "attachment": { "type": "boolean", "value": true },
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "EataHAWwdb3aCXu42nUekCiShHwZU2nHCgRMVfQLC5jT",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 3,
+      "attachment": { "type": "binary", "value": "es/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=" },
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "35EcUSFZMraXwPqyq84atAPaaVzGrYo4oAtL4N4MWUQi",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGOgoMEgp0ZXN0X2FsaWFzEgMQkE4aJSIjM043R3lxU0RGeUppaTZmOVR0d2tjVzFlVWZ2QmRBZ2I1Mmo=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 3,
+      "attachment": { "type": "string", "value": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j" },
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "2w8bXdF2SwZyxwZXmcHnofZjTcNxkJFPeYCSzXs1D6Pv",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAsIGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 2,
+      "attachment": "",
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "9SbCYr5nLqRSSdb6bqAyA4RNf8q524esv6EmXdoNtuDf",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAsIGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "fee": 100,
+      "type": 4,
+      "version": 2,
+      "attachment": "9GQfL2QeBTJABuYGStV5LXoXV76R1EtB7MEEGejC9zQk",
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "9Jts19PXh5Xit5NxTJ3AU11TogLmnh7faaqZvdjrfTCH",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAcIGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "signature": "",
+      "fee": 100,
+      "type": 4,
+      "version": 1,
+      "attachment": "",
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "4KCeGZxatnQF1s3Xc17vcy5LwRkh3pVZNhDDrAN9XPiW",
+      "timestamp": 1575447485201
+    }
+  },
+  {
+    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAcIGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
+    Json: {
+      "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
+      "amount": 10000,
+      "signature": "",
+      "fee": 100,
+      "type": 4,
+      "version": 1,
+      "attachment": "9GQfL2QeBTJABuYGStV5LXoXV76R1EtB7MEEGejC9zQk",
+      "sender": "3N7GyqSDFyJii6f9TtwkcW1eUfvBdAgb52j",
+      "feeAssetId": null,
+      "proofs": [],
+      "assetId": null,
+      "recipient": "alias:T:test_alias",
+      "feeAsset": null,
+      "id": "F7ji6E5tjRALdvLPYMAumq4vRpzJf6fgRMWrGPMaF3hU",
+      "timestamp": 1575447485201
+    }
+  }
+]

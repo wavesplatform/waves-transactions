@@ -400,7 +400,7 @@ const dataEntryToProto = (de: TDataEntry): wavesProto.waves.DataTransactionData.
   stringValue: de.type === 'string' ? de.value : undefined,
 })
 const attachmentToProto = (a?: TTypedData | string): wavesProto.waves.IAttachment | undefined => {
-  if (a == null) return
+  if (a == null || a === "") return
   let result: wavesProto.waves.IAttachment = {}
   if (typeof a === 'string') {
     result.binaryValue = base58Decode(a)

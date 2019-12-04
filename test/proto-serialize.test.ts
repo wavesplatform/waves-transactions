@@ -14,7 +14,7 @@ import { setAssetScript } from '../src/transactions/set-asset-script'
 import { invokeScript } from '../src/transactions/invoke-script'
 import { sponsorship } from '../src/transactions/sponsorship'
 import axios from 'axios';
-import { txs } from './example-proto-tx'
+import { txs, transfers } from './example-proto-tx'
 
 const SEED = 'test acc 2'
 const NODE_URL = 'https://devnet-aws-si-1.wavesnodes.com'
@@ -93,7 +93,7 @@ describe('transactions v3', () => {
     // await broadcast(istx, NODE_URL)
   })
 
-  it('correctly serialized transactions', () => {
+  it('correctly serialized transactions. All but transfer', () => {
     Object.entries(txs).forEach(([name, {Bytes, Json}]) => {
       const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
       const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes));
@@ -101,6 +101,17 @@ describe('transactions v3', () => {
         console.error(`${name}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
       }else {
         console.log(`${name} Success: \n${sbytes}\n${myBytes}\``)
+      }
+    })
+  })
+  it('correctly serialized transfers with attachments', () => {
+    transfers.forEach(({Bytes, Json}, i) => {
+      const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
+      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes));
+      if (!sbytes.includes(myBytes)){
+        console.error(`${i}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
+      }else {
+        console.log(`${i} Success: \n${sbytes}\n${myBytes}\``)
       }
     })
   })
