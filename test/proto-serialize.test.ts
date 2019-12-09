@@ -13,7 +13,7 @@ import { setScript } from '../src/transactions/set-script'
 import { setAssetScript } from '../src/transactions/set-asset-script'
 import { invokeScript } from '../src/transactions/invoke-script'
 import { sponsorship } from '../src/transactions/sponsorship'
-import axios from 'axios';
+import axios from 'axios'
 import { txs, transfers } from './example-proto-tx'
 
 const SEED = 'test acc 2'
@@ -45,7 +45,7 @@ describe('transactions v3', () => {
     })
   })
 
-  it('broadcasts new transactions', () => {
+  describe('broadcasts new transactions', () => {
     const itx = issue({ quantity: 1000, description: 'my token', name: 'my token', chainId: 'D' }, SEED)
     const ttx = transfer({ amount: 10000, recipient: libs.crypto.address(SEED, "D") }, SEED)
     const reitx = reissue({
@@ -69,17 +69,17 @@ describe('transactions v3', () => {
       assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
       minSponsoredAssetFee: 1000
     }, SEED)
-    const istx = invokeScript({ dApp: libs.crypto.address(SEED, "D"), chainId: 'D', call: { function: 'foo' } }, SEED)
-    // [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach(t => {
-    //   it(`Broadcasts ${t.type}`, async () => {
-    //     try {
-    //       await broadcast(t, NODE_URL)
-    //
-    //     } catch (e) {
-    //       console.error(e)
-    //     }
-    //   })
-    // })
+    const istx = invokeScript({ dApp: libs.crypto.address(SEED, "D"), chainId: 'D', call: { function: 'foo' } }, SEED);
+    [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach(t => {
+      it(`Broadcasts ${t.type}`, async () => {
+        try {
+          await broadcast(t, NODE_URL)
+
+        } catch (e) {
+          console.error(e)
+        }
+      })
+    })
     // await broadcast(itx, NODE_URL)
     // await broadcast(reitx, NODE_URL)
     // await broadcast(atx, NODE_URL)
@@ -94,25 +94,26 @@ describe('transactions v3', () => {
   })
 
   it('correctly serialized transactions. All but transfer', () => {
-    Object.entries(txs).forEach(([name, {Bytes, Json}]) => {
+    Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
       const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes));
-      if (!sbytes.includes(myBytes)){
+      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+      if (!sbytes.includes(myBytes)) {
         console.error(`${name}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
-      }else {
+      } else {
         console.log(`${name} Success: \n${sbytes}\n${myBytes}\``)
       }
     })
   })
   it('correctly serialized transfers with attachments', () => {
-    transfers.forEach(({Bytes, Json}, i) => {
+    transfers.forEach(({ Bytes, Json }, i) => {
       const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes));
-      if (!sbytes.includes(myBytes)){
+      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+      if (!sbytes.includes(myBytes)) {
         console.error(`${i}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
-      }else {
+      } else {
         console.log(`${i} Success: \n${sbytes}\n${myBytes}\``)
       }
+      expect(sbytes).toContain(myBytes)
     })
   })
 })

@@ -236,7 +236,7 @@ const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionD
   description: t.description,
   amount: Long.fromValue(t.quantity),
   decimals: t.decimals,
-  reissuable: t.reissuable,
+  reissuable: t.reissuable ? true : undefined,
   script: t.script == null ? null : scriptToProto(t.script),
 })
 const getTransferData = (t: ITransferTransaction): wavesProto.waves.ITransferTransactionData => ({
@@ -246,7 +246,7 @@ const getTransferData = (t: ITransferTransaction): wavesProto.waves.ITransferTra
 })
 const getReissueData = (t: IReissueTransaction): wavesProto.waves.IReissueTransactionData => ({
   assetAmount: amountToProto(t.quantity, t.assetId),
-  reissuable: t.reissuable,
+  reissuable: t.reissuable ? true : undefined,
 })
 const getBurnData = (t: IBurnTransaction): wavesProto.waves.IBurnTransactionData => ({
   assetAmount: amountToProto(t.quantity || (t as any).amount, t.assetId)
@@ -351,7 +351,7 @@ const orderToProto = (o: IOrder & {chainId: number}): wavesProto.waves.IOrder =>
     amountAssetId: o.assetPair.amountAsset == null ? null : base58Decode(o.assetPair.amountAsset),
     priceAssetId: o.assetPair.priceAsset == null ? null : base58Decode(o.assetPair.priceAsset)
   },
-  orderSide: o.orderType === "buy" ? wavesProto.waves.Order.Side.BUY : wavesProto.waves.Order.Side.SELL,
+  orderSide: o.orderType === "buy" ? undefined : wavesProto.waves.Order.Side.SELL,
   amount: Long.fromValue(o.amount),
   price: Long.fromValue(o.price),
   timestamp: Long.fromValue(o.timestamp),
