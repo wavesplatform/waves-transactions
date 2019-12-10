@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId, networkByte } from '../generic'
 import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -30,7 +30,7 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
-    chainId: paramsOrTx.chainId,
+    chainId: networkByte(paramsOrTx.chainId, undefined as any),
     id: '',
   } as any
 

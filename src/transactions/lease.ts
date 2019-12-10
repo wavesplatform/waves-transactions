@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
+import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
@@ -28,7 +28,7 @@ export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & W
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
-    chainId: paramsOrTx.chainId,
+    chainId: networkByte(paramsOrTx.chainId, 87),
     id: '',
   }
 

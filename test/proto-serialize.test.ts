@@ -18,7 +18,7 @@ import { txs, transfers } from './example-proto-tx'
 
 const SEED = 'test acc 2'
 const NODE_URL = 'https://devnet-aws-si-1.wavesnodes.com'
-
+const myAssetId = 'DXefNpMsjMaxXVSK5VsNPWgkDKvNmsZFgJK3nAk1ratE'
 /**
  * Longs as strings, remove unnecessary fields
  * @param t
@@ -45,52 +45,59 @@ describe('transactions v3', () => {
     })
   })
 
-  describe('broadcasts new transactions', () => {
-    const itx = issue({ quantity: 1000, description: 'my token', name: 'my token', chainId: 'D' }, SEED)
+  it('broadcasts new transactions', async() => {
+    const itx = issue({ quantity: 100000, description: 'my token', name: 'my token', chainId: 'D', reissuable:true }, SEED)
     const ttx = transfer({ amount: 10000, recipient: libs.crypto.address(SEED, "D") }, SEED)
     const reitx = reissue({
-      assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
+      assetId: myAssetId,
       quantity: 100,
       chainId: 'D',
       reissuable: true
     }, SEED)
-    const btx = burn({ assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm', quantity: 2, chainId: 'D' }, SEED)
-    const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }] }, SEED)
-    const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED, "D") }, SEED)
-    const canltx = cancelLease({ leaseId: ltx.id, chainId: 'D' }, SEED)
-    const atx = alias({ alias: 'super-alias', chainId: 'D' }, SEED)
+    const btx = burn({ assetId: myAssetId, quantity: 2, chainId: 'D' }, SEED)
+    const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }], chainId: 'D'}, SEED)
+    const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED + 'foo', "D") }, SEED)
+    const canltx = cancelLease({ leaseId: '6pDDM84arAdJ4Ts7cY7JaDbhjBHMbPdYsr3WyiDSDzbt', chainId: 'D' }, SEED)
+    const atx = alias({ alias: 'super-alias2', chainId: 'D' }, SEED)
     const ssTx = setScript({ script: null, chainId: 'D' }, SEED)
     const sastx = setAssetScript({
-      assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
+      assetId: myAssetId,
       chainId: 'D',
       script: 'base64:AwZd0cYf'
     }, SEED)
     const spontx = sponsorship({
-      assetId: 'DkmetPmMFTj7ddRZGTRdGS5G4GrfNKooot8BxvmJTrqm',
+      chainId: 'D',
+      assetId: myAssetId,
       minSponsoredAssetFee: 1000
     }, SEED)
     const istx = invokeScript({ dApp: libs.crypto.address(SEED, "D"), chainId: 'D', call: { function: 'foo' } }, SEED);
-    [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach(t => {
-      it(`Broadcasts ${t.type}`, async () => {
-        try {
-          await broadcast(t, NODE_URL)
-
-        } catch (e) {
-          console.error(e)
-        }
-      })
-    })
+    // [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach(t => {
+    //   it(`Broadcasts ${t.type}`, async () => {
+    //     try {
+    //       await broadcast(t, NODE_URL)
+    //
+    //     } catch (e) {
+    //       console.error(e)
+    //     }
+    //   })
+    // })
+    try {
+      // await broadcast(ttx, NODE_URL)
     // await broadcast(itx, NODE_URL)
     // await broadcast(reitx, NODE_URL)
     // await broadcast(atx, NODE_URL)
     // await broadcast(btx, NODE_URL)
     // await broadcast(dtx, NODE_URL)
-    // await broadcast(ltx, NODE_URL)
+    // await broadcast(ltx, NODE_URL); console.log(ltx.id)
     // await broadcast(canltx, NODE_URL)
     // await broadcast(ssTx, NODE_URL)
     // await broadcast(sastx, NODE_URL)
-    // await broadcast(spontx, NODE_URL)
+    await broadcast(spontx, NODE_URL)
     // await broadcast(istx, NODE_URL)
+
+    }catch (e) {
+      console.error(e)
+    }
   })
 
   it('correctly serialized transactions. All but transfer', () => {

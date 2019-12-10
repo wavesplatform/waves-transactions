@@ -203,7 +203,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
 }
 
 export function orderToProtoBytes(obj: TOrder): Uint8Array {
-  return wavesProto.waves.Order.encode(orderToProto(obj)).finish()
+  return wavesProto.waves.Order.encode(orderToProto(obj as any)).finish()
 }
 
 export function protoBytesToOrder(bytes: Uint8Array) {

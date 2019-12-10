@@ -11,7 +11,7 @@ import {
 } from '../transactions'
 import { binary } from '@waves/marshall'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
@@ -38,7 +38,7 @@ export function exchange(paramsOrTx: IExchangeTransaction, seed?: TSeedTypes): I
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
-    chainId: paramsOrTx.chainId,
+    chainId: networkByte(paramsOrTx.chainId, 87),
     id: '',
   }
 

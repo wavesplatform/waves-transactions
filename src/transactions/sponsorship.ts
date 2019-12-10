@@ -3,7 +3,7 @@
  */
 import { TRANSACTION_TYPE, WithId, WithSender, ISponsorshipParams, ISponsorshipTransaction } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, fee } from '../generic'
+import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
@@ -27,7 +27,7 @@ export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTra
     assetId: paramsOrTx.assetId,
     fee: fee(paramsOrTx, 100000000),
     timestamp: paramsOrTx.timestamp || Date.now(),
-    chainId: paramsOrTx.chainId,
+    chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
     id: '',
   }

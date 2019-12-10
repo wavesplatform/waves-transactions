@@ -23,7 +23,7 @@ import {
   WithId,
   WithSender, ITypelessDataEntry, TDataFiledType
 } from '../transactions'
-import { addProof, convertToPairs, fee, getSenderPublicKey } from '../generic'
+import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
@@ -72,7 +72,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
     fee: fee(paramsOrTx, computedFee),
     timestamp: _timestamp,
     proofs: paramsOrTx.proofs || [],
-    chainId: paramsOrTx.chainId,
+    chainId: networkByte(paramsOrTx.chainId, 87),
     id: '',
     data: paramsOrTx.data && (paramsOrTx.data as any).map((x: TDataEntry | ITypelessDataEntry) => {
       if ((<any>x).type) return x
@@ -95,4 +95,23 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
   tx.id = base58Encode(blake2b(bytes1))
 
   return tx
+}
+
+const dtxJson = {
+  "type": 12,
+  "version": 2,
+  "senderPublicKey": "FKRh2Dkxjxk5YkTUBByefDnJRdPvJSDFhB7sFCkM7kVC",
+  "fee": 100000,
+  "timestamp": 1575966397718,
+  "proofs": [
+    "2rq18LUdiavRMPe7t41TQGn1ZAQDtSKVw376WHQFKYneqtfQcRwppHJ38fbKFU6gNAGq7eCLn1UKLE8ZFDYRpvbj"
+  ],
+  "id": "DY4c43utZP9VEAQuJAEuZVQR9TLkcPe1QuHVjxRHrEuL",
+  "data": [
+    {
+      "type": "string",
+      "key": "foo",
+      "value": "bar"
+    }
+  ]
 }
