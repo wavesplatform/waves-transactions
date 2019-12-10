@@ -15,6 +15,7 @@ import { invokeScript } from '../src/transactions/invoke-script'
 import { sponsorship } from '../src/transactions/sponsorship'
 import axios from 'axios'
 import { txs, transfers } from './example-proto-tx'
+import { massTransfer } from '../src/transactions/mass-transfer'
 
 const SEED = 'test acc 2'
 const NODE_URL = 'https://devnet-aws-si-1.wavesnodes.com'
@@ -58,6 +59,11 @@ describe('transactions v3', () => {
     const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }], chainId: 'D'}, SEED)
     const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED + 'foo', "D") }, SEED)
     const canltx = cancelLease({ leaseId: '6pDDM84arAdJ4Ts7cY7JaDbhjBHMbPdYsr3WyiDSDzbt', chainId: 'D' }, SEED)
+    const mttx = massTransfer({
+      attachment: '123',
+      chainId: 'D',
+      transfers:[{recipient: libs.crypto.address(SEED, 'D'), amount: 1000}]
+    }, SEED)
     const atx = alias({ alias: 'super-alias2', chainId: 'D' }, SEED)
     const ssTx = setScript({ script: null, chainId: 'D' }, SEED)
     const sastx = setAssetScript({
@@ -90,9 +96,10 @@ describe('transactions v3', () => {
     // await broadcast(dtx, NODE_URL)
     // await broadcast(ltx, NODE_URL); console.log(ltx.id)
     // await broadcast(canltx, NODE_URL)
+    //   await broadcast(mttx, NODE_URL)
     // await broadcast(ssTx, NODE_URL)
     // await broadcast(sastx, NODE_URL)
-    await broadcast(spontx, NODE_URL)
+    // await broadcast(spontx, NODE_URL)
     // await broadcast(istx, NODE_URL)
 
     }catch (e) {
