@@ -27,7 +27,7 @@ import {
   ITransaction,
   ITransferTransaction,
   TOrder, TRANSACTION_TYPE, TTransactionType,
-  TTx, TTypedData
+  TTx, TTypedData, IUpdateAssetInfoTransaction
 } from './transactions'
 import { base64Prefix, chainIdFromRecipient, fee, isOrder } from './generic'
 import Long from 'long'
@@ -195,6 +195,11 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
         assetId: p.assetId == null ? null : base58Encode(p.assetId)
       }))
       break
+    case 'updateAssetInfo':
+      res.assetId =  base58Encode(t.updateAssetInfo!.assetId!)
+      res.name = t.updateAssetInfo!.name
+      res.description = t.updateAssetInfo!.description
+      break;
     default:
       throw new Error(`Unsupported tx type ${t.data}`)
   }
@@ -292,7 +297,13 @@ const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScr
     payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
   }
 }
-
+const getUpdateAssetInfoData = (t: IUpdateAssetInfoTransaction): wavesProto.waves.IUpdateAssetInfoTransactionData => {
+  return {
+    assetId: base58Decode(t.assetId),
+    name: t.name,
+    description: t.description
+  }
+}
 export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
 
   const common = getCommonFields(t)
@@ -340,6 +351,9 @@ export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
     case TRANSACTION_TYPE.INVOKE_SCRIPT:
       txData = getInvokeData(t)
       break
+    case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
+      txData = getUpdateAssetInfoData(t)
+      break;
   }
   return { ...common, [common.data]: txData }
 }

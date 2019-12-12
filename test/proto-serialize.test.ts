@@ -20,7 +20,7 @@ import { updateAssetInfo } from '../src/transactions/update-asset-info'
 
 const SEED = 'test acc 2'
 const NODE_URL = 'https://devnet-aws-si-1.wavesnodes.com'
-const myAssetId = 'DXefNpMsjMaxXVSK5VsNPWgkDKvNmsZFgJK3nAk1ratE'
+const myAssetId = 'AZZnDexy7dZAsJ4SGX8dbVcAv9cermXvDKfy5jHeTs79'
 const myChainId = 'D'
 /**
  * Longs as strings, remove unnecessary fields
@@ -112,7 +112,8 @@ describe('transactions v3', () => {
     // })
     try {
       // await broadcast(ttx, NODE_URL)
-      // await broadcast(itx, NODE_URL)
+      console.log(itx.id)
+      await broadcast(itx, NODE_URL)
       // await broadcast(reitx, NODE_URL)
       // await broadcast(atx, NODE_URL)
       // await broadcast(btx, NODE_URL)
@@ -155,22 +156,3 @@ describe('transactions v3', () => {
     })
   })
 })
-const sasjson = {
-  "type": 15,
-  "version": 2,
-  "senderPublicKey": "FKRh2Dkxjxk5YkTUBByefDnJRdPvJSDFhB7sFCkM7kVC",
-  "assetId": "DXefNpMsjMaxXVSK5VsNPWgkDKvNmsZFgJK3nAk1ratE",
-  "chainId": 68,
-  "fee": 100000000,
-  "timestamp": 1576155817905,
-  "proofs": [
-    "5QjobSRJ8sN9HoSGpgAQ2Z4gCEzJFGemfyr4hFojE62qWnqeCXSRpJYpiAw6PVe9rrM4GAK3Lwa1RSmhcD9bdP6C"
-  ],
-  "id": "4kX1XMLr5LoS2NdoLLKT9CfxjeZouFUmCd9T2HsG9DAi",
-  "script": "base64:AwZd0cYf"
-}
-
-const my_sasbytes =     'CEQSINS7/RZ9xzhQwSjbManjuSIpywRa/EerlvvV21poR60/GgUQgMLXLyCxz9TR7y0oApoHLAoguiZAZkbRkXlvNum1qovXzDo28GE9pwgOfivG8hqyI4cSCAoGAwZd0cYf'
-const from_node_bytes = 'CEQSINS7/RZ9xzhQwSjbManjuSIpywRa/EerlvvV21poR60/GgUQgMLXLyCxz9TR7y0oApoHLQoguiZAZkbRkXlvNum1qovXzDo28GE9pwgOfivG8hqyI4cSCQoFBl3Rxh8QAw=='
-// const b64bytes = libs.crypto.base64Encode(sas2bytes)
-// console.log(b64bytes)
