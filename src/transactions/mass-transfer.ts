@@ -2,7 +2,15 @@
  * @module index
  */
 import { TRANSACTION_TYPE, IMassTransferTransaction, IMassTransferParams, WithId, WithSender } from '../transactions'
-import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte, normalizeAssetId } from '../generic'
+import {
+  addProof,
+  chainIdFromRecipient,
+  convertToPairs,
+  fee,
+  getSenderPublicKey,
+  networkByte,
+  normalizeAssetId
+} from '../generic'
 import { TSeedTypes } from '../types'
 import { base58Encode, blake2b, signBytes } from '@waves/ts-lib-crypto'
 import { binary } from '@waves/marshall'
@@ -19,7 +27,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  if (!Array.isArray(paramsOrTx.transfers)) throw new Error('["transfers should be array"]')
+  if (!Array.isArray(paramsOrTx.transfers) || paramsOrTx.transfers.length === 0) throw new Error('Should contain at least one transfer')
 
   const tx: IMassTransferTransaction & WithId = {
     type,
@@ -31,8 +39,8 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
     timestamp: paramsOrTx.timestamp || Date.now(),
     attachment: paramsOrTx.attachment,
     proofs: paramsOrTx.proofs || [],
-    chainId: networkByte(paramsOrTx.chainId, 87),
-    id: '', //TODO: invalid id for masstransfer tx
+    chainId: networkByte(paramsOrTx.chainId, chainIdFromRecipient(paramsOrTx.transfers[0]?.recipient)),
+    id: '',
   }
 
   validate.massTransfer(tx)

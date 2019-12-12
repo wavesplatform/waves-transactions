@@ -78,6 +78,10 @@ export function chainIdFromRecipient(recipient: string){
   if (recipient.startsWith('alias')){
     return recipient.charCodeAt(6)
   }else {
-    return base58Decode(recipient)[1]
+    try {
+      return base58Decode(recipient)[1]
+    }catch (e) {
+      throw new Error(`Invalid recipient: ${recipient}`)
+    }
   }
 }

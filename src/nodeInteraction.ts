@@ -4,7 +4,6 @@
 
 import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
 import axios from 'axios'
-import { json } from '@waves/marshall'
 import * as txAPI from '@waves/blockchain-api/dist/api-node/transactions'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
@@ -308,10 +307,4 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
  */
 export function broadcast<T extends TTx>(tx: T, nodeUrl: string) {
   return txAPI.broadcast(nodeUrl, tx as any)
-  // return axios.post('transactions/broadcast', json.stringifyTx(tx), {
-  //   baseURL: nodeUrl,
-  //   headers: { 'content-type': 'application/json' },
-  //   validateStatus,
-  // }).then(process400)
-  //   .then(x => x.data)
 }

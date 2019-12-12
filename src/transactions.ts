@@ -16,6 +16,7 @@ export const TRANSACTION_TYPE = {
   SPONSORSHIP: 14 as 14,
   SET_ASSET_SCRIPT: 15 as 15,
   INVOKE_SCRIPT: 16 as 16,
+  UPDATE_ASSET_INFO: 17 as 17
 }
 
 export const DATA_FIELD_TYPE = {
@@ -101,6 +102,7 @@ export interface ITransaction<LONG = string | number> extends WithProofs, WithSe
   fee: LONG
   version: number
   chainId: number
+  feeAssetId?: string | null
 }
 
 /**
@@ -121,6 +123,7 @@ export type TTx<LONG = string | number> =
   | IDataTransaction<LONG>
   | ISetAssetScriptTransaction<LONG>
   | IInvokeScriptTransaction<LONG>
+  | IUpdateAssetInfoTransaction<LONG>
 
 
 /**
@@ -307,12 +310,22 @@ export interface IInvokeScriptCall {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
+export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.INVOKE_SCRIPT
   dApp: string
   feeAssetId?: string | null
   call?: IInvokeScriptCall,
   payment?: IInvokeScriptPayment[]
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
+export interface IUpdateAssetInfoTransaction<LONG = string | number> extends ITransaction<LONG> {
+  type: typeof TRANSACTION_TYPE.UPDATE_ASSET_INFO
+  assetId: string
+  name: string
+  description: string
 }
 
 /**
@@ -373,6 +386,7 @@ export type TTxParams<LONG = string | number> =
   | ISetScriptParams<LONG>
   | ISponsorshipParams<LONG>
   | ITransferParams<LONG>
+  | IUpdateAssetInfoParams<LONG>
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
@@ -612,3 +626,20 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
   }[]
 }
 
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
+export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Id of previously issued asset
+   */
+  assetId: string
+  /**
+   * New asset name
+   */
+  name: string
+  /**
+   * New asset description
+   */
+  description: string
+}
