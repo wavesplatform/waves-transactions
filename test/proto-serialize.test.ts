@@ -73,7 +73,12 @@ describe('transactions v3', () => {
       transfers: [{ recipient: libs.crypto.address(SEED, myChainId), amount: 1000 }]
     }, SEED)
     const atx = alias({ alias: 'super-alias2', chainId: myChainId }, SEED)
-    const ssTx = setScript({ script: null, chainId: myChainId }, SEED)
+    const ssTx = setScript({
+      //script: 'AwkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAAIBQAAAAJ0eAAAAA9zZW5kZXJQdWJsaWNLZXmIg5mo',
+      script: null,
+      chainId: myChainId,
+      additionalFee: 400000
+    }, SEED)
     const sastx = setAssetScript({
       assetId: myAssetId,
       chainId: myChainId,
@@ -116,6 +121,7 @@ describe('transactions v3', () => {
       // await broadcast(canltx, NODE_URL)
       //   await broadcast(mttx, NODE_URL)
       // await broadcast(ssTx, NODE_URL)
+      // console.log(libs.crypto.base64Encode(txToProtoBytes(sastx)))
       // await broadcast(sastx, NODE_URL)
       // await broadcast(spontx, NODE_URL)
       // await broadcast(istx, NODE_URL)
@@ -149,3 +155,22 @@ describe('transactions v3', () => {
     })
   })
 })
+const sasjson = {
+  "type": 15,
+  "version": 2,
+  "senderPublicKey": "FKRh2Dkxjxk5YkTUBByefDnJRdPvJSDFhB7sFCkM7kVC",
+  "assetId": "DXefNpMsjMaxXVSK5VsNPWgkDKvNmsZFgJK3nAk1ratE",
+  "chainId": 68,
+  "fee": 100000000,
+  "timestamp": 1576155817905,
+  "proofs": [
+    "5QjobSRJ8sN9HoSGpgAQ2Z4gCEzJFGemfyr4hFojE62qWnqeCXSRpJYpiAw6PVe9rrM4GAK3Lwa1RSmhcD9bdP6C"
+  ],
+  "id": "4kX1XMLr5LoS2NdoLLKT9CfxjeZouFUmCd9T2HsG9DAi",
+  "script": "base64:AwZd0cYf"
+}
+
+const my_sasbytes =     'CEQSINS7/RZ9xzhQwSjbManjuSIpywRa/EerlvvV21poR60/GgUQgMLXLyCxz9TR7y0oApoHLAoguiZAZkbRkXlvNum1qovXzDo28GE9pwgOfivG8hqyI4cSCAoGAwZd0cYf'
+const from_node_bytes = 'CEQSINS7/RZ9xzhQwSjbManjuSIpywRa/EerlvvV21poR60/GgUQgMLXLyCxz9TR7y0oApoHLQoguiZAZkbRkXlvNum1qovXzDo28GE9pwgOfivG8hqyI4cSCQoFBl3Rxh8QAw=='
+// const b64bytes = libs.crypto.base64Encode(sas2bytes)
+// console.log(b64bytes)

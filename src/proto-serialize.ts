@@ -256,7 +256,7 @@ const getExchangeData = (t: IExchangeTransaction): wavesProto.waves.IExchangeTra
   price: Long.fromValue(t.price),
   buyMatcherFee: Long.fromValue(t.buyMatcherFee),
   sellMatcherFee: Long.fromValue(t.sellMatcherFee),
-  orders: [orderToProto({chainId: t.chainId, ...t.order1}), orderToProto({chainId: t.chainId, ...t.order2})],
+  orders: [orderToProto({ chainId: t.chainId, ...t.order1 }), orderToProto({ chainId: t.chainId, ...t.order2 })],
 })
 const getLeaseData = (t: ILeaseTransaction): wavesProto.waves.ILeaseTransactionData => ({
   recipient: recipientToProto(t.recipient),
@@ -343,7 +343,7 @@ export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
   }
   return { ...common, [common.data]: txData }
 }
-const orderToProto = (o: IOrder & {chainId: number}): wavesProto.waves.IOrder => ({
+const orderToProto = (o: IOrder & { chainId: number }): wavesProto.waves.IOrder => ({
   chainId: o.chainId,
   senderPublicKey: base58Decode(o.senderPublicKey),
   matcherPublicKey: base58Decode(o.matcherPublicKey),
@@ -415,9 +415,13 @@ const attachmentToProto = (a?: TTypedData | string): wavesProto.waves.IAttachmen
   } else throw new Error(`Invalid attachment: ${JSON.stringify(a)}`)
   return result
 }
-const scriptToProto = (s: string): wavesProto.waves.IScript => ({
-  bytes: base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
-})
+const scriptToProto = (s: string): wavesProto.waves.IScript => {
+  const bytes = base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
+  return {
+    version: bytes[0],
+    bytes: bytes.slice(1)
+  }
+}
 
 const nameByType = {
   1: "genesis" as "genesis",
