@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>seedUtils | waves-transactions</title>
+	<title>&quot;proto-serialize&quot; | waves-transactions</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="seedutils.html">seedUtils</a>
+					<a href="_proto_serialize_.html">&quot;proto-serialize&quot;</a>
 				</li>
 			</ul>
-			<h1>External module seedUtils</h1>
+			<h1>External module &quot;proto-serialize&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -67,16 +67,13 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Classes</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/seedutils.seed.html" class="tsd-kind-icon">Seed</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="seedutils.html#generatenewseed" class="tsd-kind-icon">generate<wbr>New<wbr>Seed</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="seedutils.html#strengthenpassword" class="tsd-kind-icon">strengthen<wbr>Password</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_proto_serialize_.html#ordertoprotobytes" class="tsd-kind-icon">order<wbr>ToProto<wbr>Bytes</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_proto_serialize_.html#protobytestoorder" class="tsd-kind-icon">proto<wbr>Bytes<wbr>ToOrder</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_proto_serialize_.html#protobytestotx" class="tsd-kind-icon">proto<wbr>Bytes<wbr>ToTx</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_proto_serialize_.html#txtoproto" class="tsd-kind-icon">tx<wbr>ToProto</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_proto_serialize_.html#txtoprotobytes" class="tsd-kind-icon">tx<wbr>ToProto<wbr>Bytes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -85,51 +82,122 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="generatenewseed" class="tsd-anchor"></a>
-					<h3>generate<wbr>New<wbr>Seed</h3>
+					<a name="ordertoprotobytes" class="tsd-anchor"></a>
+					<h3>order<wbr>ToProto<wbr>Bytes</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">generate<wbr>New<wbr>Seed<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">order<wbr>ToProto<wbr>Bytes<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><a href="index.html#torder" class="tsd-signature-type">TOrder</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in seedUtils/index.ts:108</li>
+									<li>Defined in proto-serialize.ts:210</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> length: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;15</span></h5>
+									<h5>obj: <a href="index.html#torder" class="tsd-signature-type">TOrder</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="strengthenpassword" class="tsd-anchor"></a>
-					<h3>strengthen<wbr>Password</h3>
+					<a name="protobytestoorder" class="tsd-anchor"></a>
+					<h3>proto<wbr>Bytes<wbr>ToOrder</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">strengthen<wbr>Password<span class="tsd-signature-symbol">(</span>password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, rounds<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">proto<wbr>Bytes<wbr>ToOrder<span class="tsd-signature-symbol">(</span>bytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/index.iorderv1.html" class="tsd-signature-type">IOrderV1</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/index.iorderv2.html" class="tsd-signature-type">IOrderV2</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/index.iorderv3.html" class="tsd-signature-type">IOrderV3</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in seedUtils/index.ts:113</li>
+									<li>Defined in proto-serialize.ts:214</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>password: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> rounds: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;5000</span></h5>
+									<h5>bytes: <span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.iorderv1.html" class="tsd-signature-type">IOrderV1</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../interfaces/index.iorderv2.html" class="tsd-signature-type">IOrderV2</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../interfaces/index.iorderv3.html" class="tsd-signature-type">IOrderV3</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="protobytestotx" class="tsd-anchor"></a>
+					<h3>proto<wbr>Bytes<wbr>ToTx</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">proto<wbr>Bytes<wbr>ToTx<span class="tsd-signature-symbol">(</span>bytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="index.html#ttx" class="tsd-signature-type">TTx</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in proto-serialize.ts:89</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bytes: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="index.html#ttx" class="tsd-signature-type">TTx</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="txtoproto" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> tx<wbr>ToProto</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">tx<wbr>ToProto<span class="tsd-signature-symbol">(</span>t<span class="tsd-signature-symbol">: </span><a href="index.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ITransaction</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in proto-serialize.ts:307</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>t: <a href="index.html#ttx" class="tsd-signature-type">TTx</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ITransaction</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="txtoprotobytes" class="tsd-anchor"></a>
+					<h3>tx<wbr>ToProto<wbr>Bytes</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">tx<wbr>ToProto<wbr>Bytes<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><a href="index.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in proto-serialize.ts:85</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <a href="index.html#ttx" class="tsd-signature-type">TTx</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -147,7 +215,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_make_tx_.html">"make-<wbr>tx"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="_proto_serialize_.html">"proto-<wbr>serialize"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -156,21 +224,27 @@
 					<li class=" tsd-kind-external-module">
 						<a href="nodeinteraction.html">node<wbr>Interaction</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="seedutils.html">seed<wbr>Utils</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/seedutils.seed.html" class="tsd-kind-icon">Seed</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_proto_serialize_.html#ordertoprotobytes" class="tsd-kind-icon">order<wbr>ToProto<wbr>Bytes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="seedutils.html#generatenewseed" class="tsd-kind-icon">generate<wbr>New<wbr>Seed</a>
+						<a href="_proto_serialize_.html#protobytestoorder" class="tsd-kind-icon">proto<wbr>Bytes<wbr>ToOrder</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="seedutils.html#strengthenpassword" class="tsd-kind-icon">strengthen<wbr>Password</a>
+						<a href="_proto_serialize_.html#protobytestotx" class="tsd-kind-icon">proto<wbr>Bytes<wbr>ToTx</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_proto_serialize_.html#txtoproto" class="tsd-kind-icon">tx<wbr>ToProto</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_proto_serialize_.html#txtoprotobytes" class="tsd-kind-icon">tx<wbr>ToProto<wbr>Bytes</a>
 					</li>
 				</ul>
 			</nav>

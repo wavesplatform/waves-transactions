@@ -102,8 +102,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idatatransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="index.idatatransaction.html#data" class="tsd-kind-icon">data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idatatransaction.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idatatransaction.html#feeassetid" class="tsd-kind-icon">fee<wbr>Asset<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idatatransaction.html#proofs" class="tsd-kind-icon">proofs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idatatransaction.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idatatransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
@@ -116,13 +118,24 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="chainid" class="tsd-anchor"></a>
+					<h3>chain<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="index.itransaction.html">ITransaction</a>.<a href="index.itransaction.html#chainid">chainId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:104</li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="data" class="tsd-anchor"></a>
 					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="index.idataentry.html" class="tsd-signature-type">IDataEntry</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="../modules/index.html#tdataentry" class="tsd-signature-type">TDataEntry</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:263</li>
+							<li>Defined in transactions.ts:283</li>
 						</ul>
 					</aside>
 				</section>
@@ -133,7 +146,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.itransaction.html">ITransaction</a>.<a href="index.itransaction.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:76</li>
+							<li>Defined in transactions.ts:102</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="feeassetid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee<wbr>Asset<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">fee<wbr>Asset<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="index.itransaction.html">ITransaction</a>.<a href="index.itransaction.html#feeassetid">feeAssetId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:105</li>
 						</ul>
 					</aside>
 				</section>
@@ -144,7 +168,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.withproofs.html">WithProofs</a>.<a href="index.withproofs.html#proofs">proofs</a></p>
 						<ul>
-							<li>Defined in transactions.ts:45</li>
+							<li>Defined in transactions.ts:71</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,7 +192,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.withsender.html">WithSender</a>.<a href="index.withsender.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in transactions.ts:36</li>
+							<li>Defined in transactions.ts:62</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +208,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.itransaction.html">ITransaction</a>.<a href="index.itransaction.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:75</li>
+							<li>Defined in transactions.ts:101</li>
 						</ul>
 					</aside>
 				</section>
@@ -195,7 +219,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="index.itransaction.html">ITransaction</a>.<a href="index.itransaction.html#type">type</a></p>
 						<ul>
-							<li>Defined in transactions.ts:262</li>
+							<li>Defined in transactions.ts:282</li>
 						</ul>
 					</aside>
 				</section>
@@ -206,7 +230,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.itransaction.html">ITransaction</a>.<a href="index.itransaction.html#version">version</a></p>
 						<ul>
-							<li>Defined in transactions.ts:77</li>
+							<li>Defined in transactions.ts:103</li>
 						</ul>
 					</aside>
 				</section>
@@ -223,6 +247,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_make_tx_.html">"make-<wbr>tx"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_proto_serialize_.html">"proto-<wbr>serialize"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/index.html">index</a>
@@ -242,11 +269,17 @@
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="index.idatatransaction.html" class="tsd-kind-icon">IData<wbr>Transaction</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="index.idatatransaction.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="index.idatatransaction.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="index.idatatransaction.html#fee" class="tsd-kind-icon">fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="index.idatatransaction.html#feeassetid" class="tsd-kind-icon">fee<wbr>Asset<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="index.idatatransaction.html#proofs" class="tsd-kind-icon">proofs</a>

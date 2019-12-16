@@ -103,6 +103,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idataparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idataparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="index.idataparams.html#data" class="tsd-kind-icon">data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idataparams.html#fee" class="tsd-kind-icon">fee</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.idataparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
@@ -121,7 +122,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.ibasicparams.html">IBasicParams</a>.<a href="index.ibasicparams.html#additionalfee">additionalFee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:372</li>
+							<li>Defined in transactions.ts:403</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -131,13 +132,32 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="chainid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chain<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="index.ibasicparams.html">IBasicParams</a>.<a href="index.ibasicparams.html#chainid">chainId</a></p>
+						<ul>
+							<li>Defined in transactions.ts:420</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Network byte. Could be set as number or as char.
+								If set as char(string), charCodeAt(0) will be used. E.g.,
+								&#39;W&#39; will be converted to &#39;87&#39;
+							If not set, 87 will be used as default</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="data" class="tsd-anchor"></a>
 					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="index.idataentry.html" class="tsd-signature-type">IDataEntry</a><span class="tsd-signature-symbol"> | </span><a href="index.itypelessdataentry.html" class="tsd-signature-type">ITypelessDataEntry</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/index.html#tdataentry" class="tsd-signature-type">TDataEntry</a><span class="tsd-signature-symbol"> | </span><a href="index.itypelessdataentry.html" class="tsd-signature-type">ITypelessDataEntry</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in transactions.ts:421</li>
+							<li>Defined in transactions.ts:451</li>
 						</ul>
 					</aside>
 				</section>
@@ -148,7 +168,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.ibasicparams.html">IBasicParams</a>.<a href="index.ibasicparams.html#fee">fee</a></p>
 						<ul>
-							<li>Defined in transactions.ts:367</li>
+							<li>Defined in transactions.ts:398</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -164,7 +184,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.ibasicparams.html">IBasicParams</a>.<a href="index.ibasicparams.html#senderpublickey">senderPublicKey</a></p>
 						<ul>
-							<li>Defined in transactions.ts:378</li>
+							<li>Defined in transactions.ts:409</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +204,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.ibasicparams.html">IBasicParams</a>.<a href="index.ibasicparams.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in transactions.ts:382</li>
+							<li>Defined in transactions.ts:413</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,6 +227,9 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_make_tx_.html">"make-<wbr>tx"</a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_proto_serialize_.html">"proto-<wbr>serialize"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/index.html">index</a>
 					</li>
@@ -227,6 +250,9 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="index.idataparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="index.idataparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="index.idataparams.html#data" class="tsd-kind-icon">data</a>

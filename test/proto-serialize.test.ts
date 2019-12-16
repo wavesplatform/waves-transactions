@@ -112,7 +112,7 @@ describe('transactions v3', () => {
     // })
     try {
       // await broadcast(ttx, NODE_URL)
-      console.log(itx.id)
+      // console.log(itx.id)
       await broadcast(itx, NODE_URL)
       // await broadcast(reitx, NODE_URL)
       // await broadcast(atx, NODE_URL)
