@@ -28,6 +28,11 @@ export const DATA_FIELD_TYPE = {
 
 export type TDataEntry = TTypedData & { key: string}
 export type TTypedData = IBooleanData | IIntegerData | IStringData | IBinaryData
+export type TDeleteRequest = {
+  type?: null
+  value?: null
+  key: string
+}
 
 export interface IBooleanData {
   type: typeof DATA_FIELD_TYPE.BOOLEAN
@@ -280,7 +285,7 @@ export interface ISponsorshipTransaction<LONG = string | number> extends ITransa
  */
 export interface IDataTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.DATA
-  data: TDataEntry[]
+  data: Array<TDataEntry | TDeleteRequest>
 }
 
 /**
@@ -448,7 +453,7 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-  data: Array<TDataEntry | ITypelessDataEntry>
+  data: Array<TDataEntry | ITypelessDataEntry | TDeleteRequest>
 }
 
 /**

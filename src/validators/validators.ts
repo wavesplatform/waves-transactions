@@ -229,6 +229,11 @@ export const isValidData = validatePipe(
     pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
     isValidDataPair
 )
+export const isValidDeleteRequest = validatePipe(
+  isRequired(true),
+  pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+  ({type, value}: any) => type ==null && value == null
+)
 
 export const isValidAssetName = validatePipe(
     isRequired(true),

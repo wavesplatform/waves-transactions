@@ -27,7 +27,7 @@ import {
   ITransaction,
   ITransferTransaction,
   TOrder, TRANSACTION_TYPE, TTransactionType,
-  TTx, TTypedData, IUpdateAssetInfoTransaction
+  TTx, TTypedData, IUpdateAssetInfoTransaction, TDeleteRequest
 } from './transactions'
 import { base64Prefix, chainIdFromRecipient, fee, isOrder } from './generic'
 import Long from 'long'
@@ -172,6 +172,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
         if (de.hasOwnProperty('boolValue')) return { key: de.key, type: 'boolean', value: de.boolValue }
         if (de.hasOwnProperty('intValue')) return { key: de.key, type: 'integer', value: de.intValue!.toString() }
         if (de.hasOwnProperty('stringValue')) return { key: de.key, type: 'string', value: de.stringValue }
+        return { key: de.key }
       })
       break
     case "setScript":
@@ -196,10 +197,10 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       }))
       break
     case 'updateAssetInfo':
-      res.assetId =  base58Encode(t.updateAssetInfo!.assetId!)
+      res.assetId = base58Encode(t.updateAssetInfo!.assetId!)
       res.name = t.updateAssetInfo!.name
       res.description = t.updateAssetInfo!.description
-      break;
+      break
     default:
       throw new Error(`Unsupported tx type ${t.data}`)
   }
@@ -353,7 +354,7 @@ export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
       break
     case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
       txData = getUpdateAssetInfoData(t)
-      break;
+      break
   }
   return { ...common, [common.data]: txData }
 }
@@ -406,7 +407,7 @@ const massTransferItemToProto = (mti: IMassTransferItem): wavesProto.waves.MassT
   address: recipientToProto(mti.recipient),
   amount: Long.fromValue(mti.amount)
 })
-const dataEntryToProto = (de: TDataEntry): wavesProto.waves.DataTransactionData.IDataEntry => ({
+export const dataEntryToProto = (de: TDataEntry | TDeleteRequest): wavesProto.waves.DataTransactionData.IDataEntry => ({
   key: de.key,
   intValue: de.type === 'integer' ? Long.fromValue(de.value) : undefined,
   boolValue: de.type === 'boolean' ? de.value : undefined,
