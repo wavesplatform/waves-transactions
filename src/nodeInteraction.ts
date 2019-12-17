@@ -4,7 +4,7 @@
 
 import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
 import axios from 'axios'
-import * as txAPI from '@waves/blockchain-api/dist/api-node/transactions'
+import * as txAPI from '@waves/blockchain-api/dist/cjs/api-node/transactions'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 

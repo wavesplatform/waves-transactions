@@ -113,20 +113,20 @@ describe('transactions v3', () => {
     try {
       // await broadcast(ttx, NODE_URL)
       // console.log(itx.id)
-      await broadcast(itx, NODE_URL)
+      // await broadcast(itx, NODE_URL)
       // await broadcast(reitx, NODE_URL)
       // await broadcast(atx, NODE_URL)
       // await broadcast(btx, NODE_URL)
       // await broadcast(dtx, NODE_URL)
       // await broadcast(ltx, NODE_URL); console.log(ltx.id)
       // await broadcast(canltx, NODE_URL)
-      //   await broadcast(mttx, NODE_URL)
+        await broadcast(mttx, NODE_URL)
       // await broadcast(ssTx, NODE_URL)
       // console.log(libs.crypto.base64Encode(txToProtoBytes(sastx)))
       // await broadcast(sastx, NODE_URL)
       // await broadcast(spontx, NODE_URL)
       // await broadcast(istx, NODE_URL)
-      await broadcast(uaitx, NODE_URL)
+      // await broadcast(uaitx, NODE_URL)
     } catch (e) {
       console.error(e)
     }
@@ -156,3 +156,17 @@ describe('transactions v3', () => {
     })
   })
 })
+
+let a= {
+  "type":4,
+  "version":3,
+  "senderPublicKey":"8rbsYsY3pnPveg13yDcoQ8WrS2tciNQS55rAKcC6gJut",
+  "assetId":"9NNLqSE68fimL5GpKFacu67auqtq5aYPVnvWJZJPigNA","recipient":"3FVUWaBpL7DmMWwH3e8S7E8JYVvpihviTDK",
+  amount:500,
+  "attachment":"3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw",
+  "fee":100000,
+  "feeAssetId":null,
+  "timestamp":1576572672305,
+  "proofs":["4TjSReiWQRsfqJahn8jLAsw6yhTCqR4fWyE4vFpxKF6WeZoFRehbxE1FocyE8QDtezE6a5Fv1RpK7HJ2rf4WZLfM"],
+  "chainId":68,"id":"4cYF5ryXtyoXKyTWAjxFm2fnMRuASgfMb1H8SgtaMLrH"
+}

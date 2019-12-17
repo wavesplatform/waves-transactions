@@ -34,10 +34,10 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
   validate.alias(tx)
 
   const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
+  const idBytes = version > 2 ? bytes : [bytes[0], ...bytes.slice(36, -16)]
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
 
-  const idBytes = [bytes[0], ...bytes.slice(36, -16)]
   tx.id = base58Encode(blake2b(Uint8Array.from(idBytes)))
 
   return tx

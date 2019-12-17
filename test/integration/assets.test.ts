@@ -26,7 +26,7 @@ describe('Assets', () => {
     account2 = 'account2' + nonce
     const mtt = massTransfer({
       transfers: [
-        { recipient: address(account1, CHAIN_ID), amount: 5.1 * wvs },
+        { recipient: address(account1, CHAIN_ID), amount: 6 * wvs },
         { recipient: address(account2, CHAIN_ID), amount: 1 * wvs }
       ]
     }, MASTER_SEED)
@@ -175,7 +175,7 @@ describe('Assets', () => {
   describe('Other', () => {
     it('Should create alias for address', async () => {
       const aliasStr: string = randomHexString(10)
-      const aliasTx = alias({ alias: aliasStr, chainId: 'T' }, account1)
+      const aliasTx = alias({ alias: aliasStr, chainId: CHAIN_ID }, account1)
       const resp = await broadcast(aliasTx, API_BASE)
       expect(resp.type).toEqual(10)
       await waitForTx(aliasTx.id, { timeout: TIMEOUT, apiBase: API_BASE })
@@ -185,7 +185,7 @@ describe('Assets', () => {
     }, TIMEOUT)
 
     it('Should perform exchange transaction', async () => {
-      // ISSUE ASSET
+      try{// ISSUE ASSET
       let account2 = 'exchange test'
       let assetId: string
       const txParams: IIssueParams = {
@@ -238,6 +238,7 @@ describe('Assets', () => {
 
       const exchangeTx = exchange({
         type: 7,
+        chainId: CHAIN_ID.charCodeAt(0),
         version: 2,
         order1,
         order2,
@@ -252,7 +253,10 @@ describe('Assets', () => {
       }, account1)
 
       const resp = await broadcast(exchangeTx, API_BASE)
-      expect(resp.type).toEqual(7)
+      expect(resp.type).toEqual(7)}catch (e) {
+        console.error(e)
+        throw e
+      }
     }, TIMEOUT)
   })
 })
