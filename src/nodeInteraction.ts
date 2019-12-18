@@ -3,8 +3,11 @@
  */
 
 import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
-import axios from 'axios'
-import * as txAPI from '@waves/blockchain-api/dist/cjs/api-node/transactions'
+import * as tx_route from '@waves/blockchain-api/dist/cjs/api-node/transactions'
+import * as blocks_route from '@waves/blockchain-api/dist/cjs/api-node/blocks'
+import * as addresses_route from '@waves/blockchain-api/dist/cjs/api-node/addresses'
+import * as assets_route from '@waves/blockchain-api/dist/cjs/api-node/assets'
+import * as rewards_route from '@waves/blockchain-api/dist/cjs/api-node/rewards'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -31,7 +34,7 @@ const rerun = (f: () => Promise<any>, expired: boolean, t = 1000) => delay(t).th
 
 export interface INodeRequestOptions {
   timeout?: number,
-  apiBase?: string
+  apiBase: string
 }
 
 const DEFAULT_NODE_REQUEST_OPTIONS = {
@@ -40,11 +43,10 @@ const DEFAULT_NODE_REQUEST_OPTIONS = {
 }
 
 export const currentHeight = async (apiBase: string): Promise<number> => {
-  return await axios.get('/blocks/height', { baseURL: apiBase })
-    .then(res => res.data && res.data.height)
+  return blocks_route.height(apiBase).then(({height}) => height)
 }
 
-export async function waitForHeight(height: number, options?: INodeRequestOptions) {
+export async function waitForHeight(height: number, options: INodeRequestOptions) {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
@@ -69,17 +71,17 @@ export async function waitForHeight(height: number, options?: INodeRequestOption
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options?: INodeRequestOptions): Promise<TTx> {
+export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<TTx> => axios.get(`transactions/info/${txId}`, { baseURL: apiBase })
+  const promise = (): Promise<TTx> => tx_route.info(apiBase, txId)
     .then(x => {
       to.cancel()
-      return x.data
+      return x as any //todo: fix types
     })
     .catch(_ => delay(1000)
       .then(_ => expired ?
@@ -92,8 +94,6 @@ export async function waitForTx(txId: string, options?: INodeRequestOptions): Pr
 const process400 = (resp: any) => resp.status === 400
   ? Promise.reject(Object.assign(new Error(), resp.data))
   : resp
-
-const validateStatus = (status: number) => status === 400 || status >= 200 && status < 300
 
 export async function waitForTxWithNConfirmations(txId: string, confirmations: number,
                                                   options: INodeRequestOptions): Promise<TTx> {
@@ -134,10 +134,7 @@ export async function waitNBlocks(blocksCount: number, options: INodeRequestOpti
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function transactionById(txId: string, nodeUrl: string): Promise<ITransaction & WithId & { height: number }> {
-  return axios.get(`transactions/info/${txId}`, {
-    baseURL: nodeUrl,
-    validateStatus: (status) => status === 404 || validateStatus(status)
-  }).then(resp => resp.data.error === 311 ? null : resp.data)
+  return tx_route.info(nodeUrl, txId) as any //todo: fix types
 }
 
 /**
@@ -146,9 +143,7 @@ export async function transactionById(txId: string, nodeUrl: string): Promise<IT
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function balance(address: string, nodeUrl: string): Promise<number> {
-  return axios.get(`addresses/balance/${address}`, { baseURL: nodeUrl, validateStatus })
-    .then(process400)
-    .then(x => x.data.balance)
+  return addresses_route.balance(nodeUrl, address).then(d => +d.balance);
 }
 
 /**
@@ -157,9 +152,7 @@ export async function balance(address: string, nodeUrl: string): Promise<number>
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function balanceDetails(address: string, nodeUrl: string) {
-  return axios.get(`addresses/balance/details/${address}`, { baseURL: nodeUrl, validateStatus })
-    .then(process400)
-    .then(x => x.data)
+  return addresses_route.balanceDetails(nodeUrl, address)
 }
 
 /**
@@ -169,9 +162,9 @@ export async function balanceDetails(address: string, nodeUrl: string) {
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function assetBalance(assetId: string, address: string, nodeUrl: string) {
-  return axios.get(`assets/balance/${address}/${assetId}`, { baseURL: nodeUrl, validateStatus })
-    .then(process400)
-    .then(x => x.data.balance)
+  return assets_route.assetsBalance(nodeUrl, address)
+    .then(x => x.balances.filter(bal => bal.assetId === assetId))
+    .then(filtered => filtered[0]?.balance)
 }
 
 export interface IAccountDataRequestOptions {
@@ -199,15 +192,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
       : options.match.source)
   }
 
-  const url = `addresses/data/${address}`
-  const config = {
-    baseURL: nodeUrl,
-    params: {
-      matches: match
-    },
-    validateStatus
-  }
-  const data: TDataEntry[] = await axios.get(url, config)
+  const data: TDataEntry[] =  await addresses_route.data(nodeUrl, address, {matches: match}) //axios.get(url, config)
     .then(process400)
     .then(x => x.data)
 
@@ -221,11 +206,8 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
  * @param key - dictionary key
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountDataByKey(key: string, address: string, nodeUrl: string): Promise<TDataEntry> {
-  return axios.get(`addresses/data/${address}/${key}`,
-    { baseURL: nodeUrl, validateStatus: (status) => status === 404 || validateStatus(status) })
-    .then(process400)
-    .then(resp => resp.status === 404 ? null : resp.data)
+export async function accountDataByKey(key: string, address: string, nodeUrl: string) {
+  return addresses_route.dataKey(nodeUrl, address, key)
 }
 
 
@@ -235,10 +217,7 @@ export async function accountDataByKey(key: string, address: string, nodeUrl: st
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function scriptInfo(address: string, nodeUrl: string): Promise<any> {
-  return axios.get(`addresses/scriptInfo/${address}`,
-    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
-    .then(process400)
-    .then(resp => resp.data)
+  return addresses_route.scriptInfo(nodeUrl, address)
 }
 
 /**
@@ -247,10 +226,7 @@ export async function scriptInfo(address: string, nodeUrl: string): Promise<any>
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function scriptMeta(address: string, nodeUrl: string): Promise<any> {
-  return axios.get(`addresses/scriptInfo/${address}/meta`,
-    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
-    .then(process400)
-    .then(resp => resp.data)
+  return addresses_route.scriptInfoMeta(nodeUrl, address)
 }
 
 /**
@@ -265,18 +241,16 @@ export async function rewards(nodeUrl: string): Promise<any>
  */
 export async function rewards(height: number, nodeUrl: string): Promise<any>
 export async function rewards(...args: [number, string] | [string]): Promise<any> {
-  let endpoint = `blockchain/rewards/`
   let nodeUrl: string;
+  let _height: number | undefined = undefined;
   if (args[1] !== undefined) {
-    endpoint += args[0].toString()
     nodeUrl = args[1]
+    _height = args[0] as number
   } else {
     nodeUrl = args[0] as string
   }
-  return axios.get(endpoint,
-    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
-    .then(process400)
-    .then(resp => resp.data)
+
+  return rewards_route.rewards(nodeUrl, _height)
 }
 
 export interface IStateChangeResponse {
@@ -294,10 +268,11 @@ export interface IStateChangeResponse {
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function stateChanges(transactionId: string, nodeUrl: string): Promise<IStateChangeResponse> {
-  return axios.get(`debug/stateChanges/info/${transactionId}`,
-    { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
-    .then(process400)
-    .then(resp => resp.data && resp.data.stateChanges)
+  throw new Error('Unimplemented')
+  // return axios.get(`debug/stateChanges/info/${transactionId}`,
+  //   { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
+  //   .then(process400)
+  //   .then(resp => resp.data && resp.data.stateChanges)
 }
 
 /**
@@ -306,5 +281,5 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
 export function broadcast<T extends TTx>(tx: T, nodeUrl: string) {
-  return txAPI.broadcast(nodeUrl, tx as any)
+  return tx_route.broadcast(nodeUrl, tx as any)
 }
