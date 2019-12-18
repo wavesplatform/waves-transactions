@@ -433,7 +433,7 @@ const attachmentToProto = (a?: TTypedData | string): wavesProto.waves.IAttachmen
 const scriptToProto = (s: string): wavesProto.waves.IScript => {
   const bytes = base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
   return {
-    version: bytes[0],
+    version: bytes[0] === 0 ? undefined : bytes[0],
     bytes: bytes.slice(1)
   }
 }
