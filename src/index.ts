@@ -1,6 +1,3 @@
-/**
- * @module index
- */
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
@@ -25,6 +22,7 @@ export { customData, serializeCustomData } from './requests/custom-data'
 export { auth } from './requests/auth'
 export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
+export { updateAssetInfo } from './transactions/update-asset-info'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 export { makeTx } from './make-tx'
@@ -64,6 +62,8 @@ export {
   ISetAssetScriptParams,
   IInvokeScriptTransaction,
   IInvokeScriptParams,
+  IUpdateAssetInfoParams,
+  IUpdateAssetInfoTransaction,
   IOrder,
   IOrderV1,
   IOrderV2,
