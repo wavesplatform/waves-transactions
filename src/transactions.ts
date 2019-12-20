@@ -1,6 +1,3 @@
-/**
- * @module index
- */
 export const TRANSACTION_TYPE = {
   ISSUE: 3 as 3,
   TRANSFER: 4 as 4,

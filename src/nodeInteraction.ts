@@ -1,7 +1,3 @@
-/**
- * @module nodeInteraction
- */
-
 import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
 import * as tx_route from '@waves/blockchain-api/dist/cjs/api-node/transactions'
 import * as blocks_route from '@waves/blockchain-api/dist/cjs/api-node/blocks'
@@ -192,9 +188,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
       : options.match.source)
   }
 
-  const data: TDataEntry[] =  await addresses_route.data(nodeUrl, address, {matches: match}) //axios.get(url, config)
-    .then(process400)
-    .then(x => x.data)
+  const data: TDataEntry[] =  await addresses_route.data(nodeUrl, address, {matches: match}) as any //todo fix type
 
   return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
 }
@@ -207,7 +201,10 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function accountDataByKey(key: string, address: string, nodeUrl: string) {
-  return addresses_route.dataKey(nodeUrl, address, key)
+  return addresses_route.dataKey(nodeUrl, address, key).catch((e) => {
+    if (e.error === 304) return null
+    else throw e
+  })
 }
 
 

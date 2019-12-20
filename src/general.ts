@@ -1,9 +1,8 @@
-/**
- * @module index
- */
-import axios from 'axios'
-import { binary, json } from '@waves/marshall'
+import { binary } from '@waves/marshall'
 import { address, verifySignature } from '@waves/ts-lib-crypto'
+import request from '@waves/blockchain-api/dist/cjs/tools/request'
+import stringify from '@waves/blockchain-api/dist/cjs/tools/stringify'
+
 import {
   IAliasTransaction,
   IBurnTransaction,
@@ -134,13 +133,13 @@ export function submitOrder(ord: TOrder, opts: any) {
     matcherUrl = opts.matcherUrl
     endpoint = opts.market ? 'matcher/orderbook/market' : 'matcher/orderbook'
   }
-
-  return axios.post(endpoint, json.stringifyOrder(ord), {
-    baseURL: matcherUrl,
-    headers: { 'content-type': 'application/json' },
-  })
-    .then(x => x.data)
-    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(ord)}})
+  // return axios.post(endpoint, json.stringifyOrder(ord), {
+  //   baseURL: matcherUrl,
+  //   headers: { 'content-type': 'application/json' },
+  // })
+  //   .then(x => x.data)
+  //   .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
 }
 
 /**
@@ -152,10 +151,12 @@ export function submitOrder(ord: TOrder, opts: any) {
  * @param matcherUrl - matcher address to send order cancel to. E.g. https://matcher.wavesplatform.com/
  */
 export function cancelSubmittedOrder(co: ICancelOrder, amountAsset: string | null, priceAsset: string | null, matcherUrl: string) {
-  return axios.post(`matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`, JSON.stringify(co), {
-    baseURL: matcherUrl,
-    headers: { 'content-type': 'application/json' },
-  })
-    .then(x => x.data)
-    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+  const endpoint = `matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`;
+  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(co)}})
+  // return axios.post(`matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`, JSON.stringify(co), {
+  //   baseURL: matcherUrl,
+  //   headers: { 'content-type': 'application/json' },
+  // })
+  //   .then(x => x.data)
+  //   .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
 }
