@@ -59,8 +59,8 @@
     "url": "https://github.com/wavesplatform/waves-transactions.git"
   },
   "dependencies": {
-    "@waves/blockchain-api": "0.0.7",
     "@waves/marshall": "^0.10.0",
+    "@waves/node-api-js": "0.0.2",
     "@waves/protobuf-serialization": "^0.3.0",
     "@waves/ts-lib-crypto": "^1.4.2",
     "long": "^4.0.0"

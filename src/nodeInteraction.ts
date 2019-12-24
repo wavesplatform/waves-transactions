@@ -1,9 +1,10 @@
 import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
-import * as tx_route from '@waves/blockchain-api/dist/cjs/api-node/transactions'
-import * as blocks_route from '@waves/blockchain-api/dist/cjs/api-node/blocks'
-import * as addresses_route from '@waves/blockchain-api/dist/cjs/api-node/addresses'
-import * as assets_route from '@waves/blockchain-api/dist/cjs/api-node/assets'
-import * as rewards_route from '@waves/blockchain-api/dist/cjs/api-node/rewards'
+import * as tx_route from '@waves/node-api-js/cjs/api-node/transactions'
+import * as blocks_route from '@waves/node-api-js/cjs/api-node/blocks'
+import * as addresses_route from '@waves/node-api-js/cjs/api-node/addresses'
+import * as assets_route from '@waves/node-api-js/cjs/api-node/assets'
+import * as rewards_route from '@waves/node-api-js/cjs/api-node/rewards'
+import * as debug_route from '@waves/node-api-js/cjs/api-node/debug'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -39,7 +40,7 @@ const DEFAULT_NODE_REQUEST_OPTIONS = {
 }
 
 export const currentHeight = async (apiBase: string): Promise<number> => {
-  return blocks_route.height(apiBase).then(({height}) => height)
+  return blocks_route.fetchHeight(apiBase).then(({height}) => height)
 }
 
 export async function waitForHeight(height: number, options: INodeRequestOptions) {
@@ -74,7 +75,7 @@ export async function waitForTx(txId: string, options: INodeRequestOptions): Pro
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<TTx> => tx_route.info(apiBase, txId)
+  const promise = (): Promise<TTx> => tx_route.fetchInfo(apiBase, txId)
     .then(x => {
       to.cancel()
       return x as any //todo: fix types
@@ -130,7 +131,7 @@ export async function waitNBlocks(blocksCount: number, options: INodeRequestOpti
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function transactionById(txId: string, nodeUrl: string): Promise<ITransaction & WithId & { height: number }> {
-  return tx_route.info(nodeUrl, txId) as any //todo: fix types
+  return tx_route.fetchInfo(nodeUrl, txId) as any //todo: fix types
 }
 
 /**
@@ -139,7 +140,7 @@ export async function transactionById(txId: string, nodeUrl: string): Promise<IT
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function balance(address: string, nodeUrl: string): Promise<number> {
-  return addresses_route.balance(nodeUrl, address).then(d => +d.balance);
+  return addresses_route.fetchBalance(nodeUrl, address).then(d => +d.balance);
 }
 
 /**
@@ -148,7 +149,7 @@ export async function balance(address: string, nodeUrl: string): Promise<number>
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function balanceDetails(address: string, nodeUrl: string) {
-  return addresses_route.balanceDetails(nodeUrl, address)
+  return addresses_route.fetchBalanceDetails(nodeUrl, address)
 }
 
 /**
@@ -158,7 +159,7 @@ export async function balanceDetails(address: string, nodeUrl: string) {
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function assetBalance(assetId: string, address: string, nodeUrl: string) {
-  return assets_route.assetsBalance(nodeUrl, address)
+  return assets_route.fetchAssetsBalance(nodeUrl, address)
     .then(x => x.balances.filter(bal => bal.assetId === assetId))
     .then(filtered => filtered[0]?.balance)
 }
@@ -201,7 +202,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function accountDataByKey(key: string, address: string, nodeUrl: string) {
-  return addresses_route.dataKey(nodeUrl, address, key).catch((e) => {
+  return addresses_route.fetchDataKey(nodeUrl, address, key).catch((e) => {
     if (e.error === 304) return null
     else throw e
   })
@@ -214,7 +215,7 @@ export async function accountDataByKey(key: string, address: string, nodeUrl: st
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function scriptInfo(address: string, nodeUrl: string): Promise<any> {
-  return addresses_route.scriptInfo(nodeUrl, address)
+  return addresses_route.fetchScriptInfo(nodeUrl, address)
 }
 
 /**
@@ -223,7 +224,7 @@ export async function scriptInfo(address: string, nodeUrl: string): Promise<any>
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function scriptMeta(address: string, nodeUrl: string): Promise<any> {
-  return addresses_route.scriptInfoMeta(nodeUrl, address)
+  return addresses_route.fetchScriptInfoMeta(nodeUrl, address)
 }
 
 /**
@@ -247,7 +248,7 @@ export async function rewards(...args: [number, string] | [string]): Promise<any
     nodeUrl = args[0] as string
   }
 
-  return rewards_route.rewards(nodeUrl, _height)
+  return rewards_route.fetchRewards(nodeUrl, _height)
 }
 
 export interface IStateChangeResponse {
@@ -265,11 +266,7 @@ export interface IStateChangeResponse {
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function stateChanges(transactionId: string, nodeUrl: string): Promise<IStateChangeResponse> {
-  throw new Error('Unimplemented')
-  // return axios.get(`debug/stateChanges/info/${transactionId}`,
-  //   { baseURL: nodeUrl, validateStatus: (status) => validateStatus(status) })
-  //   .then(process400)
-  //   .then(resp => resp.data && resp.data.stateChanges)
+  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId).then(t => t.stateChanges) as any //todo: fix types
 }
 
 /**

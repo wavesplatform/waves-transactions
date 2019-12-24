@@ -1,7 +1,7 @@
 import { binary } from '@waves/marshall'
 import { address, verifySignature } from '@waves/ts-lib-crypto'
-import request from '@waves/blockchain-api/dist/cjs/tools/request'
-import stringify from '@waves/blockchain-api/dist/cjs/tools/stringify'
+import request from '@waves/node-api-js/cjs/tools/request'
+import stringify from '@waves/node-api-js/cjs/tools/stringify'
 
 import {
   IAliasTransaction,
