@@ -1,7 +1,7 @@
 export const txs = {
   "CreateAliasTransaction (type 10)": {
-    Bytes: "ClIIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPyBhwKGl9fY2c5aC5wemJjQGJjdWh3bmJpYmdwZGRp",
-    Json:
+    "Bytes": "ClIIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPyBhwKGl9fY2c5aC5wemJjQGJjdWh3bmJpYmdwZGRp",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "sender": "3MvziWZmo7qqQc748i2m9RS62azVVnwrybM",
@@ -17,8 +17,8 @@ export const txs = {
       }
   },
   "IssueTransaction (type 3)": {
-    Bytes: "ClwIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgDugYlCgpUZXN0IGFzc2V0EhBUZXN0IGRlc2NyaXB0aW9uGOgHIAIoAQ==",
-    Json:
+    "Bytes": "ClwIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgDugYlCgpUZXN0IGFzc2V0EhBUZXN0IGRlc2NyaXB0aW9uGOgHIAIoAQ==",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "quantity": 1000,
@@ -40,8 +40,8 @@ export const txs = {
       }
   },
   "ReissueTransaction (type 5)": {
-    Bytes: "CmAIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgDygYpCiUKINEircF0p1Y5+J02DSw6TtgeaYLgb0CoslkO4GcdRpdREOgHEAE=",
-    Json:
+    "Bytes": "CmAIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgDygYpCiUKINEircF0p1Y5+J02DSw6TtgeaYLgb0CoslkO4GcdRpdREOgHEAE=",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "quantity": 1000,
@@ -59,8 +59,8 @@ export const txs = {
       }
   },
   "BurnTransaction (type 6)": {
-    Bytes: "Cl4IVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgD0gYnCiUKINEircF0p1Y5+J02DSw6TtgeaYLgb0CoslkO4GcdRpdREOgH",
-    Json:
+    "Bytes": "Cl4IVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgD0gYnCiUKINEircF0p1Y5+J02DSw6TtgeaYLgb0CoslkO4GcdRpdREOgH",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "amount": 1000,
@@ -77,8 +77,8 @@ export const txs = {
       }
   },
   "DataTransaction (type 12)": {
-    Bytes: "Cr4CCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgUQwMOTByDZ9urX7C0oAoIHhgIKgwIK/AHDueOXtemqp+KstuawuuaJsuGugOiJuuaYgOyhn+icmOypg+GipuaZp+y6jtK35aCD67eu4aGB4pC/6oWU67C75ZWH656W5byj7YWm652o5paT5JKT556s4qeM7IGM55S+4pix4Za344yz7IeD45WQ5K2A4Yea6oS57JGG4KyF6KKc65Ke7Yyt4b2X5oSQ4aWd5KuV6JCS5K6U2LHmqqjmvJ/stLnnuLLpiYPpnZzrrpfgtZjjpazpm4bsioTrtrPltKXmo6Pmq5vihqDkqJLikLHks4frk4Ljoa/lmL/qhr/oj43jhaDqkZrni7DqqbDkrrzkqZriq7LgtKlqAjVn",
-    Json:
+    "Bytes": "Cr4CCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgUQwMOTByDZ9urX7C0oAoIHhgIKgwIK/AHDueOXtemqp+KstuawuuaJsuGugOiJuuaYgOyhn+icmOypg+GipuaZp+y6jtK35aCD67eu4aGB4pC/6oWU67C75ZWH656W5byj7YWm652o5paT5JKT556s4qeM7IGM55S+4pix4Za344yz7IeD45WQ5K2A4Yea6oS57JGG4KyF6KKc65Ke7Yyt4b2X5oSQ4aWd5KuV6JCS5K6U2LHmqqjmvJ/stLnnuLLpiYPpnZzrrpfgtZjjpazpm4bsioTrtrPltKXmo6Pmq5vihqDkqJLikLHks4frk4Ljoa/lmL/qhr/oj43jhaDqkZrni7DqqbDkrrzkqZriq7LgtKlqAjVn",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "data": [{
@@ -98,8 +98,8 @@ export const txs = {
       }
   },
   "ExchangeTransaction (type 7)": {
-    Bytes: "CucDCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgQQ4KcSINn26tfsLSgD2gawAwhkEGQY4KcSIOCnEirOAQhUEiAyUj3jH744XSQjzTA1MVpftEJqAsr2SD99aRMLE9vIeRogNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4iIgogkZVPbYAB3AEBewMBAQD1Ad+AvlOsjysBgAAA/33/hQEwgIDInZ3rlvgGOGRA2fbq1+wtSNmG5qv2LVIEEOCnElgDYkBY3TtUK8Sprpx6QbU1MD2QCVKhg949zB6VQAM6BmAX1tV5GRgmuVGjWGCjFHnAhRKkRGrlX4c+9P79KfSA5gyHKtABCFQSIEcFt4dWdq39JHx+nqNVPG5cZzJLJmg9drqE10m41KlGGiA0HOb4Z36RxtkSQ2K9tMI2ykIFKIfNaa+PuvwZKv1abiIiCiCRlU9tgAHcAQF7AwEBAPUB34C+U6yPKwGAAAD/ff+FASgBMICAyJ2d65b4BjhkQNn26tfsLUjZhuar9i1SBBDgpxJYA2JATW7XOyCkqDMMkGV/ukDALstBM2+EES+0H13Vw1kp3ukdJwgHEMsX97kAyJJpLl3ns3Dj/a5ADsw0/nzCuUfeCg==",
-    Json:
+    "Bytes": "CucDCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgQQ4KcSINn26tfsLSgD2gawAwhkEGQY4KcSIOCnEirOAQhUEiAyUj3jH744XSQjzTA1MVpftEJqAsr2SD99aRMLE9vIeRogNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4iIgogkZVPbYAB3AEBewMBAQD1Ad+AvlOsjysBgAAA/33/hQEwgIDInZ3rlvgGOGRA2fbq1+wtSNmG5qv2LVIEEOCnElgDYkBY3TtUK8Sprpx6QbU1MD2QCVKhg949zB6VQAM6BmAX1tV5GRgmuVGjWGCjFHnAhRKkRGrlX4c+9P79KfSA5gyHKtABCFQSIEcFt4dWdq39JHx+nqNVPG5cZzJLJmg9drqE10m41KlGGiA0HOb4Z36RxtkSQ2K9tMI2ykIFKIfNaa+PuvwZKv1abiIiCiCRlU9tgAHcAQF7AwEBAPUB34C+U6yPKwGAAAD/ff+FASgBMICAyJ2d65b4BjhkQNn26tfsLUjZhuar9i1SBBDgpxJYA2JATW7XOyCkqDMMkGV/ukDALstBM2+EES+0H13Vw1kp3ukdJwgHEMsX97kAyJJpLl3ns3Dj/a5ADsw0/nzCuUfeCg==",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "amount": 100,
@@ -158,8 +158,8 @@ export const txs = {
       }
   },
   "InvokeScriptTransaction (type 16)": {
-    Bytes: "CpIBCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGicKILkAAF55Xf71AIx/AAGA/wF/gBqAAQB5gGd/xCMBAc4zEMDDkwcg2fbq1+wtKAKiBzkKFgoUphkeN8QkCXQ7K2VG3hm0sMyPGZESGwEAGAkBAAAABWhlbGxvAAAAAQAAAAAAAAAAKhoCEGQ=",
-    Json:
+    "Bytes": "CpIBCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGicKILkAAF55Xf71AIx/AAGA/wF/gBqAAQB5gGd/xCMBAc4zEMDDkwcg2fbq1+wtKAKiBzkKFgoUphkeN8QkCXQ7K2VG3hm0sMyPGZESGwEAGAkBAAAABWhlbGxvAAAAAQAAAAAAAAAAKhoCEGQ=",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "call": {
@@ -186,8 +186,8 @@ export const txs = {
       }
   },
   "LeaseTransaction (type 8)": {
-    Bytes: "ClkIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPiBiMKHxIdbHhzLXR6eW5iMmxleDlqbWlmemhjbHBfZnhsd3IQZA==",
-    Json:
+    "Bytes": "ClkIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPiBiMKHxIdbHhzLXR6eW5iMmxleDlqbWlmemhjbHBfZnhsd3IQZA==",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "amount": 100,
@@ -204,8 +204,8 @@ export const txs = {
       }
   },
   "LeaseCancelTransaction (type 9)": {
-    Bytes: "ClgIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPqBiIKIHWFr/oxKaXtVQWl3rwHQRcwLiDoeTFlv7VViI7kTCQu",
-    Json:
+    "Bytes": "ClgIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAPqBiIKIHWFr/oxKaXtVQWl3rwHQRcwLiDoeTFlv7VViI7kTCQu",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "leaseId": "8ukwCXq27YGQi5TtHCjqn5Ws4VZJ9Mu2nEHYuAv1t4Zj",
@@ -221,8 +221,8 @@ export const txs = {
       }
   },
   "MassTransferTransaction (type 11)": {
-    Bytes: "CrUCCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgUQwMOTByDZ9urX7C0oAvoG/QESGgoWChQ+BAWJlYZzWfNWECnb6D8sHI4skRBkEhoKFgoU4KfqPdYV2T6wdBhwITMtIie9GzMQZBIKCgYSBGtyaDAQZBIYChQSEncuN3BfcnhxY3lmYXV2ZXdobhBkEhoKFgoUk05JVw9y8SM0WeyXOO80sQmsJ4oQZBIaChYKFNDqLtxHJz8ZiVrdgfXn+DO3ICDqEGQSJAogEh54cHhjZHRna2EwX28uZHVzZG8xN2Z6bTZoYjlnZmQQZBIaChYKFH6Kj7gE7Hy6fKU5MmwSPc5uJRW8EGQSCwoHEgUtZTZvdhBkEhYKEhIQdG56eDBrZ0B0Y2UyZGR2dhBk",
-    Json:
+    "Bytes": "CrUCCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgUQwMOTByDZ9urX7C0oAvoG/QESGgoWChQ+BAWJlYZzWfNWECnb6D8sHI4skRBkEhoKFgoU4KfqPdYV2T6wdBhwITMtIie9GzMQZBIKCgYSBGtyaDAQZBIYChQSEncuN3BfcnhxY3lmYXV2ZXdobhBkEhoKFgoUk05JVw9y8SM0WeyXOO80sQmsJ4oQZBIaChYKFNDqLtxHJz8ZiVrdgfXn+DO3ICDqEGQSJAogEh54cHhjZHRna2EwX28uZHVzZG8xN2Z6bTZoYjlnZmQQZBIaChYKFH6Kj7gE7Hy6fKU5MmwSPc5uJRW8EGQSCwoHEgUtZTZvdhBkEhYKEhIQdG56eDBrZ0B0Y2UyZGR2dhBk",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "fee": 15000000,
@@ -272,8 +272,8 @@ export const txs = {
       }
   },
   "SetScriptTransaction (type 13)": {
-    Bytes: "CpwDCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgQQwIQ9INn26tfsLSgCigflAhLiAgrfAgEKAAAAAEVmdFM3M2szcndzQmR4N2hQcGdteXF2b2FpdHBod2h3c2E0MndtcW90QndhTmZuY3VtZHBtYXNyS3YzamZid3dlY1VyZXkKAAAAABpqY3BxaHpZenRjbnhnb3FtenRyYXdvOXh6cwYKAAAAACB1ZWlvbWhwZkNqaXllUGZxYWxzOTN6QUdyb2htdXJiZAYKAAAAAEdrejZnZG00ZUJjdGRrcnhnU2d0ZWl2UXZLcnZoZ0lrZGJxa3Bqb3NsOGU1eHN1RGdidWV5QjJ0SnRZZnh0bmdKb2djdmx6dAYKAAAAACViYXl5N2V1a2s1dnF4cGdncmlJVXZidGRmdzBub3B0Y3J1bmtmBgYKAAAAAEF6a245bHZkYXVldnF6TWhpbG1pcWZuaG5uQnlzZ2d1dmw4ZzMzeGZwbmJ6N2xhNmlsY1RhZTc5Z21NdW9LamhtdgMGBgYG4wsDJQ==",
-    Json:
+    "Bytes": "CpwDCFQSIDQc5vhnfpHG2RJDYr20wjbKQgUoh81pr4+6/Bkq/VpuGgQQwIQ9INn26tfsLSgCigflAhLiAgrfAgEKAAAAAEVmdFM3M2szcndzQmR4N2hQcGdteXF2b2FpdHBod2h3c2E0MndtcW90QndhTmZuY3VtZHBtYXNyS3YzamZid3dlY1VyZXkKAAAAABpqY3BxaHpZenRjbnhnb3FtenRyYXdvOXh6cwYKAAAAACB1ZWlvbWhwZkNqaXllUGZxYWxzOTN6QUdyb2htdXJiZAYKAAAAAEdrejZnZG00ZUJjdGRrcnhnU2d0ZWl2UXZLcnZoZ0lrZGJxa3Bqb3NsOGU1eHN1RGdidWV5QjJ0SnRZZnh0bmdKb2djdmx6dAYKAAAAACViYXl5N2V1a2s1dnF4cGdncmlJVXZidGRmdzBub3B0Y3J1bmtmBgYKAAAAAEF6a245bHZkYXVldnF6TWhpbG1pcWZuaG5uQnlzZ2d1dmw4ZzMzeGZwbmJ6N2xhNmlsY1RhZTc5Z21NdW9LamhtdgMGBgYG4wsDJQ==",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "sender": "3MvziWZmo7qqQc748i2m9RS62azVVnwrybM",
@@ -289,8 +289,8 @@ export const txs = {
       }
   },
   "SetAssetScriptTransaction (type 15)": {
-    Bytes: "CnwIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgBmgdFCiCSgNqtgB1PtoyA1dcZ/w9uAAExbgJZJv8Y7lCAAOWA0xIhCh8BCQAAZAAAAAIAAAAAAAAAAAEAAAAAAAAAAAH9wtNv",
-    Json:
+    "Bytes": "CnwIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBRCAwtcvINn26tfsLSgBmgdFCiCSgNqtgB1PtoyA1dcZ/w9uAAExbgJZJv8Y7lCAAOWA0xIhCh8BCQAAZAAAAAIAAAAAAAAAAAEAAAAAAAAAAAH9wtNv",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "sender": "3MvziWZmo7qqQc748i2m9RS62azVVnwrybM",
@@ -307,8 +307,8 @@ export const txs = {
       }
   },
   "SponsorshipTransaction (type 14)": {
-    Bytes: "ClwIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAKSByYKJAogAYAAgH8Bf39NlKVsAaIP//+Wc4C0rQB/AH81sNY6gHEQZA==",
-    Json:
+    "Bytes": "ClwIVBIgNBzm+Gd+kcbZEkNivbTCNspCBSiHzWmvj7r8GSr9Wm4aBBCgjQYg2fbq1+wtKAKSByYKJAogAYAAgH8Bf39NlKVsAaIP//+Wc4C0rQB/AH81sNY6gHEQZA==",
+    "Json":
       {
         "senderPublicKey": "4WRmAtaLdb2Lpu65DMqRvq7W71jtRsSzo2aeUN2uTf2m",
         "sender": "3MvziWZmo7qqQc748i2m9RS62azVVnwrybM",
@@ -327,8 +327,8 @@ export const txs = {
 }
 export const transfers = [
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -346,8 +346,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGGAoMEgp0ZXN0X2FsaWFzEgMQkE4aAwiQTg==",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGGAoMEgp0ZXN0X2FsaWFzEgMQkE4aAwiQTg==",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -365,8 +365,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGFwoMEgp0ZXN0X2FsaWFzEgMQkE4aAhAB",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGFwoMEgp0ZXN0X2FsaWFzEgMQkE4aAhAB",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -384,8 +384,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -403,8 +403,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGOgoMEgp0ZXN0X2FsaWFzEgMQkE4aJSIjM043R3lxU0RGeUppaTZmOVR0d2tjVzFlVWZ2QmRBZ2I1Mmo=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oA8IGOgoMEgp0ZXN0X2FsaWFzEgMQkE4aJSIjM043R3lxU0RGeUppaTZmOVR0d2tjVzFlVWZ2QmRBZ2I1Mmo=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -422,8 +422,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAsIGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAsIGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -441,8 +441,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAsIGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAsIGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "fee": 100,
@@ -460,8 +460,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAcIGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAcIGEwoMEgp0ZXN0X2FsaWFzEgMQkE4=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "signature": "",
@@ -480,8 +480,8 @@ export const transfers = [
     }
   },
   {
-    Bytes: "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAcIGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
-    Json: {
+    "Bytes": "CFQSIPiDGG+4FgrYak2+ARjweSx69KPcmqJOXNwoLOSUCuJ/GgIQZCCRtvP/7C0oAcIGNwoMEgp0ZXN0X2FsaWFzEgMQkE4aIhoges/1/4N6j4LtfcM8OmWi72xzrlMQsjuKzEy/7fA/Y1U=",
+    "Json": {
       "senderPublicKey": "Hj63vyurQqjxXzaf8nA9fZZTcZ4kKHJPhrjUGWDVip7Y",
       "amount": 10000,
       "signature": "",
