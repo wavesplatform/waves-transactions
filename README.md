@@ -1,36 +1,299 @@
 # waves-transactions  [![npm version](https://badge.fury.io/js/%40waves%2Fwaves-transactions.svg)](https://badge.fury.io/js/%40waves%2Fwaves-transactions)
 
-[![License][license-image]][license-url] ![Coverage badge gree][coverage-badge-green]
+[![License][license-image]][license-url]
 
 [license-url]: https://opensource.org/licenses/MIT
 [license-image]: https://img.shields.io/npm/l/make-coverage-badge.svg
-[coverage-badge-green]:https://img.shields.io/badge/Coverage-98.77%25-brightgreen.svg
 
 Using this library you can easily create and sign transactions for Waves blockchain.
 It also allows you to multi-sign existing transactions or create them without signature at all.
 
-This library is a set of transaction constructing functions:
-* [Alias](https://wavesplatform.github.io/waves-transactions/modules/index.html#alias)
-* [Issue](https://wavesplatform.github.io/waves-transactions/modules/index.html#issue)
-* [Reissue](https://wavesplatform.github.io/waves-transactions/modules/index.html#reissue)
-* [Burn](https://wavesplatform.github.io/waves-transactions/modules/index.html#burn)
-* [Lease](https://wavesplatform.github.io/waves-transactions/modules/index.html#lease)
-* [Cancel lease](https://wavesplatform.github.io/waves-transactions/modules/index.html#cancellease)
-* [Transfer](https://wavesplatform.github.io/waves-transactions/modules/index.html#transfer)
-* [Mass transfer](https://wavesplatform.github.io/waves-transactions/modules/index.html#masstransfer)
-* [Set script](https://wavesplatform.github.io/waves-transactions/modules/index.html#setscript)
-* [Data](https://wavesplatform.github.io/waves-transactions/modules/index.html#data)
-* [Sponsorship](https://wavesplatform.github.io/waves-transactions/modules/index.html#sponsorship)
-* [Set asset script](https://wavesplatform.github.io/waves-transactions/modules/index.html#setassetscript)
-* [InvokeScript](https://wavesplatform.github.io/waves-transactions/modules/index.html#invokescript)
-* [Order](https://wavesplatform.github.io/waves-transactions/modules/index.html#order)
+- [Transactions](#Transactions) 
+  - Creation
+  - [Signing](#Signing)
+- Orders
+- Requests
+## Transactions
 
-Check full documentation on [GitHub Pages](https://wavesplatform.github.io/waves-transactions/index.html).
+### Creation
 
-### Transactions
+Transactions are created via transaction creating functions. There are 15 of them:
+```typescript
+const {
+ alias, burn, cancelLease, data, exchange,
+ invokeScript, issue, lease, massTransfer, reissue,
+ setAssetScript, setScript, sponsorship, transfer, updateAssetInfo
+} = require('@waves/waves-transactiosn')
+```
+Any of this functions takes transaction params. Type LONG represents string or number. Strings are allowed since max js int is 2**53
+#### Common params:
+Present in all transactions
+```typescript
+interface IBasicParams<LONG = string | number> {
+  /**
+   * Transaction fee. If not set, fee will be calculated automatically
+   */
+  fee?: LONG
+  /**
+   * If fee is not set, this value will be added to automatically calculated fee. E.x.:
+   * Account is scripted and 400000 fee more is required.
+   */
+  additionalFee?: number
+  /**
+   * If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:
+   * 1. Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.
+   * 2. You to create tx without proof. Therefore no seed is provided.
+   */
+  senderPublicKey?: string
+  /**
+   * Transaction timestamp. If not set current timestamp will be used. Date.now()
+   */
+  timestamp?: number
+  /**
+   * Network byte. Could be set as number or as char.
+   * If set as char(string), charCodeAt(0) will be used. E.g.,
+   * 'W' will be converted to '87'
+   * If not set, 87 will be used as default
+   */
+  chainId?: string | number
+}
+```
 
-The idea is really simple - you create transaction and sign it from a minimal set of required params.
-If you want to create [Transfer transaction](https://wavesplatform.github.io/waves-transactions/interfaces/itransfertransaction.html) the minimum you need to provide is **amount** and **recipient** as defined in [Transfer params](https://wavesplatform.github.io/waves-transactions/interfaces/itransferparams.html):
+#### Issue transaction. Type 3
+```typescript
+export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG> {
+  name: string
+  description: string
+  quantity: LONG
+  decimals?: number
+  reissuable?: boolean
+  script?: string
+}
+```
+#### Transfer transaction. Type 4
+```typescript
+export interface ITransferParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Can be either address(base58 encoded 24 byte address) or alias.
+   * Alias should be used like 'alias:{chainId}:{alias}>'. E.g.:
+   * If we have alias 'foo', and we want TESTNET transaction, recipient should be 'alias:T:foo'
+   */
+  recipient: string
+  amount: LONG
+  assetId?: string | null
+  /**
+   * Fee can be paid in custom token if sponsorship has been set for this token
+   */
+  feeAssetId?: string | null
+  /**
+   * Bytearray encoded as base58 string
+   */
+  attachment?: string | TTypedData
+}
+```
+#### Reissue transaction. Type 5
+```typescript
+export interface IReissueParams<LONG = string | number> extends IBasicParams<LONG> {
+  assetId: string
+  quantity: LONG
+  reissuable: boolean
+}
+```
+#### Burn transaction. Type 6
+```typescript
+export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG> {
+  assetId: string
+  quantity: LONG
+}
+```
+#### Exchange transaction. Type 7
+Exchange transactions are used by DEX mather. If you want to create your own exchange transaction,
+ there is no params. You need to construct it by hand(see interface below, IOrder is described in Order section) 
+```typescript
+export interface IExchangeTransaction<LONG = string | number> extends ITransaction<LONG> {
+  type: 7
+  order1: IOrder
+  order2: IOrder
+  price: LONG
+  amount: LONG
+  buyMatcherFee: LONG
+  sellMatcherFee: LONG
+}
+```
+#### Lease transaction. Type 8
+```typescript
+export interface ILeaseParams<LONG = string | number> extends IBasicParams<LONG> {
+  recipient: string
+  amount: LONG
+}
+```
+#### CancelLease transaction. Type 9
+```typescript
+export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams<LONG> {
+  leaseId: string
+}
+```
+#### Alias transaction. Type 10
+#### MassTransfer transaction. Type 11
+```typescript
+export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG> {
+  transfers: IMassTransferItem[]
+  /**
+   * Bytearray encoded as base string
+   */
+  attachment?: string | TTypedData
+  assetId?: string | null
+}
+
+export interface IMassTransferItem<LONG = string | number> {
+  recipient: string
+  amount: LONG
+}
+```
+#### Data transaction. Type 12
+```typescript
+export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
+  data: Array<IBooleanData | IIntegerData | IStringData | IBinaryData| TDeleteRequest>
+}
+export type TDeleteRequest = {
+  type?: null
+  value?: null
+  key: string
+}
+
+export interface IBooleanData {
+  key: string
+  type: 'boolean'
+  value: boolean
+}
+export interface IIntegerData<LONG = string | number> {
+  key: string
+  type: 'integer'
+  value: LONG
+}
+export interface IStringData {
+  key: string
+  type: 'string'
+  value: string
+}
+export interface IBinaryData {
+  key: string
+  type: 'binary'
+  value: string
+}
+
+
+```
+#### SetScript transaction. Type 13
+```typescript
+export interface ISetScriptParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Compiled script encoded as base64 string
+   */
+  script: string | null
+}
+```
+#### Sponsorship transaction. Type 14
+```typescript
+export interface ISponsorshipParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * AssetID of sponsored token
+   */
+  assetId: string
+  /**
+   * Minimal fee amount in sponsored asset. To disable sponsorship set it to 0
+   */
+  minSponsoredAssetFee: LONG
+}
+```
+#### SetAssetScript transaction. Type 15
+```typescript
+export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Compiled script encoded as base64 string
+   */
+  script: string
+  assetId: string
+}
+```
+#### InvokeScript transaction. Type 16
+```typescript
+export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG> {
+  dApp: string
+  feeAssetId?: string | null
+  call?: {
+    function: string
+    args?: {
+      type: 'binary' | 'integer' | 'boolean' | 'string',
+      value: string | LONG | boolean
+    }[]
+  },
+  payment?: {
+    assetId?: string | null
+    amount: LONG
+  }[]
+}
+```
+#### UpdateAssetInfo transaction. Type 17
+```typescript
+export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Id of previously issued asset
+   */
+  assetId: string
+  /**
+   * New asset name
+   */
+  name: string
+  /**
+   * New asset description
+   */
+  description: string
+}
+```
+
+### Signing
+You can provide seed or private key to transaction creating function to sign it
+```typescript
+const signedTranfer = transfer({
+    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
+    amount: 100000}, 'secret seed phraze'
+)
+const signedTranferViaPrivateKey = transfer({
+    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
+    amount: 100000}, {privateKey: 'GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom'}
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+If you want to create  the minimum you need to provide is **amount** and **recipient** as defined in Transfer params:
 ```js
 
 const { transfer } = require('@waves/waves-transactions')
@@ -106,6 +369,7 @@ So now there are two proofs:
   ]
 }
 ```
+
 
 ### Broadcast
 To send transaction you can use either node [REST API](https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast) or [broadcast](https://wavesplatform.github.io/waves-transactions/globals.html#broadcast) helper function:
