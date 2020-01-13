@@ -9,10 +9,22 @@ Using this library you can easily create and sign transactions for Waves blockch
 It also allows you to multi-sign existing transactions or create them without signature at all.
 
 - [Transactions](#Transactions) 
-  - Creation
+  - [Creation](Creation)
+    - [Issue](#Issue)
+    - [Issue](Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
+    - [Issue](#Issue)
   - [Signing](#Signing)
-- Orders
-- Requests
+- [Orders](#Orders)
+- [Requests](#Requests)
 ## Transactions
 
 ### Creation
@@ -134,6 +146,11 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
 }
 ```
 #### Alias transaction. Type 10
+```typescript
+export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG> {
+  alias: string
+}
+```
 #### MassTransfer transaction. Type 11
 ```typescript
 export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG> {
