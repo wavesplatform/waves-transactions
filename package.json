@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@waves/marshall": "^0.10.0",
-    "@waves/node-api-js": "0.0.2",
+    "@waves/node-api-js": "0.0.3",
     "@waves/protobuf-serialization": "^0.3.0",
     "@waves/ts-lib-crypto": "^1.4.2",
     "long": "^4.0.0"

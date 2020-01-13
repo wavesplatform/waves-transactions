@@ -6,6 +6,7 @@ import { schemas, serializePrimitives } from '@waves/marshall'
 import { TDataEntry } from '../transactions'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { TPrivateKey } from '../types'
 
 export interface ICustomDataV1 {
   version: 1
@@ -43,7 +44,7 @@ export type TSignedData = TCustomData & {
 /**
  * Signs [[TCustomData]]
  */
-export function customData(cData: TCustomData, seed?: TSeed): TSignedData {
+export function customData(cData: TCustomData, seed?: TSeed | TPrivateKey): TSignedData {
 
   validate.customData(cData)
 
