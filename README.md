@@ -9,22 +9,11 @@ Using this library you can easily create and sign transactions for Waves blockch
 It also allows you to multi-sign existing transactions or create them without signature at all.
 
 - [Transactions](#Transactions) 
-  - [Creation](Creation)
-    - [Issue](#Issue)
-    - [Issue](Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
-    - [Issue](#Issue)
+  - [Creation](#Creation)
   - [Signing](#Signing)
+  - [Params](#Params)
 - [Orders](#Orders)
-- [Requests](#Requests)
+- [Broadcast](#Broadcast)
 ## Transactions
 
 ### Creation
@@ -37,7 +26,36 @@ const {
  setAssetScript, setScript, sponsorship, transfer, updateAssetInfo
 } = require('@waves/waves-transactiosn')
 ```
-Any of this functions takes transaction params. Type LONG represents string or number. Strings are allowed since max js int is 2**53
+Example:
+```typescript
+const issueTx = issue({
+  name: 'foo',
+  description: 'bar',
+  quantity: 10000,
+  senderPublicKey: 'GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom',
+  chainId: 'T'
+})
+const burnTx = burn({
+  assetId: '6toKooURvF3CpRQV8hzhNbHjK3Rb3L9Krd7TFnzcoe8L',
+  senderPublicKey: 'GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom',
+  chainId: 'T'
+})
+```
+### Signing
+You can provide seed or private key to transaction creating function to sign it. If you do, senderPublicKey can be omitted.
+```typescript
+const signedTranfer = transfer({
+    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
+    amount: 100000}, 'secret seed phraze'
+)
+const signedTranferViaPrivateKey = transfer({
+    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
+    amount: 100000}, {privateKey: 'GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom'}
+)
+```
+
+### Params
+Type LONG represents string or number. Strings are allowed since max js int is 2**53
 #### Common params:
 Present in all transactions
 ```typescript
@@ -269,18 +287,7 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
 }
 ```
 
-### Signing
-You can provide seed or private key to transaction creating function to sign it
-```typescript
-const signedTranfer = transfer({
-    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
-    amount: 100000}, 'secret seed phraze'
-)
-const signedTranferViaPrivateKey = transfer({
-    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
-    amount: 100000}, {privateKey: 'GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom'}
-)
-```
+
 
 
 
@@ -387,7 +394,20 @@ So now there are two proofs:
 }
 ```
 
-
+### Orders
+Order is created the same way as transaction
+```typescript
+const { order } = require('@waves/waves-transactions')
+const params = {
+    amount: 100000000, //1 waves
+    price: 10, //for 0.00000010 BTC
+    priceAsset: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
+    matcherPublicKey: '7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy',
+    orderType: 'buy'
+}
+  
+const signedOrder = order(params, 'Some seed ')
+```
 ### Broadcast
 To send transaction you can use either node [REST API](https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast) or [broadcast](https://wavesplatform.github.io/waves-transactions/globals.html#broadcast) helper function:
 ```javascript
