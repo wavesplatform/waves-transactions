@@ -14,6 +14,7 @@ It also allows you to multi-sign existing transactions or create them without si
   - [Params](#Params)
 - [Orders](#Orders)
 - [Broadcast](#Broadcast)
+- [Dependencies](#Dependencies)
 ## Transactions
 
 ### Creation
@@ -422,3 +423,10 @@ You can send tx to any waves node you like:. E.g.:
 #### Important!!!
 Most transactions require chainId as parameter, e.g: [IBurnParams](https://wavesplatform.github.io/waves-transactions/interfaces/iburnparams.html). By default chainId is 'W', which means MAINNET. To make transaction in TESTNET be sure to pass chainId if it is present in params interface and then send it to TESTNET node
 
+### Dependencies
+This library uses `@waves/ts-lib-crypto` for cryptography and `@waves/node-api-js` for interacting with node. 
+You can access them this way:
+```typescript
+const libCrypto = require('@waves/waves-transactions').libs.crypto
+const libApi = require('@waves/waves-transactions').libs.nodeApiJs
+```

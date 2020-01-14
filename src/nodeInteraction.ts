@@ -271,6 +271,7 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
 
 /**
  * Sends transaction to waves node
+ * IMPORTANT: You cannot broadcast order. Orders should be sent to matcher via submitOrder method
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
