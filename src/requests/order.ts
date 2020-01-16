@@ -95,9 +95,9 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   const bytes = binary.serializeOrder(ord)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
-  
+
   validate.order(ord)
-  
+
   ord.id = base58Encode(blake2b(bytes))
 
   // OrderV1 uses signature instead of proofs
