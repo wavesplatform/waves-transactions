@@ -6,10 +6,13 @@ import { base64Prefix, chainIdFromRecipient } from './generic'
 import Long from 'long'
 import { lease } from './transactions/lease'
 import {
+    IMassTransferItem,
     TAliasTransaction,
     TBurnTransaction,
     TCancelLeaseTransaction,
     TDataTransaction,
+    TDataTransactionDeleteRequest,
+    TDataTransactionEntry,
     TExchangeTransaction,
     TInvokeScriptTransaction,
     TIssueTransaction,
@@ -23,12 +26,8 @@ import {
     TTransaction,
     TTransactionType,
     TTransferTransaction,
-    TUpdateAssetInfoTransaction,
-    IMassTransferItem,
-    TDataTransactionEntry,
-    TDataTransactionDeleteRequest,
-    TTransferTransactionAttachment
-
+    TTransferTransactionAttachment,
+    TUpdateAssetInfoTransaction
 } from '@waves/ts-types'
 
 const invokeScriptCallSchema = {
@@ -255,13 +254,21 @@ const getReissueData = (t: TReissueTransaction): wavesProto.waves.IReissueTransa
 const getBurnData = (t: TBurnTransaction): wavesProto.waves.IBurnTransactionData => ({
     assetAmount: amountToProto(t.quantity || (t as any).amount, t.assetId)
 })
-const getExchangeData = (t: TExchangeTransaction): wavesProto.waves.IExchangeTransactionData => ({//todo fix
-    amount: Long.fromValue(t.amount),
-    price: Long.fromValue(t.price),
-    buyMatcherFee: Long.fromValue(t.buyMatcherFee),
-    sellMatcherFee: Long.fromValue(t.sellMatcherFee),
-    orders: [orderToProto({chainId: t.chainId, ...t.buyOrder}), orderToProto({chainId: t.chainId, ...t.sellOrder})],
-})
+const getExchangeData = (t: TExchangeTransaction): wavesProto.waves.IExchangeTransactionData =>
+    t.version === 1 || t.version === 2
+        ? ({
+            amount: Long.fromValue(t.amount),
+            price: Long.fromValue(t.price),
+            buyMatcherFee: Long.fromValue(t.buyMatcherFee),
+            sellMatcherFee: Long.fromValue(t.sellMatcherFee),
+            orders: [
+                orderToProto({chainId: (t as any).chainId, ...t.order1}),
+                orderToProto({chainId: (t as any).chainId, ...t.order2})
+            ],
+        })
+        : (() => {
+            throw new Error('error')
+        })()
 const getLeaseData = (t: TLeaseTransaction): wavesProto.waves.ILeaseTransactionData => ({
     recipient: recipientToProto(t.recipient),
     amount: Long.fromValue(t.amount)
@@ -356,7 +363,7 @@ export const txToProto = (t: TTransaction): wavesProto.waves.ITransaction => {
     }
     return {...common, [common.data]: txData}
 }
-const orderToProto = (o: IOrder & { chainId: number }): wavesProto.waves.IOrder => ({
+const orderToProto = (o: IOrder & { chainId?: number }): wavesProto.waves.IOrder => ({
     chainId: o.chainId,
     senderPublicKey: base58Decode(o.senderPublicKey),
     matcherPublicKey: base58Decode(o.matcherPublicKey),
@@ -409,7 +416,7 @@ export const dataEntryToProto = (de: TDataTransactionEntry | TDataTransactionDel
     key: de.key,
     intValue: de.type === 'integer' ? Long.fromValue(de.value) : undefined,
     boolValue: de.type === 'boolean' ? de.value : undefined,
-    binaryValue: de.type === 'binary' ? base64Decode((de.value.startsWith('base64:') ? de.value.slice(7) : de.value)) : undefined,
+    binaryValue: de.type === 'binary' && de.value != null? base64Decode(((de.value as string).startsWith('base64:') ? de.value.slice(7) : de.value)) : undefined,
     stringValue: de.type === 'string' ? de.value : undefined,
 })
 const attachmentToProto = (a?: TTransferTransactionAttachment | string): wavesProto.waves.IAttachment | undefined => {

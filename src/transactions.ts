@@ -3,7 +3,8 @@ import {
     TDataTransactionDeleteRequest,
     TDataTransactionEntry,
     TDataTransactionTypelessDataEntry,
-    TTransferTransactionAttachment
+    TTransferTransactionAttachment,
+    TTransactionType
 } from '@waves/ts-types'
 export interface WithId {
   /**
@@ -11,6 +12,11 @@ export interface WithId {
    */
   id: string
 }
+
+export interface WithTxType {
+    type: TTransactionType
+}
+
 export interface WithSender {
     /**
      * Account public key. This account will pay fee and this account's script will be executed if exists
@@ -147,7 +153,7 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-    data: Array<TDataTransactionEntry<LONG> | TDataTransactionTypelessDataEntry | TDataTransactionDeleteRequest>
+    data: Array<TDataTransactionEntry | TDataTransactionTypelessDataEntry | TDataTransactionDeleteRequest>
 }
 
 /**

@@ -13,17 +13,17 @@ const {
   LONG,
   SHORT,
   STRING,
-} = serializePrimitives
+} = serializePrimitives;
 import { concat, blake2b, signBytes, base58Encode } from '@waves/ts-lib-crypto'
 import {
-  IDataTransaction,
+  TDataTransaction, TDataTransactionDeleteRequest,
+  TDataTransactionEntry,
+  TDataTransactionTypelessDataEntry,
+  TDataTransactionWithId,
   TRANSACTION_TYPE,
-  TDataEntry,
-  DATA_FIELD_TYPE,
-  IDataParams,
-  WithId,
-  WithSender, ITypelessDataEntry, TDataFiledType, TDeleteRequest
-} from '../transactions'
+  TDataFiledType
+} from '@waves/ts-types'
+import { IDataParams, WithSender } from '../transactions'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -44,9 +44,9 @@ const mapType = <T>(value: T): [TDataFiledType, number, (value:T)=>Uint8Array] =
 
 
 /* @echo DOCS */
-export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & WithId
-export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId
-export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & WithId  {
+export function data(params: IDataParams, seed: TSeedTypes): TDataTransactionWithId
+export function data(paramsOrTx: IDataParams & WithSender | TDataTransaction, seed?: TSeedTypes): TDataTransactionWithId
+export function data(paramsOrTx: any, seed?: TSeedTypes): TDataTransactionWithId  {
   const type = TRANSACTION_TYPE.DATA
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
@@ -56,7 +56,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
 
   const _timestamp = paramsOrTx.timestamp || Date.now()
 
-  const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: TDataEntry | ITypelessDataEntry | TDeleteRequest) => {
+  const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: TDataTransactionEntry | TDataTransactionTypelessDataEntry | TDataTransactionDeleteRequest) => {
     if ((<any>x).type || x.value == null) return x
     else {
       const type = mapType(x.value)[0]
@@ -73,7 +73,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
       BYTE(TRANSACTION_TYPE.DATA),
       BYTE(1),
       BASE58_STRING(senderPublicKey),
-      COUNT(SHORT)((x: TDataEntry | ITypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(dataEntriesWithTypes),
+      COUNT(SHORT)((x: TDataTransactionEntry | TDataTransactionTypelessDataEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(dataEntriesWithTypes),
       LONG(_timestamp)
     )
 
@@ -85,7 +85,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & Wit
   }
 
 
-  const tx: IDataTransaction & WithId = {
+  const tx: TDataTransactionWithId = {
     type,
     version,
     senderPublicKey,

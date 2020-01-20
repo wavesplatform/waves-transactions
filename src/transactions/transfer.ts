@@ -1,8 +1,9 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, ITransferTransaction, ITransferParams, WithId, WithSender } from '../transactions'
+import {  ITransferParams, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
+import { TRANSACTION_TYPE, TTransferTransaction, TTransferTransactionWithId} from '@waves/ts-types'
 import {
   addProof,
   getSenderPublicKey,
@@ -18,15 +19,15 @@ import { binary } from '@waves/marshall'
 import { txToProtoBytes } from '../proto-serialize'
 
 /* @echo DOCS */
-export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId
-export function transfer(paramsOrTx: ITransferParams & WithSender | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction & WithId
-export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction & WithId {
+export function transfer(params: ITransferParams, seed: TSeedTypes): TTransferTransactionWithId
+export function transfer(paramsOrTx: ITransferParams & WithSender | TTransferTransaction, seed?: TSeedTypes): TTransferTransactionWithId
+export function transfer(paramsOrTx: any, seed?: TSeedTypes): TTransferTransactionWithId {
   const type = TRANSACTION_TYPE.TRANSFER
   const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: ITransferTransaction & WithId = {
+  const tx: TTransferTransactionWithId = {
     type,
     version,
     senderPublicKey,

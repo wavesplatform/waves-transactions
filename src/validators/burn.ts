@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import { TRANSACTION_TYPE } from '@waves/ts-types'
 import {
     isEq,
     orEq,

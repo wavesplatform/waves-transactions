@@ -1,8 +1,9 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, WithId, WithSender, ISponsorshipParams, ISponsorshipTransaction } from '../transactions'
+import { WithSender, ISponsorshipParams, } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
+import { TRANSACTION_TYPE, TSponsorshipTransaction, TSponsorshipTransactionWithId  } from '@waves/ts-types'
 import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -11,15 +12,15 @@ import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
-export function sponsorship(params: ISponsorshipParams, seed: TSeedTypes): ISponsorshipTransaction & WithId
-export function sponsorship(paramsOrTx: ISponsorshipParams & WithSender | ISponsorshipTransaction, seed?: TSeedTypes): ISponsorshipTransaction & WithId
-export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTransaction & WithId {
+export function sponsorship(params: ISponsorshipParams, seed: TSeedTypes): TSponsorshipTransactionWithId
+export function sponsorship(paramsOrTx: ISponsorshipParams & WithSender | TSponsorshipTransaction, seed?: TSeedTypes): TSponsorshipTransactionWithId
+export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): TSponsorshipTransactionWithId {
   const type = TRANSACTION_TYPE.SPONSORSHIP
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: ISponsorshipTransaction & WithId = {
+  const tx: TSponsorshipTransactionWithId = {
     type,
     version,
     senderPublicKey,

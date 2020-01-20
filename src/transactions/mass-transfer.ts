@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, IMassTransferTransaction, IMassTransferParams, WithId, WithSender } from '../transactions'
+import { IMassTransferParams, WithSender } from '../transactions'
 import {
   addProof,
   chainIdFromRecipient,
@@ -13,15 +13,16 @@ import {
 } from '../generic'
 import { TSeedTypes } from '../types'
 import { base58Encode, blake2b, signBytes } from '@waves/ts-lib-crypto'
+import { TRANSACTION_TYPE, TMassTransferTransaction,TMassTransferTransactionWithId} from '@waves/ts-types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
-export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): IMassTransferTransaction & WithId
-export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | IMassTransferTransaction, seed?: TSeedTypes): IMassTransferTransaction & WithId
-export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferTransaction & WithId {
+export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): TMassTransferTransactionWithId
+export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | TMassTransferTransaction, seed?: TSeedTypes): TMassTransferTransactionWithId
+export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): TMassTransferTransactionWithId {
   const type = TRANSACTION_TYPE.MASS_TRANSFER
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
@@ -29,7 +30,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
 
   if (!Array.isArray(paramsOrTx.transfers) || paramsOrTx.transfers.length === 0) throw new Error('Should contain at least one transfer')
 
-  const tx: IMassTransferTransaction & WithId = {
+  const tx: TMassTransferTransactionWithId = {
     type,
     version,
     senderPublicKey,

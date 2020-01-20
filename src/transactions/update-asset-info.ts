@@ -1,28 +1,24 @@
 /**
  * @module index
  */
-import {
-  TRANSACTION_TYPE,
-  WithId,
-  WithSender,
-  IUpdateAssetInfoParams, IUpdateAssetInfoTransaction
-} from '../transactions'
+import { WithSender, IUpdateAssetInfoParams } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
+import { TUpdateAssetInfoTransaction, TRANSACTION_TYPE, TUpdateAssetInfoTransactionWithId} from '@waves/ts-types'
 import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId, networkByte } from '../generic'
 import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { txToProtoBytes } from '../proto-serialize'
 
 /* @echo DOCS */
-export function updateAssetInfo(params: IUpdateAssetInfoParams, seed: TSeedTypes): IUpdateAssetInfoTransaction & WithId
-export function updateAssetInfo(paramsOrTx: IUpdateAssetInfoParams & WithSender | IUpdateAssetInfoTransaction, seed?: TSeedTypes): IUpdateAssetInfoTransaction & WithId
-export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): IUpdateAssetInfoTransaction & WithId {
+export function updateAssetInfo(params: IUpdateAssetInfoParams, seed: TSeedTypes): TUpdateAssetInfoTransactionWithId
+export function updateAssetInfo(paramsOrTx: IUpdateAssetInfoParams & WithSender | TUpdateAssetInfoTransaction, seed?: TSeedTypes): TUpdateAssetInfoTransactionWithId
+export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): TUpdateAssetInfoTransactionWithId {
   const type = TRANSACTION_TYPE.UPDATE_ASSET_INFO
   const version = paramsOrTx.version || 1
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: IUpdateAssetInfoTransaction & WithId = {
+  const tx: TUpdateAssetInfoTransactionWithId = {
     type,
     version,
     senderPublicKey,

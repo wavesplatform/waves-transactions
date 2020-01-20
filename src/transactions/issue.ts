@@ -1,24 +1,25 @@
 /**
  * @module index
  */
-import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId, WithSender } from '../transactions'
+import {  IIssueParams, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { TRANSACTION_TYPE , TIssueTransaction, TIssueTransactionWithId} from "@waves/ts-types";
 
 /* @echo DOCS */
-export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId
-export function issue(paramsOrTx: IIssueParams & WithSender | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId
-export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & WithId {
+export function issue(params: IIssueParams, seed: TSeedTypes): TIssueTransactionWithId
+export function issue(paramsOrTx: IIssueParams & WithSender | TIssueTransaction, seed?: TSeedTypes): TIssueTransactionWithId
+export function issue(paramsOrTx: any, seed?: TSeedTypes): TIssueTransactionWithId {
   const type = TRANSACTION_TYPE.ISSUE
   const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: IIssueTransaction & WithId = {
+  const tx: TIssueTransactionWithId = {
     type,
     version,
     senderPublicKey,

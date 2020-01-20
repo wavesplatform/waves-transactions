@@ -1,8 +1,9 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender } from '../transactions'
+import { ILeaseParams, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
+import { TRANSACTION_TYPE, TLeaseTransaction, TLeaseTransactionWithId} from '@waves/ts-types'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -11,15 +12,15 @@ import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
-export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction & WithId
-export function lease(paramsOrTx: ILeaseParams & WithSender | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId
-export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & WithId {
+export function lease(params: ILeaseParams, seed: TSeedTypes): TLeaseTransactionWithId
+export function lease(paramsOrTx: ILeaseParams & WithSender | TLeaseTransaction, seed?: TSeedTypes): TLeaseTransactionWithId
+export function lease(paramsOrTx: any, seed?: TSeedTypes): TLeaseTransactionWithId {
   const type = TRANSACTION_TYPE.LEASE
   const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: ILeaseTransaction & WithId = {
+  const tx: TLeaseTransactionWithId = {
     type,
     version,
     senderPublicKey,

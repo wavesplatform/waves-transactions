@@ -1,25 +1,26 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, IBurnTransaction, IBurnParams, WithId, WithSender } from '../transactions'
+import {  IBurnParams, WithId, WithSender } from '../transactions'
 import { binary } from '@waves/marshall'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { TBurnTransaction, TRANSACTION_TYPE,TBurnTransactionWithId } from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function burn(params: IBurnParams, seed: TSeedTypes): IBurnTransaction & WithId
-export function burn(paramsOrTx: IBurnParams & WithSender | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId
-export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & WithId {
+export function burn(params: IBurnParams, seed: TSeedTypes): TBurnTransactionWithId
+export function burn(paramsOrTx: IBurnParams & WithSender | TBurnTransaction, seed?: TSeedTypes): TBurnTransactionWithId
+export function burn(paramsOrTx: any, seed?: TSeedTypes): TBurnTransactionWithId {
   const type = TRANSACTION_TYPE.BURN
   const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: IBurnTransaction & WithId = {
+  const tx: TBurnTransactionWithId = {
     type,
     version,
     senderPublicKey,

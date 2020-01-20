@@ -1,10 +1,11 @@
-import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
+import { WithId } from './transactions'
 import * as tx_route from '@waves/node-api-js/cjs/api-node/transactions'
 import * as blocks_route from '@waves/node-api-js/cjs/api-node/blocks'
 import * as addresses_route from '@waves/node-api-js/cjs/api-node/addresses'
 import * as assets_route from '@waves/node-api-js/cjs/api-node/assets'
 import * as rewards_route from '@waves/node-api-js/cjs/api-node/rewards'
 import * as debug_route from '@waves/node-api-js/cjs/api-node/debug'
+import { TTransaction, ITransaction, TDataTransactionEntry } from '@waves/ts-types'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -68,14 +69,14 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx> {
+export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTransaction> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<TTx> => tx_route.fetchInfo(apiBase, txId)
+  const promise = (): Promise<TTransaction> => tx_route.fetchInfo(apiBase, txId)
     .then(x => {
       to.cancel()
       return x as any //todo: fix types
@@ -93,7 +94,7 @@ const process400 = (resp: any) => resp.status === 400
   : resp
 
 export async function waitForTxWithNConfirmations(txId: string, confirmations: number,
-                                                  options: INodeRequestOptions): Promise<TTx> {
+                                                  options: INodeRequestOptions): Promise<TTransaction> {
 
 
   const { timeout } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
@@ -174,9 +175,9 @@ export interface IAccountDataRequestOptions {
  * @param options - waves address and optional match regular expression. If match is present keys will be filtered by this regexp
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataEntry>>
-export async function accountData(address: string, nodeUrl: string): Promise<Record<string, TDataEntry>>
-export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataEntry>> {
+export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataTransactionEntry>>
+export async function accountData(address: string, nodeUrl: string): Promise<Record<string, TDataTransactionEntry>>
+export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataTransactionEntry>> {
   let address
   let match
   if (typeof options === 'string') {
@@ -189,7 +190,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
       : options.match.source)
   }
 
-  const data: TDataEntry[] =  await addresses_route.data(nodeUrl, address, {matches: match}) as any //todo fix type
+  const data:  TDataTransactionEntry[] =  await addresses_route.data(nodeUrl, address, {matches: match}) as any //todo fix type
 
   return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
 }
@@ -252,7 +253,7 @@ export async function rewards(...args: [number, string] | [string]): Promise<any
 }
 
 export interface IStateChangeResponse {
-  data: TDataEntry[],
+  data:  TDataTransactionEntry[],
   transfers: {
     address: string,
     amount: number,
@@ -275,6 +276,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends TTx>(tx: T, nodeUrl: string) {
+export function broadcast<T extends TTransaction>(tx: T, nodeUrl: string) {
   return tx_route.broadcast(nodeUrl, tx as any)
 }

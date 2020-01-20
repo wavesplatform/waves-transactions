@@ -1,8 +1,9 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, ISetScriptTransaction, ISetScriptParams, WithId, WithSender } from '../transactions'
+import { ISetScriptParams, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
+import { TRANSACTION_TYPE, TSetScriptTransaction, TSetScriptTransactionWithId} from '@waves/ts-types'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -11,16 +12,16 @@ import { txToProtoBytes } from '../proto-serialize'
 
 
 /* @echo DOCS */
-export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScriptTransaction & WithId
-export function setScript(paramsOrTx: ISetScriptParams & WithSender | ISetScriptTransaction, seed?: TSeedTypes): ISetScriptTransaction & WithId
-export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransaction & WithId {
+export function setScript(params: ISetScriptParams, seed: TSeedTypes): TSetScriptTransactionWithId
+export function setScript(paramsOrTx: ISetScriptParams & WithSender | TSetScriptTransaction, seed?: TSeedTypes): TSetScriptTransactionWithId
+export function setScript(paramsOrTx: any, seed?: TSeedTypes): TSetScriptTransactionWithId {
   const type = TRANSACTION_TYPE.SET_SCRIPT
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
-  const tx: ISetScriptTransaction & WithId = {
+  const tx: TSetScriptTransactionWithId = {
     type,
     version,
     senderPublicKey,
