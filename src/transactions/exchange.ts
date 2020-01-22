@@ -31,7 +31,7 @@ export function exchange(paramsOrTx: TExchangeTransaction, seed?: TSeedTypes): T
         fee: fee(paramsOrTx, 100000),
         timestamp: paramsOrTx.timestamp || Date.now(),
         proofs: paramsOrTx.proofs || [],
-        chainId: networkByte((paramsOrTx as any).chainId, 87),
+        chainId: networkByte(paramsOrTx.version === 3 ? paramsOrTx.chainId : undefined, 87),
         id: '',
     }
 
