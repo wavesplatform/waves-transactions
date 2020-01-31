@@ -24,7 +24,6 @@ import {
   IOrder,
   IReissueTransaction, ISetAssetScriptTransaction,
   ISetScriptTransaction, ISponsorshipTransaction,
-  ITransaction,
   ITransferTransaction,
   TOrder, TRANSACTION_TYPE, TTransactionType,
   TTx, TTypedData, IUpdateAssetInfoTransaction, TDeleteRequest
