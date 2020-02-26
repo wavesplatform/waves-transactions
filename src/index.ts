@@ -25,6 +25,7 @@ export { customData, serializeCustomData } from './requests/custom-data'
 export { auth } from './requests/auth'
 export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
+export { updateAssetInfo } from './transactions/update-asset-info'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 export { makeTx } from './make-tx'
@@ -97,6 +98,7 @@ const libs = {
 import * as seedUtils from './seedUtils'
 import * as nodeInteraction from './nodeInteraction'
 import * as validators from './validators'
+import { updateAssetInfo } from './transactions/update-asset-info';
 
 export {
   libs,

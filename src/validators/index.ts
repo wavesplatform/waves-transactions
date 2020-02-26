@@ -13,6 +13,7 @@ import { reissueValidator as reissue } from './reissue';
 import { issueValidator as issue } from './issue';
 import { leaseValidator as lease } from './lease';
 import { invokeValidator as invokeScript } from './invoke-script';
+import { updateAssetInfoValidator as updateAssetInfo } from './update-asset-info';
 import { exchangeValidator as exchange } from './exchange';
 
 import { orderValidator as order } from './order';
@@ -36,8 +37,9 @@ export const validate = {
     lease,
     setScript,
     invokeScript,
+    updateAssetInfo,
     exchange,
-    
+
     cancelOrder,
     customData,
     order,

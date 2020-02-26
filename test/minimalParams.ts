@@ -5,8 +5,8 @@ import {
   ILeaseParams,
   IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
   TRANSACTION_TYPE,
-  ICancelOrderParams
-} from '../src/transactions'
+  ICancelOrderParams, IUpdateAssetInfoParams
+} from '../src/transactions';
 
 export const aliasMinimalParams: IAliasParams = {
   alias: 'mytestalias',
@@ -105,6 +105,14 @@ export const setAssetScriptMinimalParams: ISetAssetScriptParams = {
   assetId: '',
 }
 
+export const updateAssetInfoMinimalParams: IUpdateAssetInfoParams = {
+  name: '',
+  description: '',
+  assetId: '',
+  chainId: 0,
+  feeAssetId: '',
+}
+
 export const minimalParams = {
   [TRANSACTION_TYPE.ISSUE]: issueMinimalParams,
   [TRANSACTION_TYPE.TRANSFER]: transferMinimalParams,
@@ -118,4 +126,5 @@ export const minimalParams = {
   [TRANSACTION_TYPE.SET_SCRIPT]: setScriptMinimalParams,
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: setAssetScriptMinimalParams,
   [TRANSACTION_TYPE.INVOKE_SCRIPT]: invokeScriptMinimalParams,
+  [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: updateAssetInfoMinimalParams,
 }
