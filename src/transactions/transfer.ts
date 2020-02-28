@@ -25,6 +25,9 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
   const version = paramsOrTx.version || 3
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
+  const attachment = typeof paramsOrTx.attachment === 'string'
+      ? {type: 'string', value: paramsOrTx.attachment}
+      : paramsOrTx.attachment
 
   const tx: ITransferTransaction & WithId = {
     type,
@@ -33,7 +36,7 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     assetId: normalizeAssetId(paramsOrTx.assetId),
     recipient: paramsOrTx.recipient,
     amount: paramsOrTx.amount,
-    attachment: paramsOrTx.attachment,
+    attachment,
     fee: fee(paramsOrTx, 100000),
     feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
