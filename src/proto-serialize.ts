@@ -289,14 +289,20 @@ const getSetAssetScriptData = (t: ISetAssetScriptTransaction): wavesProto.waves.
   assetId: base58Decode(t.assetId),
   script: t.script == null ? null : scriptToProto(t.script)
 })
-const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => {
-  let functionCall = t.call == null ? null : binary.serializerFromSchema(invokeScriptCallSchema)(t.call)
-  return {
-    dApp: recipientToProto(t.dApp),
-    functionCall,
-    payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
-  }
-}
+// const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => {
+//   let functionCall = t.call == null ? null : binary.serializerFromSchema(invokeScriptCallSchema)(t.call)
+//   return {
+//     dApp: recipientToProto(t.dApp),
+//     functionCall,
+//     payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
+//   }
+// }
+const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => ({
+  dApp: recipientToProto(t.dApp),
+  functionCall: t.call == null ? null : binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call), //todo: export function call from marshall and use it directly
+  payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId))
+})
+
 const getUpdateAssetInfoData = (t: IUpdateAssetInfoTransaction): wavesProto.waves.IUpdateAssetInfoTransactionData => {
   return {
     assetId: base58Decode(t.assetId),
