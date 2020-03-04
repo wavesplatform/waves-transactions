@@ -26,6 +26,9 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
   const version = paramsOrTx.version || 2
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
+  const attachment = typeof paramsOrTx.attachment === 'string'
+      ? {type: 'string', value: paramsOrTx.attachment}
+      : paramsOrTx.attachment
 
   if (!Array.isArray(paramsOrTx.transfers) || paramsOrTx.transfers.length === 0) throw new Error('Should contain at least one transfer')
 
@@ -37,7 +40,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
     transfers: paramsOrTx.transfers,
     fee: fee(paramsOrTx, 100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
-    attachment: paramsOrTx.attachment,
+    attachment,
     proofs: paramsOrTx.proofs || [],
     chainId: networkByte(paramsOrTx.chainId, chainIdFromRecipient(paramsOrTx.transfers[0]?.recipient)),
     id: '',
