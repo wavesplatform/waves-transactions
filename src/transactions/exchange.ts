@@ -15,12 +15,13 @@ import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId, ne
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 /* @echo DOCS */
 export function exchange(paramsOrTx: IExchangeTransaction, seed?: TSeedTypes): IExchangeTransaction & WithId {
 
   const type = TRANSACTION_TYPE.EXCHANGE
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.EXCHANGE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

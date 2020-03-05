@@ -8,6 +8,7 @@ import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -15,7 +16,7 @@ export function burn(params: IBurnParams, seed: TSeedTypes): IBurnTransaction & 
 export function burn(paramsOrTx: IBurnParams & WithSender | IBurnTransaction, seed?: TSeedTypes): IBurnTransaction & WithId
 export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & WithId {
   const type = TRANSACTION_TYPE.BURN
-  const version = paramsOrTx.version || 3
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.BURN
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

@@ -8,6 +8,7 @@ import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -15,7 +16,7 @@ export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): ICanc
 export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | ICancelLeaseTransaction, seed?: TSeedTypes): ICancelLeaseTransaction & WithId
 export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): ICancelLeaseTransaction & WithId {
   const type = TRANSACTION_TYPE.CANCEL_LEASE
-  const version = paramsOrTx.version || 3
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.CANCEL_LEASE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

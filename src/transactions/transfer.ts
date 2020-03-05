@@ -16,18 +16,19 @@ import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 /* @echo DOCS */
 export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId
 export function transfer(paramsOrTx: ITransferParams & WithSender | ITransferTransaction, seed?: TSeedTypes): ITransferTransaction & WithId
 export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransaction & WithId {
   const type = TRANSACTION_TYPE.TRANSFER
-  const version = paramsOrTx.version || 3
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.TRANSFER
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
-  const attachment = typeof paramsOrTx.attachment === 'string'
+  const attachment = version > 2  && typeof paramsOrTx.attachment === 'string'
       ? {type: 'string', value: paramsOrTx.attachment}
-      : paramsOrTx.attachment
+      : paramsOrTx.attachment || ''
 
   const tx: ITransferTransaction & WithId = {
     type,

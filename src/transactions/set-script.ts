@@ -8,6 +8,7 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -15,7 +16,7 @@ export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScrip
 export function setScript(paramsOrTx: ISetScriptParams & WithSender | ISetScriptTransaction, seed?: TSeedTypes): ISetScriptTransaction & WithId
 export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransaction & WithId {
   const type = TRANSACTION_TYPE.SET_SCRIPT
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')

@@ -8,6 +8,7 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -15,7 +16,7 @@ export function sponsorship(params: ISponsorshipParams, seed: TSeedTypes): ISpon
 export function sponsorship(paramsOrTx: ISponsorshipParams & WithSender | ISponsorshipTransaction, seed?: TSeedTypes): ISponsorshipTransaction & WithId
 export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTransaction & WithId {
   const type = TRANSACTION_TYPE.SPONSORSHIP
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.SPONSORSHIP
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

@@ -8,6 +8,7 @@ import { txToProtoBytes } from '../proto-serialize';
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -15,7 +16,7 @@ export function alias(params: IAliasParams, seed: TSeedTypes): IAliasTransaction
 export function alias(paramsOrTx: IAliasParams & WithSender | IAliasTransaction, seed?: TSeedTypes): IAliasTransaction & WithId
 export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & WithId {
   const type = TRANSACTION_TYPE.ALIAS
-  const version = paramsOrTx.version || 3
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.ALIAS
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
