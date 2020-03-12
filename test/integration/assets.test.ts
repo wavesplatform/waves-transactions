@@ -201,7 +201,7 @@ describe('Assets', () => {
       assetId = issueTx.id
       await broadcast(issueTx, API_BASE)
       // GIVE WAVES TO TEST ACC
-      // const transferTx = transfer({ recipient: address(account2, 'T'), amount: 100000000 }, MASTER_SEED)
+      // const transferTx = transfer({ recipient: address(account2, CHAIN_ID), amount: 100000000, chainId: CHAIN_ID }, MASTER_SEED)
       // await broadcast(transferTx, API_BASE)
 
       //WAIT BOTH TX TO COMPLETE

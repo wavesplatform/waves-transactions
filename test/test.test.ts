@@ -5,8 +5,6 @@ import { transfer } from '../src/transactions/transfer';
 import { massTransfer } from '../src/transactions/mass-transfer';
 import { data } from '../src/transactions/data';
 import { invokeScript } from '../src/transactions/invoke-script';
-import { address, randomSeed } from '@waves/ts-lib-crypto';
-import { setScript } from '../src/transactions/set-script';
 
 const nodeUrl = 'http://localhost:32772';
 

@@ -67,7 +67,7 @@ describe('Node interaction', () => {
 
     await expect(broadcast(result, nodeUrl)).rejects
       .toMatchObject({error: 307})
-  })
+  }, 100000)
 
 })
 
