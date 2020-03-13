@@ -1,4 +1,4 @@
-import { base58Decode, base64Decode, blake2b, keccak, stringToBytes } from '@waves/ts-lib-crypto';
+import { base58Decode, base64Decode, keccak, blake2b, stringToBytes } from '@waves/ts-lib-crypto'
 
 
 const TX_DEFAULTS = {
@@ -190,30 +190,25 @@ export const isAttachment = ifElse(
     orEq([null, undefined]),
     defaultValue(true),
     ifElse(
-        // if valid string
-        isString,
-        defaultValue(true),
+      // if valid Data Pair
+      validatePipe(isArray, (data: any[]) => data.every(isValidDataPair)),
+      defaultValue(true),
+      // else if valid base58 or bytearray
+      pipe(
         ifElse(
-            // else if valid Data Pair
-            validatePipe(isArray, (data: any[]) => data.every(isValidDataPair)),
-            defaultValue(true),
-            // else if valid base58 or bytearray
-            pipe(
-                ifElse(
-                    isBase58,
-                    base58Decode,
-                    nope,
-                ),
-                ifElse(
-                    isByteArray,
-                    pipe(
-                        prop('length'),
-                        lte(TX_DEFAULTS.MAX_ATTACHMENT),
-                    ),
-                    defaultValue(false)
-                )
-            )
+          isBase58,
+          base58Decode,
+          nope,
+        ),
+        ifElse(
+          isByteArray,
+          pipe(
+            prop('length'),
+            lte(TX_DEFAULTS.MAX_ATTACHMENT),
+          ),
+          defaultValue(false)
         )
+      )
     )
 
 )

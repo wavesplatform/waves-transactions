@@ -20,7 +20,7 @@ describe('Matcher requests', () => {
     expect(submitResp.status).toEqual('OrderAccepted')
 
     const co = cancelOrder({ orderId: ord.id }, MASTER_SEED)
-    const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL) as any
+    const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
     expect(cancelResp.status).toEqual('OrderCanceled')
   }, TIMEOUT)
 
@@ -41,7 +41,7 @@ describe('Matcher requests', () => {
     expect(submitResp.status).toEqual('OrderAccepted')
 
     const co = cancelOrder({ orderId: ord.id }, MASTER_SEED)
-    const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL) as any
+    const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
     expect(cancelResp.status).toEqual('OrderCanceled')
   }, TIMEOUT)
 

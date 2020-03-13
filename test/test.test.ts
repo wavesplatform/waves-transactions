@@ -6,7 +6,7 @@ import { massTransfer } from '../src/transactions/mass-transfer';
 import { data } from '../src/transactions/data';
 import { invokeScript } from '../src/transactions/invoke-script';
 
-const nodeUrl = 'http://localhost:32769';
+const nodeUrl = 'http://localhost:32772';
 
 
 it('issue', async () => {
@@ -36,7 +36,7 @@ it('transfer', async () => {
         recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
         amount: 1,
         chainId: 73,
-        attachment: 'hello'//{value: 'hello', type: 'string'}
+        attachment: {value: 'hello', type: 'string'}
     }, 'node10');
     console.log(JSON.stringify(tx, null, 4));
     console.log(await broadcast(tx, nodeUrl));
