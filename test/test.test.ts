@@ -6,7 +6,7 @@ import { massTransfer } from '../src/transactions/mass-transfer';
 import { data } from '../src/transactions/data';
 import { invokeScript } from '../src/transactions/invoke-script';
 
-const nodeUrl = 'http://localhost:32772';
+const nodeUrl = 'http://localhost:32769';
 
 
 it('issue', async () => {
@@ -36,7 +36,7 @@ it('transfer', async () => {
         recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
         amount: 1,
         chainId: 73,
-        attachment: {value: 'hello', type: 'string'}
+        attachment: 'hello'//{value: 'hello', type: 'string'}
     }, 'node10');
     console.log(JSON.stringify(tx, null, 4));
     console.log(await broadcast(tx, nodeUrl));
@@ -150,6 +150,19 @@ it('invoke', async () => {
 
 
 }, 1000000000);
+
+
+it('transfer test', async () => {
+    const tx = transfer({
+        // attachment: 'hello',//[{key: 'foo', value: null}],
+        attachment: 'hel',
+        chainId: 73,
+        amount: 1,
+        recipient: '3Hm3LGoNPmw1VTZ3eRA2pAfeQPhnaBm6YFC'
+    }, 'node10');
+    console.log(JSON.stringify(tx, null, 4));
+    console.log(await broadcast(tx, nodeUrl));
+});
 
 
 function sleep(ms: number) {
