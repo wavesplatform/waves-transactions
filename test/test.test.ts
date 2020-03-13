@@ -6,7 +6,7 @@ import { massTransfer } from '../src/transactions/mass-transfer';
 import { data } from '../src/transactions/data';
 import { invokeScript } from '../src/transactions/invoke-script';
 
-const nodeUrl = 'http://localhost:32772';
+const nodeUrl = 'http://localhost:32769';
 
 
 it('issue', async () => {
@@ -153,15 +153,67 @@ it('invoke', async () => {
 
 
 it('transfer test', async () => {
-    const tx = transfer({
-        // attachment: 'hello',//[{key: 'foo', value: null}],
-        attachment: 'hel',
+    const conditions = [
+        {attachment: 'StV1DL6CwTryKyV'},
+        {attachment: ''},
+        {attachment: null},
+        {attachment: undefined},
+
+        {version: 3, attachment: 'StV1DL6CwTryKyV'},
+        {version: 3, attachment: ''},
+        {version: 3, attachment: null},
+        {version: 3, attachment: undefined},
+
+        {version: 3, attachment: {type: 'string', value: ''}},
+        {version: 3, attachment: {type: 'string', value: 'hello world'}},
+
+        {version: 3, attachment: {type: 'integer', value: '123'}},
+        {version: 3, attachment: {type: 'integer', value: 123}},
+        {version: 3, attachment: {type: 'integer', value: -1}},
+        {version: 3, attachment: {type: 'integer', value: -1e10}},
+        {version: 3, attachment: {type: 'integer', value: -0}},
+        {version: 3, attachment: {type: 'integer', value: 0}},
+        {version: 3, attachment: {type: 'integer', value: '-9223372036854775808'}},
+        {version: 3, attachment: {type: 'integer', value: '9223372036854775807'}},
+
+        {version: 3, attachment: {type: 'boolean', value: false}},
+        {version: 3, attachment: {type: 'boolean', value: true}},
+
+        {version: 3, attachment: {type: 'binary', value: ''}},
+        {version: 3, attachment: {type: 'binary', value: 'StV1DL6CwTryKyV'}},
+    ];
+console.log(conditions.length)
+    const makeTx = (cond: any) => transfer({
+        ...cond,
         chainId: 73,
         amount: 1,
         recipient: '3Hm3LGoNPmw1VTZ3eRA2pAfeQPhnaBm6YFC'
     }, 'node10');
-    console.log(JSON.stringify(tx, null, 4));
+
+
+    for (let i in conditions){
+        try {
+            await broadcast(makeTx(conditions[i]), nodeUrl)
+        } catch (e) {
+            console.log('fail', conditions[i]);
+            console.error(JSON.stringify(e, null, 4));
+        }
+    }
+
+
+});
+
+it('single transfer test', async () => {
+    const tx = transfer({
+        version: 3,
+        attachment: {type: 'binary', value: 'StV1DL6CwTryKyV'},
+        chainId: 73,
+        amount: 1,
+        recipient: '3Hm3LGoNPmw1VTZ3eRA2pAfeQPhnaBm6YFC'
+    }, 'node10');
+    console.log(tx)
     console.log(await broadcast(tx, nodeUrl));
+
 });
 
 

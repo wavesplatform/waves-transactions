@@ -26,9 +26,15 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
   const version = paramsOrTx.version || DEFAULT_VERSIONS.TRANSFER
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
-  const attachment = version > 2  && typeof paramsOrTx.attachment === 'string'
-      ? {type: 'string', value: paramsOrTx.attachment}
-      : paramsOrTx.attachment || ''
+
+  let attachment = paramsOrTx.attachment;
+  if(version > 2){
+    attachment = typeof attachment === 'string'
+        ? {type: 'string', value: paramsOrTx.attachment}
+        : attachment || undefined
+  }else {
+    attachment = attachment || ''
+  }
 
   const tx: ITransferTransaction & WithId = {
     type,
