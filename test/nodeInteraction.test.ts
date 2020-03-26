@@ -2,7 +2,7 @@ import * as utilityF from '../src/nodeInteraction'
 import { data } from '../src'
 import { broadcast } from '../src/nodeInteraction'
 
-const apiBase = 'https://testnodes.wavesnodes.com/'
+const apiBase = 'https://nodes-testnet.wavesnodes.com/'
 
 describe('Node interaction utility functions', () => {
 
