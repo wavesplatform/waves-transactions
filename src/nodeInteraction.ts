@@ -68,7 +68,7 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx> {
+export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx & {applicationStatus: 'succeed' | 'scriptExecutionFailed'}> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
