@@ -9,6 +9,7 @@ import {address, randomSeed} from '@waves/ts-lib-crypto'
 import {setScript} from '../src/transactions/set-script'
 import {TIMEOUT} from './integration/config'
 import {log} from 'util'
+import {waitForTxWithNConfirmations} from '../src/nodeInteraction'
 
 const nodeUrl = 'http://localhost:6869'
 const masterSeed = 'waves private node seed with waves tokens'
@@ -167,8 +168,9 @@ it('invoke test', async () => {
         feeAssetId: null,
     }, masterSeed)
     const {id} = await broadcast(invokeTx, nodeUrl)
-    const tx = (await waitForTx(id, {apiBase: nodeUrl, timeout: TIMEOUT}))
-})
+    const tx = (await waitForTxWithNConfirmations(id,0, {apiBase: nodeUrl, timeout: TIMEOUT}))
+    console.log(tx)
+}, 100000)
 
 
 it('transfer test', async () => {
