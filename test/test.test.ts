@@ -8,7 +8,6 @@ import {invokeScript} from '../src/transactions/invoke-script'
 import {address, randomSeed} from '@waves/ts-lib-crypto'
 import {setScript} from '../src/transactions/set-script'
 import {TIMEOUT} from './integration/config'
-import {log} from 'util'
 import {waitForTxWithNConfirmations} from '../src/nodeInteraction'
 
 const nodeUrl = 'http://localhost:6869'
