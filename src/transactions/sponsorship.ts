@@ -26,7 +26,7 @@ export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): ISponsorshipTra
     senderPublicKey,
     minSponsoredAssetFee: paramsOrTx.minSponsoredAssetFee,
     assetId: paramsOrTx.assetId,
-    fee: fee(paramsOrTx, 100000000),
+    fee: fee(paramsOrTx, 1e5),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
