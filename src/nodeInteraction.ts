@@ -68,14 +68,14 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx & {applicationStatus: 'succeed' | 'scriptExecutionFailed'}> {
+export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<TTx & {applicationStatus: 'succeed' | 'scriptExecutionFailed'}> =>
+  const promise = (): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> =>
       tx_route.fetchInfo(apiBase, txId)
     .then(x => {
       to.cancel()
@@ -94,7 +94,7 @@ const process400 = (resp: any) => resp.status === 400
   : resp
 
 export async function waitForTxWithNConfirmations(txId: string, confirmations: number, options: INodeRequestOptions):
-    Promise<TTx & {applicationStatus: 'succeed' | 'scriptExecutionFailed'}>{
+    Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}>{
 
 
   const { timeout } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
@@ -267,7 +267,7 @@ export interface IStateChangeResponse {
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function stateChanges(transactionId: string, nodeUrl: string): Promise<IStateChangeResponse> {
-  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId).then(t => t.stateChanges) as any //todo: fix types
+  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId).then((t: any) => t.stateChanges) as any //todo: fix types
 }
 
 /**
@@ -276,6 +276,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends TTx>(tx: T, nodeUrl: string) {
+export function broadcast<T extends TTx>(tx: T, nodeUrl: string){
   return tx_route.broadcast(nodeUrl, tx as any)
 }
