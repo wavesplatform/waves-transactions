@@ -39,8 +39,8 @@ import { exchange } from './transactions/exchange'
 import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
 import { serializeCustomData, TSignedData } from './requests/custom-data'
-import { serializeAuthData } from './requests/auth';
-import { serializeWavesAuthData } from './requests/wavesAuth';
+import { serializeAuthData } from './requests/auth'
+import { serializeWavesAuthData } from './requests/wavesAuth'
 
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
@@ -133,7 +133,7 @@ export function submitOrder(ord: TOrder, opts: any) {
     matcherUrl = opts.matcherUrl
     endpoint = opts.market ? 'matcher/orderbook/market' : 'matcher/orderbook'
   }
-  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(ord)}})
+  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(ord), headers: {'Content-Type': 'application/json'}}})
 }
 
 /**
@@ -145,6 +145,6 @@ export function submitOrder(ord: TOrder, opts: any) {
  * @param matcherUrl - matcher address to send order cancel to. E.g. https://matcher.waves.exchange/
  */
 export function cancelSubmittedOrder(co: ICancelOrder, amountAsset: string | null, priceAsset: string | null, matcherUrl: string) {
-  const endpoint = `matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`;
-  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(co)}})
+  const endpoint = `matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`
+  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(co),  headers: {'Content-Type': 'application/json'}}})
 }

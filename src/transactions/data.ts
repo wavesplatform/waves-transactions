@@ -29,6 +29,7 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { dataEntryToProto, txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 const typeMap: any = {
   integer: ['integer', 0, LONG],
@@ -48,7 +49,7 @@ export function data(params: IDataParams, seed: TSeedTypes): IDataTransaction & 
 export function data(paramsOrTx: IDataParams & WithSender | IDataTransaction, seed?: TSeedTypes): IDataTransaction & WithId
 export function data(paramsOrTx: any, seed?: TSeedTypes): IDataTransaction & WithId  {
   const type = TRANSACTION_TYPE.DATA
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.DATA
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

@@ -36,7 +36,7 @@ export interface INodeRequestOptions {
 
 const DEFAULT_NODE_REQUEST_OPTIONS = {
   timeout: 120000,
-  apiBase: "https://nodes.wavesplatform.com"
+  apiBase: 'https://nodes.wavesplatform.com',
 }
 
 export const currentHeight = async (apiBase: string): Promise<number> => {
@@ -68,14 +68,15 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx> {
+export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<TTx> => tx_route.fetchInfo(apiBase, txId)
+  const promise = (): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> =>
+      tx_route.fetchInfo(apiBase, txId)
     .then(x => {
       to.cancel()
       return x as any //todo: fix types
@@ -92,8 +93,8 @@ const process400 = (resp: any) => resp.status === 400
   ? Promise.reject(Object.assign(new Error(), resp.data))
   : resp
 
-export async function waitForTxWithNConfirmations(txId: string, confirmations: number,
-                                                  options: INodeRequestOptions): Promise<TTx> {
+export async function waitForTxWithNConfirmations(txId: string, confirmations: number, options: INodeRequestOptions):
+    Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}>{
 
 
   const { timeout } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
@@ -140,7 +141,7 @@ export async function transactionById(txId: string, nodeUrl: string): Promise<IT
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function balance(address: string, nodeUrl: string): Promise<number> {
-  return addresses_route.fetchBalance(nodeUrl, address).then(d => +d.balance);
+  return addresses_route.fetchBalance(nodeUrl, address).then(d => +d.balance)
 }
 
 /**
@@ -239,8 +240,8 @@ export async function rewards(nodeUrl: string): Promise<any>
  */
 export async function rewards(height: number, nodeUrl: string): Promise<any>
 export async function rewards(...args: [number, string] | [string]): Promise<any> {
-  let nodeUrl: string;
-  let _height: number | undefined = undefined;
+  let nodeUrl: string
+  let _height: number | undefined = undefined
   if (args[1] !== undefined) {
     nodeUrl = args[1]
     _height = args[0] as number
@@ -266,7 +267,7 @@ export interface IStateChangeResponse {
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function stateChanges(transactionId: string, nodeUrl: string): Promise<IStateChangeResponse> {
-  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId).then(t => t.stateChanges) as any //todo: fix types
+  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId).then((t: any) => t.stateChanges) as any //todo: fix types
 }
 
 /**
@@ -275,6 +276,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends TTx>(tx: T, nodeUrl: string) {
+export function broadcast<T extends TTx>(tx: T, nodeUrl: string){
   return tx_route.broadcast(nodeUrl, tx as any)
 }

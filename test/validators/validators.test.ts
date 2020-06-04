@@ -282,7 +282,7 @@ describe('Validators', () => {
 
             expect(() => validate.transfer(transfer)).not.toThrow()
             expect(() => validate.transfer({ ...transfer, type: 1 })).toThrow()
-            expect(() => validate.transfer({ ...transfer, version: 3 })).toThrow()
+            expect(() => validate.transfer({ ...transfer, version: 4 })).toThrow()
         })
     })
 })

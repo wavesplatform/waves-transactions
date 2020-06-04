@@ -8,13 +8,14 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 /* @echo DOCS */
 export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId
 export function issue(paramsOrTx: IIssueParams & WithSender | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId
 export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & WithId {
   const type = TRANSACTION_TYPE.ISSUE
-  const version = paramsOrTx.version || 3
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.ISSUE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

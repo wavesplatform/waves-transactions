@@ -8,6 +8,7 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -15,7 +16,7 @@ export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction
 export function lease(paramsOrTx: ILeaseParams & WithSender | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId
 export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & WithId {
   const type = TRANSACTION_TYPE.LEASE
-  const version = paramsOrTx.version || 3
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.LEASE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 

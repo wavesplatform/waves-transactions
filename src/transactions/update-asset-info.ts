@@ -12,13 +12,14 @@ import { addProof, getSenderPublicKey, convertToPairs, fee, normalizeAssetId, ne
 import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 /* @echo DOCS */
 export function updateAssetInfo(params: IUpdateAssetInfoParams, seed: TSeedTypes): IUpdateAssetInfoTransaction & WithId
 export function updateAssetInfo(paramsOrTx: IUpdateAssetInfoParams & WithSender | IUpdateAssetInfoTransaction, seed?: TSeedTypes): IUpdateAssetInfoTransaction & WithId
 export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): IUpdateAssetInfoTransaction & WithId {
   const type = TRANSACTION_TYPE.UPDATE_ASSET_INFO
-  const version = paramsOrTx.version || 1
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.UPDATE_ASSET_INFO
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
