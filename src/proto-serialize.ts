@@ -111,7 +111,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       res.decimals = t.issue!.decimals
       res.reissuable = t.issue!.reissuable
       if (t.issue!.hasOwnProperty('script')) {
-        res.script = t.issue!.script && base64Prefix(base64Encode(t.issue!.script.bytes!))
+        res.script = t.issue!.script && base64Prefix(base64Encode(t.issue!.script))
       }
       break
     case 'transfer':
@@ -156,9 +156,9 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
         res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
       }
       res.attachment = attachmentFromProto(t.massTransfer!.attachment!, t.version < 2)
-      res.transfers = t.massTransfer!.transfers!.map(({ amount, address }) => ({
+      res.transfers = t.massTransfer!.transfers!.map(({ amount, recipient }) => ({
         amount: amount!.toString(),
-        recipient: recipientFromProto(address!, t.chainId)
+        recipient: recipientFromProto(recipient!, t.chainId)
       }))
       break
     case "dataTransaction":
@@ -175,7 +175,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       })
       break
     case "setScript":
-      res.script = t.setScript!.script == null ? null : base64Prefix(base64Encode(t.setScript!.script!.bytes!))
+      res.script = t.setScript!.script == null ? null : base64Prefix(base64Encode(t.setScript!.script!))
       break
     case "sponsorFee":
       res.minSponsoredAssetFee = t.sponsorFee!.minFee!.amount!.toString()
@@ -183,7 +183,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       break
     case "setAssetScript":
       res.assetId = base58Encode(t.setAssetScript!.assetId!)
-      res.script = base64Prefix(base64Encode(t.setAssetScript!.script!.bytes!))
+      res.script = base64Prefix(base64Encode(t.setAssetScript!.script!))
       break
     case "invokeScript":
       res.dApp = recipientFromProto(t.invokeScript!.dApp!, t.chainId)
@@ -409,7 +409,7 @@ const amountToProto = (a: string | number, assetId?: string | null): wavesProto.
   assetId: assetId == null ? null : base58Decode(assetId)
 })
 const massTransferItemToProto = (mti: IMassTransferItem): wavesProto.waves.MassTransferTransactionData.ITransfer => ({
-  address: recipientToProto(mti.recipient),
+  recipient: recipientToProto(mti.recipient),
   amount: Long.fromValue(mti.amount)
 })
 export const dataEntryToProto = (de: TDataEntry | TDeleteRequest): wavesProto.waves.DataTransactionData.IDataEntry => ({
@@ -435,12 +435,8 @@ const attachmentToProto = (a?: TTypedData | string): wavesProto.waves.IAttachmen
   } else throw new Error(`Invalid attachment: ${JSON.stringify(a)}`)
   return result
 }
-const scriptToProto = (s: string): wavesProto.waves.IScript => {
-  const bytes = base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
-  return {
-    version: bytes[0] === 0 ? undefined : bytes[0],
-    bytes: bytes.slice(1)
-  }
+const scriptToProto = (s: string): Uint8Array => {
+  return base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
 }
 
 const nameByType = {

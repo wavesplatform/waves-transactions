@@ -1,8 +1,8 @@
-import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
+import { publicKey } from '@waves/ts-lib-crypto'
 import { invokeScriptMinimalParams } from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
-import { binary } from '@waves/marshall'
 import { IInvokeScriptParams } from '../../src'
+import { validateTxSignature } from '../../test/utils'
 
 describe('invokeScript', () => {
 
@@ -42,13 +42,13 @@ describe('invokeScript', () => {
 
   it('Should get correct signature', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 1)).toBeTruthy()
   })
 
   it('Should sign already signed', () => {
     let tx = invokeScript({ ...invokeScriptMinimalParams }, stringSeed)
     tx = invokeScript(tx, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 1, 1)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
@@ -57,7 +57,8 @@ describe('invokeScript', () => {
       ...invokeScriptMinimalParams,
       payment: [{ amount: 100, assetId: null }]
     }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
+
+    expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()
+    expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 })

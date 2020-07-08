@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { issue } from '../../src'
+import { validateTxSignature } from '../../test/utils'
 import { issueMinimalParams } from '../minimalParams'
-import { binary } from '@waves/marshall'
 
 describe('issue', () => {
 
@@ -29,20 +29,21 @@ describe('issue', () => {
 
   it('Should get correct signature', () => {
     const tx = issue({ ...issueMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[0]!)).toBeTruthy()
+
+    expect(validateTxSignature(tx, 2)).toBeTruthy()    
   })
 
   it('Should sign already signed', () => {
     let tx = issue({ ...issueMinimalParams }, stringSeed)
     tx = issue(tx, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 1)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = issue({ ...issueMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx),tx.proofs[3]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 })
 
