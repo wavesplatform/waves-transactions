@@ -1,7 +1,6 @@
-import { verifySignature, publicKey, } from '@waves/ts-lib-crypto'
+import { publicKey, } from '@waves/ts-lib-crypto'
 import { setScript } from '../../src'
-import { ISetScriptTransaction } from '../../src/transactions'
-import { binary } from '@waves/marshall'
+import { validateTxSignature } from '../../test/utils'
 
 describe('setScript', () => {
 
@@ -13,7 +12,7 @@ describe('setScript', () => {
     const txParams = { script: compiledContract }
     const signedTx = setScript(txParams, seed)
 
-    expect(validateSetScriptTx(signedTx)).toBe(true)
+    expect(validateTxSignature(signedTx, 1)).toBe(true)
   })
 
   it('Should generate correct signed setScript transaction with multiple signers via array', () => {
@@ -22,8 +21,8 @@ describe('setScript', () => {
 
     expect(signedTx.proofs[0]).toEqual('')
     expect(signedTx.script).toBeNull()
-    expect(validateSetScriptTx(signedTx, 1)).toBe(true)
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 1)).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
   it('Should generate correct signed setScript transaction with multiple signers via object', () => {
@@ -31,15 +30,15 @@ describe('setScript', () => {
     const signedTx = setScript(txParams, { '1': seed, '2': seed2 })
 
     expect(signedTx.proofs[0]).toEqual('')
-    expect(validateSetScriptTx(signedTx, 1, publicKey(seed))).toBe(true)
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 1, publicKey(seed))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
   it('Should generate correct signed setScript transaction with null script', () => {
     const txParams = { script: null }
     const signedTx = setScript(txParams, seed)
 
-    expect(validateSetScriptTx(signedTx)).toBe(true)
+    expect(validateTxSignature(signedTx, 1)).toBe(true)
   })
 
   it('Should generate correct setScript transaction without seed', () => {
@@ -61,12 +60,7 @@ describe('setScript', () => {
 
     expect(signedTx.proofs[0]).toEqual('')
     expect(signedTx.proofs[1]).toEqual('')
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
 })
-
-function validateSetScriptTx(tx: ISetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
-  const bytes = binary.serializeTx(tx)
-  return verifySignature(publicKey || tx.senderPublicKey, bytes, tx.proofs[proofNumber]!)
-}

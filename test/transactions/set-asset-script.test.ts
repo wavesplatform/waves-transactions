@@ -1,7 +1,6 @@
-import { verifySignature, publicKey, } from '@waves/ts-lib-crypto'
+import { publicKey, } from '@waves/ts-lib-crypto'
 import { setAssetScript } from '../../src'
-import { ISetAssetScriptTransaction } from '../../src/transactions'
-import { binary } from '@waves/marshall'
+import { validateTxSignature } from '../../test/utils'
 
 describe('setAssetScript', () => {
 
@@ -13,7 +12,7 @@ describe('setAssetScript', () => {
     const txParams = { script: compiledContract, assetId: '' }
     const signedTx = setAssetScript(txParams, seed)
 
-    expect(validateSetScriptTx(signedTx)).toBe(true)
+    expect(validateTxSignature(signedTx, 1)).toBe(true)
   })
 
   it('Should generate correct signed setAssetScript transaction with multiple signers via array', () => {
@@ -22,8 +21,8 @@ describe('setAssetScript', () => {
 
     expect(signedTx.proofs[0]).toEqual('')
     expect(signedTx.script).toEqual('base64:AQIDBA==')
-    expect(validateSetScriptTx(signedTx, 1)).toBe(true)
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 1)).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
   it('Should generate correct signed setAssetScript transaction with multiple signers via object', () => {
@@ -31,8 +30,8 @@ describe('setAssetScript', () => {
     const signedTx = setAssetScript(txParams, { '1': seed, '2': seed2 })
 
     expect(signedTx.proofs[0]).toEqual('')
-    expect(validateSetScriptTx(signedTx, 1, publicKey(seed))).toBe(true)
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 1, publicKey(seed))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
 
@@ -55,12 +54,7 @@ describe('setAssetScript', () => {
 
     expect(signedTx.proofs[0]).toEqual('')
     expect(signedTx.proofs[1]).toEqual('')
-    expect(validateSetScriptTx(signedTx, 2, publicKey(seed2))).toBe(true)
+    expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
 })
-
-function validateSetScriptTx(tx: ISetAssetScriptTransaction, proofNumber = 0, publicKey?: string): boolean {
-  const bytes = binary.serializeTx(tx)
-  return verifySignature(publicKey || tx.senderPublicKey, bytes, tx.proofs[proofNumber]!)
-}

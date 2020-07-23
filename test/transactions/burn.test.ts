@@ -1,8 +1,7 @@
-import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
+import { publicKey } from '@waves/ts-lib-crypto'
 import { burn } from '../../src'
 import { burnMinimalParams } from '../minimalParams'
-import { binary } from '@waves/marshall'
-import * as wavesProto from '@waves/protobuf-serialization'
+import { validateTxSignature } from '../../test/utils'
 
 describe('burn', () => {
 
@@ -19,19 +18,19 @@ describe('burn', () => {
 
   it('Should get correct signature', () => {
     const tx = burn({ ...burnMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2)).toBeTruthy()
   })
 
   it('Should sign already signed', () => {
     let tx = burn({ ...burnMinimalParams }, stringSeed)
     tx = burn(tx, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 1)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = burn({ ...burnMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 })

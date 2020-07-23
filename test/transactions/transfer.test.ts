@@ -1,5 +1,6 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { transfer } from '../../src'
+import { validateTxSignature } from '../../test/utils'
 import { transferMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
 
@@ -16,18 +17,19 @@ describe('transfer', () => {
 
   it('Should get correct signature', () => {
     const tx = transfer({ ...transferMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2)).toBeTruthy()
   })
 
   it('Should get correct signature via private key', () => {
     const tx = transfer({ ...transferMinimalParams }, privateKey)
-    expect(verifySignature(publicKey(privateKey), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 2)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = transfer({ ...transferMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
+
+    expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
+    expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 })
