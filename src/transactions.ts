@@ -362,6 +362,10 @@ export type TTxParams<LONG = string | number> =
  */
 export interface IBasicParams<LONG = string | number> {
   /**
+  * Transaction version. If not set, the latest available version will be used.
+  */
+  version?: number
+  /**
    * Transaction fee. If not set, fee will be calculated automatically
    */
   fee?: LONG
