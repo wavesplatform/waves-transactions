@@ -12,8 +12,7 @@ import {
 } from '../../src'
 import { address, publicKey } from '@waves/ts-lib-crypto'
 import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
-
-
+import { issueMinimalParams } from '../minimalParams'
 
 describe('Assets', () => {
   let account1: string, account2: string
@@ -170,6 +169,22 @@ describe('Assets', () => {
       expect(burnResp.type).toEqual(6)
     }, TIMEOUT + 20000)
 
+  })
+
+  describe('NFT assets', () => {
+    it('Should issue nft asset', async () => {
+      const tx = issue({
+        ...issueMinimalParams,
+        quantity: 1,
+        decimals: 0,
+        chainId: CHAIN_ID
+      }, account1)
+
+      const resp = await broadcast(tx, API_BASE)
+      await waitForTx(tx.id, {apiBase: API_BASE})
+
+      expect(resp.type).toEqual(3)
+    }
   })
 
   describe('Other', () => {
