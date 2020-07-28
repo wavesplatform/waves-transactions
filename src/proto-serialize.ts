@@ -240,7 +240,7 @@ const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionD
   name: t.name,
   description: t.description,
   amount: Long.fromValue(t.quantity),
-  decimals: t.decimals,
+  decimals: t.decimals === 0 ? null : t.decimals,
   reissuable: t.reissuable ? true : undefined,
   script: t.script == null ? null : scriptToProto(t.script),
 })
