@@ -69,7 +69,7 @@ describe('Assets', () => {
     it('Should BURN token', async () => {
       const burnParams: IBurnParams = {
         assetId,
-        quantity: 500,
+        amount: 500,
         chainId: CHAIN_ID,
       }
       const burnTx = burn(burnParams, account1)
@@ -136,7 +136,7 @@ describe('Assets', () => {
 
       const burnParams: IBurnParams = {
         assetId,
-        quantity: 1000,
+        amount: 1000,
         chainId: CHAIN_ID,
       }
       const burnTx = burn(burnParams, account1)
@@ -160,7 +160,7 @@ describe('Assets', () => {
 
       const burnParams: IBurnParams = {
         assetId,
-        quantity: '1000',
+        amount: '1000',
         chainId: CHAIN_ID,
         additionalFee: 400000,
       }

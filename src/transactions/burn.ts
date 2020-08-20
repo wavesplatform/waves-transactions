@@ -25,7 +25,7 @@ export function burn(paramsOrTx: any, seed?: TSeedTypes): IBurnTransaction & Wit
     version,
     senderPublicKey,
     assetId: paramsOrTx.assetId,
-    quantity: paramsOrTx.quantity,
+    amount: paramsOrTx.amount,
     chainId: networkByte(paramsOrTx.chainId, 87),
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),

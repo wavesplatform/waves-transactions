@@ -254,7 +254,7 @@ const getReissueData = (t: IReissueTransaction): wavesProto.waves.IReissueTransa
   reissuable: t.reissuable ? true : undefined,
 })
 const getBurnData = (t: IBurnTransaction): wavesProto.waves.IBurnTransactionData => ({
-  assetAmount: amountToProto(t.quantity || (t as any).amount, t.assetId)
+  assetAmount: amountToProto(t.amount || (t as any).amount, t.assetId)
 })
 const getExchangeData = (t: IExchangeTransaction): wavesProto.waves.IExchangeTransactionData => ({
   amount: Long.fromValue(t.amount),

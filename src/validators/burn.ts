@@ -18,7 +18,7 @@ const burnScheme = {
     senderPublicKey: isPublicKey,
     version: orEq([undefined, 2, 3]),
     assetId: isAssetId,
-    quantity: isNumberLike,
+    amount: isNumberLike,
     chainId: isNumber,
     fee: isNumberLike,
     timestamp: isNumber,
