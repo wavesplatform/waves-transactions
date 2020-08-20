@@ -177,7 +177,7 @@ export interface IReissueTransaction<LONG = string | number> extends ITransactio
 export interface IBurnTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
   type: typeof TRANSACTION_TYPE.BURN
   assetId: string
-  quantity: LONG
+  amount: LONG
 }
 
 /**
@@ -408,7 +408,7 @@ export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG>
  */
 export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
   assetId: string
-  quantity: LONG
+  amount: LONG
 }
 
 /**

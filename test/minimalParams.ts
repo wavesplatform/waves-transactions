@@ -14,7 +14,7 @@ export const aliasMinimalParams: IAliasParams = {
 
 export const burnMinimalParams: IBurnParams = {
   assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
-  quantity: 10000,
+  amount: 10000,
 }
 
 export const leaseMinimalParams: ILeaseParams = {
