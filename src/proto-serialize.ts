@@ -238,7 +238,7 @@ const getCommonFields = ({ senderPublicKey, fee, timestamp, type, version, ...re
 }
 const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionData => ({
   name: t.name,
-  description: t.description,
+  description: t.description === '' ? null : t.description,
   amount: Long.fromValue(t.quantity),
   decimals: t.decimals === 0 ? null : t.decimals,
   reissuable: t.reissuable ? true : undefined,
