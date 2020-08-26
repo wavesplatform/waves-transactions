@@ -15,7 +15,7 @@ import {
 const exchangeScheme = {
     type: isEq(TRANSACTION_TYPE.EXCHANGE),
     senderPublicKey: isPublicKey,
-    version: orEq([undefined, 0, 1, 2]),
+    version: orEq([undefined, 0, 1, 2, 3]),
     order1: validatePipe(
         isRequired(true),
         orderValidator
