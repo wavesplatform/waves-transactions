@@ -13,6 +13,12 @@ describe('invokeScript', () => {
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
   })
 
+  it('should build from minimal set of params for tx version 1', () => {
+    const tx = invokeScript({ ...invokeScriptMinimalParams, version: 1 }, stringSeed)
+    expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
+  })
+
+
   it('should build from minimal set of params with payment', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, payment: [{ amount: 100, assetId: null }] }, stringSeed)
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })

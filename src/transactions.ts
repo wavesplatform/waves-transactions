@@ -293,7 +293,7 @@ export interface IInvokeScriptPayment<LONG = string | number> {
   amount: LONG
 }
 
-export interface IInvokeScriptCall {
+export interface IInvokeScriptCall<LONG = string | number> {
   /**
    * Function name
    */
@@ -302,11 +302,8 @@ export interface IInvokeScriptCall {
    * Array of function arguments. E.g.:
    * {type: 'integer', value: 200} or
    * { type: 'binary', value: 'base64:AQa3b8tH'}
-   */
-  args: {
-    type: 'binary' | 'integer' | 'boolean' | 'string',
-    value: string | number | boolean
-  }[]
+   */   
+  args: TInvokeScriptCallArgument<LONG>[]
 }
 
 /**
@@ -316,7 +313,7 @@ export interface IInvokeScriptTransaction<LONG = string | number> extends ITrans
   type: typeof TRANSACTION_TYPE.INVOKE_SCRIPT
   dApp: string
   feeAssetId?: string | null
-  call?: IInvokeScriptCall,
+  call?: IInvokeScriptCall<LONG>,
   payment?: IInvokeScriptPayment[]
 }
 
@@ -621,16 +618,45 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
   feeAssetId?: string | null
   call?: {
     function: string
-    args?: {
-      type: 'binary' | 'integer' | 'boolean' | 'string',
-      value: string | LONG | boolean
-    }[]
+    args?: TInvokeScriptCallArgument<LONG>[]
   },
   payment?: {
     assetId?: string | null
     amount: LONG
   }[]
 }
+
+export interface IInvokeScriptCallStringArgument {
+  type: 'string';
+  value: string;
+}
+
+export interface IInvokeScriptCallBinaryArgument {
+  type: 'binary';
+  value: string;
+}
+
+export interface IInvokeScriptCallBoolArgument {
+  type: 'boolean';
+  value: boolean;
+}
+
+export interface IInvokeScriptCallIntegerArgument<LONG = string | number> {
+  type: 'integer';
+  value: LONG;
+}
+
+export interface IInvokeScriptCallListArgument<LONG = string | number> {
+  type: 'list';
+  value: Exclude<TInvokeScriptCallArgument<LONG>, IInvokeScriptCallListArgument<LONG>>[];
+}
+
+export type TInvokeScriptCallArgument<LONG = string | number> =
+  IInvokeScriptCallStringArgument |
+  IInvokeScriptCallBinaryArgument | 
+  IInvokeScriptCallBoolArgument |
+  IInvokeScriptCallIntegerArgument<LONG> |
+  IInvokeScriptCallListArgument<LONG>;
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
