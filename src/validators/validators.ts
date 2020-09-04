@@ -219,6 +219,7 @@ const validateType = {
     boolean: isBoolean,
     string: isString,
     binary: isBase64,
+    list: isArray
 };
 
 export const isValidDataPair = (data: { type: keyof typeof validateType, value: unknown }) =>
