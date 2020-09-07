@@ -1,6 +1,3 @@
-/**
- * @module index
- */
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
@@ -25,6 +22,7 @@ export { customData, serializeCustomData } from './requests/custom-data'
 export { auth } from './requests/auth'
 export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
+export { updateAssetInfo } from './transactions/update-asset-info'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 export { makeTx } from './make-tx'
@@ -59,11 +57,13 @@ export {
   ISponsorshipParams,
   IDataTransaction,
   IDataParams,
-  IDataEntry,
+  TDataEntry,
   ISetScriptTransaction,
   ISetAssetScriptParams,
   IInvokeScriptTransaction,
   IInvokeScriptParams,
+  IUpdateAssetInfoParams,
+  IUpdateAssetInfoTransaction,
   IOrder,
   IOrderV1,
   IOrderV2,
@@ -88,20 +88,24 @@ export {
 // internal libraries access
 import * as crypto from '@waves/ts-lib-crypto'
 import * as marshall from '@waves/marshall'
+// import * as nodeApiJs from '@waves/node-api-js'
 
 const libs = {
   crypto,
   marshall,
+  // nodeApiJs
 }
 
 import * as seedUtils from './seedUtils'
 import * as nodeInteraction from './nodeInteraction'
 import * as validators from './validators'
+import * as protoPerialize from './proto-serialize'
 
 export {
   libs,
   seedUtils,
   nodeInteraction,
-  validators
+  validators,
+  protoPerialize
 }
 

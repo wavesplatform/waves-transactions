@@ -7,6 +7,8 @@ import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -14,7 +16,7 @@ export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): IReissueT
 export function reissue(paramsOrTx: IReissueParams & WithSender | IReissueTransaction, seed?: TSeedTypes): IReissueTransaction & WithId
 export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction & WithId{
   const type = TRANSACTION_TYPE.REISSUE
-  const version = paramsOrTx.version || 2
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.REISSUE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -31,10 +33,10 @@ export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
-  
+
   validate.reissue(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s,i]) => addProof(tx, signBytes(s, bytes),i))
   tx.id = base58Encode(blake2b(bytes))

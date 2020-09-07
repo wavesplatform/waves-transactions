@@ -13,6 +13,8 @@ import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte, normali
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { txToProtoBytes } from '../proto-serialize'
+import { DEFAULT_VERSIONS } from '../defaultVersions';
 
 
 /* @echo DOCS */
@@ -20,7 +22,7 @@ export function invokeScript(params: IInvokeScriptParams, seed: TSeedTypes): IIn
 export function invokeScript(paramsOrTx: IInvokeScriptParams & WithSender | IInvokeScriptTransaction, seed?: TSeedTypes): IInvokeScriptTransaction & WithId
 export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptTransaction & WithId {
   const type = TRANSACTION_TYPE.INVOKE_SCRIPT
-  const version = paramsOrTx.version || 1
+  const version = paramsOrTx.version || DEFAULT_VERSIONS.INVOKE_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -40,8 +42,8 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
   }
 
   validate.invokeScript(tx)
-  
-  const bytes = binary.serializeTx(tx)
+
+  const bytes = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(base58Encode(blake2b(bytes)))

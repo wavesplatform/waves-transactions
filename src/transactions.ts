@@ -1,6 +1,3 @@
-/**
- * @module index
- */
 export const TRANSACTION_TYPE = {
   ISSUE: 3 as 3,
   TRANSFER: 4 as 4,
@@ -16,13 +13,44 @@ export const TRANSACTION_TYPE = {
   SPONSORSHIP: 14 as 14,
   SET_ASSET_SCRIPT: 15 as 15,
   INVOKE_SCRIPT: 16 as 16,
+  UPDATE_ASSET_INFO: 17 as 17
 }
 
 export const DATA_FIELD_TYPE = {
   INTEGER: 'integer' as 'integer',
   BOOLEAN: 'boolean' as 'boolean',
-  BINARY :'binary' as 'binary',
-  STRING :'string' as 'string',
+  BINARY: 'binary' as 'binary',
+  STRING: 'string' as 'string',
+}
+
+export type TDataEntry = TTypedData & { key: string}
+export type TTypedData = IBooleanData | IIntegerData | IStringData | IBinaryData
+export type TDeleteRequest = {
+  type?: null
+  value?: null
+  key: string
+}
+
+export interface IBooleanData {
+  type: typeof DATA_FIELD_TYPE.BOOLEAN
+  value: boolean
+}
+export interface IIntegerData<LONG = string | number> {
+  type: typeof DATA_FIELD_TYPE.INTEGER
+  value: LONG
+}
+export interface IStringData {
+  type: typeof DATA_FIELD_TYPE.STRING
+  value: string
+}
+export interface IBinaryData {
+  type: typeof DATA_FIELD_TYPE.BINARY
+  value: string
+}
+
+export interface ITypelessDataEntry {
+  key: string
+  value: string | number | boolean | Uint8Array | number[]
 }
 
 export type TTransactionType = typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE]
@@ -75,6 +103,8 @@ export interface ITransaction<LONG = string | number> extends WithProofs, WithSe
   timestamp: number
   fee: LONG
   version: number
+  chainId: number
+  feeAssetId?: string | null
 }
 
 /**
@@ -87,7 +117,7 @@ export type TTx<LONG = string | number> =
   | IReissueTransaction<LONG>
   | IBurnTransaction<LONG>
   | ILeaseTransaction<LONG>
-  | IExchangeTransaction
+  | IExchangeTransaction<LONG>
   | ICancelLeaseTransaction<LONG>
   | IMassTransferTransaction<LONG>
   | ISetScriptTransaction<LONG>
@@ -95,6 +125,7 @@ export type TTx<LONG = string | number> =
   | IDataTransaction<LONG>
   | ISetAssetScriptTransaction<LONG>
   | IInvokeScriptTransaction<LONG>
+  | IUpdateAssetInfoTransaction<LONG>
 
 
 /**
@@ -148,7 +179,7 @@ export interface ITransferTransaction<LONG = string | number> extends ITransacti
   type: typeof TRANSACTION_TYPE.TRANSFER
   recipient: string
   amount: LONG
-  attachment: string
+  attachment: TTypedData
   feeAssetId?: string | null
   assetId?: string | null
 }
@@ -225,20 +256,11 @@ export interface IAliasTransaction<LONG = string | number> extends ITransaction<
 export interface IMassTransferTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.MASS_TRANSFER
   transfers: IMassTransferItem<LONG>[]
-  attachment: string
+  attachment: TTypedData
   assetId?: string | null
 }
 
-export interface IDataEntry {
-  key: string
-  type: TDataFiledType
-  value: string | number | boolean
-}
 
-export interface ITypelessDataEntry {
-  key: string
-  value: string | number | boolean | Uint8Array | number[]
-}
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
@@ -260,7 +282,7 @@ export interface ISponsorshipTransaction<LONG = string | number> extends ITransa
  */
 export interface IDataTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.DATA
-  data: IDataEntry[]
+  data: Array<TDataEntry | TDeleteRequest>
 }
 
 /**
@@ -271,7 +293,7 @@ export interface IInvokeScriptPayment<LONG = string | number> {
   amount: LONG
 }
 
-export interface IInvokeScriptCall {
+export interface IInvokeScriptCall<LONG = string | number> {
   /**
    * Function name
    */
@@ -280,22 +302,29 @@ export interface IInvokeScriptCall {
    * Array of function arguments. E.g.:
    * {type: 'integer', value: 200} or
    * { type: 'binary', value: 'base64:AQa3b8tH'}
-   */
-  args: {
-    type: 'binary' | 'integer' | 'boolean' | 'string',
-    value: string | number | boolean
-  }[]
+   */   
+  args: TInvokeScriptCallArgument<LONG>[]
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG>, WithChainId {
+export interface IInvokeScriptTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.INVOKE_SCRIPT
   dApp: string
   feeAssetId?: string | null
-  call?: IInvokeScriptCall,
+  call?: IInvokeScriptCall<LONG>,
   payment?: IInvokeScriptPayment[]
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
+export interface IUpdateAssetInfoTransaction<LONG = string | number> extends ITransaction<LONG> {
+  type: typeof TRANSACTION_TYPE.UPDATE_ASSET_INFO
+  assetId: string
+  name: string
+  description: string
 }
 
 /**
@@ -356,6 +385,7 @@ export type TTxParams<LONG = string | number> =
   | ISetScriptParams<LONG>
   | ISponsorshipParams<LONG>
   | ITransferParams<LONG>
+  | IUpdateAssetInfoParams<LONG>
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
@@ -384,9 +414,6 @@ export interface IBasicParams<LONG = string | number> {
    * Transaction timestamp. If not set current timestamp will be used. Date.now()
    */
   timestamp?: number
-}
-
-export interface WithChainIdParam {
   /**
    * Network byte. Could be set as number or as char.
    * If set as char(string), charCodeAt(0) will be used. E.g.,
@@ -396,17 +423,19 @@ export interface WithChainIdParam {
   chainId?: string | number
 }
 
+
+
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG> {
   alias: string
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG> {
   assetId: string
   amount: LONG
 }
@@ -414,7 +443,7 @@ export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG>,
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams<LONG> {
   leaseId: string
 }
 
@@ -422,13 +451,13 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-  data: Array<IDataEntry | ITypelessDataEntry>
+  data: Array<TDataEntry | ITypelessDataEntry | TDeleteRequest>
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG> {
   /**
    * @minLength 4
    * @maxLength 16
@@ -460,7 +489,7 @@ export interface IMassTransferParams<LONG = string | number> extends IBasicParam
   /**
    * Bytearray encoded as base string
    */
-  attachment?: string
+  attachment?: string | TTypedData
   assetId?: string | null
 }
 
@@ -518,7 +547,7 @@ export interface IAuth {
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IReissueParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface IReissueParams<LONG = string | number> extends IBasicParams<LONG> {
   assetId: string
   quantity: LONG
   reissuable: boolean
@@ -527,7 +556,7 @@ export interface IReissueParams<LONG = string | number> extends IBasicParams<LON
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG> {
   /**
    * Compiled script encoded as base64 string
    */
@@ -538,7 +567,7 @@ export interface ISetAssetScriptParams<LONG = string | number> extends IBasicPar
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface ISetScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface ISetScriptParams<LONG = string | number> extends IBasicParams<LONG> {
   /**
    * Compiled script encoded as base64 string
    */
@@ -578,21 +607,18 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
   /**
    * Bytearray encoded as base58 string
    */
-  attachment?: string
+  attachment?: string | TTypedData
 }
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG>, WithChainIdParam {
+export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG> {
   dApp: string
   feeAssetId?: string | null
   call?: {
     function: string
-    args?: {
-      type: 'binary' | 'integer' | 'boolean' | 'string',
-      value: string | LONG | boolean
-    }[]
+    args?: TInvokeScriptCallArgument<LONG>[]
   },
   payment?: {
     assetId?: string | null
@@ -600,3 +626,52 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
   }[]
 }
 
+export interface IInvokeScriptCallStringArgument {
+  type: 'string';
+  value: string;
+}
+
+export interface IInvokeScriptCallBinaryArgument {
+  type: 'binary';
+  value: string;
+}
+
+export interface IInvokeScriptCallBoolArgument {
+  type: 'boolean';
+  value: boolean;
+}
+
+export interface IInvokeScriptCallIntegerArgument<LONG = string | number> {
+  type: 'integer';
+  value: LONG;
+}
+
+export interface IInvokeScriptCallListArgument<LONG = string | number> {
+  type: 'list';
+  value: Exclude<TInvokeScriptCallArgument<LONG>, IInvokeScriptCallListArgument<LONG>>[];
+}
+
+export type TInvokeScriptCallArgument<LONG = string | number> =
+  IInvokeScriptCallStringArgument |
+  IInvokeScriptCallBinaryArgument | 
+  IInvokeScriptCallBoolArgument |
+  IInvokeScriptCallIntegerArgument<LONG> |
+  IInvokeScriptCallListArgument<LONG>;
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
+export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicParams<LONG> {
+  /**
+   * Id of previously issued asset
+   */
+  assetId: string
+  /**
+   * New asset name
+   */
+  name: string
+  /**
+   * New asset description
+   */
+  description: string
+}

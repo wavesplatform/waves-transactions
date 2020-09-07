@@ -2,7 +2,7 @@ import { cancelOrder, cancelSubmittedOrder, order, submitOrder } from '../../src
 import { MATCHER_PUBLIC_KEY, MATCHER_URL, MASTER_SEED, TIMEOUT } from './config'
 
 describe('Matcher requests', () => {
-  const assetId = 'GVmtioaQfyackGbeFSrLTMJsD69D8pcBe2UjAth61ny3'
+  const assetId = '2kZaFxAiY7xUy11j8jZn7UwnCQneHkStNSfsmQaTbx8B'
 
   it('should submit and cancel order', async () => {
     const oParams = {
@@ -29,7 +29,7 @@ describe('Matcher requests', () => {
     const oParams = {
       orderType: 'buy' as 'buy',
       matcherPublicKey: MATCHER_PUBLIC_KEY,
-      price: 10000000000000,
+      price: 100000,
       amount: 1000,
       matcherFee: 700000,
       priceAsset: null,
@@ -37,7 +37,7 @@ describe('Matcher requests', () => {
     }
 
     const ord = order(oParams, MASTER_SEED)
-    const submitResp = await submitOrder(ord, {market: true, matcherUrl: MATCHER_URL})
+    const submitResp = await submitOrder(ord, {market: false, matcherUrl: MATCHER_URL})
     expect(submitResp.status).toEqual('OrderAccepted')
 
     const co = cancelOrder({ orderId: ord.id }, MASTER_SEED)

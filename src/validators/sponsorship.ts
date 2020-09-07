@@ -16,7 +16,7 @@ import {
 const sponsorshipScheme = {
   type: isEq(TRANSACTION_TYPE.SPONSORSHIP),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1]),
+  version: orEq([undefined, 0, 1, 2]),
   assetId: isAssetId,
   minSponsoredAssetFee: isNumberLike,
   fee: isNumberLike,

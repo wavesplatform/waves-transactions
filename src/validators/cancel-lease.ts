@@ -16,7 +16,7 @@ import {
 const cancelLeaseScheme = {
   type: isEq(TRANSACTION_TYPE.CANCEL_LEASE),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 2]),
+  version: orEq([undefined, 2, 3]),
   leaseId: isAssetId,
   chainId: isNumber,
   fee: isNumberLike,

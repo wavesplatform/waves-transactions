@@ -1,5 +1,7 @@
-import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
+import { publicKey } from '@waves/ts-lib-crypto'
 import { data } from '../../src'
+import { txToProtoBytes } from '../../src/proto-serialize'
+import { validateTxSignature } from '../../test/utils'
 import { dataMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
 
@@ -23,14 +25,15 @@ describe('data', () => {
 
   it('Should get correct signature', () => {
     const tx = data({ ...dataMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[0]!)).toBeTruthy()
+    expect(validateTxSignature(tx, 1)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = data({ ...dataMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx), tx.proofs[3]!)).toBeTruthy()
+
+    expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()
+    expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 
   // Test correct serialization.Compare with value from old data function version
@@ -54,6 +57,9 @@ describe('data', () => {
     }
     const tx = data(dataParams, 'seed')
     const barr = '12,1,252,114,65,226,103,96,110,242,73,35,82,18,85,173,252,168,159,237,67,226,116,182,178,180,249,152,104,50,219,208,174,108,0,3,0,6,111,110,101,84,119,111,1,0,0,8,116,119,111,84,104,114,101,101,0,0,0,0,0,0,0,0,2,0,5,116,104,114,101,101,2,0,4,1,2,3,4,0,0,0,0,0,1,134,160,0,0,0,0,0,1,134,160'
-    expect(binary.serializeTx(tx).toString()).toEqual(barr)
+    
+    const bytes = tx.version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
+
+    expect(bytes.toString()).toEqual(barr)
   })
 })

@@ -1,11 +1,12 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { issue } from '../../src'
+import { validateTxSignature } from '../../test/utils'
 import { issueMinimalParams } from '../minimalParams'
-import { binary } from '@waves/marshall'
 
 describe('issue', () => {
 
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
+  const protoBytesMinVersion = 2
 
   it('should build from minimal set of params', () => {
     const tx = issue({ ...issueMinimalParams }, stringSeed)
@@ -29,21 +30,30 @@ describe('issue', () => {
 
   it('Should get correct signature', () => {
     const tx = issue({ ...issueMinimalParams }, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[0]!)).toBeTruthy()
+
+    expect(validateTxSignature(tx, protoBytesMinVersion)).toBeTruthy()    
+  })
+
+  it('Should get correct signature of NFT token', () => {
+    const tx = issue({
+      ...issueMinimalParams,
+      quantity: 1,
+      decimals: 0
+    }, stringSeed)
+
+    expect(validateTxSignature(tx, protoBytesMinVersion)).toBeTruthy()    
   })
 
   it('Should sign already signed', () => {
     let tx = issue({ ...issueMinimalParams }, stringSeed)
     tx = issue(tx, stringSeed)
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx), tx.proofs[1]!)).toBeTruthy()
+    expect(validateTxSignature(tx, protoBytesMinVersion, 1)).toBeTruthy()
   })
 
   it('Should get correct multiSignature', () => {
     const stringSeed2 = 'example seed 2'
     const tx = issue({ ...issueMinimalParams }, [null, stringSeed, null, stringSeed2])
-    expect(verifySignature(publicKey(stringSeed), binary.serializeTx(tx),tx.proofs[1]!)).toBeTruthy()
-    expect(verifySignature(publicKey(stringSeed2), binary.serializeTx(tx),tx.proofs[3]!)).toBeTruthy()
+    expect(validateTxSignature(tx, protoBytesMinVersion, 1, publicKey(stringSeed))).toBeTruthy()
+    expect(validateTxSignature(tx, protoBytesMinVersion, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 })
-
-//AQQAAAAHJG1hdGNoMAUAAAACdHgDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAD0J1cm5UcmFuc2FjdGlvbgQAAAABdAUAAAAHJG1hdGNoMAcGPmRSDA

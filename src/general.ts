@@ -1,9 +1,8 @@
-/**
- * @module index
- */
-import axios from 'axios'
-import { binary, json } from '@waves/marshall'
+import { binary } from '@waves/marshall'
 import { address, verifySignature } from '@waves/ts-lib-crypto'
+import request from '@waves/node-api-js/cjs/tools/request'
+import stringify from '@waves/node-api-js/cjs/tools/stringify'
+
 import {
   IAliasTransaction,
   IBurnTransaction,
@@ -40,8 +39,8 @@ import { exchange } from './transactions/exchange'
 import { sponsorship } from './transactions/sponsorship'
 import { invokeScript } from './transactions/invoke-script'
 import { serializeCustomData, TSignedData } from './requests/custom-data'
-import { serializeAuthData } from './requests/auth';
-import { serializeWavesAuthData } from './requests/wavesAuth';
+import { serializeAuthData } from './requests/auth'
+import { serializeWavesAuthData } from './requests/wavesAuth'
 
 
 export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
@@ -116,7 +115,7 @@ export function verifyWavesAuthData(authData: { signature: string, publicKey: st
 /**
  * Sends order to matcher
  * @param ord - transaction to send
- * @param options - matcher address to send order to. E.g. https://matcher.waves.exchange/ Optional 'market' flag to send market order
+ * @param options - matcher address to send order to. E.g. https://matcher.waves.exchange/. Optional 'market' flag to send market order
  */
 export function submitOrder(ord: TOrder, options: {matcherUrl: string, market?: boolean}): Promise<any>
 /**
@@ -134,13 +133,7 @@ export function submitOrder(ord: TOrder, opts: any) {
     matcherUrl = opts.matcherUrl
     endpoint = opts.market ? 'matcher/orderbook/market' : 'matcher/orderbook'
   }
-
-  return axios.post(endpoint, json.stringifyOrder(ord), {
-    baseURL: matcherUrl,
-    headers: { 'content-type': 'application/json' },
-  })
-    .then(x => x.data)
-    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(ord), headers: {'Content-Type': 'application/json'}}})
 }
 
 /**
@@ -152,10 +145,6 @@ export function submitOrder(ord: TOrder, opts: any) {
  * @param matcherUrl - matcher address to send order cancel to. E.g. https://matcher.waves.exchange/
  */
 export function cancelSubmittedOrder(co: ICancelOrder, amountAsset: string | null, priceAsset: string | null, matcherUrl: string) {
-  return axios.post(`matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`, JSON.stringify(co), {
-    baseURL: matcherUrl,
-    headers: { 'content-type': 'application/json' },
-  })
-    .then(x => x.data)
-    .catch(e => Promise.reject(e.response && e.response.status === 400 ? new Error(e.response.data.message) : e))
+  const endpoint = `matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`
+  return request({base: matcherUrl, url: endpoint, options: {method: 'POST', body: stringify(co),  headers: {'Content-Type': 'application/json'}}})
 }

@@ -2,12 +2,14 @@ import * as utilityF from '../src/nodeInteraction'
 import { data } from '../src'
 import { broadcast } from '../src/nodeInteraction'
 
-const apiBase = 'https://nodes-testnet.wavesnodes.com/'
+const chainId = 'T';
+const apiBase = 'https://testnodes.wavesnodes.com/'
 
 describe('Node interaction utility functions', () => {
 
   it('should send tx to node', async () => {
     const dataParams = {
+      version:1,
       data: [
         {
           key: 'oneTwo',
@@ -23,6 +25,7 @@ describe('Node interaction utility functions', () => {
         },
       ],
       timestamp: 100000,
+      chainId: chainId,
     }
     const result = data(dataParams, 'seed seed')
 
@@ -39,10 +42,9 @@ describe('Node interaction utility functions', () => {
     expect(tx.id).toEqual(id)
   })
 
-  it('Should return null on not existing tx', async () => {
+  it('Should throw on not existing tx', async () => {
     const id = 'EdhLuhUMX22gKxGxKZxLcVsygMC9nBCBbSuAxFbZumQ'
-    const tx = await utilityF.transactionById(id, apiBase)
-    expect(tx).toEqual(null)
+    expect( utilityF.transactionById(id, apiBase)).rejects.toMatchObject({error:301})
   })
 
   it('Should wait 1 Block', async () => {

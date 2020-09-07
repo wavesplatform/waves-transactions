@@ -16,7 +16,7 @@ import {
 const setScriptScheme = {
   type: isEq(TRANSACTION_TYPE.SET_SCRIPT),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1]),
+  version: orEq([undefined, 0, 1, 2]),
   chainId: isNumber,
   fee: isNumberLike,
   timestamp: isNumber,

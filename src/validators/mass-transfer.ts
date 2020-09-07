@@ -24,7 +24,7 @@ import {
 const massTransferScheme = {
   type: isEq(TRANSACTION_TYPE.MASS_TRANSFER),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1]),
+  version: orEq([undefined, 0, 1, 2]),
   transfers: validatePipe(
       isArray,
       pipe(prop('length'), gte(0)),
@@ -43,5 +43,7 @@ const massTransferScheme = {
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
 };
 
+const massTransferSchemeV2 = {
 
+}
 export const massTransferValidator = validateByShema(massTransferScheme, getError)

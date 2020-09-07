@@ -1,0 +1,17 @@
+export const DEFAULT_VERSIONS = {
+    ISSUE: 3,
+    TRANSFER: 3,
+    REISSUE: 3,
+    BURN: 3,
+    EXCHANGE: 3,
+    LEASE: 3,
+    CANCEL_LEASE: 3,
+    ALIAS: 3,
+    MASS_TRANSFER: 2,
+    DATA: 2,
+    SET_SCRIPT: 2,
+    SPONSORSHIP: 2,
+    SET_ASSET_SCRIPT: 2,
+    INVOKE_SCRIPT: 2,
+    UPDATE_ASSET_INFO: 1
+}

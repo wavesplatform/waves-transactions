@@ -37,7 +37,7 @@ describe('signTx', () => {
 
   it('should throw when type is unknown', () => {
     const tx = reissue({ ...reissueMinimalParams }, stringSeed)
-    const signedTwoTimes = () => signTx({ ...tx, type: 99 }, [stringSeed])
+    const signedTwoTimes = () => signTx({ ...tx, type: 99 } as any, [stringSeed])
     expect(signedTwoTimes).toThrow('Unknown tx type: 99')
   })
 })
@@ -67,7 +67,7 @@ describe('Node interaction', () => {
 
     await expect(broadcast(result, nodeUrl)).rejects
       .toMatchObject({error: 307})
-  })
+  }, 100000)
 
 })
 

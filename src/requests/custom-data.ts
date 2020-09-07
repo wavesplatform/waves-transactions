@@ -3,9 +3,10 @@
  */
 import { signBytes, blake2b, base58Encode, publicKey, concat, TSeed } from '@waves/ts-lib-crypto'
 import { schemas, serializePrimitives } from '@waves/marshall'
-import { IDataEntry } from '../transactions'
+import { TDataEntry } from '../transactions'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import { TPrivateKey } from '../types'
 
 export interface ICustomDataV1 {
   version: 1
@@ -19,7 +20,7 @@ export interface ICustomDataV1 {
 
 export interface ICustomDataV2 {
   version: 2
-  data: IDataEntry[]
+  data: TDataEntry[]
   publicKey?: string
 }
 
@@ -43,7 +44,7 @@ export type TSignedData = TCustomData & {
 /**
  * Signs [[TCustomData]]
  */
-export function customData(cData: TCustomData, seed?: TSeed): TSignedData {
+export function customData(cData: TCustomData, seed?: TSeed | TPrivateKey): TSignedData {
 
   validate.customData(cData)
 

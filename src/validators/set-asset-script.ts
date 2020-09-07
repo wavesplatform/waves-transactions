@@ -17,7 +17,7 @@ import {
 const setAssetScriptScheme = {
   type: isEq(TRANSACTION_TYPE.SET_ASSET_SCRIPT),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1]),
+  version: orEq([undefined, 0, 1, 2]),
   assetId: isAssetId,
   chainId: isNumber,
   fee: isNumberLike,

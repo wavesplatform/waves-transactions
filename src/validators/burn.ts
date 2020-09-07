@@ -16,7 +16,7 @@ import {
 const burnScheme = {
     type: isEq(TRANSACTION_TYPE.BURN),
     senderPublicKey: isPublicKey,
-    version: orEq([undefined, 2]),
+    version: orEq([undefined, 2, 3]),
     assetId: isAssetId,
     amount: isNumberLike,
     chainId: isNumber,
