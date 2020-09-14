@@ -5,6 +5,7 @@ import * as addresses_route from '@waves/node-api-js/cjs/api-node/addresses'
 import * as assets_route from '@waves/node-api-js/cjs/api-node/assets'
 import * as rewards_route from '@waves/node-api-js/cjs/api-node/rewards'
 import * as debug_route from '@waves/node-api-js/cjs/api-node/debug'
+import { RequestInit } from '@waves/node-api-js/cjs/tools/request'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -39,18 +40,18 @@ const DEFAULT_NODE_REQUEST_OPTIONS = {
   apiBase: 'https://nodes.wavesplatform.com',
 }
 
-export const currentHeight = async (apiBase: string): Promise<number> => {
-  return blocks_route.fetchHeight(apiBase).then(({height}) => height)
+export const currentHeight = async (apiBase: string, requestOptions?: RequestInit): Promise<number> => {
+  return blocks_route.fetchHeight(apiBase, requestOptions).then(({height}) => height)
 }
 
-export async function waitForHeight(height: number, options: INodeRequestOptions) {
+export async function waitForHeight(height: number, options: INodeRequestOptions, requestOptions?: RequestInit) {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<number> => currentHeight(apiBase)
+  const promise = (): Promise<number> => currentHeight(apiBase, requestOptions)
     .then(x => {
       if (x >= height) {
         to.cancel()
@@ -68,7 +69,7 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
+export async function waitForTx(txId: string, options: INodeRequestOptions, requestOptions?: RequestInit): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
@@ -76,7 +77,7 @@ export async function waitForTx(txId: string, options: INodeRequestOptions): Pro
   to.then(() => expired = true)
 
   const promise = (): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> =>
-      tx_route.fetchInfo(apiBase, txId)
+      tx_route.fetchInfo(apiBase, txId, requestOptions)
     .then(x => {
       to.cancel()
       return x as any //todo: fix types
@@ -93,7 +94,7 @@ const process400 = (resp: any) => resp.status === 400
   ? Promise.reject(Object.assign(new Error(), resp.data))
   : resp
 
-export async function waitForTxWithNConfirmations(txId: string, confirmations: number, options: INodeRequestOptions):
+export async function waitForTxWithNConfirmations(txId: string, confirmations: number, options: INodeRequestOptions, requestOptions?: RequestInit):
     Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}>{
 
 
@@ -103,27 +104,27 @@ export async function waitForTxWithNConfirmations(txId: string, confirmations: n
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  let tx = await waitForTx(txId, options)
+  let tx = await waitForTx(txId, options, requestOptions)
 
   let txHeight = (tx as any).height
   let currentHeight = (tx as any).height
 
   while (txHeight + confirmations > currentHeight) {
     if (expired) throw new Error('Tx wait stopped: timeout')
-    await waitForHeight(txHeight + confirmations, options)
-    tx = await waitForTx(txId, options)
+    await waitForHeight(txHeight + confirmations, options, requestOptions)
+    tx = await waitForTx(txId, options, requestOptions)
     txHeight = (tx as any).height
   }
 
   return tx
 }
 
-export async function waitNBlocks(blocksCount: number, options: INodeRequestOptions = DEFAULT_NODE_REQUEST_OPTIONS) {
+export async function waitNBlocks(blocksCount: number, options: INodeRequestOptions = DEFAULT_NODE_REQUEST_OPTIONS, requestOptions?: RequestInit) {
   const { apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
-  const height = await currentHeight(apiBase)
+  const height = await currentHeight(apiBase, requestOptions)
   const target = height + blocksCount
   // console.log(`current height: ${height} target: ${target}`)
-  return await waitForHeight(target, options)
+  return await waitForHeight(target, options, requestOptions)
 }
 
 /**
@@ -131,8 +132,8 @@ export async function waitNBlocks(blocksCount: number, options: INodeRequestOpti
  * @param txId - transaction ID as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
-export async function transactionById(txId: string, nodeUrl: string): Promise<ITransaction & WithId & { height: number }> {
-  return tx_route.fetchInfo(nodeUrl, txId) as any //todo: fix types
+export async function transactionById(txId: string, nodeUrl: string, requestOptions?: RequestInit): Promise<ITransaction & WithId & { height: number }> {
+  return tx_route.fetchInfo(nodeUrl, txId, requestOptions) as any //todo: fix types
 }
 
 /**
@@ -140,8 +141,8 @@ export async function transactionById(txId: string, nodeUrl: string): Promise<IT
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
-export async function balance(address: string, nodeUrl: string): Promise<number> {
-  return addresses_route.fetchBalance(nodeUrl, address).then(d => +d.balance)
+export async function balance(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<number> {
+  return addresses_route.fetchBalance(nodeUrl, address, requestOptions).then(d => +d.balance)
 }
 
 /**
@@ -149,8 +150,8 @@ export async function balance(address: string, nodeUrl: string): Promise<number>
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
-export async function balanceDetails(address: string, nodeUrl: string) {
-  return addresses_route.fetchBalanceDetails(nodeUrl, address)
+export async function balanceDetails(address: string, nodeUrl: string, requestOptions?: RequestInit) {
+  return addresses_route.fetchBalanceDetails(nodeUrl, address, requestOptions)
 }
 
 /**
@@ -159,8 +160,8 @@ export async function balanceDetails(address: string, nodeUrl: string) {
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
-export async function assetBalance(assetId: string, address: string, nodeUrl: string) {
-  return assets_route.fetchAssetsBalance(nodeUrl, address)
+export async function assetBalance(assetId: string, address: string, nodeUrl: string, requestOptions?: RequestInit) {
+  return assets_route.fetchAssetsBalance(nodeUrl, address, requestOptions)
     .then(x => x.balances.filter(bal => bal.assetId === assetId))
     .then(filtered => filtered[0]?.balance)
 }
@@ -175,9 +176,9 @@ export interface IAccountDataRequestOptions {
  * @param options - waves address and optional match regular expression. If match is present keys will be filtered by this regexp
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataEntry>>
-export async function accountData(address: string, nodeUrl: string): Promise<Record<string, TDataEntry>>
-export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string): Promise<Record<string, TDataEntry>> {
+export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, TDataEntry>>
+export async function accountData(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, TDataEntry>>
+export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, TDataEntry>> {
   let address
   let match
   if (typeof options === 'string') {
@@ -190,7 +191,12 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
       : options.match.source)
   }
 
-  const data: TDataEntry[] =  await addresses_route.data(nodeUrl, address, {matches: match}) as any //todo fix type
+  const data: TDataEntry[] =  await addresses_route.data(
+    nodeUrl,
+    address,
+    { matches: match },
+    requestOptions
+    ) as any //todo fix type
 
   return data.reduce((acc, item) => ({ ...acc, [item.key]: item }), {})
 }
@@ -202,8 +208,8 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
  * @param key - dictionary key
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountDataByKey(key: string, address: string, nodeUrl: string) {
-  return addresses_route.fetchDataKey(nodeUrl, address, key).catch((e) => {
+export async function accountDataByKey(key: string, address: string, nodeUrl: string, requestOptions?: RequestInit) {
+  return addresses_route.fetchDataKey(nodeUrl, address, key, requestOptions).catch((e) => {
     if (e.error === 304) return null
     else throw e
   })
@@ -215,8 +221,8 @@ export async function accountDataByKey(key: string, address: string, nodeUrl: st
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function scriptInfo(address: string, nodeUrl: string): Promise<any> {
-  return addresses_route.fetchScriptInfo(nodeUrl, address)
+export async function scriptInfo(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<any> {
+  return addresses_route.fetchScriptInfo(nodeUrl, address, requestOptions)
 }
 
 /**
@@ -224,8 +230,8 @@ export async function scriptInfo(address: string, nodeUrl: string): Promise<any>
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function scriptMeta(address: string, nodeUrl: string): Promise<any> {
-  return addresses_route.fetchScriptInfoMeta(nodeUrl, address)
+export async function scriptMeta(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<any> {
+  return addresses_route.fetchScriptInfoMeta(nodeUrl, address, requestOptions)
 }
 
 /**
@@ -239,7 +245,7 @@ export async function rewards(nodeUrl: string): Promise<any>
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
 export async function rewards(height: number, nodeUrl: string): Promise<any>
-export async function rewards(...args: [number, string] | [string]): Promise<any> {
+export async function rewards(...args: [number, string] | [string]): Promise<any> {//TODO add requestOptions argument
   let nodeUrl: string
   let _height: number | undefined = undefined
   if (args[1] !== undefined) {
@@ -266,8 +272,8 @@ export interface IStateChangeResponse {
  * @param transactionId - invokeScript transaction id as base58 string
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function stateChanges(transactionId: string, nodeUrl: string): Promise<IStateChangeResponse> {
-  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId).then((t: any) => t.stateChanges) as any //todo: fix types
+export async function stateChanges(transactionId: string, nodeUrl: string, requestOptions?: RequestInit): Promise<IStateChangeResponse> {
+  return debug_route.fetchStateChangesByTxId(nodeUrl, transactionId, requestOptions).then((t: any) => t.stateChanges) as any //todo: fix types
 }
 
 /**
@@ -276,6 +282,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string): Prom
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends TTx>(tx: T, nodeUrl: string){
-  return tx_route.broadcast(nodeUrl, tx as any)
+export function broadcast<T extends TTx>(tx: T, nodeUrl: string, requestOptions?: RequestInit){
+  return tx_route.broadcast(nodeUrl, tx as any, requestOptions)
 }
