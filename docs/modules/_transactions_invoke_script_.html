@@ -88,9 +88,83 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/invoke-script.ts:21</li>
+									<li>Defined in transactions/invoke-script.ts:96</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates and signs <a href="../interfaces/_transactions_.iinvokescripttransaction.html">IInvokeScriptTransaction</a>.</p>
+								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
+								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
+								Also you can use already formed <a href="../interfaces/_transactions_.iinvokescripttransaction.html">IInvokeScriptTransaction</a> instead of params.</p>
+								<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+									<h3>Usage</h3>
+								</a>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { invokeScript } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>)
+
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">&#x27;create genesis wallet devnet-0&#x27;</span>
+
+<span class="hljs-keyword">const</span> params = {
+
+  <span class="hljs-attr">call</span>: {
+    <span class="hljs-attr">args</span>: [{ <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;integer&#x27;</span>, <span class="hljs-attr">value</span>: <span class="hljs-number">1</span> }],
+    <span class="hljs-comment">//args: [{ type: &#x27;binary&#x27;, value: &#x27;base64:AAA=&#x27; }],</span>
+    <span class="hljs-comment">//args: [{ type: &#x27;string&#x27;, value: &#x27;foo&#x27; }],</span>
+    <span class="hljs-comment">//args: [{ type: &#x27;boolean&#x27;, value: true }],</span>
+    <span class="hljs-attr">function</span>: <span class="hljs-string">&#x27;foo&#x27;</span>,
+  },
+  <span class="hljs-attr">payment</span>: [{
+    <span class="hljs-attr">amount</span>: <span class="hljs-number">7</span>,
+    <span class="hljs-attr">assetId</span>: <span class="hljs-string">&#x27;73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK&#x27;</span>, <span class="hljs-comment">//null</span>
+  }],
+  <span class="hljs-attr">dApp</span>: <span class="hljs-string">&#x27;3Fb641A9hWy63K18KsBJwns64McmdEATgJd&#x27;</span>,
+  <span class="hljs-attr">chainId</span>: <span class="hljs-string">&#x27;D&#x27;</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-string">&#x27;73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK&#x27;</span>,
+  <span class="hljs-comment">//senderPublicKey: &#x27;by default derived from seed&#x27;,</span>
+  <span class="hljs-comment">//timestamp: Date.now(),</span>
+  <span class="hljs-comment">//fee: 100000,</span>
+  <span class="hljs-comment">//chainId:</span>
+}
+
+<span class="hljs-keyword">const</span> signedInvokeScriptTx = invokeScript(params, seed)
+<span class="hljs-built_in">console</span>.log(signedInvokeScriptTx)
+</code></pre>
+								<a href="#output" id="output" style="color: inherit; text-decoration: none;">
+									<h3>Output</h3>
+								</a>
+								<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;2dPrCAVUH13vpqfjmtaWregetxLaFy7KfhsQ9GgwApww&quot;</span>,
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-number">16</span>,
+  <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">&quot;senderPublicKey&quot;</span>: <span class="hljs-string">&quot;HnU9jfhpMcQNaG5yQ46eR43RnkWKGxerw2zVrbpnbGof&quot;</span>,
+  <span class="hljs-attr">&quot;dApp&quot;</span>: <span class="hljs-string">&quot;3Fb641A9hWy63K18KsBJwns64McmdEATgJd&quot;</span>,
+  <span class="hljs-attr">&quot;call&quot;</span>: {
+    <span class="hljs-attr">&quot;args&quot;</span>: [
+      {
+        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+        <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-number">1</span>
+      }
+    ],
+    <span class="hljs-attr">&quot;function&quot;</span>: <span class="hljs-string">&quot;foo&quot;</span>
+  },
+  <span class="hljs-attr">&quot;payment&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;amount&quot;</span>: <span class="hljs-number">7</span>,
+      <span class="hljs-attr">&quot;assetId&quot;</span>: <span class="hljs-string">&quot;73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK&quot;</span>
+    }
+  ],
+  <span class="hljs-attr">&quot;fee&quot;</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">&quot;feeAssetId&quot;</span>: <span class="hljs-string">&quot;73pu8pHFNpj9tmWuYjqnZ962tXzJvLGX86dxjZxGYhoK&quot;</span>,
+  <span class="hljs-attr">&quot;timestamp&quot;</span>: <span class="hljs-number">1602669886751</span>,
+  <span class="hljs-attr">&quot;chainId&quot;</span>: <span class="hljs-number">68</span>,
+  <span class="hljs-attr">&quot;proofs&quot;</span>: [
+    <span class="hljs-string">&quot;2ZCdCLAfG1yp5YRkBzPcbwkygvM9SQSmCyu1kVFuEHouTwwR7YDoWHpFzyWjU94AjpWM13AaYS7gRtj1uasCJj4W&quot;</span>
+  ]
+}</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -105,7 +179,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in transactions/invoke-script.ts:22</li>
+									<li>Defined in transactions/invoke-script.ts:97</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
