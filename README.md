@@ -25,7 +25,7 @@ const {
  alias, burn, cancelLease, data, exchange,
  invokeScript, issue, lease, massTransfer, reissue,
  setAssetScript, setScript, sponsorship, transfer, updateAssetInfo
-} = require('@waves/waves-transactiosn')
+} = require('@waves/waves-transactions')
 ```
 Example:
 ```typescript
