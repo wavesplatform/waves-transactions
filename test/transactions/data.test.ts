@@ -1,65 +1,133 @@
-import { publicKey } from '@waves/ts-lib-crypto'
-import { data } from '../../src'
-import { txToProtoBytes } from '../../src/proto-serialize'
-import { validateTxSignature } from '../../test/utils'
-import { dataMinimalParams } from '../minimalParams'
-import { binary } from '@waves/marshall'
+import {publicKey} from '@waves/ts-lib-crypto'
+import {data, IDataTransaction, WithId} from '../../src'
+import {txToProtoBytes} from '../../src/proto-serialize'
+import {validateTxSignature} from '../../test/utils'
+import {dataMinimalParams} from '../minimalParams'
+import {binary} from '@waves/marshall'
+import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
+import {TSeedTypes} from '../../src/types'
+
 
 describe('data', () => {
 
-  const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
+    const senderPk = {privateKey: 'Ct524rFrsuNZV3sUq2PfV84edzNK6AyA2i7qPHuyF63V'}
+    const testChainId = 'I'
+    const timestamp = 1600000000000
+    const fee = 100000
 
-  it('should build from minimal set of params', () => {
-    const tx = data({ ...dataMinimalParams } as any, stringSeed)
-    expect(tx.data.length).toEqual(3)
-    expect(tx.proofs.length).toEqual(1)
-  })
+    test.each([
+        [
+            [{key: 'int', value: -1}, {key: 'str', value: 'string'}, {key: 'bool', value: true}, {
+                key: 'bin',
+                type: 'binary',
+                value: 'base64:YWxpY2U='
+            }],
+            1,
+            base64Decode('DAEOfDELVTFkTjXX6NQIecrcVDMzucL6GfiwihJh+rt7SAAEAANpbnQA//////////8AA3N0cgMABnN0cmluZwAEYm9vbAEBAANiaW4CAAVhbGljZQAAAXSHboAAAAAAAAABhqA='),
+        ],
+        [
+            [{key: 'int', value: -1}, {key: 'str', value: 'string'}, {key: 'bool', value: true}, {
+                key: 'bin',
+                type: 'binary',
+                value: 'base64:YWxpY2U='
+            }],
+            2,
+            base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggc5ChAKA2ludFD///////////8BCg0KA3N0cmoGc3RyaW5nCggKBGJvb2xYAQoMCgNiaW5iBWFsaWNl'),
+        ],
+        [
+            [{key: 'int', value: 0}, {key: 'str', value: 'string'}, {key: 'bool', value: false}, {
+                key: 'bin',
+                value: Uint8Array.from([1, 2, 3, 4])
+            }],
+            1,
+            base64Decode('DAEOfDELVTFkTjXX6NQIecrcVDMzucL6GfiwihJh+rt7SAAEAANpbnQAAAAAAAAAAAAAA3N0cgMABnN0cmluZwAEYm9vbAEAAANiaW4CAAQBAgMEAAABdIdugAAAAAAAAAGGoA=='),
+        ],
+        [
+            [{key: 'int', value: 0}, {key: 'str', value: 'string'}, {key: 'bool', value: false}, {
+                key: 'bin',
+                value: Uint8Array.from([1, 2, 3, 4])
+            }],
+            2,
+            base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggcvCgcKA2ludFAACg0KA3N0cmoGc3RyaW5nCggKBGJvb2xYAAoLCgNiaW5iBAECAwQ='),
+        ],
+        [
+            [{key: 'null', value: null}],
+            2,
+            base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggcICgYKBG51bGw='),
+        ],
+        [
+            [{key: 'null', value: null}, {key: 'str', value: 'string'}],
+            2,
+            base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggcXCgYKBG51bGwKDQoDc3RyagZzdHJpbmc='),
+        ],
+    ])('check serialization for %o, tx version: %i', (dataEntries, version, expectedBytes) => {
+        const tx = data({
+            data: dataEntries,
+            chainId: testChainId,
+            timestamp: timestamp,
+            version: version,
+            fee: fee,
+        } as any, senderPk)
+        const bytes = tx.version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
+        expect(bytes).toEqual(expectedBytes)
+    })
 
-  it('Should throw on wrong data field type', () => {
-    const tx = () => data({ ...dataMinimalParams, data: null } as any, stringSeed)
-    const tx1 = () => data({ ...dataMinimalParams, data: { haha: 123 } } as any, stringSeed)
-    expect(tx).toThrow('["data should be array"]')
-    expect(tx1).toThrow('["data should be array"]')
-  })
+    test.each([
+        [[{key: 'bin', value: Array(100).fill(1)}], 1, 100000],
+        [[{key: 'bin', value: Array(100).fill(1)}], 2, 100000],
+        [[{key: 'bin', value: Array(1000).fill(1)}], 1, 200000],
+        [[{key: 'bin', value: Array(1000).fill(1)}], 2, 100000],
+        [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000],
+        [[{key: 'bin', value: Array(10000).fill(1)}], 2, 1000000],
+        [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 9800000],
+        [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 9800000],
+        [Array(15).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 14700000],
+        [Array(15).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 14700000],
+    ])('check fee calculation', (dataEntries, version, expectedFee) => {
+        const tx = data({
+            data: dataEntries,
+            chainId: testChainId,
+            timestamp: timestamp,
+            version: version,
+        } as any, senderPk)
+        expect(tx.fee).toEqual(expectedFee)
+    })
 
+    test.each([
+        [null, 1, '["data should be array"]'],
+        [undefined, 1, '["data should be array"]'],
+        [{key: 'str', value: 'string'}, 2, '["data should be array"]'],
+        [[{key: 'bin', value: null}], 1, 'Cannot read property'],
+    ])('should throw on invalid data', (dataEntries, version, expectedError) => {
+        const tx = () => data({
+            data: dataEntries,
+            chainId: testChainId,
+            timestamp: timestamp,
+            version: version,
+        } as any, senderPk)
+        expect(tx).toThrow(expectedError)
+    })
 
-  it('Should get correct signature', () => {
-    const tx = data({ ...dataMinimalParams }, stringSeed)
-    expect(validateTxSignature(tx, 1)).toBeTruthy()
-  })
+    it('should get correct signature', () => {
+        const tx = data({...dataMinimalParams}, senderPk)
+        expect(validateTxSignature(tx, 1)).toBeTruthy()
+    })
 
-  it('Should get correct multiSignature', () => {
-    const stringSeed2 = 'example seed 2'
-    const tx = data({ ...dataMinimalParams }, [null, stringSeed, null, stringSeed2])
+    it('should get correct multiSignature', () => {
+        const stringSeed2 = 'example seed 2'
+        const tx = data({...dataMinimalParams}, [null, senderPk, null, stringSeed2])
+        expect(validateTxSignature(tx, 1, 1, publicKey(senderPk))).toBeTruthy()
+        expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
+    })
 
-    expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()
-    expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
-  })
+    it('should get correct default values', () => {
+        const expectedTimestamp = new Date().getTime()
+        const tx = data({...dataMinimalParams} as any, senderPk)
 
-  // Test correct serialization.Compare with value from old data function version
-  it('Should correctly serialize', () => {
-    const dataParams = {
-      data: [
-        {
-          key: 'oneTwo',
-          value: false,
-        },
-        {
-          key: 'twoThree',
-          value: 2,
-        },
-        {
-          key: 'three',
-          value: Uint8Array.from([1, 2, 3, 4]),
-        },
-      ],
-      timestamp: 100000,
-    }
-    const tx = data(dataParams, 'seed')
-    const barr = '12,1,252,114,65,226,103,96,110,242,73,35,82,18,85,173,252,168,159,237,67,226,116,182,178,180,249,152,104,50,219,208,174,108,0,3,0,6,111,110,101,84,119,111,1,0,0,8,116,119,111,84,104,114,101,101,0,0,0,0,0,0,0,0,2,0,5,116,104,114,101,101,2,0,4,1,2,3,4,0,0,0,0,0,1,134,160,0,0,0,0,0,1,134,160'
-    
-    const bytes = tx.version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
-
-    expect(bytes.toString()).toEqual(barr)
-  })
+        expect(tx.data.length).toEqual(3)
+        expect(tx.version).toEqual(2)
+        expect(tx.timestamp - expectedTimestamp).toBeLessThan(100)
+        expect(tx.feeAssetId).toEqual(undefined)
+        expect(tx.type).toEqual(12)
+    })
 })
