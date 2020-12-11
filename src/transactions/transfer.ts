@@ -16,7 +16,7 @@ import { validate } from '../validators'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
 
 /* @echo DOCS */
 export function transfer(params: ITransferParams, seed: TSeedTypes): ITransferTransaction & WithId
@@ -27,15 +27,6 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  let attachment = paramsOrTx.attachment;
-  if(version > 2){
-    attachment = typeof attachment === 'string'
-        ? {type: 'string', value: paramsOrTx.attachment}
-        : attachment || undefined
-  }else {
-    attachment = attachment || ''
-  }
-
   const tx: ITransferTransaction & WithId = {
     type,
     version,
@@ -43,7 +34,7 @@ export function transfer(paramsOrTx: any, seed?: TSeedTypes): ITransferTransacti
     assetId: normalizeAssetId(paramsOrTx.assetId),
     recipient: paramsOrTx.recipient,
     amount: paramsOrTx.amount,
-    attachment,
+    attachment: paramsOrTx.attachment,
     fee: fee(paramsOrTx, 100000),
     feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
