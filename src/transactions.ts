@@ -179,7 +179,7 @@ export interface ITransferTransaction<LONG = string | number> extends ITransacti
   type: typeof TRANSACTION_TYPE.TRANSFER
   recipient: string
   amount: LONG
-  attachment: string
+  attachment: string | null
   feeAssetId?: string | null
   assetId?: string | null
 }
@@ -256,7 +256,7 @@ export interface IAliasTransaction<LONG = string | number> extends ITransaction<
 export interface IMassTransferTransaction<LONG = string | number> extends ITransaction<LONG> {
   type: typeof TRANSACTION_TYPE.MASS_TRANSFER
   transfers: IMassTransferItem<LONG>[]
-  attachment: string
+  attachment: string | null
   assetId?: string | null
 }
 
@@ -489,7 +489,7 @@ export interface IMassTransferParams<LONG = string | number> extends IBasicParam
   /**
    * Bytearray encoded as base string
    */
-  attachment?: string
+  attachment?: string | null
   assetId?: string | null
 }
 
@@ -607,7 +607,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
   /**
    * Bytearray encoded as base58 string
    */
-  attachment?: string
+  attachment?: string | null
 }
 
 /**
