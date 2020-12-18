@@ -38,7 +38,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): IMassTransferT
     transfers: paramsOrTx.transfers,
     fee: fee(paramsOrTx, 100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
-    attachment: paramsOrTx.attachment || null,
+    attachment: paramsOrTx.attachment || '',
     proofs: paramsOrTx.proofs || [],
     chainId: networkByte(paramsOrTx.chainId, chainIdFromRecipient(paramsOrTx.transfers[0]?.recipient)),
     id: '',
