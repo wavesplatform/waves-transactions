@@ -48,39 +48,6 @@ const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: num
   return base58Encode(concat(rawAddress, checkSum))
 }
 
-const attachmentFromProto = (a: wavesProto.waves.IAttachment | undefined | null, preProtoVersion: boolean) => {
-  if (a == null) return
-  switch (true) {
-    case a.hasOwnProperty('intValue'):
-      return {
-        type: 'integer',
-        value: a.intValue,
-      }
-    case a.hasOwnProperty('boolValue'):
-      return {
-        type: 'boolean',
-        value: a.boolValue,
-      }
-    case a.hasOwnProperty('binaryValue'):
-      if (preProtoVersion) {
-        return base58Encode(a.binaryValue!)
-      } else {
-        return {
-          type: 'binary',
-          value: base64Encode(a.binaryValue!),
-        }
-      }
-    case a.hasOwnProperty('stringValue'):
-      return {
-        type: 'string',
-        value: a.stringValue,
-      }
-    default:
-      throw new Error(`Failed to convert attachment ${JSON.stringify(a)}`)
-  }
-}
-
-
 export function txToProtoBytes(obj: TTx): Uint8Array {
   return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
 }
@@ -118,7 +85,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       res.amount = t.transfer!.amount!.amount!.toString()
       res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId)
       if (t.transfer!.hasOwnProperty('attachment')) {
-        res.attachment = attachmentFromProto(t.transfer!.attachment, t.version < 3)
+        res.attachment = t.transfer!.attachment == null ? null : base58Encode(t.transfer!.attachment)
       }
       if (t.transfer!.hasOwnProperty('assetId')) {
         res.assetId = t.transfer!.amount!.assetId == null ? null : base58Encode(t.transfer!.amount!.assetId)
@@ -155,7 +122,9 @@ export function protoBytesToTx(bytes: Uint8Array): TTx {
       if (t.massTransfer!.hasOwnProperty('assetId')) {
         res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
       }
-      res.attachment = attachmentFromProto(t.massTransfer!.attachment!, t.version < 2)
+      if (t.massTransfer!.hasOwnProperty('attachment')) {
+        res.attachment = t.massTransfer!.attachment == null ? null : base58Encode(t.massTransfer!.attachment)
+      }
       res.transfers = t.massTransfer!.transfers!.map(({ amount, recipient }) => ({
         amount: amount!.toString(),
         recipient: recipientFromProto(recipient!, t.chainId),
@@ -247,7 +216,7 @@ const getIssueData = (t: IIssueTransaction): wavesProto.waves.IIssueTransactionD
 const getTransferData = (t: ITransferTransaction): wavesProto.waves.ITransferTransactionData => ({
   recipient: recipientToProto(t.recipient),
   amount: amountToProto(t.amount, t.assetId),
-  attachment: attachmentToProto(t.attachment),
+  attachment: t.attachment == null || t.attachment == '' ? undefined : base58Decode(t.attachment),
 })
 const getReissueData = (t: IReissueTransaction): wavesProto.waves.IReissueTransactionData => ({
   assetAmount: amountToProto(t.quantity, t.assetId),
@@ -273,7 +242,7 @@ const getCancelLeaseData = (t: ICancelLeaseTransaction): wavesProto.waves.ILease
 const getAliasData = (t: IAliasTransaction): wavesProto.waves.ICreateAliasTransactionData => ({ alias: t.alias })
 const getMassTransferData = (t: IMassTransferTransaction): wavesProto.waves.IMassTransferTransactionData => ({
   assetId: t.assetId == null ? null : base58Decode(t.assetId),
-  attachment: attachmentToProto(t.attachment),
+  attachment: t.attachment == null || t.attachment == '' ? undefined : base58Decode(t.attachment),
   transfers: t.transfers.map(massTransferItemToProto),
 })
 const getDataTxData = (t: IDataTransaction): wavesProto.waves.IDataTransactionData => ({
@@ -411,22 +380,6 @@ export const dataEntryToProto = (de: TDataEntry | TDeleteRequest): wavesProto.wa
   binaryValue: de.type === 'binary' ? base64Decode((de.value.startsWith('base64:') ? de.value.slice(7) : de.value)) : undefined,
   stringValue: de.type === 'string' ? de.value : undefined,
 })
-const attachmentToProto = (a?: TTypedData | string): wavesProto.waves.IAttachment | undefined => {
-  if (a == null || a === '') return
-  let result: wavesProto.waves.IAttachment = {}
-  if (typeof a === 'string') {
-    result.binaryValue = base58Decode(a)
-  } else if (a.type === 'integer') {
-    result.intValue = Long.fromValue(a.value)
-  } else if (a.type === 'boolean') {
-    result.boolValue = a.value
-  } else if (a.type === 'binary') {
-    result.binaryValue = base64Decode((a.value.startsWith('base64:') ? a.value.slice(7) : a.value))
-  } else if (a.type === 'string') {
-    result.stringValue = a.value
-  } else throw new Error(`Invalid attachment: ${JSON.stringify(a)}`)
-  return result
-}
 const scriptToProto = (s: string): Uint8Array => {
   return base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
 }
