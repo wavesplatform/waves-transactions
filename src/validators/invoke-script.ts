@@ -25,7 +25,7 @@ import {
 const invokeScheme = {
   type: isEq(TRANSACTION_TYPE.INVOKE_SCRIPT),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 0, 1, 2, 3]),
   dApp: isRecipient,
 
   call: ifElse(
@@ -57,13 +57,12 @@ const invokeScheme = {
   chainId: isNumber,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+}
 
+const invokeV3Scheme = {
+  ...invokeScheme,
+  extraFeePerStep: isNumberLike,
+}
 
 export const invokeValidator = validateByShema(invokeScheme, getError)
-
-
-// const tx: IInvokeScriptTransaction & WithId = {
-  //   call: paramsOrTx.call && {args: [], ...paramsOrTx.call},
-  //   payment: mapPayment(paramsOrTx.payment),
-  // }
+export const invokeV3Validator = validateByShema(invokeV3Scheme, getError)
