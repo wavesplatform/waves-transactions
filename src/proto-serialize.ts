@@ -54,10 +54,10 @@ export function txToProtoBytes(obj: TTx): Uint8Array {
 
 export function protoBytesToTx(bytes: Uint8Array): TTx {
   const t = wavesProto.waves.Transaction.decode(bytes)
-
+  type transactionTypes = 'genesis'|'payment'|'issue'|'transfer'|'reissue'|'burn'|'exchange'|'lease'|'leaseCancel'|'createAlias'|'massTransfer'|'dataTransaction'|'setScript'|'sponsorFee'|'setAssetScript'|'invokeScript'|'updateAssetInfo'
   let res: any = {
     version: t.version,
-    type: typeByName[t.data!] as TTransactionType,
+    type: typeByName[t.data! as transactionTypes] as TTransactionType,
     senderPublicKey: base58Encode(t.senderPublicKey),
     timestamp: t.timestamp.toNumber(),
     fee: t.fee!.amount!.toNumber(),
@@ -262,6 +262,7 @@ const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScr
   dApp: recipientToProto(t.dApp),
   functionCall: binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call), //todo: export function call from marshall and use it directly
   payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId)),
+  extraFeePerStep: t.version === 3 ? amountToProto(t!.extraFeePerStep!, t.feeAssetId).amount : undefined,
 })
 
 const getUpdateAssetInfoData = (t: IUpdateAssetInfoTransaction): wavesProto.waves.IUpdateAssetInfoTransactionData => {
