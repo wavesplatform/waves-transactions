@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "4.1.7",
+  "version": "4.1.8-beta",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
