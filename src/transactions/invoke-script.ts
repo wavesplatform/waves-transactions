@@ -2,9 +2,10 @@
  * @module index
  */
 import {
+    IInvokeScriptCall,
     IInvokeScriptParams,
     IInvokeScriptPayment,
-    IInvokeScriptTransaction,
+    IInvokeScriptTransaction, ITransaction,
     TRANSACTION_TYPE,
     WithId,
     WithSender
@@ -27,7 +28,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     const seedsAndIndexes = convertToPairs(seed)
     const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-    let tx: IInvokeScriptTransaction & WithId = {
+    let tx: IInvokeScriptTransaction & WithId | IInvokeScriptTransactionV3 & WithId = {
         type,
         version,
         senderPublicKey,
@@ -45,7 +46,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
     if (version === 3) {
         tx = {
             ...tx,
-            extraFeePerStep: paramsOrTx.extraFeePerStep,
+            extraFeePerStep: paramsOrTx.extraFeePerStep || 1,
         }
         validate.invokeV3Script(tx)
     } else validate.invokeScript(tx)
@@ -61,3 +62,7 @@ export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): IInvokeScriptT
 const mapPayment = (payments?: IInvokeScriptPayment[]): IInvokeScriptPayment[] => payments == null
     ? []
     : payments.map(pmt => ({...pmt, assetId: pmt.assetId === 'WAVES' ? null : pmt.assetId}))
+
+export type IInvokeScriptTransactionV3 = IInvokeScriptTransaction & {
+    extraFeePerStep: number
+}

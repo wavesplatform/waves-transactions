@@ -262,7 +262,8 @@ const getInvokeData = (t: IInvokeScriptTransaction): wavesProto.waves.IInvokeScr
   dApp: recipientToProto(t.dApp),
   functionCall: binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call), //todo: export function call from marshall and use it directly
   payments: t.payment == null ? null : t.payment.map(({ amount, assetId }) => amountToProto(amount, assetId)),
-  extraFeePerStep: t.version === 3 ? amountToProto(t!.extraFeePerStep!, t.feeAssetId).amount : undefined,
+  // @ts-ignore
+  extraFeePerStep: t.version === 3 ? amountToProto(t.extraFeePerStep, t.feeAssetId).amount : undefined,
 })
 
 const getUpdateAssetInfoData = (t: IUpdateAssetInfoTransaction): wavesProto.waves.IUpdateAssetInfoTransactionData => {
