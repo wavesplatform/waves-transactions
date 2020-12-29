@@ -12,7 +12,7 @@ import { setScriptValidator as setScript } from './set-script';
 import { reissueValidator as reissue } from './reissue';
 import { issueValidator as issue } from './issue';
 import { leaseValidator as lease } from './lease';
-import { invokeValidator as invokeScript } from './invoke-script';
+import { invokeValidator as invokeScript, invokeV3Validator as invokeV3Script } from './invoke-script';
 import { exchangeValidator as exchange } from './exchange';
 import { updateAssetInfoValidator as updateAssetInfo } from './update-asset-info';
 
@@ -37,6 +37,7 @@ export const validate = {
     lease,
     setScript,
     invokeScript,
+    invokeV3Script,
     exchange,
     updateAssetInfo,
 

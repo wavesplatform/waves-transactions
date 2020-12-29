@@ -1,3 +1,5 @@
+import {isNumberLike} from './validators'
+
 export const TRANSACTION_TYPE = {
   ISSUE: 3 as 3,
   TRANSFER: 4 as 4,
@@ -13,7 +15,7 @@ export const TRANSACTION_TYPE = {
   SPONSORSHIP: 14 as 14,
   SET_ASSET_SCRIPT: 15 as 15,
   INVOKE_SCRIPT: 16 as 16,
-  UPDATE_ASSET_INFO: 17 as 17
+  UPDATE_ASSET_INFO: 17 as 17,
 }
 
 export const DATA_FIELD_TYPE = {
@@ -314,7 +316,8 @@ export interface IInvokeScriptTransaction<LONG = string | number> extends ITrans
   dApp: string
   feeAssetId?: string | null
   call?: IInvokeScriptCall<LONG>,
-  payment?: IInvokeScriptPayment[]
+  payment?: IInvokeScriptPayment[],
+  extraFeePerStep?: number
 }
 
 /**
