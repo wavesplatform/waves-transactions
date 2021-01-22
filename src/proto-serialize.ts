@@ -54,10 +54,10 @@ export function txToProtoBytes(obj: TTx): Uint8Array {
 
 export function protoBytesToTx(bytes: Uint8Array): TTx {
   const t = wavesProto.waves.Transaction.decode(bytes)
-
+  type transactionTypes = 'genesis'|'payment'|'issue'|'transfer'|'reissue'|'burn'|'exchange'|'lease'|'leaseCancel'|'createAlias'|'massTransfer'|'dataTransaction'|'setScript'|'sponsorFee'|'setAssetScript'|'invokeScript'|'updateAssetInfo'
   let res: any = {
     version: t.version,
-    type: typeByName[t.data!] as TTransactionType,
+    type: typeByName[t.data! as transactionTypes] as TTransactionType,
     senderPublicKey: base58Encode(t.senderPublicKey),
     timestamp: t.timestamp.toNumber(),
     fee: t.fee!.amount!.toNumber(),
