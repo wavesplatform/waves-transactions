@@ -25,7 +25,7 @@ export { invokeScript } from './transactions/invoke-script'
 export { updateAssetInfo } from './transactions/update-asset-info'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
-export { makeTx } from './make-tx'
+export { makeTx, makeTxBytes } from './make-tx'
 
 
 // Export interfaces

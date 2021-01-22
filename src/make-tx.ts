@@ -22,7 +22,7 @@ import {
   ISetAssetScriptTransaction, ISetScriptParams,
   ISetScriptTransaction,
   ISponsorshipParams,
-  ISponsorshipTransaction,
+  ISponsorshipTransaction, ITransaction,
   ITransferParams,
   ITransferTransaction, IUpdateAssetInfoTransaction,
   TRANSACTION_TYPE, TTransactionType, WithId, WithSender
@@ -42,6 +42,8 @@ import { sponsorship } from './transactions/sponsorship'
 import { exchange } from './transactions/exchange'
 import { invokeScript } from './transactions/invoke-script'
 import { updateAssetInfo } from './transactions/update-asset-info'
+import { txToProtoBytes } from './proto-serialize';
+import { binary } from '@waves/marshall';
 
 export type TTransaction<T extends TTransactionType> = TxTypeMap[T]
 
@@ -119,5 +121,45 @@ export function makeTx<T extends TTransactionType>(params: TTxParamsWithType<T> 
       return updateAssetInfo(params as any) as any
     default:
       throw new Error(`Unknown tx type: ${params.type}`)
+  }
+}
+
+/**
+ * Makes transaction bytes from validated transaction
+ */
+export function makeTxBytes<T extends TTransactionType>(tx: TTxParamsWithType<T> & WithSender & { version: number }): Uint8Array {
+  switch (tx.type) {
+    case TRANSACTION_TYPE.ISSUE:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.TRANSFER:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.REISSUE:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.BURN:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.LEASE:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.CANCEL_LEASE:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.ALIAS:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.MASS_TRANSFER:
+      return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.DATA:
+      return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.SET_SCRIPT:
+      return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.SET_ASSET_SCRIPT:
+      return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.SPONSORSHIP:
+      return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.EXCHANGE:
+      return tx.version > 2 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.INVOKE_SCRIPT:
+      return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx);
+    case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
+      return txToProtoBytes(tx as any);
+    default:
+      throw new Error(`Unknown tx type: ${tx.type}`)
   }
 }
