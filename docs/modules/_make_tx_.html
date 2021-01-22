@@ -79,6 +79,7 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_make_tx_.html#maketx" class="tsd-kind-icon">make<wbr>Tx</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_make_tx_.html#maketxbytes" class="tsd-kind-icon">make<wbr>TxBytes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -92,7 +93,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TxTypeMap</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in make-tx.ts:46</li>
+							<li>Defined in make-tx.ts:48</li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -108,7 +109,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTx<wbr>Params<wbr>With<wbr>Type&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TxParamsTypeMap</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in make-tx.ts:65</li>
+							<li>Defined in make-tx.ts:67</li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -124,7 +125,7 @@
 					<div class="tsd-signature tsd-kind-icon">Tx<wbr>Params<wbr>Type<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>[TRANSACTION_TYPE.ALIAS]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.BURN]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.CANCEL_LEASE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.DATA]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.EXCHANGE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.INVOKE_SCRIPT]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.ISSUE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.LEASE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.MASS_TRANSFER]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.REISSUE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.SET_ASSET_SCRIPT]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.SET_SCRIPT]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.SPONSORSHIP]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.TRANSFER]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.UPDATE_ASSET_INFO]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iupdateassetinfotransaction.html" class="tsd-signature-type">IUpdateAssetInfoTransaction</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in make-tx.ts:67</li>
+							<li>Defined in make-tx.ts:69</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -184,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">Tx<wbr>Type<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>[TRANSACTION_TYPE.ALIAS]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.ialiastransaction.html" class="tsd-signature-type">IAliasTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.BURN]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.CANCEL_LEASE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.DATA]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.idatatransaction.html" class="tsd-signature-type">IDataTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.EXCHANGE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.INVOKE_SCRIPT]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iinvokescripttransaction.html" class="tsd-signature-type">IInvokeScriptTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.ISSUE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iissuetransaction.html" class="tsd-signature-type">IIssueTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.LEASE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.ileasetransaction.html" class="tsd-signature-type">ILeaseTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.MASS_TRANSFER]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.imasstransfertransaction.html" class="tsd-signature-type">IMassTransferTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.REISSUE]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.ireissuetransaction.html" class="tsd-signature-type">IReissueTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.SET_ASSET_SCRIPT]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isetassetscripttransaction.html" class="tsd-signature-type">ISetAssetScriptTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.SET_SCRIPT]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isetscripttransaction.html" class="tsd-signature-type">ISetScriptTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.SPONSORSHIP]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.TRANSFER]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.itransfertransaction.html" class="tsd-signature-type">ITransferTransaction</a><span class="tsd-signature-symbol">; </span>[TRANSACTION_TYPE.UPDATE_ASSET_INFO]<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iupdateassetinfotransaction.html" class="tsd-signature-type">IUpdateAssetInfoTransaction</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in make-tx.ts:48</li>
+							<li>Defined in make-tx.ts:50</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -251,7 +252,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in make-tx.ts:88</li>
+									<li>Defined in make-tx.ts:90</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -272,6 +273,40 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_make_tx_.html#ttransaction" class="tsd-signature-type">TTransaction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="maketxbytes" class="tsd-anchor"></a>
+					<h3>make<wbr>TxBytes</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">make<wbr>TxBytes&lt;T&gt;<span class="tsd-signature-symbol">(</span>tx<span class="tsd-signature-symbol">: </span><a href="_make_tx_.html#ttxparamswithtype" class="tsd-signature-type">TTxParamsWithType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in make-tx.ts:130</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Makes transaction bytes from validated transaction</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="_transactions_.html#ttransactiontype" class="tsd-signature-type">TTransactionType</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tx: <a href="_make_tx_.html#ttxparamswithtype" class="tsd-signature-type">TTxParamsWithType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -304,6 +339,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_make_tx_.html#maketx" class="tsd-kind-icon">make<wbr>Tx</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_make_tx_.html#maketxbytes" class="tsd-kind-icon">make<wbr>TxBytes</a>
 					</li>
 				</ul>
 			</nav>
