@@ -15,20 +15,6 @@ const data1 = {
 }
 
 const data2 = {
-    type: 17,
-    version: 1,
-    chainId: 68,
-    senderPublicKey: "8oKJXQtbtQ6gh5GJGYFXs8fPo7bmVgtWBNFyL4fULYvy",
-    sender: "3FZxrnQSk1AgZifVwTSxeD3sES8rNq1nXaw",
-    assetId: "EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ",
-    name: "aaaa",
-    description: "",
-    fee: 9223372036854775807,
-    feeAssetId: null,
-    timestamp: 1613033219687,
-}
-
-const data3 = {
     version: 1,
     type: 17,
     senderPublicKey: "Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt",
@@ -52,11 +38,6 @@ describe('data', () => {
         [
             data2,
             'data2',
-            new Uint8Array([8, 68, 18, 32, 115, -33, 56, 82, 12, 6, 24, -37, 112, -87, -97, -67, 96, -14, -90, -20, 29, 34, 0, 117, -26, -105, 48, -72, 76, -39, -113, 32, 72, 88, -35, 62, 26, 10, 16, -1, -1, -1, -1, -1, -1, -1, -1, 127, 32, -57, -10, -59, -125, -7, 46, 40, 1, -86, 7, 40, 10, 32, -54, 26, -126, 83, -94, -126, -17, 9, -104, 126, 21, -48, 44, -101, 66, 21, 17, 102, -16, 38, -99, 112, 33, 96, -58, 18, 25, 94, 25, 73, -10, -21, 18, 4, 97, 97, 97, 97]),
-        ],
-        [
-            data3,
-            'data3',
             new Uint8Array([8,84,18,32,-110,-8,10,14,-26,-14,-123,126,-79,73,-1,-35,36,22,112,-103,-56,14,-16,99,93,-120,119,76,-120,-17,114,66,9,-83,44,47,26,4,16,-96,-115,6,32,-128,-109,-42,-123,-7,46,40,1,-86,7,40,10,32,-90,15,105,-75,-18,-100,13,54,93,21,-84,56,-15,-84,-49,-48,57,75,12,-97,123,-118,35,25,-88,-42,10,-101,55,-117,99,23,18,4,97,97,97,97])
         ]
     ])('check serialization for %o, tx version: %i', (data, name, expectedBytes) => {
@@ -64,7 +45,7 @@ describe('data', () => {
         console.log('data', data)
         console.log('protoBytesToTx', protoBytesToTx(new Uint8Array(expectedBytes)))
         console.log('txToProtoBytes -> protoBytesToTx', protoBytesToTx(txToProtoBytes(tx)))
-        const fs=require("fs")
+        const fs=require('fs')
         fs.writeFileSync(`../${name}_bytes.txt`, txToProtoBytes(tx))
         const bytes = txToProtoBytes(tx)
         expect(bytes).toEqual(expectedBytes)

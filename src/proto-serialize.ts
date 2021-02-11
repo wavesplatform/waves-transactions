@@ -268,7 +268,7 @@ const getUpdateAssetInfoData = (t: IUpdateAssetInfoTransaction): wavesProto.wave
   return {
     assetId: base58Decode(t.assetId),
     name: t.name,
-    description: t.description,
+    description: t.description === '' ? null : t.description,
   }
 }
 export const txToProto = (t: TTx): wavesProto.waves.ITransaction => {
