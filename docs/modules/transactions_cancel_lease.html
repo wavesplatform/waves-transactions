@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;transactions/burn&quot; | waves-transactions</title>
+	<title>&quot;transactions/cancel-lease&quot; | waves-transactions</title>
 	<meta name="description" content="Documentation for waves-transactions">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_transactions_burn_.html">&quot;transactions/burn&quot;</a>
+					<a href="transactions_cancel_lease.html">&quot;transactions/cancel-lease&quot;</a>
 				</li>
 			</ul>
-			<h1>Module &quot;transactions/burn&quot;</h1>
+			<h1>Module &quot;transactions/cancel-lease&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_transactions_burn_.html#burn" class="tsd-kind-icon">burn</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="transactions_cancel_lease.html#cancellease" class="tsd-kind-icon">cancel<wbr>Lease</a></li>
 							</ul>
 						</section>
 					</div>
@@ -78,46 +78,46 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="burn" class="tsd-anchor"></a>
-					<h3>burn</h3>
+					<a name="cancellease" class="tsd-anchor"></a>
+					<h3>cancel<wbr>Lease</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">burn<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iburnparams.html" class="tsd-signature-type">IBurnParams</a>, seed<span class="tsd-signature-symbol">: </span><a href="_types_.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
-						<li class="tsd-signature tsd-kind-icon">burn<span class="tsd-signature-symbol">(</span>paramsOrTx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="../interfaces/_transactions_.iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a>, seed<span class="tsd-signature-symbol">?: </span><a href="_types_.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
+						<li class="tsd-signature tsd-kind-icon">cancel<wbr>Lease<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a>, seed<span class="tsd-signature-symbol">: </span><a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
+						<li class="tsd-signature tsd-kind-icon">cancel<wbr>Lease<span class="tsd-signature-symbol">(</span>paramsOrTx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="../interfaces/_transactions_.icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a>, seed<span class="tsd-signature-symbol">?: </span><a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/burn.ts#L15">transactions/burn.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/cancel-lease.ts#L15">transactions/cancel-lease.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/_transactions_.iburnparams.html" class="tsd-signature-type">IBurnParams</a></h5>
+									<h5>params: <a href="../interfaces/_transactions_.icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a></h5>
 								</li>
 								<li>
-									<h5>seed: <a href="_types_.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
+									<h5>seed: <a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/burn.ts#L16">transactions/burn.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/cancel-lease.ts#L16">transactions/cancel-lease.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>paramsOrTx: <span class="tsd-signature-symbol">(</span><a href="../interfaces/_transactions_.iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a></h5>
+									<h5>paramsOrTx: <span class="tsd-signature-symbol">(</span><a href="../interfaces/_transactions_.icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> seed: <a href="_types_.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> seed: <a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.iburntransaction.html" class="tsd-signature-type">IBurnTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.icancelleasetransaction.html" class="tsd-signature-type">ICancelLeaseTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -130,14 +130,14 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="_transactions_burn_.html">&quot;transactions/burn&quot;</a>
+						<a href="transactions_cancel_lease.html">&quot;transactions/cancel-<wbr>lease&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_transactions_burn_.html#burn" class="tsd-kind-icon">burn</a>
+						<a href="transactions_cancel_lease.html#cancellease" class="tsd-kind-icon">cancel<wbr>Lease</a>
 					</li>
 				</ul>
 			</nav>

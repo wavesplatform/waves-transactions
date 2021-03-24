@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;transactions/exchange&quot; | waves-transactions</title>
+	<title>&quot;transactions/sponsorship&quot; | waves-transactions</title>
 	<meta name="description" content="Documentation for waves-transactions">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_transactions_exchange_.html">&quot;transactions/exchange&quot;</a>
+					<a href="transactions_sponsorship.html">&quot;transactions/sponsorship&quot;</a>
 				</li>
 			</ul>
-			<h1>Module &quot;transactions/exchange&quot;</h1>
+			<h1>Module &quot;transactions/sponsorship&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_transactions_exchange_.html#exchange" class="tsd-kind-icon">exchange</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="transactions_sponsorship.html#sponsorship" class="tsd-kind-icon">sponsorship</a></li>
 							</ul>
 						</section>
 					</div>
@@ -78,28 +78,46 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="exchange" class="tsd-anchor"></a>
-					<h3>exchange</h3>
+					<a name="sponsorship" class="tsd-anchor"></a>
+					<h3>sponsorship</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">exchange<span class="tsd-signature-symbol">(</span>paramsOrTx<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a>, seed<span class="tsd-signature-symbol">?: </span><a href="_types_.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
+						<li class="tsd-signature tsd-kind-icon">sponsorship<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a>, seed<span class="tsd-signature-symbol">: </span><a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
+						<li class="tsd-signature tsd-kind-icon">sponsorship<span class="tsd-signature-symbol">(</span>paramsOrTx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="../interfaces/_transactions_.isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a>, seed<span class="tsd-signature-symbol">?: </span><a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/exchange.ts#L21">transactions/exchange.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/sponsorship.ts#L15">transactions/sponsorship.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>paramsOrTx: <a href="../interfaces/_transactions_.iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a></h5>
+									<h5>params: <a href="../interfaces/_transactions_.isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> seed: <a href="_types_.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
+									<h5>seed: <a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.iexchangetransaction.html" class="tsd-signature-type">IExchangeTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/f3f0160/src/transactions/sponsorship.ts#L16">transactions/sponsorship.ts:16</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>paramsOrTx: <span class="tsd-signature-symbol">(</span><a href="../interfaces/_transactions_.isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withsender.html" class="tsd-signature-type">WithSender</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> seed: <a href="types.html#tseedtypes" class="tsd-signature-type">TSeedTypes</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_transactions_.isponsorshiptransaction.html" class="tsd-signature-type">ISponsorshipTransaction</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/_transactions_.withid.html" class="tsd-signature-type">WithId</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -112,14 +130,14 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="_transactions_exchange_.html">&quot;transactions/exchange&quot;</a>
+						<a href="transactions_sponsorship.html">&quot;transactions/sponsorship&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_transactions_exchange_.html#exchange" class="tsd-kind-icon">exchange</a>
+						<a href="transactions_sponsorship.html#sponsorship" class="tsd-kind-icon">sponsorship</a>
 					</li>
 				</ul>
 			</nav>
