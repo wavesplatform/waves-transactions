@@ -27,7 +27,6 @@ export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAut
 export { waitForTx, broadcast } from './nodeInteraction'
 export { makeTx, makeTxBytes } from './make-tx'
 
-
 // Export interfaces
 export {
   ITransaction,

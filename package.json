@@ -16,6 +16,7 @@
   "scripts": {
     "preversion": "npm run build",
     "postversion": "npm publish",
+    "build-docs": "typedoc --out docs src && cd docs && touch .nojekyll",
     "postpublish": "git push origin head",
     "build": "ts-node build/build.ts && webpack --config webpack.config.js --env",
     "fix-style": "tslint --fix -c tslint.json '{src,test,usage}/**/*{.ts,.tsx}'",

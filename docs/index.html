@@ -108,11 +108,11 @@
 				</a>
 				<p>You can provide seed or private key to transaction creating function to sign it. If you do, senderPublicKey can be omitted.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> signedTranfer = transfer({
-    recipient:<span class="hljs-string">&#x27;3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9&#x27;</span>,
+    recipient:<span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
     amount: <span class="hljs-number">100000</span>}, <span class="hljs-string">&#x27;secret seed phraze&#x27;</span>
 )
 <span class="hljs-keyword">const</span> signedTranferViaPrivateKey = transfer({
-    recipient:<span class="hljs-string">&#x27;3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9&#x27;</span>,
+    recipient:<span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
     amount: <span class="hljs-number">100000</span>}, {privateKey: <span class="hljs-string">&#x27;GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom&#x27;</span>}
 )</code></pre>
 				<a href="#params" id="params" style="color: inherit; text-decoration: none;">
@@ -354,7 +354,7 @@
 <span class="hljs-keyword">const</span> seed = <span class="hljs-string">&#x27;some example seed phrase&#x27;</span>
 <span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
   <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2&#x27;</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
   <span class="hljs-comment">//Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs</span>
   <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span> 
 }, seed)
@@ -370,7 +370,7 @@
   <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq&#x27;</span>,
   <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2&#x27;</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
   <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
   <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
   <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
@@ -385,7 +385,7 @@
 				<p>You can also create transaction, but not sign it:</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> unsignedTransferTx = transfer({
   <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2&#x27;</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
   <span class="hljs-comment">//senderPublicKey is required if you omit seed</span>
   <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">&#x27;6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq&#x27;</span> 
 })</code></pre>
@@ -397,7 +397,7 @@
   <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq&#x27;</span>,
   <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
-  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2&#x27;</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
   <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
   <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
   <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,

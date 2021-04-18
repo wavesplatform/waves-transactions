@@ -46,11 +46,11 @@ const burnTx = burn({
 You can provide seed or private key to transaction creating function to sign it. If you do, senderPublicKey can be omitted.
 ```typescript
 const signedTranfer = transfer({
-    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
+    recipient:'3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
     amount: 100000}, 'secret seed phraze'
 )
 const signedTranferViaPrivateKey = transfer({
-    recipient:'3P5tbbRm9MCBc5oiMyt29dLAznXnRQwPmN9',
+    recipient:'3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
     amount: 100000}, {privateKey: 'GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom'}
 )
 ```
@@ -325,7 +325,7 @@ const { transfer } = require('@waves/waves-transactions')
 const seed = 'some example seed phrase'
 const signedTranserTx = transfer({ 
   amount: 1,
-  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
   //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
   timestamp: 1536917842558 
 }, seed)
@@ -344,7 +344,7 @@ Output will be a signed transfer transaction:
   id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
   type: 4,
   version: 2,
-  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
   attachment: undefined,
   feeAssetId: undefined,
   assetId: undefined,
@@ -362,7 +362,7 @@ You can also create transaction, but not sign it:
 ```javascript
 const unsignedTransferTx = transfer({ 
   amount: 1,
-  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
   //senderPublicKey is required if you omit seed
   senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq' 
 })
@@ -380,7 +380,7 @@ So now there are two proofs:
   id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
   type: 4,
   version: 2,
-  recipient: '3P6fVra21KmTfWHBdib45iYV6aFduh4WwC2',
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
   attachment: undefined,
   feeAssetId: undefined,
   assetId: undefined,
