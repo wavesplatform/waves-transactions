@@ -3,25 +3,25 @@ import { address, verifySignature } from '@waves/ts-lib-crypto'
 import request from '@waves/node-api-js/cjs/tools/request'
 import stringify from '@waves/node-api-js/cjs/tools/stringify'
 
-import {
-  IAliasTransaction,
-  IBurnTransaction,
-  ICancelLeaseTransaction,
-  ICancelOrder,
-  IDataTransaction, IExchangeTransaction,
-  IIssueTransaction,
-  ILeaseTransaction,
-  IMassTransferTransaction,
-  IReissueTransaction,
-  ISetAssetScriptTransaction,
-  ISetScriptTransaction,
-  ISponsorshipTransaction,
-  ITransferTransaction,
-  TRANSACTION_TYPE,
-  TTx,
-  TTxParams,
-  IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams, IWavesAuthParams
-} from './transactions'
+// import {
+//   IAliasTransaction,
+//   IBurnTransaction,
+//   ICancelLeaseTransaction,
+//   ICancelOrder,
+//   IDataTransaction, IExchangeTransaction,
+//   IIssueTransaction,
+//   ILeaseTransaction,
+//   IMassTransferTransaction,
+//   IReissueTransaction,
+//   ISetAssetScriptTransaction,
+//   ISetScriptTransaction,
+//   ISponsorshipTransaction,
+//   ITransferTransaction,
+//   TRANSACTION_TYPE,
+//   TTx,
+//   TTxParams,
+//   IInvokeScriptTransaction, TOrder, WithTxType, IAuth, IAuthParams, IWavesAuthParams
+// } from './transactions'
 import { TSeedTypes } from './types'
 import { issue } from './transactions/issue'
 import { transfer } from './transactions/transfer'
@@ -41,14 +41,34 @@ import { invokeScript } from './transactions/invoke-script'
 import { serializeCustomData, TSignedData } from './requests/custom-data'
 import { serializeAuthData } from './requests/auth'
 import { serializeWavesAuthData } from './requests/wavesAuth'
+import {
+  IAliasTransaction,
+  IBurnTransaction,
+  ICancelLeaseTransaction,
+  IDataTransaction,
+  IExchangeTransaction,
+  IInvokeScriptTransaction,
+  IIssueTransaction,
+  ILeaseTransaction,
+  IMassTransferTransaction,
+  TRANSACTION_TYPE,
+  IReissueTransaction,
+  ISetAssetScriptTransaction,
+  ISetScriptTransaction,
+  ISponsorshipTransaction,
+  ITransaction,
+  ITransferTransaction, TTransaction,
+} from '@waves/ts-types'
+import { IAuthParams, ICancelOrder, TOrder, TTxParams, WithTxType } from './transactions'
 
+type TLong = string | number
 
-export const txTypeMap: { [type: number]: { sign: (tx: TTx | TTxParams & WithTxType, seed: TSeedTypes) => TTx } } = {
-  [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction, seed) },
-  [TRANSACTION_TYPE.TRANSFER]: { sign: (x, seed) => transfer(x as ITransferTransaction, seed) },
-  [TRANSACTION_TYPE.REISSUE]: { sign: (x, seed) => reissue(x as IReissueTransaction, seed) },
-  [TRANSACTION_TYPE.BURN]: { sign: (x, seed) => burn(x as IBurnTransaction, seed) },
-  [TRANSACTION_TYPE.LEASE]: { sign: (x, seed) => lease(x as ILeaseTransaction, seed) },
+export const txTypeMap: { [type: number]: { sign: (tx: TTransaction<TLong> | TTxParams & WithTxType, seed: TSeedTypes) => TTransaction<TLong> } } = {
+  [TRANSACTION_TYPE.ISSUE]: { sign: (x, seed) => issue(x as IIssueTransaction<TLong>, seed) },
+  [TRANSACTION_TYPE.TRANSFER]: { sign: (x, seed) => transfer(x as ITransferTransaction<TLong>, seed) },
+  [TRANSACTION_TYPE.REISSUE]: { sign: (x, seed) => reissue(x as IReissueTransaction<TLong>, seed) },
+  [TRANSACTION_TYPE.BURN]: { sign: (x, seed) => burn(x as IBurnTransaction<TLong>, seed) },
+  [TRANSACTION_TYPE.LEASE]: { sign: (x, seed) => lease(x as ILeaseTransaction<TLong>, seed) },
   [TRANSACTION_TYPE.CANCEL_LEASE]: { sign: (x, seed) => cancelLease(x as ICancelLeaseTransaction, seed) },
   [TRANSACTION_TYPE.ALIAS]: { sign: (x, seed) => alias(x as IAliasTransaction, seed) },
   [TRANSACTION_TYPE.MASS_TRANSFER]: { sign: (x, seed) => massTransfer(x as IMassTransferTransaction, seed) },

@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId, WithSender } from '../transactions'
+import {IIssueParams, WithId, WithProofs, WithSender} from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
@@ -9,24 +9,25 @@ import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
 import { DEFAULT_VERSIONS } from '../defaultVersions'
+import {IssueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 /* @echo DOCS */
-export function issue(params: IIssueParams, seed: TSeedTypes): IIssueTransaction & WithId
-export function issue(paramsOrTx: IIssueParams & WithSender | IIssueTransaction, seed?: TSeedTypes): IIssueTransaction & WithId
-export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & WithId {
+export function issue(params: IIssueParams, seed: TSeedTypes): IssueTransaction & WithId
+export function issue(paramsOrTx: IIssueParams & WithSender | IssueTransaction, seed?: TSeedTypes): IssueTransaction & WithId
+export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & WithId {
   const type = TRANSACTION_TYPE.ISSUE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.ISSUE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: IIssueTransaction & WithId = {
+  const tx: IssueTransaction & WithId & WithProofs = {
     type,
     version,
     senderPublicKey,
     name: paramsOrTx.name,
     description: paramsOrTx.description,
     quantity: paramsOrTx.quantity,
-    script: paramsOrTx.script == null ? undefined : base64Prefix(paramsOrTx.script)!,
+    script: paramsOrTx.script == null ? null : base64Prefix(paramsOrTx.script)!,
     decimals: paramsOrTx.decimals == null ? 8 : paramsOrTx.decimals,
     reissuable: paramsOrTx.reissuable || false,
     fee: paramsOrTx.quantity === 1 ? fee(paramsOrTx, 1000000) : fee(paramsOrTx, 100000000),

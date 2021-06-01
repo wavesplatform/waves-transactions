@@ -1,26 +1,27 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, ILeaseTransaction, ILeaseParams, WithId, WithSender } from '../transactions'
+import {ILeaseParams, WithId, WithProofs, WithSender} from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
+import {LeaseTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function lease(params: ILeaseParams, seed: TSeedTypes): ILeaseTransaction & WithId
-export function lease(paramsOrTx: ILeaseParams & WithSender | ILeaseTransaction, seed?: TSeedTypes): ILeaseTransaction & WithId
-export function lease(paramsOrTx: any, seed?: TSeedTypes): ILeaseTransaction & WithId {
+export function lease(params: ILeaseParams, seed: TSeedTypes): LeaseTransaction & WithId
+export function lease(paramsOrTx: ILeaseParams & WithSender | LeaseTransaction, seed?: TSeedTypes): LeaseTransaction & WithId
+export function lease(paramsOrTx: any, seed?: TSeedTypes): LeaseTransaction & WithId {
   const type = TRANSACTION_TYPE.LEASE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.LEASE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: ILeaseTransaction & WithId = {
+  const tx: LeaseTransaction & WithId & WithProofs = {
     type,
     version,
     senderPublicKey,

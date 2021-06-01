@@ -6,6 +6,7 @@ import * as assets_route from '@waves/node-api-js/cjs/api-node/assets'
 import * as rewards_route from '@waves/node-api-js/cjs/api-node/rewards'
 import * as debug_route from '@waves/node-api-js/cjs/api-node/debug'
 import { RequestInit } from '@waves/node-api-js/cjs/tools/request'
+import {Transaction} from '@waves/ts-types'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -282,6 +283,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string, reque
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends TTx>(tx: T, nodeUrl: string, requestOptions?: RequestInit){
+export function broadcast<T extends Transaction>(tx: T, nodeUrl: string, requestOptions?: RequestInit){
   return tx_route.broadcast(nodeUrl, tx as any, requestOptions)
 }

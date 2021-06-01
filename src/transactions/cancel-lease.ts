@@ -1,26 +1,27 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, ICancelLeaseTransaction, ICancelLeaseParams, WithId, WithSender } from '../transactions'
+import {ICancelLeaseParams, WithId, WithProofs, WithSender} from '../transactions'
 import { binary } from '@waves/marshall'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
+import {CancelLeaseTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): ICancelLeaseTransaction & WithId
-export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | ICancelLeaseTransaction, seed?: TSeedTypes): ICancelLeaseTransaction & WithId
-export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): ICancelLeaseTransaction & WithId {
+export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): CancelLeaseTransaction & WithId
+export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | CancelLeaseTransaction, seed?: TSeedTypes): CancelLeaseTransaction & WithId
+export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): CancelLeaseTransaction & WithId {
   const type = TRANSACTION_TYPE.CANCEL_LEASE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.CANCEL_LEASE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: ICancelLeaseTransaction & WithId = {
+  const tx: CancelLeaseTransaction & WithId & WithProofs = {
     type,
     version,
     senderPublicKey,
