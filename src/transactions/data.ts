@@ -57,7 +57,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
             return {
                 type,
                 key: x.key,
-                value: type === 'binary' ? 'base64:' + Buffer.from(x.value as any[]).toString('base64') : x.value as (string | number | boolean),
+                value: type === 'binary' ? 'base64:' + Buffer.from(x.value as unknown as any[]).toString('base64') : x.value as (string | number | boolean),
             }
         }
     })

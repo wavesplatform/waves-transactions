@@ -12,7 +12,7 @@ import {DEFAULT_VERSIONS} from '../defaultVersions'
 import {ExchangeTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 /* @echo DOCS */
-export function exchange(paramsOrTx: ExchangeTransaction & WithProofs, seed?: TSeedTypes): ExchangeTransaction & WithId {
+export function exchange(paramsOrTx: ExchangeTransaction & WithProofs, seed?: TSeedTypes): ExchangeTransaction & WithId & WithProofs{
 
     const type = TRANSACTION_TYPE.EXCHANGE
     const version = paramsOrTx.version || DEFAULT_VERSIONS.EXCHANGE

@@ -2,10 +2,8 @@
  * @module index
  */
 import {
-  TRANSACTION_TYPE,
-  ISetAssetScriptTransaction,
   ISetAssetScriptParams,
-  WithId,
+  WithId, WithProofs,
   WithSender
 } from '../transactions'
 import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
@@ -14,20 +12,21 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
+import {SetAssetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function setAssetScript(params: ISetAssetScriptParams, seed: TSeedTypes): ISetAssetScriptTransaction & WithId
-export function setAssetScript(paramsOrTx: ISetAssetScriptParams & WithSender | ISetAssetScriptTransaction, seed?: TSeedTypes): ISetAssetScriptTransaction & WithId
-export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): ISetAssetScriptTransaction & WithId {
+export function setAssetScript(params: ISetAssetScriptParams, seed: TSeedTypes): SetAssetScriptTransaction & WithId
+export function setAssetScript(paramsOrTx: ISetAssetScriptParams & WithSender | SetAssetScriptTransaction, seed?: TSeedTypes): SetAssetScriptTransaction & WithId
+export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): SetAssetScriptTransaction & WithId {
   const type = TRANSACTION_TYPE.SET_ASSET_SCRIPT
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_ASSET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script == null) throw new Error('Asset script cannot be empty')
 
-  const tx: ISetAssetScriptTransaction & WithId = {
+  const tx: SetAssetScriptTransaction & WithId & WithProofs= {
     type,
     version,
     senderPublicKey,
@@ -37,7 +36,7 @@ export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): ISetAssetScr
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',
-    script: base64Prefix(paramsOrTx.script),
+    script: base64Prefix(paramsOrTx.script) || '',
   }
 
   validate.setAssetScript(tx)

@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, IReissueTransaction, IReissueParams, WithId, WithSender } from '../transactions'
+import {IReissueParams, WithId, WithProofs, WithSender} from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
 import { TSeedTypes } from '../types'
@@ -9,18 +9,19 @@ import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
 import { DEFAULT_VERSIONS } from '../defaultVersions';
+import {ReissueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): IReissueTransaction & WithId
-export function reissue(paramsOrTx: IReissueParams & WithSender | IReissueTransaction, seed?: TSeedTypes): IReissueTransaction & WithId
-export function reissue(paramsOrTx: any, seed?: TSeedTypes): IReissueTransaction & WithId{
+export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): ReissueTransaction & WithId
+export function reissue(paramsOrTx: IReissueParams & WithSender | ReissueTransaction, seed?: TSeedTypes): ReissueTransaction & WithId
+export function reissue(paramsOrTx: any, seed?: TSeedTypes): ReissueTransaction & WithId{
   const type = TRANSACTION_TYPE.REISSUE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.REISSUE
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: IReissueTransaction & WithId = {
+  const tx: ReissueTransaction & WithId & WithProofs= {
     type,
     version,
     senderPublicKey,

@@ -1,7 +1,7 @@
 import {
   MassTransferItem,
   DataTransactionEntry,
-  TransactionType
+  TransactionType, GenesisTransaction, Transaction, TRANSACTION_TYPE, PaymentTransaction
 } from '@waves/ts-types'
 export interface WithId {
   /**
@@ -48,20 +48,20 @@ export interface IOrder<LONG = string | number> extends WithProofs, WithSender {
   matcherPublicKey: string
 }
 
-export interface IOrderV1<LONG = string | number> extends IOrder<LONG> {
-  version: 1 | undefined
-}
-
-export interface IOrderV2<LONG = string | number> extends IOrder<LONG> {
-  version: 2
-}
-
-export interface IOrderV3<LONG = string | number> extends IOrder<LONG> {
-  version: 3
-  matcherFeeAssetId?: string | null
-}
-
-export type TOrder = IOrderV1 | IOrderV2 | IOrderV3
+// export interface IOrderV1<LONG = string | number> extends IOrder<LONG> {
+//   version: 1 | undefined
+// }
+//
+// export interface IOrderV2<LONG = string | number> extends IOrder<LONG> {
+//   version: 2
+// }
+//
+// export interface IOrderV3<LONG = string | number> extends IOrder<LONG> {
+//   version: 3
+//   matcherFeeAssetId?: string | null
+// }
+//
+// export type TOrder = IOrderV1 | IOrderV2 | IOrderV3
 
 /**
  * CancelOrder object. When this object is sent to matcher, order with 'orderId' will be canceled
@@ -345,3 +345,7 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
    */
   description: string
 }
+
+export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction>
+
+export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2>
