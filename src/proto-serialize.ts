@@ -28,7 +28,7 @@ import {base64Prefix, chainIdFromRecipient} from './generic'
 import Long from 'long'
 import {lease} from './transactions/lease'
 import {GenesisTransaction} from '@waves/ts-types/transactions/index'
-import {TTransaction} from './transactions'
+import {TTransaction, WithChainId} from './transactions'
 import {ExchangeTransactionOrderV1} from '@waves/ts-types/src/parts'
 
 const invokeScriptCallSchema = {
@@ -241,7 +241,7 @@ const getReissueData = (t: ReissueTransaction): wavesProto.waves.IReissueTransac
 const getBurnData = (t: BurnTransaction): wavesProto.waves.IBurnTransactionData => ({
     assetAmount: amountToProto(t.amount || (t as any).amount, t.assetId),
 })
-const getExchangeData = (t: SignedTransaction<Exclude<ExchangeTransaction, ExchangeTransactionV1>>): wavesProto.waves.IExchangeTransactionData => ({
+const getExchangeData = (t: any): wavesProto.waves.IExchangeTransactionData => ({
     amount: Long.fromValue(t.amount),
     price: Long.fromValue(t.price),
     buyMatcherFee: Long.fromValue(t.buyMatcherFee),
@@ -341,7 +341,7 @@ export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesPr
 }
 
 
-const orderToProto = (o: SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & {chainId: number}): wavesProto.waves.IOrder => ({
+const orderToProto = (o: any): wavesProto.waves.IOrder => ({
     chainId: o.chainId,
     senderPublicKey: base58Decode(o.senderPublicKey),
     matcherPublicKey: base58Decode(o.matcherPublicKey),
@@ -359,7 +359,7 @@ const orderToProto = (o: SignedIExchangeTransactionOrder<ExchangeTransactionOrde
     proofs: o.proofs.map(base58Decode),
 })
 
-const orderFromProto = (po: wavesProto.waves.IOrder): ExchangeTransactionOrder => ({
+const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithChainId => ({
     version: po.version! as 1 | 2 | 3,
     senderPublicKey: base58Encode(po.senderPublicKey!),
     matcherPublicKey: base58Encode(po.matcherPublicKey!),
@@ -367,6 +367,7 @@ const orderFromProto = (po: wavesProto.waves.IOrder): ExchangeTransactionOrder =
         amountAsset: po!.assetPair!.amountAssetId == null ? null : base58Encode(po!.assetPair!.amountAssetId),
         priceAsset: po!.assetPair!.priceAssetId == null ? null : base58Encode(po!.assetPair!.priceAssetId),
     },
+    // @ts-ignore
     chainId: po.chainId,
     orderType: po.orderSide === wavesProto.waves.Order.Side.BUY ? 'buy' : 'sell',
     amount: po.amount!.toString(),
