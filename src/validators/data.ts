@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
   isEq,
   orEq,
@@ -25,7 +25,7 @@ const dataScheme = {
       data.every(item => isValidData(item) || isValidDeleteRequest),
   fee: isNumberLike,
   timestamp: isNumber,
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+}
 
 export const dataValidator = validateByShema(dataScheme, getError)

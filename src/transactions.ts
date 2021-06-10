@@ -30,24 +30,6 @@ export interface WithProofs {
   proofs: string[]
 }
 
-/**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
- */
-export interface IOrder<LONG = string | number> extends WithProofs, WithSender {
-  version?: number,
-  orderType: 'buy' | 'sell'
-  assetPair: {
-    amountAsset: string | null
-    priceAsset: string | null
-  }
-  price: LONG
-  amount: LONG
-  timestamp: number
-  expiration: number
-  matcherFee: LONG
-  matcherPublicKey: string
-}
-
 // export interface IOrderV1<LONG = string | number> extends IOrder<LONG> {
 //   version: 1 | undefined
 // }

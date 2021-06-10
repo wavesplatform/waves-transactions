@@ -1,4 +1,3 @@
-import { TRANSACTION_TYPE } from '../transactions'
 import {
     isEq,
     orEq,
@@ -11,6 +10,7 @@ import {
     isValidAliasName,
     defaultValue, isPublicKey
 } from './validators'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 const aliasScheme = {

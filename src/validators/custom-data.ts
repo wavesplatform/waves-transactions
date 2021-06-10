@@ -14,8 +14,8 @@ import {
 
 const customDataV1Scheme = {
     version: isEq(1),
-    binary: isBase64
-};
+    binary: isBase64,
+}
 
 const customDataV2Scheme = {
     version: isEq(2),
@@ -27,8 +27,8 @@ const customDataV2Scheme = {
                 isValidDataPair
             )
         ),
-    )
-};
+    ),
+}
 
 const v1Validator = validateByShema(customDataV1Scheme, getError)
 const v2Validator = validateByShema(customDataV2Scheme, getError)
@@ -36,5 +36,5 @@ const v2Validator = validateByShema(customDataV2Scheme, getError)
 export const customDataValidator = ifElse(
     pipe(prop('version'), isEq(1)),
     v1Validator, 
-    v2Validator
+    v2Validator,
 )

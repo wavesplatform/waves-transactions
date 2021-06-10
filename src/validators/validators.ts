@@ -14,7 +14,7 @@ const ASSETS = {
     NAME_MIN_BYTES: 4,
     NAME_MAX_BYTES: 16,
     DESCRIPTION_MAX_BYTES: 1000,
-};
+}
 
 
 export const defaultValue = (value: unknown) => () => value
@@ -24,16 +24,16 @@ export const nope = (value: any) => value
 export const pipe = (...args: Array<Function>) => (value: unknown) => args.reduce((acc: unknown, cb) => cb(acc), value)
 
 export const validatePipe = (...args: Array<Function>) => (value: unknown) => {
-    let isValid = true;
+    let isValid = true
 
     for (const cb of args) {
         isValid = !!cb(value)
         if (!isValid) {
-            return false;
+            return false
         }
     }
 
-    return isValid;
+    return isValid
 }
 
 export const prop = (key: string | number) => (value: unknown) => value ? (value as any)[key] : undefined
@@ -53,7 +53,7 @@ export const isEq = <T>(reference: T) => (value: unknown) => {
         case isBoolean(value) && isBoolean(reference):
             return Boolean(value) === Boolean(reference)
         default:
-            return reference === value;
+            return reference === value
     }
 }
 
@@ -71,10 +71,10 @@ export const isBoolean = (value: unknown) => value != null && (typeof value === 
 
 export const isByteArray = (value: unknown) => {
     if (!value) {
-        return false;
+        return false
     }
 
-    const bytes = new Uint8Array(value as any);
+    const bytes = new Uint8Array(value as any)
     return bytes.length === (value as any).length && bytes.every((val, index) => isEq(val)((value as any)[index]))
 }
 
@@ -90,7 +90,7 @@ export const bytesLength = (length: number) => (value: unknown) => {
 
 export const isBase58 = (value: unknown) => {
     try {
-        base58Decode(value as string);
+        base58Decode(value as string)
     } catch (e) {
         return false;
     }
@@ -101,41 +101,41 @@ export const isBase58 = (value: unknown) => {
 export const isBase64 = (value: unknown) => {
     try {
         value = (value as string).replace(/^base64:/,'')
-        base64Decode(value as string);
+        base64Decode(value as string)
     } catch (e) {
-        return false;
+        return false
     }
 
-    return true;
+    return true
 }
 
 export const isValidAddress = (address: unknown, network?: number) => {
     if (typeof address !== 'string' || !isBase58(address)) {
-        return false;
+        return false
     }
 
-    let addressBytes = base58Decode(address);
+    let addressBytes = base58Decode(address)
 
     if (addressBytes[0] !== 1) {
-        return false;
+        return false
     }
 
     if (network != null && addressBytes[1] != network) {
-        return false;
+        return false
     }
 
-    let key = addressBytes.slice(0, 22);
-    let check = addressBytes.slice(22, 26);
-    let keyHash = keccak(blake2b(key)).slice(0, 4);
+    let key = addressBytes.slice(0, 22)
+    let check = addressBytes.slice(22, 26)
+    let keyHash = keccak(blake2b(key)).slice(0, 4)
 
     for (let i = 0; i < 4; i++) {
         if (check[i] !== keyHash[i]) {
-            return false;
+            return false
         }
     }
 
-    return true;
-};
+    return true
+}
 
 const validateChars = (chars: string) => (value: string) => value.split('').every((char: string) => chars.includes(char))
 
@@ -147,7 +147,7 @@ export const isValidAliasName = ifElse(
         validatePipe(
             lte(TX_DEFAULTS.ALIAS.MAX_ALIAS_LENGTH),
             gte(TX_DEFAULTS.ALIAS.MIN_ALIAS_LENGTH)
-        ),
+        )
     ),
     defaultValue(false)
 )
@@ -163,8 +163,8 @@ export const isValidAlias = validatePipe(
             pipe(
                 prop(2),
                 isValidAliasName
-            ),
-        ),
+            )
+        )
     )
 )
 
@@ -173,7 +173,7 @@ export const isHash = validatePipe(
     isBase58,
     pipe(
         (value: string) => base58Decode(value),
-        bytesLength(32),
+        bytesLength(32)
     )
 )
 
@@ -198,13 +198,13 @@ export const isAttachment = ifElse(
         ifElse(
           isBase58,
           base58Decode,
-          nope,
+          nope
         ),
         ifElse(
           isByteArray,
           pipe(
             prop('length'),
-            lte(TX_DEFAULTS.MAX_ATTACHMENT),
+            lte(TX_DEFAULTS.MAX_ATTACHMENT)
           ),
           defaultValue(false)
         )
@@ -256,7 +256,7 @@ export const isValidAssetDescription = ifElse(
     pipe(
         stringToBytes,
         prop('length'),
-        lte(ASSETS.DESCRIPTION_MAX_BYTES),
+        lte(ASSETS.DESCRIPTION_MAX_BYTES)
     )
 )
 
@@ -276,7 +276,7 @@ export const validateByShema = (shema: Record<string, Function>, errorTpl: (key:
         }
     )
 
-    return true;
+    return true
 }
 
 export const getError = (key: string, value: any) => {

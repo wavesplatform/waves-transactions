@@ -12,6 +12,6 @@ const cancelOrderScheme = {
   orderId: isHash,
   signature: isBase58,
   hash: isBase58,
-};
+}
 
 export const cancelOrderValidator = validateByShema(cancelOrderScheme, getError)

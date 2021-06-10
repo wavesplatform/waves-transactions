@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
   isEq,
   orEq,
@@ -20,7 +20,7 @@ const leaseScheme = {
   amount: isNumberLike,
   fee: isNumberLike,
   timestamp: isNumber,
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+}
 
 export const leaseValidator = validateByShema(leaseScheme, getError)

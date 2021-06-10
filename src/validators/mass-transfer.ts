@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
   isEq,
   orEq,
@@ -32,7 +32,7 @@ const massTransferScheme = {
           validatePipe(
               isRequired(true),
               pipe(prop('recipient'), isRecipient),
-              pipe(prop('amount'), isNumberLike),
+              pipe(prop('amount'), isNumberLike)
           )
       )
   ),
@@ -40,10 +40,7 @@ const massTransferScheme = {
   attachment: isAttachment,
   fee: isNumberLike,
   timestamp: isNumber,
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
-
-const massTransferSchemeV2 = {
-
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
+
 export const massTransferValidator = validateByShema(massTransferScheme, getError)
