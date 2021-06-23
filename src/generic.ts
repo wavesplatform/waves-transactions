@@ -64,7 +64,11 @@ export function networkByte(p: number | string | undefined, def: number): number
 }
 
 export function fee(params: IBasicParams, def: number) {
-  if (params.fee) return params.fee
+  if (params.fee) {
+    // TODO instanceof will not work
+    return (params.fee).toString();
+  }
+
   if (!params.additionalFee) return def
   return def + params.additionalFee
 }
