@@ -19,7 +19,7 @@ export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): UpdateAsset
     const seedsAndIndexes = convertToPairs(seed)
     const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-    const tx: UpdateAssetInfoTransaction & WithId & WithProofs= {
+    const tx: UpdateAssetInfoTransaction & WithId & WithProofs = {
         type,
         version,
         senderPublicKey,

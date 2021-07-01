@@ -20,7 +20,7 @@ describe('data', () => {
             [{key: 'int', value: -1}, {key: 'str', value: 'string'}, {key: 'bool', value: true}, {
                 key: 'bin',
                 type: 'binary',
-                value: 'base64:YWxpY2U='
+                value: 'base64:YWxpY2U=',
             }],
             1,
             base64Decode('DAEOfDELVTFkTjXX6NQIecrcVDMzucL6GfiwihJh+rt7SAAEAANpbnQA//////////8AA3N0cgMABnN0cmluZwAEYm9vbAEBAANiaW4CAAVhbGljZQAAAXSHboAAAAAAAAABhqA='),
@@ -29,7 +29,7 @@ describe('data', () => {
             [{key: 'int', value: -1}, {key: 'str', value: 'string'}, {key: 'bool', value: true}, {
                 key: 'bin',
                 type: 'binary',
-                value: 'base64:YWxpY2U='
+                value: 'base64:YWxpY2U=',
             }],
             2,
             base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggc5ChAKA2ludFD///////////8BCg0KA3N0cmoGc3RyaW5nCggKBGJvb2xYAQoMCgNiaW5iBWFsaWNl'),
@@ -37,7 +37,7 @@ describe('data', () => {
         [
             [{key: 'int', value: 0}, {key: 'str', value: 'string'}, {key: 'bool', value: false}, {
                 key: 'bin',
-                value: Uint8Array.from([1, 2, 3, 4])
+                value: Uint8Array.from([1, 2, 3, 4]),
             }],
             1,
             base64Decode('DAEOfDELVTFkTjXX6NQIecrcVDMzucL6GfiwihJh+rt7SAAEAANpbnQAAAAAAAAAAAAAA3N0cgMABnN0cmluZwAEYm9vbAEAAANiaW4CAAQBAgMEAAABdIdugAAAAAAAAAGGoA=='),
@@ -77,7 +77,7 @@ describe('data', () => {
         [[{key: 'bin', value: Array(100).fill(1)}], 2, 100000],
         [[{key: 'bin', value: Array(1000).fill(1)}], 1, 200000],
         [[{key: 'bin', value: Array(1000).fill(1)}], 2, 100000],
-        [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000],
+        [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000], //todo fix feecalc for v1
         [[{key: 'bin', value: Array(10000).fill(1)}], 2, 1000000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 9800000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 9800000],

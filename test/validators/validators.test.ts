@@ -1,6 +1,7 @@
 import { validators } from '../../src/index'
 import { validate } from '../../src/validators'
-import { TRANSACTION_TYPE } from '../../src/transactions';
+import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 describe('Validators', () => {
 
@@ -8,8 +9,8 @@ describe('Validators', () => {
 
         it('Require', () => {
 
-            const notRequired = validators.isRequired(false);
-            const required = validators.isRequired(true);
+            const notRequired = validators.isRequired(false)
+            const required = validators.isRequired(true)
 
             expect(notRequired(null)).toBe(true)
             expect(notRequired(undefined)).toBe(true)
@@ -163,8 +164,8 @@ describe('Validators', () => {
 
         it('If Else', () => {
             const cond = validators.ifElse(validators.isArray, (value: Array<unknown>) => value[0], () => 'null')
-            expect(cond([300])).toBe(300);
-            expect(cond(null)).toBe('null');
+            expect(cond([300])).toBe(300)
+            expect(cond(null)).toBe('null')
 
         })
 
@@ -173,10 +174,10 @@ describe('Validators', () => {
             const process = validators.pipe(
                 (value: unknown) => ({ 1: value }),
                 (value: unknown) => ({ 2: value }),
-                (value: unknown) => ({ 3: value }),
+                (value: unknown) => ({ 3: value })
             )
 
-            const result = process('test');
+            const result = process('test')
 
             expect(result[3][2][1]).toBe('test')
         })
@@ -191,7 +192,7 @@ describe('Validators', () => {
             const process = validators.validatePipe(
                 validators.isRequired(true),
                 validators.isNumber,
-                validators.isEq(5),
+                validators.isEq(5)
             )
 
             expect(process(null)).toBe(false)
@@ -232,8 +233,8 @@ describe('Validators', () => {
             const schema = {
                 recipient: validators.isRecipient,
                 amount: validators.isNumberLike,
-                bool: validators.orEq([true, false])
-            };
+                bool: validators.orEq([true, false]),
+            }
 
             const getError = (key: string) => key
             const validator = validators.validateByShema(schema, getError)
@@ -241,23 +242,23 @@ describe('Validators', () => {
             expect(validator({
                 recipient: '3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj',
                 amount: 10,
-                bool: true
+                bool: true,
             })).toBe(true)
 
             expect(() => validator({ recipient: 1 })).toThrow('recipient')
 
             expect(() => validator({
                 recipient: '3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj',
-                amount: undefined
+                amount: undefined,
             })).toThrow('amount')
 
             expect(() => validator({
                 recipient: '3PCAB4sHXgvtu5NPoen6EXR5yaNbvsEA8Fj',
                 amount: '2',
-                bool: 1
+                bool: 1,
             })).toThrow('bool')
 
-            const a: any = null;
+            const a: any = null
 
             expect(() => validator(a)).toThrow('recipient')
         })

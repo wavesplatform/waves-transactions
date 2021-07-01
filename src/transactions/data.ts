@@ -71,7 +71,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
             LONG(_timestamp)
         )
 
-        computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
+        computedFee = (Math.floor(1 + (bytes.length  - 1) / 1024) * 100000)
     } else {
         let protoEntries = dataEntriesWithTypes.map(dataEntryToProto)
         let dataBytes = wavesProto.waves.DataTransactionData.encode({data: protoEntries}).finish()

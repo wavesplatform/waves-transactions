@@ -1,5 +1,5 @@
 import { exampleTxs } from './exampleTxs'
-import { broadcast, libs, TTx, WithId } from '../src'
+import {broadcast, libs, TTx, waitForTx, WithId} from '../src'
 import { protoBytesToTx, txToProtoBytes } from '../src/proto-serialize'
 import { transfer } from '../src/transactions/transfer'
 import { issue } from '../src/transactions/issue'
@@ -16,11 +16,19 @@ import { sponsorship } from '../src/transactions/sponsorship'
 import { txs, transfers } from './example-proto-tx'
 import { massTransfer } from '../src/transactions/mass-transfer'
 import { updateAssetInfo } from '../src/transactions/update-asset-info'
+import {randomHexString, TIMEOUT} from './integration/config'
+import {address} from '@waves/ts-lib-crypto'
+import {issueMinimalParams} from './minimalParams'
 
-const SEED = 'test acc 2'
-const NODE_URL = 'https://devnet-aws-si-1.wavesnodes.com'
-const myAssetId = 'AZZnDexy7dZAsJ4SGX8dbVcAv9cermXvDKfy5jHeTs79'
-const myChainId = 'D'
+
+
+const nodeUrl = 'http://localhost:6869/'
+const masterSeed = 'waves private node seed with waves tokens'
+const CHAIN_ID = 82
+let SEED = 'abc'
+const wvs = 1e8
+let assetId = ''
+
 /**
  * Longs as strings, remove unnecessary fields
  * @param t
@@ -36,6 +44,33 @@ const normalizeTx = (t: TTx): TTx => {
   return tx
 }
 describe('transactions v3', () => {
+
+  beforeAll(async () => {
+    const nonce = randomHexString(6)
+    jest.setTimeout(60000)
+    SEED = 'account1' + nonce
+    const mtt = massTransfer({
+      transfers: [
+        { recipient: address(SEED, CHAIN_ID), amount: 10 * wvs },
+      ],
+    }, masterSeed)
+
+    const assetIssue = issue({
+      ...issueMinimalParams,
+      quantity: 1000000000000,
+      decimals: 8,
+      reissuable: true,
+      chainId: CHAIN_ID,
+    }, masterSeed)
+
+    await broadcast(assetIssue, nodeUrl)
+    assetId = assetIssue.id
+    
+    await broadcast(mtt, nodeUrl)
+    await waitForTx(mtt.id, {apiBase: nodeUrl, timeout: TIMEOUT})
+
+  }, TIMEOUT)
+
   describe('serialize/deserialize', () => {
     const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as any)
     txs.forEach(tx => {
@@ -52,53 +87,53 @@ describe('transactions v3', () => {
       quantity: 100000,
       description: 'my token',
       name: 'my token',
-      chainId: myChainId,
-      reissuable: true
+      chainId: CHAIN_ID,
+      reissuable: true,
     }, SEED)
-    const ttx = transfer({ amount: 10000, recipient: libs.crypto.address(SEED, myChainId) }, SEED)
+    const ttx = transfer({ amount: 10000, recipient: libs.crypto.address(SEED, CHAIN_ID) }, SEED)
     const reitx = reissue({
-      assetId: myAssetId,
+      assetId: assetId,
       quantity: 100,
-      chainId: myChainId,
-      reissuable: true
+      chainId: CHAIN_ID,
+      reissuable: true,
     }, SEED)
-    const btx = burn({ assetId: myAssetId, quantity: 2, chainId: myChainId }, SEED)
-    const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }], chainId: myChainId }, SEED)
-    const dtx2delete = data({ data: [{key: 'foo'}], chainId: myChainId }, SEED)
-    const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED + 'foo', myChainId) }, SEED)
-    const canltx = cancelLease({ leaseId: '6pDDM84arAdJ4Ts7cY7JaDbhjBHMbPdYsr3WyiDSDzbt', chainId: myChainId }, SEED)
+    const btx = burn({ assetId: assetId, amount: 2, chainId: CHAIN_ID }, SEED)
+    const dtx = data({ data: [{ type: 'string', key: 'foo', value: 'bar' }], chainId: CHAIN_ID }, SEED)
+    const dtx2delete = data({ data: [{key: 'foo'}], chainId: CHAIN_ID }, SEED)
+    const ltx = lease({ amount: 1000, recipient: libs.crypto.address(SEED + 'foo', CHAIN_ID) }, SEED)
+    const canltx = cancelLease({ leaseId: '6pDDM84arAdJ4Ts7cY7JaDbhjBHMbPdYsr3WyiDSDzbt', chainId: CHAIN_ID }, SEED)
     const mttx = massTransfer({
       attachment: '123',
-      chainId: myChainId,
-      transfers: [{ recipient: libs.crypto.address(SEED, myChainId), amount: 1000 }]
+      chainId: CHAIN_ID,
+      transfers: [{ recipient: libs.crypto.address(SEED, CHAIN_ID), amount: 1000 }],
     }, SEED)
-    const atx = alias({ alias: 'super-alias2', chainId: myChainId }, SEED)
+    const atx = alias({ alias: 'super-alias2', chainId: CHAIN_ID }, SEED)
     const ssTx = setScript({
       //script: 'AwkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAAIBQAAAAJ0eAAAAA9zZW5kZXJQdWJsaWNLZXmIg5mo',
       script: null,
-      chainId: myChainId,
-      additionalFee: 400000
+      chainId: CHAIN_ID,
+      additionalFee: 400000,
     }, SEED)
     const sastx = setAssetScript({
-      assetId: myAssetId,
-      chainId: myChainId,
-      script: 'base64:AwZd0cYf'
+      assetId: assetId,
+      chainId: CHAIN_ID,
+      script: 'base64:AwZd0cYf',
     }, SEED)
     const spontx = sponsorship({
-      chainId: myChainId,
-      assetId: myAssetId,
-      minSponsoredAssetFee: 1000
+      chainId: CHAIN_ID,
+      assetId: assetId,
+      minSponsoredAssetFee: 1000,
     }, SEED)
     const istx = invokeScript({
-      dApp: libs.crypto.address(SEED, myChainId),
-      chainId: myChainId,
-      call: { function: 'foo' }
+      dApp: libs.crypto.address(SEED, CHAIN_ID),
+      chainId: CHAIN_ID,
+      call: { function: 'foo' },
     }, SEED)
     const uaitx = updateAssetInfo({
-      assetId: myAssetId,
+      assetId: assetId,
       name: 'new NAme',
       description: 'new description',
-      chainId: myChainId
+      chainId: CHAIN_ID,
     }, SEED)
     // [ttx, itx, reitx, atx, btx, dtx, ltx, canltx, ssTx, sastx, spontx, istx].forEach(t => {
     //   it(`Broadcasts ${t.type}`, async () => {
@@ -117,7 +152,7 @@ describe('transactions v3', () => {
       // await broadcast(reitx, NODE_URL)
       // await broadcast(atx, NODE_URL)
       // await broadcast(btx, NODE_URL)
-      await broadcast(dtx, NODE_URL)
+      await broadcast(dtx, nodeUrl)
       // await broadcast(dtx2delete, NODE_URL)
       // await broadcast(ltx, NODE_URL); console.log(ltx.id)
       // await broadcast(canltx, NODE_URL)
@@ -131,7 +166,7 @@ describe('transactions v3', () => {
     } catch (e) {
       console.error(e)
     }
-  })
+  }, TIMEOUT)
 
   it('correctly serialized transactions. All but transfer', () => {
     Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
@@ -143,31 +178,32 @@ describe('transactions v3', () => {
         console.log(`${name} Success: \n${sbytes}\n${myBytes}\``)
       }
     })
-  })
-  it('correctly serialized transfers with attachments', () => {
-    transfers.forEach(({ Bytes, Json }, i) => {
-      const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
-      if (!sbytes.includes(myBytes)) {
-        console.error(`${i}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
-      } else {
-        console.log(`${i} Success: \n${sbytes}\n${myBytes}\``)
-      }
-      expect(sbytes).toContain(myBytes)
-    })
-  })
+  }, TIMEOUT)
+  // todo add transfers with bytes
+  // it('correctly serialized transfers with attachments', () => {
+  //   transfers.forEach(({ Bytes, Json }, i) => {
+  //     const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
+  //     const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+  //     if (!sbytes.includes(myBytes)) {
+  //       console.error(`${i}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
+  //     } else {
+  //       console.log(`${i} Success: \n${sbytes}\n${myBytes}\``)
+  //     }
+  //     expect(sbytes).toContain(myBytes)
+  //   })
+//  })
 })
 
 let a= {
-  "type":4,
-  "version":3,
-  "senderPublicKey":"8rbsYsY3pnPveg13yDcoQ8WrS2tciNQS55rAKcC6gJut",
-  "assetId":"9NNLqSE68fimL5GpKFacu67auqtq5aYPVnvWJZJPigNA","recipient":"3FVUWaBpL7DmMWwH3e8S7E8JYVvpihviTDK",
+  'type':4,
+  'version':3,
+  'senderPublicKey':'8rbsYsY3pnPveg13yDcoQ8WrS2tciNQS55rAKcC6gJut',
+  'assetId':'9NNLqSE68fimL5GpKFacu67auqtq5aYPVnvWJZJPigNA','recipient':'3FVUWaBpL7DmMWwH3e8S7E8JYVvpihviTDK',
   amount:500,
-  "attachment":"3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw",
-  "fee":100000,
-  "feeAssetId":null,
-  "timestamp":1576572672305,
-  "proofs":["4TjSReiWQRsfqJahn8jLAsw6yhTCqR4fWyE4vFpxKF6WeZoFRehbxE1FocyE8QDtezE6a5Fv1RpK7HJ2rf4WZLfM"],
-  "chainId":68,"id":"4cYF5ryXtyoXKyTWAjxFm2fnMRuASgfMb1H8SgtaMLrH"
+  'attachment':'3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw',
+  'fee':100000,
+  'feeAssetId':null,
+  'timestamp':1576572672305,
+  'proofs':['4TjSReiWQRsfqJahn8jLAsw6yhTCqR4fWyE4vFpxKF6WeZoFRehbxE1FocyE8QDtezE6a5Fv1RpK7HJ2rf4WZLfM'],
+  'chainId':68,'id':'4cYF5ryXtyoXKyTWAjxFm2fnMRuASgfMb1H8SgtaMLrH',
 }

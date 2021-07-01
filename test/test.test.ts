@@ -7,59 +7,66 @@ import {data} from '../src/transactions/data'
 import {invokeScript} from '../src/transactions/invoke-script'
 import {address, randomSeed} from '@waves/ts-lib-crypto'
 import {setScript} from '../src/transactions/set-script'
-import {TIMEOUT} from './integration/config'
+import {API_BASE, TIMEOUT} from './integration/config'
 import {waitForTxWithNConfirmations} from '../src/nodeInteraction'
 
 const nodeUrl = 'http://localhost:6869'
 const masterSeed = 'waves private node seed with waves tokens'
+const CHAIN_ID = 82
+let dappAddress1 = ''
+jest.setTimeout(60000)
 
 it('issue', async () => {
     const tx = issue({
         name: 'test',
         description: 'test',
         quantity: 1,
-        chainId: 82,
+        chainId: CHAIN_ID,
         fee: 100000000,
     }, masterSeed)
     console.log(await broadcast(tx, nodeUrl))
 })
 
-it('updateAssetInfo', async () => {
-    const tx = updateAssetInfo({
-        name: 'myCoin',
-        description: 'description for myCoin',
-        assetId: '9Qkr6cBZmfPZosCwbnHKVHciEJgFSzahe4H9HL6avmT9',
-        chainId: 82,
-    }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
-})
+// it('updateAssetInfo', async () => {
+//     const tx = updateAssetInfo({
+//         name: 'myCoin',
+//         description: 'description for myCoin',
+//         assetId: '9Qkr6cBZmfPZosCwbnHKVHciEJgFSzahe4H9HL6avmT9',
+//         chainId: CHAIN_ID,
+//     }, masterSeed)
+//     console.log(JSON.stringify(tx, null, 4))
+//     console.log(await broadcast(tx, nodeUrl))
+// })
 
 it('transfer', async () => {
+
+    const recipient = address(randomSeed(), CHAIN_ID)
     const tx = transfer({
-        recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
+        recipient: recipient,
         amount: 1,
-        chainId: 82,
-        attachment: {value: 'hello', type: 'string'},
+        chainId: CHAIN_ID,
+        attachment: '',
     }, masterSeed)
     console.log(JSON.stringify(tx, null, 4))
     console.log(await broadcast(tx, nodeUrl))
 })
 
 it('masstransfer', async () => {
+    const r1 = address(randomSeed(), CHAIN_ID)
+    const r2 = address(randomSeed(), CHAIN_ID)
     const tx = massTransfer({
         transfers: [
             {
-                recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
+                recipient: r1,
                 amount: 1,
             },
             {
-                recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
+                recipient: r2,
                 amount: 1,
             },
         ],
-        chainId: 82,
-        attachment: {value: 'hello', type: 'string'},
+        chainId: CHAIN_ID,
+        attachment: '',
     }, masterSeed)
     console.log(JSON.stringify(tx, null, 4))
     console.log(await broadcast(tx, nodeUrl))
@@ -68,7 +75,7 @@ it('masstransfer', async () => {
 it('set data', async () => {
     const tx = data({
         data: [{key: 'foo', value: 'bar'}],
-        chainId: 82,
+        chainId: CHAIN_ID,
     }, masterSeed)
     console.log(JSON.stringify(tx, null, 4))
     console.log(await broadcast(tx, nodeUrl))
@@ -76,8 +83,8 @@ it('set data', async () => {
 
 it('drop data', async () => {
     const tx = data({
-        data: [{key: 'foo', value: null}],
-        chainId: 82,
+        data: [{key: 'foo'}],
+        chainId: CHAIN_ID,
     }, masterSeed)
     console.log(JSON.stringify(tx, null, 4))
     console.log(await broadcast(tx, nodeUrl))
@@ -88,29 +95,30 @@ it('setScriptTest', async () => {
     const script = 'AAIEAAAAAAAAAAQIAhIAAAAAAAAAAAEAAAABaQEAAAADZm9vAAAAAAkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAADa2V5AAAAAAAAAAABCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAANrZXkGCQAETAAAAAIJAQAAAAtTdHJpbmdFbnRyeQAAAAICAAAAA2tleQIAAAADc3RyBQAAAANuaWwAAAAAl/lsvw=='
 
     const seed = randomSeed()
-    const addr = address(seed, 82)
-    console.log(addr)
-    console.log(seed)
+    const addr = address(seed, CHAIN_ID)
+
+    dappAddress1 = addr
 
     let tx = transfer({
         recipient: addr,
         amount: 2e8,
-        chainId: 82,
+        chainId: CHAIN_ID,
     }, masterSeed)
     console.log(await broadcast(tx, nodeUrl))
-    await sleep(15000)
+    await waitForTx(tx.id, {apiBase: nodeUrl, timeout: 10000})
 
     const setScriptTx = setScript({
         script,
-        chainId: 82,
+        chainId: CHAIN_ID,
     }, seed)
     console.log(await broadcast(setScriptTx, nodeUrl))
+    await waitForTx(setScriptTx.id, {apiBase: nodeUrl, timeout: 10000})
     // await sleep(15000);
     // try {
     //     const invokeTx = invokeScript({
     //         dApp: addr,
     //         call: {function: 'foo', args: []},
-    //         chainId: 82,
+    //         chainId: chainId,
     //         fee: 500000,
     //         payment: [{assetId: null, amount: 1}],
     //         feeAssetId: null
@@ -126,7 +134,7 @@ it('setScriptTest', async () => {
     //     const invokeTx1pay = invokeScript({
     //         dApp: addr,
     //         call: {function: 'foo', args: []},
-    //         chainId: 82,
+    //         chainId: chainId,
     //         fee: 500000,
     //         payment: [{amount: 1, assetId: null}],
     //         feeAssetId: null
@@ -143,7 +151,7 @@ it('setScriptTest', async () => {
     //         // dApp: addr,
     //         dApp: '3HaN7nm7LuC7bDpgiG917VdJ1mmJE3iXMPM',
     //         call: {function: 'foo', args: []},
-    //         chainId: 82,
+    //         chainId: chainId,
     //         fee: 500000,
     //         payment: [{amount: 1, assetId: null}, {amount: 1, assetId: null}],
     //     }, masterSeed)
@@ -160,9 +168,9 @@ it('setScriptTest', async () => {
 it('invoke test', async () => {
 
     const invokeTx = invokeScript({
-        dApp: '3MAjRbSNjxihNaMLnhRM5L1JQtyf81AuAHA',
+        dApp: dappAddress1,
         call: {function: 'foo', args: []},
-        chainId: 82,
+        chainId: CHAIN_ID,
         fee: 500000,
         feeAssetId: null,
     }, masterSeed)
@@ -178,36 +186,13 @@ it('transfer test', async () => {
         {attachment: ''},
         {attachment: null},
         {attachment: undefined},
-
-        {version: 3, attachment: 'StV1DL6CwTryKyV'},
-        {version: 3, attachment: ''},
-        {version: 3, attachment: null},
-        {version: 3, attachment: undefined},
-
-        {version: 3, attachment: {type: 'string', value: ''}},
-        {version: 3, attachment: {type: 'string', value: 'hello world'}},
-
-        {version: 3, attachment: {type: 'integer', value: '123'}},
-        {version: 3, attachment: {type: 'integer', value: 123}},
-        {version: 3, attachment: {type: 'integer', value: -1}},
-        {version: 3, attachment: {type: 'integer', value: -1e10}},
-        {version: 3, attachment: {type: 'integer', value: -0}},
-        {version: 3, attachment: {type: 'integer', value: 0}},
-        {version: 3, attachment: {type: 'integer', value: '-9223372036854775808'}},
-        {version: 3, attachment: {type: 'integer', value: '9223372036854775807'}},
-
-        {version: 3, attachment: {type: 'boolean', value: false}},
-        {version: 3, attachment: {type: 'boolean', value: true}},
-
-        {version: 3, attachment: {type: 'binary', value: ''}},
-        {version: 3, attachment: {type: 'binary', value: 'StV1DL6CwTryKyV'}},
     ]
-    console.log(conditions.length)
+    const recipient = address(randomSeed(), CHAIN_ID)
     const makeTx = (cond: any) => transfer({
         ...cond,
-        chainId: 82,
+        chainId: CHAIN_ID,
         amount: 1,
-        recipient: '3Hm3LGoNPmw1VTZ3eRA2pAfeQPhnaBm6YFC',
+        recipient: recipient,
     }, masterSeed)
 
 

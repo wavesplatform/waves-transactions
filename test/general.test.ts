@@ -5,6 +5,7 @@ import { reissueMinimalParams, burnMinimalParams, orderMinimalParams } from './m
 import { TTx } from '../src'
 import { exampleTxs } from './exampleTxs'
 import { order } from '../src/requests/order'
+import {API_BASE} from './integration/config'
 
 const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
@@ -43,7 +44,6 @@ describe('signTx', () => {
 })
 
 describe('Node interaction', () => {
-  const nodeUrl = 'https://nodes.wavesplatform.com/'
 
   it('should send tx to node', async () => {
     const dataParams = {
@@ -65,8 +65,8 @@ describe('Node interaction', () => {
     }
     const result = data(dataParams, 'seed')
 
-    await expect(broadcast(result, nodeUrl)).rejects
-      .toMatchObject({error: 307})
+    await expect(broadcast(result, API_BASE)).rejects
+      .toMatchObject({error: 303})
   }, 100000)
 
 })

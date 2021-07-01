@@ -30,6 +30,7 @@ import {lease} from './transactions/lease'
 import {GenesisTransaction} from '@waves/ts-types/transactions/index'
 import {TTransaction, WithChainId} from './transactions'
 import {ExchangeTransactionOrderV1} from '@waves/ts-types/src/parts'
+import {parseTx} from '@waves/marshall/dist/parse'
 
 const invokeScriptCallSchema = {
     ...schemas.txFields.functionCall[1], withLength: {
@@ -113,7 +114,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             res.reissuable = t.reissue!.reissuable
             break
         case 'burn':
-            res.quantity = t.burn!.assetAmount!.amount!.toString()
+            res.amount = t.burn!.assetAmount!.amount!.toString()
             res.assetId = base58Encode(t.burn!.assetAmount!.assetId!)
             break
         case 'exchange':
@@ -139,8 +140,8 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
                 res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
             }
             if (t.massTransfer!.hasOwnProperty('attachment')) {
-                res.attachment = t.massTransfer!.attachment == null ? null : base58Encode(t.massTransfer!.attachment)
-            }
+                res.attachment = t.massTransfer!.attachment == null ? '' : base58Encode(t.massTransfer!.attachment)
+            } else res.attachment = ''
             res.transfers = t.massTransfer!.transfers!.map(({amount, recipient}) => ({
                 amount: amount!.toString(),
                 recipient: recipientFromProto(recipient!, t.chainId),
@@ -268,7 +269,7 @@ const getSetScriptData = (t: SetScriptTransaction): wavesProto.waves.ISetScriptT
     script: t.script == null ? null : scriptToProto(t.script),
 })
 const getSponsorData = (t: SponsorshipTransaction): wavesProto.waves.ISponsorFeeTransactionData => ({
-    minFee: amountToProto(t.minSponsoredAssetFee, t.assetId),
+    minFee: t.minSponsoredAssetFee === null ? amountToProto(0, t.assetId) : amountToProto(t.minSponsoredAssetFee, t.assetId),
 })
 const getSetAssetScriptData = (t: SetAssetScriptTransaction): wavesProto.waves.ISetAssetScriptTransactionData => ({
     assetId: base58Decode(t.assetId),
@@ -284,7 +285,7 @@ const getUpdateAssetInfoData = (t: UpdateAssetInfoTransaction): wavesProto.waves
     return {
         assetId: base58Decode(t.assetId),
         name: t.name,
-        description: t.description,
+        description: t.description === '' ? null : t.description,
     }
 }
 export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesProto.waves.ITransaction => {
@@ -383,7 +384,7 @@ const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({
     publicKeyHash: !r.startsWith('alias') ? base58Decode(r).slice(2, -4) : undefined,
 })
 const amountToProto = (a: string | number, assetId?: string | null): wavesProto.waves.IAmount => ({
-    amount: Long.fromValue(a),
+    amount: a == 0 ? null : Long.fromValue(a),
     assetId: assetId == null ? null : base58Decode(assetId),
 })
 const massTransferItemToProto = (mti: MassTransferItem): wavesProto.waves.MassTransferTransactionData.ITransfer => ({
