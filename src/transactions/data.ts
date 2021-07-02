@@ -38,9 +38,9 @@ const mapType = <T>(value: T): [DataFiledType, number, (value: T) => Uint8Array]
 
 
 /* @echo DOCS */
-export function data(params: IDataParams, seed: TSeedTypes): DataTransaction & WithId
-export function data(paramsOrTx: IDataParams & WithSender | DataTransaction, seed?: TSeedTypes): DataTransaction & WithId
-export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & WithId {
+export function data(params: IDataParams, seed: TSeedTypes): DataTransaction & WithId & WithProofs
+export function data(paramsOrTx: IDataParams & WithSender | DataTransaction, seed?: TSeedTypes): DataTransaction & WithId & WithProofs
+export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & WithId & WithProofs{
     const type = TRANSACTION_TYPE.DATA
     const version = paramsOrTx.version || DEFAULT_VERSIONS.DATA
     const seedsAndIndexes = convertToPairs(seed)

@@ -11,9 +11,9 @@ import {DEFAULT_VERSIONS} from '../defaultVersions'
 import {TRANSACTION_TYPE, UpdateAssetInfoTransaction} from '@waves/ts-types'
 
 /* @echo DOCS */
-export function updateAssetInfo(params: IUpdateAssetInfoParams, seed: TSeedTypes): UpdateAssetInfoTransaction & WithId
-export function updateAssetInfo(paramsOrTx: IUpdateAssetInfoParams & WithSender | UpdateAssetInfoTransaction, seed?: TSeedTypes): UpdateAssetInfoTransaction & WithId
-export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): UpdateAssetInfoTransaction & WithId {
+export function updateAssetInfo(params: IUpdateAssetInfoParams, seed: TSeedTypes): UpdateAssetInfoTransaction & WithId & WithProofs
+export function updateAssetInfo(paramsOrTx: IUpdateAssetInfoParams & WithSender | UpdateAssetInfoTransaction, seed?: TSeedTypes): UpdateAssetInfoTransaction & WithId & WithProofs
+export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): UpdateAssetInfoTransaction & WithId & WithProofs {
     const type = TRANSACTION_TYPE.UPDATE_ASSET_INFO
     const version = paramsOrTx.version || DEFAULT_VERSIONS.UPDATE_ASSET_INFO
     const seedsAndIndexes = convertToPairs(seed)

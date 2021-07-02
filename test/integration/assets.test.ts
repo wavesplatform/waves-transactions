@@ -185,7 +185,7 @@ describe('Assets', () => {
       await waitForTx(tx.id, {apiBase: API_BASE})
 
       expect(resp.type).toEqual(3)
-    }
+    }, TIMEOUT)
   })
 
   describe('Other', () => {
@@ -246,7 +246,7 @@ describe('Assets', () => {
         amountAsset: assetId,
         priceAsset: null,
         amount: 1,
-        price: 100000000
+        price: 100000000,
       }, account1)
 
       //await submitOrder(order1, matcherUrl)

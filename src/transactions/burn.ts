@@ -13,9 +13,9 @@ import {BurnTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function burn(params: IBurnParams, seed: TSeedTypes): BurnTransaction & WithId
-export function burn(paramsOrTx: IBurnParams & WithSender | BurnTransaction, seed?: TSeedTypes): BurnTransaction & WithId
-export function burn(paramsOrTx: any, seed?: TSeedTypes): BurnTransaction & WithId {
+export function burn(params: IBurnParams, seed: TSeedTypes): BurnTransaction & WithId & WithProofs
+export function burn(paramsOrTx: IBurnParams & WithSender | BurnTransaction, seed?: TSeedTypes): BurnTransaction & WithId & WithProofs
+export function burn(paramsOrTx: any, seed?: TSeedTypes): BurnTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.BURN
   const version = paramsOrTx.version || DEFAULT_VERSIONS.BURN
   const seedsAndIndexes = convertToPairs(seed)

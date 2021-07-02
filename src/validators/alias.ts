@@ -21,8 +21,8 @@ const aliasScheme = {
     fee: isNumberLike,
     chainId: isNumber,
     timestamp: isNumber,
-    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
- };
+    proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),
+}
 
 
 export const aliasValidator = validateByShema(aliasScheme, getError)

@@ -13,9 +13,9 @@ import {ReissueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): ReissueTransaction & WithId
-export function reissue(paramsOrTx: IReissueParams & WithSender | ReissueTransaction, seed?: TSeedTypes): ReissueTransaction & WithId
-export function reissue(paramsOrTx: any, seed?: TSeedTypes): ReissueTransaction & WithId{
+export function reissue(paramsOrTx: IReissueParams, seed: TSeedTypes): ReissueTransaction & WithId & WithProofs
+export function reissue(paramsOrTx: IReissueParams & WithSender | ReissueTransaction, seed?: TSeedTypes): ReissueTransaction & WithId & WithProofs
+export function reissue(paramsOrTx: any, seed?: TSeedTypes): ReissueTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.REISSUE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.REISSUE
   const seedsAndIndexes = convertToPairs(seed)

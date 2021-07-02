@@ -1,5 +1,5 @@
 import { exampleTxs } from './exampleTxs'
-import {broadcast, libs, TTx, waitForTx, WithId} from '../src'
+import {broadcast, libs, waitForTx, WithId} from '../src'
 import { protoBytesToTx, txToProtoBytes } from '../src/proto-serialize'
 import { transfer } from '../src/transactions/transfer'
 import { issue } from '../src/transactions/issue'
@@ -13,7 +13,7 @@ import { setScript } from '../src/transactions/set-script'
 import { setAssetScript } from '../src/transactions/set-asset-script'
 import { invokeScript } from '../src/transactions/invoke-script'
 import { sponsorship } from '../src/transactions/sponsorship'
-import { txs, transfers } from './example-proto-tx'
+import { txs } from './example-proto-tx'
 import { massTransfer } from '../src/transactions/mass-transfer'
 import { updateAssetInfo } from '../src/transactions/update-asset-info'
 import {randomHexString, TIMEOUT} from './integration/config'
@@ -24,7 +24,7 @@ import {issueMinimalParams} from './minimalParams'
 
 const nodeUrl = 'http://localhost:6869/'
 const masterSeed = 'waves private node seed with waves tokens'
-const CHAIN_ID = 82
+const CHAIN_ID = 84
 let SEED = 'abc'
 const wvs = 1e8
 let assetId = ''
@@ -33,7 +33,7 @@ let assetId = ''
  * Longs as strings, remove unnecessary fields
  * @param t
  */
-const normalizeTx = (t: TTx): TTx => {
+const normalizeTx = (t:any) => {
   const tx: any = t
   if (tx.quantity) tx.quantity = tx.quantity.toString()
   if (tx.amount) tx.amount = tx.amount.toString()
@@ -43,6 +43,33 @@ const normalizeTx = (t: TTx): TTx => {
   delete tx.proofs
   return tx
 }
+
+describe('serialize/deserialize', () => {
+  const txss = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as any)
+  txss.forEach(tx => {
+    it('type: ' + tx.type, () => {
+      tx = normalizeTx(tx)
+      //const expectedProtoBytes = tx.
+      const parsed = protoBytesToTx(txToProtoBytes(tx))
+      expect(parsed).toMatchObject(tx)
+    })
+  })
+
+  it('correctly serialized transactions. All but transfer', () => {
+    Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
+      console.log(name)
+      const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
+      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+      if (!sbytes.includes(myBytes)) {
+        console.error(`${name}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
+      } else {
+        console.log(`${name} Success: \n${sbytes}\n${myBytes}\``)
+      }
+    })
+  }, TIMEOUT)
+
+})
+
 describe('transactions v3', () => {
 
   beforeAll(async () => {
@@ -70,17 +97,6 @@ describe('transactions v3', () => {
     await waitForTx(mtt.id, {apiBase: nodeUrl, timeout: TIMEOUT})
 
   }, TIMEOUT)
-
-  describe('serialize/deserialize', () => {
-    const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as any)
-    txs.forEach(tx => {
-      it('type: ' + tx.type, () => {
-        tx = normalizeTx(tx)
-        const parsed = protoBytesToTx(txToProtoBytes(tx))
-        expect(parsed).toMatchObject(tx)
-      })
-    })
-  })
 
   it('broadcasts new transactions', async () => {
     const itx = issue({
@@ -168,30 +184,20 @@ describe('transactions v3', () => {
     }
   }, TIMEOUT)
 
-  it('correctly serialized transactions. All but transfer', () => {
-    Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
-      const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
-      if (!sbytes.includes(myBytes)) {
-        console.error(`${name}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
-      } else {
-        console.log(`${name} Success: \n${sbytes}\n${myBytes}\``)
-      }
-    })
-  }, TIMEOUT)
-  // todo add transfers with bytes
-  // it('correctly serialized transfers with attachments', () => {
-  //   transfers.forEach(({ Bytes, Json }, i) => {
-  //     const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-  //     const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
-  //     if (!sbytes.includes(myBytes)) {
-  //       console.error(`${i}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
-  //     } else {
-  //       console.log(`${i} Success: \n${sbytes}\n${myBytes}\``)
-  //     }
-  //     expect(sbytes).toContain(myBytes)
-  //   })
-//  })
+
+ //  //todo add transfers with bytes
+ //  it('correctly serialized transfers with attachments', () => {
+ //    transfers.forEach(({ Bytes, Json }, i) => {
+ //      const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
+ //      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+ //      if (!sbytes.includes(myBytes)) {
+ //        console.error(`${i}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
+ //      } else {
+ //        console.log(`${i} Success: \n${sbytes}\n${myBytes}\``)
+ //      }
+ //      expect(sbytes).toContain(myBytes)
+ //    })
+ // })
 })
 
 let a= {

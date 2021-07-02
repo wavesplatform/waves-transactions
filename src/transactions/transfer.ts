@@ -20,9 +20,9 @@ import {DEFAULT_VERSIONS} from '../defaultVersions'
 import {TRANSACTION_TYPE, TransferTransaction} from '@waves/ts-types'
 
 /* @echo DOCS */
-export function transfer(params: ITransferParams, seed: TSeedTypes): TransferTransaction & WithId
-export function transfer(paramsOrTx: ITransferParams & WithSender | TransferTransaction, seed?: TSeedTypes): TransferTransaction & WithId
-export function transfer(paramsOrTx: any, seed?: TSeedTypes): TransferTransaction & WithId {
+export function transfer(params: ITransferParams, seed: TSeedTypes): TransferTransaction & WithId & WithProofs
+export function transfer(paramsOrTx: ITransferParams & WithSender | TransferTransaction, seed?: TSeedTypes): TransferTransaction & WithId & WithProofs
+export function transfer(paramsOrTx: any, seed?: TSeedTypes): TransferTransaction & WithId & WithProofs{
     const type = TRANSACTION_TYPE.TRANSFER
     const version = paramsOrTx.version || DEFAULT_VERSIONS.TRANSFER
     const seedsAndIndexes = convertToPairs(seed)
