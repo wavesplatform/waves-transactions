@@ -50,7 +50,7 @@ describe('serialize/deserialize', () => {
     })
   })
 
-  it('correctly serialized transactions', () => { //todo fix masstransfer
+  it('correctly serialized transactions', () => {
     Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
       const actualBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
       const expectedBytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
