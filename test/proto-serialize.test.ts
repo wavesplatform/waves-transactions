@@ -52,14 +52,9 @@ describe('serialize/deserialize', () => {
 
   it('correctly serialized transactions', () => { //todo fix masstransfer
     Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
-      console.log(name)
-      const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-      const sbytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
-      if (!sbytes.includes(myBytes)) {
-        console.error(`${name}\nExpected: ${sbytes}\nActual  : ${myBytes}`)
-      } else {
-        console.log(`${name} Success: \n${sbytes}\n${myBytes}\``)
-      }
+      const actualBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
+      const expectedBytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+      expect(expectedBytes).toBe(actualBytes)
     })
   }, TIMEOUT)
 

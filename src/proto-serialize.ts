@@ -396,7 +396,7 @@ const amountToProto = (a: string | number, assetId?: string | null): wavesProto.
 })
 const massTransferItemToProto = (mti: MassTransferItem): wavesProto.waves.MassTransferTransactionData.ITransfer => ({
     recipient: recipientToProto(mti.recipient),
-    amount: Long.fromValue(mti.amount),
+    amount: mti.amount == 0 ? null : Long.fromValue(mti.amount),
 })
 export const dataEntryToProto = (de: DataTransactionEntry): wavesProto.waves.DataTransactionData.IDataEntry => ({
     key: de.key,

@@ -105,7 +105,7 @@ export const massTransferTx = {
     ['MMiYadhicyXZMJVEPep7nsSto5NS2mnHaseWoEDfPxXAdfYLDMgk65b5g55SDvFLzEJVqjiZnxNHQ5jiUUf8bKU'],
   id: 'GjrPGGqMhZmvDfyQwnK13T1fSGjeN5NJS2E7meuP6tEm',
   transfers:
-    [{ recipient: 'alias:T:aaab', amount: '9223372036854775807' },
+    [{ recipient: '3MtyRj3obKxxHK7UCip4jUWTzzvwZ9CRFBc', amount: '9223372036854775807' },
       { recipient: 'alias:T:aabc', amount: 10000 }],
 }
 
