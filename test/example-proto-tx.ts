@@ -43,7 +43,7 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'leaseId': 'BhaURR89tjeVWq1xnt4qLjQvYAGnmmocDmvnb1hooR1z',
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236450481,
             'proofs': ['a63AFSP1oxMNrkRPXfiTcVRFeB3vYjJyKzTqQdHrK8rdh34397rnbQtXFExgsqvniFCmvXFKqcpeXirLJEyPoYw'],
@@ -59,7 +59,7 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'alias': '_rich-account.with@30_symbols_',
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236451175,
             'proofs': ['ZQxN8M6ryeYvfWsBRssbeeu8bXMpuLJYkRCwFJxYe4K8anogcbiRBDX9crRReus7mABGwogSMQdn1vxd9EAmQb4'],
@@ -93,13 +93,13 @@ export const txs = {
             'data': [{'key': 'bool', 'type': 'boolean', 'value': true}, {
                 'key': 'int',
                 'type': 'integer',
-                'value': 9223372036854775807,
+                'value': '9223372036854775807',
             }, {'key': 'bin', 'type': 'binary', 'value': 'base64:c29tZSBzdHJpbmc='}, {
                 'key': 'str',
                 'type': 'string',
                 'value': 'some string',
             }, {'key': 'delKey', 'value': null}],
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236451882,
             'proofs': ['2B6E8MV51MqKqXdmXPqpizNfAkrQCzt14KSkYk4U2LJ7ATqygwkmcmeh4NP3YPVWK3ZXRevQefcWgMSnYJHadZWC'],
@@ -117,7 +117,7 @@ export const txs = {
             'data': [{'key': 'bool', 'type': 'boolean', 'value': true}, {
                 'key': 'int',
                 'type': 'integer',
-                'value': 9223372036854775807,
+                'value': '9223372036854775807',
             }, {'key': 'bin', 'type': 'binary', 'value': 'base64:c29tZSBzdHJpbmc='}, {
                 'key': 'str',
                 'type': 'string',
@@ -161,7 +161,7 @@ export const txs = {
                 'amount': 20,
                 'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ',
             }],
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ',
             'timestamp': 1625236452093,
             'proofs': ['57bggAeTpEzjf5d5Lcuc8bKo5NH3bzKtUG2CJZCE4w2HcNoY4DncAMmvVGfc5aMz5Unoa6KxKPv3TYjUo99N71rs'],
@@ -179,13 +179,15 @@ export const txs = {
             'dApp': '3N7U8EVrPNXRp4rQ6LNebhmjqzA4gPY641Q',
             'call': {
                 'function': 'testFunctionV2',
-                'args': [{'type': 'boolean', 'value': true}, {'type': 'boolean', 'value': false}, {
-                    'type': 'binary',
-                    'value': 'base64:YWFhYWFh',
-                }, {'type': 'integer', 'value': 9223372036854775807}, {
-                    'type': 'integer',
-                    'value': 0,
-                }, {'type': 'string', 'value': 'aaaaaa'}, {'type': 'string', 'value': ''}],
+                'args': [
+                    {'type': 'boolean', 'value': true},
+                    {'type': 'boolean', 'value': false},
+                    {'type': 'binary', 'value': 'base64:YWFhYWFh'},
+                    {'type': 'integer', 'value': '9223372036854775807'},
+                    {'type': 'integer', 'value': 0},
+                    {'type': 'string', 'value': 'aaaaaa'},
+                    {'type': 'string', 'value': ''},
+                ],
             },
             'payment': [{'amount': 20, 'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ'}],
             'fee': 500000,
@@ -209,7 +211,7 @@ export const txs = {
                 'args': [{'type': 'boolean', 'value': true}, {'type': 'boolean', 'value': false}, {
                     'type': 'binary',
                     'value': 'base64:YWFhYWFh',
-                }, {'type': 'integer', 'value': 9223372036854775807}, {
+                }, {'type': 'integer', 'value': '9223372036854775807'}, {
                     'type': 'integer',
                     'value': 0,
                 }, {'type': 'string', 'value': 'aaaaaa'}, {'type': 'string', 'value': ''}, {
@@ -219,7 +221,7 @@ export const txs = {
                         'value': false,
                     }, {'type': 'binary', 'value': 'base64:YWFhYWFh'}, {
                         'type': 'integer',
-                        'value': 9223372036854775807,
+                        'value': '9223372036854775807',
                     }, {'type': 'integer', 'value': 0}, {'type': 'string', 'value': 'aaaaaa'}, {
                         'type': 'string',
                         'value': '',
@@ -248,7 +250,7 @@ export const txs = {
                 'args': [{'type': 'boolean', 'value': true}, {'type': 'boolean', 'value': false}, {
                     'type': 'binary',
                     'value': 'base64:YWFhYWFh',
-                }, {'type': 'integer', 'value': 9223372036854775807}, {
+                }, {'type': 'integer', 'value': '9223372036854775807'}, {
                     'type': 'integer',
                     'value': 0,
                 }, {'type': 'string', 'value': 'aaaaaa'}, {'type': 'string', 'value': ''}, {
@@ -258,7 +260,7 @@ export const txs = {
                         'value': false,
                     }, {'type': 'binary', 'value': 'base64:YWFhYWFh'}, {
                         'type': 'integer',
-                        'value': 9223372036854775807,
+                        'value': '9223372036854775807',
                     }, {'type': 'integer', 'value': 0}, {'type': 'string', 'value': 'aaaaaa'}, {
                         'type': 'string',
                         'value': '',
@@ -292,7 +294,7 @@ export const txs = {
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'name': 'aaaa',
             'description': '',
-            'quantity': 9223372036854775807,
+            'quantity': '9223372036854775807',
             'decimals': 0,
             'reissuable': true,
             'script': null,
@@ -317,7 +319,7 @@ export const txs = {
             'decimals': 7,
             'reissuable': false,
             'script': null,
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236452286,
             'proofs': ['3DCJoduExFdnPe5hDoawXDMUvpVV75116XaTRi2HQW5YTk1cATqEANUkqUh3j6gMpvaGFAZFCQfN8uuNtDZMDVuo'],
@@ -334,7 +336,7 @@ export const txs = {
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'name': 'aaaaaaaaaaaaaaaa',
             'description': 'Some asset \n description',
-            'quantity': 9223372036854775807,
+            'quantity': '9223372036854775807',
             'decimals': 8,
             'reissuable': true,
             'script': null,
@@ -355,7 +357,7 @@ export const txs = {
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'name': 'aaaaaaaaaaaaaaaa',
             'description': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            'quantity': 9223372036854775807,
+            'quantity': '9223372036854775807',
             'decimals': 0,
             'reissuable': false,
             'script': 'base64:BQbtKNoM',
@@ -375,8 +377,8 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'recipient': '3MwrGpurVChT8VtveXSfzBBr1VSfSMWTzHC',
-            'amount': 9223372036854775807,
-            'fee': 9223372036854775807,
+            'amount': '9223372036854775807',
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236452578,
             'proofs': ['42zY1Xv149pzfzBEE3k35jGZXcZnJcxX8ciXQK5x5EoVpDxYzESx9QwoA4NteSZ1yiZS8SLdpiiNn8pqydhfcoAf'],
@@ -392,7 +394,7 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'recipient': 'alias:T:_rich-account.with@30_symbols_',
-            'amount': 9223372036854775807,
+            'amount': '9223372036854775807',
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1625236452581,
@@ -429,9 +431,9 @@ export const txs = {
             'attachment': '2UyXA7eLNfqs1',
             'transfers': [{
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}],
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236452770,
             'proofs': ['ZkEaypNo8DHQb6daLUD2x7skQnbctu45mM46cu85aNijEYgNe3Lau3koYM2Yg2JQcyhgiyncUasM2ai9uRyD6Ln'],
@@ -450,7 +452,7 @@ export const txs = {
             'attachment': '',
             'transfers': [{
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM', 'amount': 0}],
             'fee': 200000,
             'feeAssetId': null,
@@ -471,226 +473,226 @@ export const txs = {
             'attachment': '',
             'transfers': [{
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
                 'amount': 0,
             }, {
                 'recipient': 'alias:T:_rich-account.with@30_symbols_',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': 'alias:T:_min', 'amount': 0}, {
                 'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM',
-                'amount': 9223372036854775807,
+                'amount': '9223372036854775807',
             }, {'recipient': '3ND2akT8nQH3BDWFWe4Jak4sTVYpzCQs1aM', 'amount': 0}],
             'fee': 5100000,
             'feeAssetId': null,
@@ -708,9 +710,9 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'assetId': 'DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv',
-            'quantity': 9223372036854775807,
+            'quantity': '9223372036854775807',
             'reissuable': false,
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236452966,
             'proofs': ['37CFrkNoujidUTxAmrEVBqjTFUQwfBusv2ajuo9BqjCHSg8WZzYDwVHdEwSJN8wBs813fyodqk2Xsr5wgsVm9sgh'],
@@ -762,7 +764,7 @@ export const txs = {
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'assetId': 'E5Rcha533YfMJZE9aDmx2m5tZSYYt6HWgFU3jkP4YGDV',
             'script': 'base64:AwZd0cYf',
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1625236453158,
             'proofs': ['2Fj18Ln7r3EmhtSNVSDrsqAG6BHYfYMTMpFhMeq2qc6oxpj4XWJmdmFxVcyBCmxMWCaf659ss1trsgW9DoYrU879'],
@@ -810,7 +812,7 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'assetId': 'GMiZSiRUd2kWrc2PDVWGGE2bB219wp2CHCBUipeJkvVm',
-            'minSponsoredAssetFee': 9223372036854775807,
+            'minSponsoredAssetFee': '9223372036854775807',
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1625236453544,
@@ -828,7 +830,7 @@ export const txs = {
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ',
             'minSponsoredAssetFee': 0,
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ',
             'timestamp': 1625236453548,
             'proofs': ['2TaSK17Gg9MsQmRAatgoDdEqvzWQ8Agi5WMR5JKK7rHLQnyX629dZ3dxbU38PjuDVUXQV4iYpk7miRCdnF4qJwe5'],
@@ -844,10 +846,10 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'recipient': 'alias:T:_rich-account.with@30_symbols_',
-            'amount': 9223372036854775807,
+            'amount': '9223372036854775807',
             'assetId': 'AzFCetMjPhAv4gjdnYzWsoEesyAdAB26kK81DU8yjMb9',
             'attachment': '',
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': 'AzFCetMjPhAv4gjdnYzWsoEesyAdAB26kK81DU8yjMb9',
             'timestamp': 1625236453735,
             'proofs': ['2F3Q1rGAu1wMRpcBwqPTUv5VTLSpMK3Xnih53WbtNYeYsN4h7qYLA44mu2MazvTo4ojijcC3EyXmg78XjAx81q8Y'],
@@ -863,10 +865,10 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'recipient': '3N7BsHBsgbYQU7aiDmpdiQ93GsPQBkzffLF',
-            'amount': 9223372036854775807,
+            'amount': '9223372036854775807',
             'assetId': null,
             'attachment': '',
-            'fee': 9223372036854775807,
+            'fee': '9223372036854775807',
             'feeAssetId': 'AzFCetMjPhAv4gjdnYzWsoEesyAdAB26kK81DU8yjMb9',
             'timestamp': 1625236453740,
             'proofs': ['34G24GV8kDgPGsiRyu6oP2bA11QjwM2LGiLXqwKvJntEuxjXA9uYF5oVXcZ7R3EpwT5C3rCHJKrXWyvqtNgYEKuU'],

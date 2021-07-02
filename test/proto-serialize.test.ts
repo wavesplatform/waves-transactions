@@ -33,12 +33,8 @@ let assetId = ''
  * Longs as strings, remove unnecessary fields
  * @param t
  */
-const normalizeTx = (t:any) => {
+const deleteProofsAndId = (t:any) => {
   const tx: any = t
-  if (tx.quantity) tx.quantity = tx.quantity.toString()
-  if (tx.amount) tx.amount = tx.amount.toString()
-  if (tx.payment) tx.payment = tx.payment.map((item: any) => ({ ...item, amount: item.amount.toString() }))
-  if (tx.transfers) tx.transfers = tx.transfers.map((item: any) => ({ ...item, amount: item.amount.toString() }))
   delete tx.id
   delete tx.proofs
   return tx
@@ -48,14 +44,13 @@ describe('serialize/deserialize', () => {
   const txss = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as any)
   txss.forEach(tx => {
     it('type: ' + tx.type, () => {
-      tx = normalizeTx(tx)
-      //const expectedProtoBytes = tx.
+      tx = deleteProofsAndId(tx)
       const parsed = protoBytesToTx(txToProtoBytes(tx))
       expect(parsed).toMatchObject(tx)
     })
   })
 
-  it('correctly serialized transactions. All but transfer', () => {
+  it('correctly serialized transactions', () => { //todo fix masstransfer
     Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
       console.log(name)
       const myBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))

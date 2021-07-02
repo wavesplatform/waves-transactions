@@ -54,12 +54,12 @@ export const burnTx = {
     ['3JYfajBS1KJFSu3cdkF3f3JpH9kGVPR1R1YEgV7LHCHJyQXa82k7SMu9rqwpMvAqCXoQeJa5rEQPF9NY9rnufUan'],
   id: '6X7Fe82PcVeU9qMtscBA2fBzrSf96PtAwrynViR3zRjP',
   assetId: 'DWgwcZTMhSvnyYCoWLRUXXSH1RSkzThXLJhww9gwkqdn',
-  amount: 10000 }
+  amount: '9223372036854775807' }
 
 export const leaseTx = {
   type: 8,
   version: 2,
-  fee: 100000,
+  fee: '9223372036854775807',
   senderPublicKey: '7GGPvAPV3Gmxo4eswmBRLb6bXXEhAovPinfcwVkA2LJh',
   timestamp: 1542539421538,
   proofs:
@@ -85,7 +85,7 @@ export const cancelLeaseTx = {
 export const aliasTx = {
   type: 10,
   version: 2,
-  fee: 100000,
+  fee: '9223372036854775807',
   senderPublicKey: '7GGPvAPV3Gmxo4eswmBRLb6bXXEhAovPinfcwVkA2LJh',
   timestamp: 1542539421565,
   id: '1bVuFdMbDAk6dhcQFfJFxpDjmm8DdFnnKesQ3wpxj7P',
@@ -96,16 +96,16 @@ export const aliasTx = {
 
 export const massTransferTx = {
   type: 11,
-  version: 1,
-  fee: 200000,
+  version: 2,
+  fee: '9223372036854775807',
   senderPublicKey: 'HqbBwFvoaMVm3Z5rXjwEmUbzH2jucxP4x4XEawJnnqAR',
   timestamp: 1625154205073,
-  attachment: 'aaa',
+  attachment: 'f',
   proofs:
     ['MMiYadhicyXZMJVEPep7nsSto5NS2mnHaseWoEDfPxXAdfYLDMgk65b5g55SDvFLzEJVqjiZnxNHQ5jiUUf8bKU'],
   id: 'GjrPGGqMhZmvDfyQwnK13T1fSGjeN5NJS2E7meuP6tEm',
   transfers:
-    [{ recipient: 'alias:T:aaab', amount: 10000 },
+    [{ recipient: 'alias:T:aaab', amount: '9223372036854775807' },
       { recipient: 'alias:T:aabc', amount: 10000 }],
 }
 
