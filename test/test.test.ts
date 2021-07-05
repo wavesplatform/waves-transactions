@@ -16,17 +16,19 @@ const masterSeed = 'waves private node seed with waves tokens'
 const CHAIN_ID = 82
 let dappAddress1 = ''
 let dappAddress2 = ''
+let assetId = ''
 jest.setTimeout(60000)
 
 it('issue', async () => {
     const tx = issue({
         name: 'test',
         description: 'test',
-        quantity: 1,
+        quantity: 1097654321,
         chainId: CHAIN_ID,
         fee: 100000000,
     }, masterSeed)
-    console.log(await broadcast(tx, nodeUrl))
+    const {id} = await broadcast(tx, nodeUrl)
+    assetId = id
 })
 
 // it('updateAssetInfo', async () => {
@@ -49,8 +51,7 @@ it('transfer', async () => {
         chainId: CHAIN_ID,
         attachment: '',
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 it('masstransfer', async () => {
@@ -70,17 +71,15 @@ it('masstransfer', async () => {
         chainId: CHAIN_ID,
         attachment: '',
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 it('set data', async () => {
     const tx = data({
-        data: [{key: 'foo', value: 'bar'}],
+        data: [{key: 'foo', type:'string',value: 'bar'}],
         chainId: CHAIN_ID,
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 it('drop data', async () => {
@@ -88,15 +87,14 @@ it('drop data', async () => {
         data: [{key: 'foo'}],
         chainId: CHAIN_ID,
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 
 it('setScriptTest', async () => {
     const script = 'AAIEAAAAAAAAAAQIAhIAAAAAAAAAAAEAAAABaQEAAAADZm9vAAAAAAkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAADa2V5AAAAAAAAAAABCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAANrZXkGCQAETAAAAAIJAQAAAAtTdHJpbmdFbnRyeQAAAAICAAAAA2tleQIAAAADc3RyBQAAAANuaWwAAAAAl/lsvw=='
 
-    const script2 = 'AAIFAAAAAAAAAA4IAhIKCggBAgQIERIUGAAAAAAAAAABAAAAAWkBAAAABGNhbGwAAAAIAAAAAWEAAAABYgAAAAFjAAAAAWQAAAABZgAAAAFnAAAAAWgAAAABagkABEwAAAACCQEAAAALQmluYXJ5RW50cnkAAAACAgAAAANiaW4FAAAAAWIJAARMAAAAAgkBAAAAC0JpbmFyeUVudHJ5AAAAAgIAAAAEYm9vbAkAAZEAAAACBQAAAAFnAAAAAAAAAAAACQAETAAAAAIJAQAAAAxJbnRlZ2VyRW50cnkAAAACAgAAAARpbnQxBQAAAAFhCQAETAAAAAIJAQAAAAxJbnRlZ2VyRW50cnkAAAACAgAAAARpbnQyCQABkQAAAAIFAAAAAWYAAAAAAAAAAAAJAARMAAAAAgkBAAAAC1N0cmluZ0VudHJ5AAAAAgIAAAAEc3RyMQUAAAABZAkABEwAAAACCQEAAAALU3RyaW5nRW50cnkAAAACAgAAAARzdHIyCQABkQAAAAIFAAAAAWoAAAAAAAAAAAAJAARMAAAAAgkBAAAADEJvb2xlYW5FbnRyeQAAAAICAAAABWJvb2wxBQAAAAFjCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAAVib29sMgkAAZEAAAACBQAAAAFoAAAAAAAAAAAABQAAAANuaWwAAAABAAAAAnR4AQAAAAZ2ZXJpZnkAAAAABsxUaLQ='
+    const script2 = 'base64:AAIFAAAAAAAAAAsIAhIHCgUBAgQIHwAAAAAAAAABAAAAAWkBAAAABGNhbGwAAAAFAAAAAWEAAAABYgAAAAFjAAAAAWQAAAABZgQAAAAEaW50VgQAAAAHJG1hdGNoMAkAAZEAAAACBQAAAAFmAAAAAAAAAAAAAwkAAAEAAAACBQAAAAckbWF0Y2gwAgAAAANJbnQEAAAAAXQFAAAAByRtYXRjaDAFAAAAAXQJAAACAAAAAQIAAAAOd3JvbmcgYXJnIHR5cGUEAAAABWJ5dGVWBAAAAAckbWF0Y2gwCQABkQAAAAIFAAAAAWYAAAAAAAAAAAEDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAACkJ5dGVWZWN0b3IEAAAAAXQFAAAAByRtYXRjaDAFAAAAAXQJAAACAAAAAQIAAAAOd3JvbmcgYXJnIHR5cGUEAAAABWJvb2xWBAAAAAckbWF0Y2gwCQABkQAAAAIFAAAAAWYAAAAAAAAAAAIDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAB0Jvb2xlYW4EAAAAAXQFAAAAByRtYXRjaDAFAAAAAXQJAAACAAAAAQIAAAAOd3JvbmcgYXJnIHR5cGUEAAAABHN0clYEAAAAByRtYXRjaDAJAAGRAAAAAgUAAAABZgAAAAAAAAAAAwMJAAABAAAAAgUAAAAHJG1hdGNoMAIAAAAGU3RyaW5nBAAAAAF0BQAAAAckbWF0Y2gwBQAAAAF0CQAAAgAAAAECAAAADndyb25nIGFyZyB0eXBlCQAETAAAAAIJAQAAAAtCaW5hcnlFbnRyeQAAAAICAAAAA2JpbgUAAAABYgkABEwAAAACCQEAAAALQmluYXJ5RW50cnkAAAACAgAAAARib29sBQAAAAVieXRlVgkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAAEaW50MQUAAAABYQkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAAEaW50MgUAAAAEaW50VgkABEwAAAACCQEAAAALU3RyaW5nRW50cnkAAAACAgAAAARzdHIxBQAAAAFkCQAETAAAAAIJAQAAAAtTdHJpbmdFbnRyeQAAAAICAAAABHN0cjIFAAAABHN0clYJAARMAAAAAgkBAAAADEJvb2xlYW5FbnRyeQAAAAICAAAABWJvb2wxBQAAAAFjCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAAVib29sMgUAAAAFYm9vbFYFAAAAA25pbAAAAAEAAAACdHgBAAAABnZlcmlmeQAAAAAGaGqCnQ=='
     const seed = randomSeed()
     const addr = address(seed, CHAIN_ID)
 
@@ -106,18 +104,19 @@ it('setScriptTest', async () => {
 
     dappAddress1 = addr
     dappAddress2 = addr2
-    console.log(dappAddress1)
 
     let tx = transfer({
         recipient: addr,
         amount: 2e8,
         chainId: CHAIN_ID,
     }, masterSeed)
+
     let tx2 = transfer({
         recipient: addr2,
         amount: 2e8,
         chainId: CHAIN_ID,
     }, masterSeed)
+
     await broadcast(tx, nodeUrl)
     await broadcast(tx2, nodeUrl)
     await waitForTx(tx.id, {apiBase: nodeUrl, timeout: 10000})
@@ -128,7 +127,7 @@ it('setScriptTest', async () => {
     }, seed)
 
     const setScriptTx2 = setScript({
-        script2,
+        script: script2,
         chainId: CHAIN_ID,
     }, seed2)
 
@@ -190,7 +189,7 @@ it('setScriptTest', async () => {
 it('invoke test', async () => {
 
 
-    if (dappAddress1 =='') {
+    if (dappAddress1 == '') {
         dappAddress1 = '3MJ2PHxU4Vsf5HfLzuYrRTP3imrQVvhkWyk'
     }
 
@@ -201,11 +200,71 @@ it('invoke test', async () => {
         fee: 500000,
         feeAssetId: null,
     }, masterSeed)
-   await broadcast(invokeTx, nodeUrl)
-    // const tx = (await waitForTxWithNConfirmations(id,0, {apiBase: nodeUrl, timeout: TIMEOUT}))
-    // console.log(tx)
+    const {id} = await broadcast(invokeTx, nodeUrl)
+    const tx = (await waitForTxWithNConfirmations(id, 0, {apiBase: nodeUrl, timeout: TIMEOUT}))
 }, 100000)
 
+it('invoke with list test', async () => {
+
+    const invokeTx = invokeScript({
+        dApp: dappAddress2,
+        call: {
+            function: 'call', args: [
+                {
+                    'type': 'integer',
+                    'value': 1,
+                },
+                {
+                    'type': 'binary',
+                    'value': 'base64:YWJj',
+                },
+                {
+                    'type': 'boolean',
+                    'value': true,
+                },
+                {
+                    'type': 'string',
+                    'value': 'abc',
+                },
+                {
+                    'type': 'list',
+                    'value': [{
+                        'type': 'integer',
+                        'value': 2,
+                    },
+                        {
+                            'type': 'binary',
+                            'value': 'base64:YWJjZA==',
+                        },
+                        {
+                            'type': 'boolean',
+                            'value': false,
+                        },
+                        {
+                            'type': 'string',
+                            'value': 'abcd',
+                        }],
+                },
+            ],
+        },
+        chainId: CHAIN_ID,
+        payment: [
+            {'amount': 1, 'assetId': null},
+            {'amount': 2, 'assetId': null},
+            {'amount': 3, 'assetId': null},
+            {'amount': 4, 'assetId': null},
+            {'amount': 5, 'assetId': null},
+            {'amount': 21, 'assetId': assetId},
+            {'amount': 22, 'assetId': assetId},
+            {'amount': 23, 'assetId': assetId},
+            {'amount': 24, 'assetId': assetId},
+            {'amount': 25, 'assetId': assetId}],
+        fee: 500000,
+        feeAssetId: null,
+    }, masterSeed)
+    const {id} = await broadcast(invokeTx, nodeUrl)
+    const tx = (await waitForTxWithNConfirmations(id, 0, {apiBase: nodeUrl, timeout: TIMEOUT}))
+}, 100000)
 
 it('transfer test', async () => {
     const conditions = [
