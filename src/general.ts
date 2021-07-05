@@ -55,6 +55,7 @@ import {
     ReissueTransaction,
     SetAssetScriptTransaction,
     SetScriptTransaction,
+    SignedTransaction,
     SponsorshipTransaction,
     Transaction,
     TRANSACTION_TYPE,
@@ -64,7 +65,7 @@ import {IAuthParams, ICancelOrder, TTransaction, TTxParams, WithProofs, WithSend
 
 type TLong = string | number
 
-export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxParams & WithTxType, seed: TSeedTypes) => Transaction<TLong> } } = {
+export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxParams & WithTxType, seed: TSeedTypes) => SignedTransaction<Transaction<TLong>> } } = {
     [TRANSACTION_TYPE.ISSUE]: {sign: (x, seed) => issue(x as IssueTransaction<TLong>, seed)},
     [TRANSACTION_TYPE.TRANSFER]: {sign: (x, seed) => transfer(x as TransferTransaction<TLong>, seed)},
     [TRANSACTION_TYPE.REISSUE]: {sign: (x, seed) => reissue(x as ReissueTransaction<TLong>, seed)},
@@ -86,7 +87,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxP
  * @param tx
  * @param seed
  */
-export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedTypes): Transaction {
+export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedTypes): SignedTransaction<Transaction> {
     if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
     return txTypeMap[tx.type].sign(tx, seed)

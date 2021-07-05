@@ -79,7 +79,7 @@ export const cancelLeaseTx = {
   proofs:
     ['5yytwFhmSJhPoRViBKt8AjYkBLxHYxgrs9mSPs3khT4iFLzqbkyyAYu7qbPsJ4iut8BKFFADX2J6hfVwxNFkHTjo'],
   id: '656pBWMAPfVMu1gbSZ5dd5WTRQzWNo2phfJsD2rDBKfh',
-  leaseId: '656pBWMAPfVMu1gbSZ5dd5WTRQzWNo2phfJsD2rDBKfh'
+  leaseId: '656pBWMAPfVMu1gbSZ5dd5WTRQzWNo2phfJsD2rDBKfh',
 }
 
 export const aliasTx = {
@@ -134,7 +134,7 @@ export const setScriptTx = {
   proofs:
     ['35x1Rphm1mr24ELJgpLP6dK3wMW7cG6nWsFUcMF3RvxKr3UjEuo4NfYnQf6MEanD7bxBdKDuYxbBJZYQQ495ax3w'],
   id: 'J8SBGZzSLybdsgpFjDNxVwB8mixkZoEJkgHya3EiXXPc',
-  script: 'base64:AQa3b8tH'
+  script: 'base64:AQa3b8tH',
 }
 
 export const setAssetScriptTx = {
@@ -168,7 +168,7 @@ export const invokeScriptTx = {
   'dApp': '3P8M8XGF2uzDazV5fzdKNxrbC3YqCWScKxw',
   // 'feeAssetId': null,
   'proofs': [
-    '3rq5gJ7q1zMmn41eAiUM9ThLCEQgHfK1fk2DvCefWHZWDWdxHi1T5Xmd5UuT33FZiw46FJDy2sokhzLduoC7izbj'
+    '3rq5gJ7q1zMmn41eAiUM9ThLCEQgHfK1fk2DvCefWHZWDWdxHi1T5Xmd5UuT33FZiw46FJDy2sokhzLduoC7izbj',
   ],
   'payment': [
     {

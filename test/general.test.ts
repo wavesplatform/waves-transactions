@@ -1,17 +1,17 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
-import { reissue, signTx, data, burn, broadcast } from '../src'
+import {reissue, signTx, data, burn, broadcast, IDataParams} from '../src'
 import { serialize, verify } from '../src/general'
 import { reissueMinimalParams, burnMinimalParams, orderMinimalParams } from './minimalParams'
-import { TTx } from '../src'
 import { exampleTxs } from './exampleTxs'
 import { order } from '../src/requests/order'
 import {API_BASE} from './integration/config'
+import {Transaction} from '@waves/ts-types'
 
 const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
 describe('signTx', () => {
 
-  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as TTx)
+  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as Transaction)
   txs.forEach(tx => {
     it('type: ' + tx.type, () => {
       const signed = signTx(tx, stringSeed)
@@ -62,7 +62,7 @@ describe('Node interaction', () => {
         },
       ],
       timestamp: 100000,
-    }
+    } as IDataParams
     const result = data(dataParams, 'seed')
 
     await expect(broadcast(result, API_BASE)).rejects
