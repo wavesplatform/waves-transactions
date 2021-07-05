@@ -1,5 +1,5 @@
 import {publicKey} from '@waves/ts-lib-crypto'
-import {data, IDataTransaction, WithId} from '../../src'
+import {data, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {validateTxSignature} from '../../test/utils'
 import {dataMinimalParams} from '../minimalParams'
@@ -45,7 +45,7 @@ describe('data', () => {
         [
             [{key: 'int', value: 0}, {key: 'str', value: 'string'}, {key: 'bool', value: false}, {
                 key: 'bin',
-                value: Uint8Array.from([1, 2, 3, 4])
+                value: Uint8Array.from([1, 2, 3, 4]),
             }],
             2,
             base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggcvCgcKA2ludFAACg0KA3N0cmoGc3RyaW5nCggKBGJvb2xYAAoLCgNiaW5iBAECAwQ='),
@@ -127,7 +127,6 @@ describe('data', () => {
         expect(tx.data.length).toEqual(3)
         expect(tx.version).toEqual(2)
         expect(tx.timestamp - expectedTimestamp).toBeLessThan(100)
-        expect(tx.feeAssetId).toEqual(undefined)
         expect(tx.type).toEqual(12)
     })
 })

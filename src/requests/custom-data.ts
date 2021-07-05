@@ -52,9 +52,9 @@ export function customData(cData: TCustomData, seed?: TSeed | TPrivateKey): TSig
 
   const hash = base58Encode(blake2b(bytes))
 
-  const pk = cData.publicKey ? cData.publicKey : seed && publicKey(seed);
+  const pk = cData.publicKey ? cData.publicKey : seed && publicKey(seed)
 
-  const signature = seed && signBytes(seed, bytes);
+  const signature = seed && signBytes(seed, bytes)
 
   return {...cData, hash, publicKey: pk, signature}
 }

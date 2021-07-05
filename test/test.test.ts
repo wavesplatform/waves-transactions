@@ -9,11 +9,13 @@ import {address, randomSeed} from '@waves/ts-lib-crypto'
 import {setScript} from '../src/transactions/set-script'
 import {API_BASE, TIMEOUT} from './integration/config'
 import {waitForTxWithNConfirmations} from '../src/nodeInteraction'
+import {strengthenPassword} from '../src/seedUtils'
 
 const nodeUrl = 'http://localhost:6869'
 const masterSeed = 'waves private node seed with waves tokens'
 const CHAIN_ID = 82
 let dappAddress1 = ''
+let dappAddress2 = ''
 jest.setTimeout(60000)
 
 it('issue', async () => {
@@ -94,24 +96,44 @@ it('drop data', async () => {
 it('setScriptTest', async () => {
     const script = 'AAIEAAAAAAAAAAQIAhIAAAAAAAAAAAEAAAABaQEAAAADZm9vAAAAAAkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAADa2V5AAAAAAAAAAABCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAANrZXkGCQAETAAAAAIJAQAAAAtTdHJpbmdFbnRyeQAAAAICAAAAA2tleQIAAAADc3RyBQAAAANuaWwAAAAAl/lsvw=='
 
+    const script2 = 'AAIFAAAAAAAAAA4IAhIKCggBAgQIERIUGAAAAAAAAAABAAAAAWkBAAAABGNhbGwAAAAIAAAAAWEAAAABYgAAAAFjAAAAAWQAAAABZgAAAAFnAAAAAWgAAAABagkABEwAAAACCQEAAAALQmluYXJ5RW50cnkAAAACAgAAAANiaW4FAAAAAWIJAARMAAAAAgkBAAAAC0JpbmFyeUVudHJ5AAAAAgIAAAAEYm9vbAkAAZEAAAACBQAAAAFnAAAAAAAAAAAACQAETAAAAAIJAQAAAAxJbnRlZ2VyRW50cnkAAAACAgAAAARpbnQxBQAAAAFhCQAETAAAAAIJAQAAAAxJbnRlZ2VyRW50cnkAAAACAgAAAARpbnQyCQABkQAAAAIFAAAAAWYAAAAAAAAAAAAJAARMAAAAAgkBAAAAC1N0cmluZ0VudHJ5AAAAAgIAAAAEc3RyMQUAAAABZAkABEwAAAACCQEAAAALU3RyaW5nRW50cnkAAAACAgAAAARzdHIyCQABkQAAAAIFAAAAAWoAAAAAAAAAAAAJAARMAAAAAgkBAAAADEJvb2xlYW5FbnRyeQAAAAICAAAABWJvb2wxBQAAAAFjCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAAVib29sMgkAAZEAAAACBQAAAAFoAAAAAAAAAAAABQAAAANuaWwAAAABAAAAAnR4AQAAAAZ2ZXJpZnkAAAAABsxUaLQ='
     const seed = randomSeed()
     const addr = address(seed, CHAIN_ID)
 
+    const seed2 = randomSeed()
+    const addr2 = address(seed2, CHAIN_ID)
+
+
     dappAddress1 = addr
+    dappAddress2 = addr2
+    console.log(dappAddress1)
 
     let tx = transfer({
         recipient: addr,
         amount: 2e8,
         chainId: CHAIN_ID,
     }, masterSeed)
-    console.log(await broadcast(tx, nodeUrl))
+    let tx2 = transfer({
+        recipient: addr2,
+        amount: 2e8,
+        chainId: CHAIN_ID,
+    }, masterSeed)
+    await broadcast(tx, nodeUrl)
+    await broadcast(tx2, nodeUrl)
     await waitForTx(tx.id, {apiBase: nodeUrl, timeout: 10000})
 
     const setScriptTx = setScript({
         script,
         chainId: CHAIN_ID,
     }, seed)
-    console.log(await broadcast(setScriptTx, nodeUrl))
+
+    const setScriptTx2 = setScript({
+        script2,
+        chainId: CHAIN_ID,
+    }, seed2)
+
+    await broadcast(setScriptTx2, nodeUrl)
+    await broadcast(setScriptTx, nodeUrl)
     await waitForTx(setScriptTx.id, {apiBase: nodeUrl, timeout: 10000})
     // await sleep(15000);
     // try {
@@ -167,6 +189,11 @@ it('setScriptTest', async () => {
 
 it('invoke test', async () => {
 
+
+    if (dappAddress1 =='') {
+        dappAddress1 = '3MJ2PHxU4Vsf5HfLzuYrRTP3imrQVvhkWyk'
+    }
+
     const invokeTx = invokeScript({
         dApp: dappAddress1,
         call: {function: 'foo', args: []},
@@ -174,9 +201,9 @@ it('invoke test', async () => {
         fee: 500000,
         feeAssetId: null,
     }, masterSeed)
-    const {id} = await broadcast(invokeTx, nodeUrl)
-    const tx = (await waitForTxWithNConfirmations(id,0, {apiBase: nodeUrl, timeout: TIMEOUT}))
-    console.log(tx)
+   await broadcast(invokeTx, nodeUrl)
+    // const tx = (await waitForTxWithNConfirmations(id,0, {apiBase: nodeUrl, timeout: TIMEOUT}))
+    // console.log(tx)
 }, 100000)
 
 
