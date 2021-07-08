@@ -29,12 +29,13 @@ const typeMap: any = {
     number: ['integer', 0, LONG],
     boolean: ['boolean', 1, BYTE],
     string: ['string', 3, LEN(SHORT)(STRING)],
-    binary: ['binary', 2, (s: string) => LEN(SHORT)(BASE64_STRING)(s.slice(7))], // Slice base64: part
+    binary: ['binary', 2, (s: string) => LEN(SHORT)(BASE64_STRING)(s)], // Slice base64: part
     _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T): [DataFiledType, number, (value: T) => Uint8Array] =>
-    typeMap[typeof value] || typeMap['_']
+const mapType = <T>(value: T, type: string | undefined): [DataFiledType, number, (value: T) => Uint8Array] => {
+    return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
+}
 
 
 /* @echo DOCS */
@@ -50,24 +51,37 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
 
     const _timestamp = paramsOrTx.timestamp || Date.now()
 
+    // console.log(paramsOrTx)
     const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: DataTransactionEntry) => {
+
         if ((<any>x).type || x.value == null) return x
         else {
-            const type = mapType(x.value)[0]
-            return {
+            const type = mapType(x.value, x.type)[0]
+            const y = {
                 type,
                 key: x.key,
                 value: type === 'binary' ? 'base64:' + Buffer.from(x.value as unknown as any[]).toString('base64') : x.value as (string | number | boolean),
             }
+            // console.log(y)
+
+            return y
         }
     })
+
+    const schema = (x: DataTransactionEntry) => {
+        // console.log('x', JSON.stringify(x, null, ' '))
+        // console.log(mapType(x.value, x.type)[1])
+        // console.log(mapType(x.value, x.type)[2](x.value))
+        return concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value, x.type)[1]], mapType(x.value, x.type)[2](x.value))
+    }
     let computedFee
     if (version < 2) {
+        // console.log([mapType(x.value)[1]])
         let bytes = concat(
             BYTE(TRANSACTION_TYPE.DATA),
             BYTE(1),
             BASE58_STRING(senderPublicKey),
-            COUNT(SHORT)((x: DataTransactionEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(dataEntriesWithTypes),
+            COUNT(SHORT)(schema)(dataEntriesWithTypes),
             LONG(_timestamp)
         )
 

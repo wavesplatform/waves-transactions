@@ -29,14 +29,13 @@ import Long from 'long'
 import {lease} from './transactions/lease'
 import {GenesisTransaction} from '@waves/ts-types/transactions/index'
 import {TTransaction, WithChainId} from './transactions'
-import {ExchangeTransactionOrderV1} from '@waves/ts-types/src/parts'
-import {parseTx} from '@waves/marshall/dist/parse'
 
 const invokeScriptCallSchema = {
-    ...schemas.txFields.functionCall[1], withLength: {
-        toBytes: serializePrimitives.SHORT,
-        fromBytes: parsePrimitives.P_SHORT,
-    },
+    ...schemas.txFields.functionCall[1],
+    // withLength: {
+    //     toBytes: serializePrimitives.SHORT,
+    //     fromBytes: parsePrimitives.P_SHORT,
+    // },
 }
 
 const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: number): string => {

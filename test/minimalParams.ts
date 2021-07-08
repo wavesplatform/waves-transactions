@@ -92,7 +92,7 @@ export const dataMinimalParams: IDataParams = {
       value: true,
     },
   ],
-}
+} as any
 
 export const reissueMinimalParams: IReissueParams = {
   assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',

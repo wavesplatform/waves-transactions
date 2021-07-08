@@ -1,5 +1,5 @@
 import {publicKey} from '@waves/ts-lib-crypto'
-import {data, WithId} from '../../src'
+import {data, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {validateTxSignature} from '../../test/utils'
 import {dataMinimalParams} from '../minimalParams'
@@ -68,6 +68,8 @@ describe('data', () => {
             version: version,
             fee: fee,
         } as any, senderPk)
+        console.log(makeTxBytes(tx).join(','))
+        console.log(makeTxBytes(tx).length)
         const bytes = tx.version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
         expect(bytes).toEqual(expectedBytes)
     })
@@ -79,6 +81,8 @@ describe('data', () => {
         [[{key: 'bin', value: Array(1000).fill(1)}], 2, 100000],
         [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000], //todo fix feecalc for v1
         [[{key: 'bin', value: Array(10000).fill(1)}], 2, 1000000],
+        [[{key: 'bin', type:'binary', value: libs.crypto.base64Encode(Array(10000).fill(1))}], 1, 1000000],
+        [[{key: 'bin', type:'binary', value: Array(10000).fill(1)}], 1, 1000000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 9800000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 9800000],
         [Array(15).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 14700000],

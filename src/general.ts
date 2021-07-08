@@ -54,7 +54,7 @@ import {
     MassTransferTransaction,
     ReissueTransaction,
     SetAssetScriptTransaction,
-    SetScriptTransaction,
+    SetScriptTransaction, SignedIExchangeTransactionOrder,
     SignedTransaction,
     SponsorshipTransaction,
     Transaction,
@@ -97,7 +97,7 @@ export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedType
  * Converts transaction or order object to Uint8Array
  * @param obj transaction or order
  */
-export function serialize(obj: Transaction | ExchangeTransactionOrder & WithProofs & WithSender): Uint8Array {
+export function serialize(obj: Transaction | SignedIExchangeTransactionOrder<ExchangeTransactionOrder>): Uint8Array {
     if (isOrder(obj)) return binary.serializeOrder(obj)
     return binary.serializeTx(obj)
 }
@@ -108,10 +108,10 @@ export function serialize(obj: Transaction | ExchangeTransactionOrder & WithProo
  * @param proofN - proof index. Takes first proof by default
  * @param publicKey - takes senderPublicKey by default
  */
-export function verify(obj: TTransaction & WithProofs | ExchangeTransactionOrder & WithProofs & WithSender, proofN = 0, publicKey?: string): boolean {
+export function verify(obj: TTransaction & WithProofs | SignedIExchangeTransactionOrder<ExchangeTransactionOrder>, proofN = 0, publicKey?: string): boolean {
     publicKey = publicKey || obj.senderPublicKey
     const bytes = serialize(obj)
-    const signature = obj.version == null ? (obj as any).signature : obj.proofs[proofN]
+    const signature = obj.version == null ? (obj as any).signature : (obj as any).proofs[proofN]
     return verifySignature(publicKey, bytes, signature)
 }
 
