@@ -29,7 +29,7 @@ const typeMap: any = {
     number: ['integer', 0, LONG],
     boolean: ['boolean', 1, BYTE],
     string: ['string', 3, LEN(SHORT)(STRING)],
-    binary: ['binary', 2, (s: string) => LEN(SHORT)(BASE64_STRING)(s)], // Slice base64: part
+    binary: ['binary', 2, (s: string) => LEN(SHORT)(BASE64_STRING)(s)],
     _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
@@ -58,14 +58,11 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
 
     const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: DataTransactionEntry) => {
 
+        if (x.value == null) return x
         if ((<any>x).type) {
-            if (x.value == null) return x
-            else {
-                const y = {
-                    ...x,
-                    value: convertValue(x.type, x.value, 'defined'),
-                }
-                return y
+            return {
+                ...x,
+                value: convertValue(x.type, x.value, 'defined'),
             }
         } else {
             const type = mapType(x.value, x.type)[0]

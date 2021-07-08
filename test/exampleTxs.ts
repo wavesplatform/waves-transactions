@@ -96,17 +96,17 @@ export const aliasTx = {
 
 export const massTransferTx = {
   type: 11,
-  version: 2,
+  version: 1,
   fee: '9223372036854775807',
-  senderPublicKey: 'HqbBwFvoaMVm3Z5rXjwEmUbzH2jucxP4x4XEawJnnqAR',
-  timestamp: 1625154205073,
-  attachment: 'f',
+  senderPublicKey: 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
+  timestamp: 1625757161139,
+  attachment: '',
   proofs:
-    ['MMiYadhicyXZMJVEPep7nsSto5NS2mnHaseWoEDfPxXAdfYLDMgk65b5g55SDvFLzEJVqjiZnxNHQ5jiUUf8bKU'],
-  id: 'GjrPGGqMhZmvDfyQwnK13T1fSGjeN5NJS2E7meuP6tEm',
+    ['niDFstiQBoVkFjFjZYDDw4pfCe8DNtpY4ua4xFPC7sPbd7yk5jmTvqPEkhZiFTMhVJgVUtYqMPW6iXVZzdXUAZq'],
+  id: '2X1VMPJT6itAqRaXYQeuq4WdD1qnATozaPTcxgU6FFio',
   transfers:
-    [{ recipient: '3MtyRj3obKxxHK7UCip4jUWTzzvwZ9CRFBc', amount: '9223372036854775807' },
-      { recipient: 'alias:T:aabc', amount: 10000 }],
+    [{ recipient: '3N7wzmTodKbMPr5ghpGHjQSZn9CVjrtbnfr', amount: '9223372036854775807' },
+      { recipient: 'alias:T:_rich-account.with@30_symbols_', amount: 10000 }],
 }
 
 export const dataTx = {

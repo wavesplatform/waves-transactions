@@ -8,7 +8,7 @@ import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
 import {BurnTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 

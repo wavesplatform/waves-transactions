@@ -66,14 +66,14 @@ describe('Node interaction', () => {
     const result = data(dataParams, 'seed')
 
     await expect(broadcast(result, API_BASE)).rejects
-      .toMatchObject({error: 303})
+      .toMatchObject({error: 404})
   }, 100000)
 
 })
 
 it('verify signatures of txs and orders', async () => {
   const ord = order(orderMinimalParams, stringSeed)
-  const tx = burn(burnMinimalParams, [null, stringSeed])
+  const tx = burn({...burnMinimalParams, version: 2}, [null, stringSeed])
   expect(verify(ord)).toEqual(true)
   expect(verify(tx, 1)).toEqual(true)
 })

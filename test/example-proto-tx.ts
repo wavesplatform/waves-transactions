@@ -470,7 +470,6 @@ export const txs = {
             'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
             'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
             'assetId': '682CZKmF8DH4zypt1hEsksL8xTsPUw1i1T51DhXZHVWY',
-            'attachment': '',
             'transfers': [{
                 'recipient': '3N3xeDHzzC16aoj9jtbo6ZL69VWtYSqJs4M',
                 'amount': '9223372036854775807',
