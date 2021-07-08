@@ -10,7 +10,7 @@ import {TSeedTypes} from '../types'
 import {validate} from '../validators'
 import {dataEntryToProto, txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {DataFiledType, DataTransaction, TRANSACTION_TYPE, DataTransactionEntry} from '@waves/ts-types'
+import {DataFiledType, DataTransaction, DataTransactionEntry, TRANSACTION_TYPE} from '@waves/ts-types'
 
 const {
     BASE58_STRING,
@@ -37,11 +37,14 @@ const mapType = <T>(value: T, type: string | undefined): [DataFiledType, number,
     return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
 }
 
+const convertBinaryValue = (type: 'integer' | 'string' | 'binary' | 'boolean', value: Uint8Array | string | number | boolean, opt: string) => {
+    return type === 'binary' && Uint8Array.prototype.isPrototypeOf(value) ? 'base64:' + Buffer.from(value as unknown as any[]).toString('base64') : value
+}
 
 /* @echo DOCS */
 export function data(params: IDataParams, seed: TSeedTypes): DataTransaction & WithId & WithProofs
 export function data(paramsOrTx: IDataParams & WithSender | DataTransaction, seed?: TSeedTypes): DataTransaction & WithId & WithProofs
-export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & WithId & WithProofs{
+export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & WithId & WithProofs {
     const type = TRANSACTION_TYPE.DATA
     const version = paramsOrTx.version || DEFAULT_VERSIONS.DATA
     const seedsAndIndexes = convertToPairs(seed)
@@ -51,20 +54,26 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
 
     const _timestamp = paramsOrTx.timestamp || Date.now()
 
-    // console.log(paramsOrTx)
     const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: DataTransactionEntry) => {
 
-        if ((<any>x).type || x.value == null) return x
-        else {
+        if ((<any>x).type) {
+            if (x.value == null) return x
+            else {
+                const y = {
+                    ...x,
+                    value: convertBinaryValue(x.type, x.value, 'defined'),
+                }
+                return y
+            }
+        } else {
             const type = mapType(x.value, x.type)[0]
-            const y = {
+
+            return {
                 type,
                 key: x.key,
-                value: type === 'binary' ? 'base64:' + Buffer.from(x.value as unknown as any[]).toString('base64') : x.value as (string | number | boolean),
+                // @ts-ignore
+                value: convertBinaryValue(type, x.value, 'not defined'),
             }
-            // console.log(y)
-
-            return y
         }
     })
 
@@ -85,7 +94,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
             LONG(_timestamp)
         )
 
-        computedFee = (Math.floor(1 + (bytes.length  - 1) / 1024) * 100000)
+        computedFee = (Math.floor(1 + (bytes.length - 1) / 1024) * 100000)
     } else {
         let protoEntries = dataEntriesWithTypes.map(dataEntryToProto)
         let dataBytes = wavesProto.waves.DataTransactionData.encode({data: protoEntries}).finish()
@@ -93,7 +102,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     }
 
 
-    const tx: DataTransaction & WithId & WithProofs= {
+    const tx: DataTransaction & WithId & WithProofs = {
         type,
         version,
         senderPublicKey,
