@@ -1,14 +1,16 @@
 import { broadcast, sponsorship, transfer, waitForTx } from '../../src'
-import { API_BASE, CHAIN_ID, MASTER_SEED, TIMEOUT } from './config';
+import { API_BASE, CHAIN_ID, MASTER_SEED, TIMEOUT } from './config'
 import { address } from '@waves/ts-lib-crypto'
 
 describe('Sponsorship', () => {
-  let assetId = 'ELjR9srYT4UDaBRSqo9D544YGQ8AwYkn7fjrmxWEo9en'
+  let assetId = '4SwWp8A2c6d68oYZzLmJbiY23dBKsuLid62mtJEqzYQy'
 
   it('Should set sponsorship', async () => {
     const sponTx = sponsorship({ assetId, minSponsoredAssetFee: 100,chainId: CHAIN_ID }, MASTER_SEED)
     await broadcast(sponTx, API_BASE)
     await waitForTx(sponTx.id, { timeout: TIMEOUT, apiBase: API_BASE })
+
+    console.log(sponTx)
 
     const ttx = transfer({ recipient: address(MASTER_SEED, CHAIN_ID), amount: 1000, feeAssetId: assetId,chainId: CHAIN_ID }, MASTER_SEED)
     await broadcast(ttx, API_BASE)

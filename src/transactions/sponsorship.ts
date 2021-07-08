@@ -13,9 +13,9 @@ import {SponsorshipTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function sponsorship(params: ISponsorshipParams, seed: TSeedTypes): SponsorshipTransaction & WithId
-export function sponsorship(paramsOrTx: ISponsorshipParams & WithSender | SponsorshipTransaction, seed?: TSeedTypes): SponsorshipTransaction & WithId
-export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): SponsorshipTransaction & WithId {
+export function sponsorship(params: ISponsorshipParams, seed: TSeedTypes): SponsorshipTransaction & WithId & WithProofs
+export function sponsorship(paramsOrTx: ISponsorshipParams & WithSender | SponsorshipTransaction, seed?: TSeedTypes): SponsorshipTransaction & WithId & WithProofs
+export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): SponsorshipTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.SPONSORSHIP
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SPONSORSHIP
   const seedsAndIndexes = convertToPairs(seed)

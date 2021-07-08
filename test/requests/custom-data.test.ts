@@ -1,7 +1,8 @@
 import { customData, serializeCustomData } from '../../src/requests/custom-data'
 import { verifyCustomData } from '../../src/general'
-import { DATA_FIELD_TYPE } from '../../src/transactions'
+
 import { base58Encode, blake2b } from '@waves/ts-lib-crypto'
+import {DATA_FIELD_TYPE} from '@waves/ts-types'
 
 describe('custom-data', () => {
 
@@ -28,8 +29,8 @@ describe('custom-data', () => {
       data: [{
         type: DATA_FIELD_TYPE.INTEGER,
         value: 1,
-        key: 'foo'
-      }]
+        key: 'foo',
+      }],
     }, stringSeed)
     expect(verifyCustomData(d)).toBe(true)
   })

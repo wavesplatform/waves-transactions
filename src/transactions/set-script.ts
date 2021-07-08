@@ -13,9 +13,9 @@ import {SetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function setScript(params: ISetScriptParams, seed: TSeedTypes): SetScriptTransaction & WithId
-export function setScript(paramsOrTx: ISetScriptParams & WithSender | SetScriptTransaction, seed?: TSeedTypes): SetScriptTransaction & WithId
-export function setScript(paramsOrTx: any, seed?: TSeedTypes): SetScriptTransaction & WithId {
+export function setScript(params: ISetScriptParams, seed: TSeedTypes): SetScriptTransaction & WithId & WithProofs
+export function setScript(paramsOrTx: ISetScriptParams & WithSender | SetScriptTransaction, seed?: TSeedTypes): SetScriptTransaction & WithId & WithProofs
+export function setScript(paramsOrTx: any, seed?: TSeedTypes): SetScriptTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.SET_SCRIPT
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)

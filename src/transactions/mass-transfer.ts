@@ -21,9 +21,9 @@ import {MassTransferTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): MassTransferTransaction & WithId
-export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | MassTransferTransaction, seed?: TSeedTypes): MassTransferTransaction & WithId
-export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): MassTransferTransaction & WithId {
+export function massTransfer(params: IMassTransferParams, seed: TSeedTypes): MassTransferTransaction & WithId & WithProofs
+export function massTransfer(paramsOrTx: IMassTransferParams & WithSender | MassTransferTransaction, seed?: TSeedTypes): MassTransferTransaction & WithId & WithProofs
+export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): MassTransferTransaction & WithId & WithProofs{
     const type = TRANSACTION_TYPE.MASS_TRANSFER
     const version = paramsOrTx.version || DEFAULT_VERSIONS.MASS_TRANSFER
     const seedsAndIndexes = convertToPairs(seed)
@@ -39,7 +39,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): MassTransferTr
         transfers: paramsOrTx.transfers,
         fee: fee(paramsOrTx, 100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
         timestamp: paramsOrTx.timestamp || Date.now(),
-        attachment: paramsOrTx.attachment || null,
+        attachment: paramsOrTx.attachment || '',
         proofs: paramsOrTx.proofs || [],
         chainId: networkByte(paramsOrTx.chainId, chainIdFromRecipient(paramsOrTx.transfers[0]?.recipient)),
         id: '',

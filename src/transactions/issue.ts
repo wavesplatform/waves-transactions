@@ -12,9 +12,9 @@ import { DEFAULT_VERSIONS } from '../defaultVersions'
 import {IssueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 /* @echo DOCS */
-export function issue(params: IIssueParams, seed: TSeedTypes): IssueTransaction & WithId
-export function issue(paramsOrTx: IIssueParams & WithSender | IssueTransaction, seed?: TSeedTypes): IssueTransaction & WithId
-export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & WithId {
+export function issue(params: IIssueParams, seed: TSeedTypes): IssueTransaction & WithId & WithProofs
+export function issue(paramsOrTx: IIssueParams & WithSender | IssueTransaction, seed?: TSeedTypes): IssueTransaction & WithId & WithProofs
+export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & WithId & WithProofs {
   const type = TRANSACTION_TYPE.ISSUE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.ISSUE
   const seedsAndIndexes = convertToPairs(seed)

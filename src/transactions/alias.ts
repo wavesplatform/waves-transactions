@@ -13,9 +13,9 @@ import {AliasTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function alias(params: IAliasParams, seed: TSeedTypes): AliasTransaction & WithId
-export function alias(paramsOrTx: IAliasParams & WithSender | AliasTransaction, seed?: TSeedTypes): AliasTransaction & WithId
-export function alias(paramsOrTx: any, seed?: TSeedTypes): AliasTransaction & WithId {
+export function alias(params: IAliasParams, seed: TSeedTypes): AliasTransaction & WithId & WithProofs
+export function alias(paramsOrTx: IAliasParams & WithSender | AliasTransaction, seed?: TSeedTypes): AliasTransaction & WithId & WithProofs
+export function alias(paramsOrTx: any, seed?: TSeedTypes): AliasTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.ALIAS
   const version = paramsOrTx.version || DEFAULT_VERSIONS.ALIAS
   const seedsAndIndexes = convertToPairs(seed)

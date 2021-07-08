@@ -10,7 +10,7 @@ import {TSeedTypes} from '../types'
 import {validate} from '../validators'
 import {dataEntryToProto, txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {DataFiledType, DataTransaction, TRANSACTION_TYPE, DataTransactionEntry} from '@waves/ts-types'
+import {DataFiledType, DataTransaction, DataTransactionEntry, TRANSACTION_TYPE} from '@waves/ts-types'
 
 const {
     BASE58_STRING,
@@ -29,18 +29,24 @@ const typeMap: any = {
     number: ['integer', 0, LONG],
     boolean: ['boolean', 1, BYTE],
     string: ['string', 3, LEN(SHORT)(STRING)],
-    binary: ['binary', 2, (s: string) => LEN(SHORT)(BASE64_STRING)(s.slice(7))], // Slice base64: part
+    binary: ['binary', 2, (s: string) => LEN(SHORT)(BASE64_STRING)(s)],
     _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T): [DataFiledType, number, (value: T) => Uint8Array] =>
-    typeMap[typeof value] || typeMap['_']
+const mapType = <T>(value: T, type: string | undefined): [DataFiledType, number, (value: T) => Uint8Array] => {
+    return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
+}
 
+const convertValue = (type: 'integer' | 'string' | 'binary' | 'boolean', value: Uint8Array | string | number | boolean, opt: string) => {
+    return type === 'binary' && (Uint8Array.prototype.isPrototypeOf(value) || Array.isArray(value))
+        ? 'base64:' + Buffer.from(value as unknown as any[]).toString('base64')
+        : value
+}
 
 /* @echo DOCS */
-export function data(params: IDataParams, seed: TSeedTypes): DataTransaction & WithId
-export function data(paramsOrTx: IDataParams & WithSender | DataTransaction, seed?: TSeedTypes): DataTransaction & WithId
-export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & WithId {
+export function data(params: IDataParams, seed: TSeedTypes): DataTransaction & WithId & WithProofs
+export function data(paramsOrTx: IDataParams & WithSender | DataTransaction, seed?: TSeedTypes): DataTransaction & WithId & WithProofs
+export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & WithId & WithProofs {
     const type = TRANSACTION_TYPE.DATA
     const version = paramsOrTx.version || DEFAULT_VERSIONS.DATA
     const seedsAndIndexes = convertToPairs(seed)
@@ -51,27 +57,40 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     const _timestamp = paramsOrTx.timestamp || Date.now()
 
     const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: DataTransactionEntry) => {
-        if ((<any>x).type || x.value == null) return x
-        else {
-            const type = mapType(x.value)[0]
+
+        if (x.value == null) return x
+        if ((<any>x).type) {
+            return {
+                ...x,
+                value: convertValue(x.type, x.value, 'defined'),
+            }
+        } else {
+            const type = mapType(x.value, x.type)[0]
+
             return {
                 type,
                 key: x.key,
-                value: type === 'binary' ? 'base64:' + Buffer.from(x.value as unknown as any[]).toString('base64') : x.value as (string | number | boolean),
+                // @ts-ignore
+                value: convertValue(type, x.value, 'not defined'),
             }
         }
     })
+
+    const schema = (x: DataTransactionEntry) => {
+        return concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value, x.type)[1]], mapType(x.value, x.type)[2](x.value))
+    }
+
     let computedFee
     if (version < 2) {
         let bytes = concat(
             BYTE(TRANSACTION_TYPE.DATA),
             BYTE(1),
             BASE58_STRING(senderPublicKey),
-            COUNT(SHORT)((x: DataTransactionEntry) => concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value)[1]], mapType(x.value)[2](x.value)))(dataEntriesWithTypes),
+            COUNT(SHORT)(schema)(dataEntriesWithTypes),
             LONG(_timestamp)
         )
 
-        computedFee = (Math.floor(1 + (bytes.length + 8/*feeLong*/ - 1) / 1024) * 100000)
+        computedFee = (Math.floor(1 + (bytes.length - 1) / 1024) * 100000)
     } else {
         let protoEntries = dataEntriesWithTypes.map(dataEntryToProto)
         let dataBytes = wavesProto.waves.DataTransactionData.encode({data: protoEntries}).finish()
@@ -79,7 +98,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     }
 
 
-    const tx: DataTransaction & WithId & WithProofs= {
+    const tx: DataTransaction & WithId & WithProofs = {
         type,
         version,
         senderPublicKey,

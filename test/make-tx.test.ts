@@ -1,9 +1,8 @@
 import { exampleTxs } from './exampleTxs'
-import { TTx } from '../src'
 import { makeTx } from '../src'
 
 describe('makes tx', () => {
-  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as TTx)
+  const txs = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x])
   txs.forEach(tx => {
     it('type: ' + tx.type, () => {
       const made = makeTx(tx)

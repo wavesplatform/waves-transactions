@@ -7,6 +7,7 @@ import {
     TRANSACTION_TYPE,
     TransactionType
 } from '@waves/ts-types'
+import {InvokeScriptCallArgument} from '@waves/ts-types/src/parts'
 
 export interface WithId {
     /**
@@ -123,7 +124,7 @@ export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG>
  */
 export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG> {
     assetId: string
-    quantity: LONG
+    amount: LONG
 }
 
 /**
@@ -137,7 +138,7 @@ export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
-    data: Array<DataTransactionEntry>
+    data: Array<DataTransactionEntry | { type?: undefined; value?: undefined; key: string; }> //todo separate type for delete entry
 }
 
 /**
@@ -304,10 +305,7 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
     feeAssetId?: string | null
     call?: {
         function: string
-        args?: {
-            type: 'binary' | 'integer' | 'boolean' | 'string',
-            value: string | LONG | boolean
-        }[]
+        args?: Array<InvokeScriptCallArgument<LONG>>
     },
     payment?: {
         assetId?: string | null

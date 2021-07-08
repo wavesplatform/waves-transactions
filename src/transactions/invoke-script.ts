@@ -12,9 +12,9 @@ import {DEFAULT_VERSIONS} from '../defaultVersions'
 import {InvokeScriptPayment, InvokeScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 /* @echo DOCS */
-export function invokeScript(params: IInvokeScriptParams, seed: TSeedTypes): InvokeScriptTransaction & WithId
-export function invokeScript(paramsOrTx: IInvokeScriptParams & WithSender | InvokeScriptTransaction, seed?: TSeedTypes): InvokeScriptTransaction & WithId
-export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): InvokeScriptTransaction & WithId {
+export function invokeScript(params: IInvokeScriptParams, seed: TSeedTypes): InvokeScriptTransaction & WithId & WithProofs
+export function invokeScript(paramsOrTx: IInvokeScriptParams & WithSender | InvokeScriptTransaction, seed?: TSeedTypes): InvokeScriptTransaction & WithId & WithProofs
+export function invokeScript(paramsOrTx: any, seed?: TSeedTypes): InvokeScriptTransaction & WithId & WithProofs{
     const type = TRANSACTION_TYPE.INVOKE_SCRIPT
     const version = paramsOrTx.version || DEFAULT_VERSIONS.INVOKE_SCRIPT
     const seedsAndIndexes = convertToPairs(seed)

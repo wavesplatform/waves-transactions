@@ -13,9 +13,9 @@ import {CancelLeaseTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): CancelLeaseTransaction & WithId
-export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | CancelLeaseTransaction, seed?: TSeedTypes): CancelLeaseTransaction & WithId
-export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): CancelLeaseTransaction & WithId {
+export function cancelLease(params: ICancelLeaseParams, seed: TSeedTypes): CancelLeaseTransaction & WithId & WithProofs
+export function cancelLease(paramsOrTx: ICancelLeaseParams & WithSender | CancelLeaseTransaction, seed?: TSeedTypes): CancelLeaseTransaction & WithId & WithProofs
+export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): CancelLeaseTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.CANCEL_LEASE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.CANCEL_LEASE
   const seedsAndIndexes = convertToPairs(seed)

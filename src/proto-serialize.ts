@@ -29,13 +29,13 @@ import Long from 'long'
 import {lease} from './transactions/lease'
 import {GenesisTransaction} from '@waves/ts-types/transactions/index'
 import {TTransaction, WithChainId} from './transactions'
-import {ExchangeTransactionOrderV1} from '@waves/ts-types/src/parts'
 
 const invokeScriptCallSchema = {
-    ...schemas.txFields.functionCall[1], withLength: {
-        toBytes: serializePrimitives.SHORT,
-        fromBytes: parsePrimitives.P_SHORT,
-    },
+    ...schemas.txFields.functionCall[1],
+    // withLength: {
+    //     toBytes: serializePrimitives.SHORT,
+    //     fromBytes: parsePrimitives.P_SHORT,
+    // },
 }
 
 const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: number): string => {
@@ -50,6 +50,13 @@ const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: num
 export function txToProtoBytes(obj: TTransaction): Uint8Array {
     return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
 }
+
+function convertNumber(n: Long) {
+    const maxJsNumber = 2 ** 53 - 1
+
+    return n.toNumber() > maxJsNumber ? n.toString() : n.toNumber()
+}
+
 
 export function protoBytesToTx(bytes: Uint8Array): TTransaction {
     const t = wavesProto.waves.Transaction.decode(bytes)
@@ -76,7 +83,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
         type: typeByName[t.data! as transactionTypes] as TransactionType,
         senderPublicKey: base58Encode(t.senderPublicKey),
         timestamp: t.timestamp.toNumber(),
-        fee: t.fee!.amount!.toNumber(),
+        fee: convertNumber(t.fee!.amount!),
         // chainId: t.chainId
     }
     if (t.fee!.hasOwnProperty('assetId')) {
@@ -90,7 +97,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
         case 'issue':
             res.name = t.issue!.name!
             res.description = t.issue!.description!
-            res.quantity = t.issue!.amount!.toString()
+            res.quantity = convertNumber(t.issue!.amount!)
             res.decimals = t.issue!.decimals
             res.reissuable = t.issue!.reissuable
             if (t.issue!.hasOwnProperty('script')) {
@@ -98,7 +105,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             }
             break
         case 'transfer':
-            res.amount = t.transfer!.amount!.amount!.toString()
+            res.amount = convertNumber(t.transfer!.amount!.amount!)
             res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId)
             if (t.transfer!.hasOwnProperty('attachment')) {
                 res.attachment = t.transfer!.attachment == null ? null : base58Encode(t.transfer!.attachment)
@@ -108,25 +115,25 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             }
             break
         case 'reissue':
-            res.quantity = t.reissue!.assetAmount!.amount!.toString()
+            res.quantity = convertNumber(t.reissue!.assetAmount!.amount!)
             res.assetId = t.reissue!.assetAmount!.assetId == null ? null : base58Encode(t.reissue!.assetAmount!.assetId)
             res.reissuable = t.reissue!.reissuable
             break
         case 'burn':
-            res.quantity = t.burn!.assetAmount!.amount!.toString()
+            res.amount = convertNumber(t.burn!.assetAmount!.amount!)
             res.assetId = base58Encode(t.burn!.assetAmount!.assetId!)
             break
         case 'exchange':
-            res.amount = t.exchange!.amount!.toString()
-            res.price = t.exchange!.price!.toString()
-            res.buyMatcherFee = t.exchange!.buyMatcherFee!.toString()
-            res.sellMatcherFee = t.exchange!.sellMatcherFee!.toString()
+            res.amount = convertNumber(t.exchange!.amount!)
+            res.price = convertNumber(t.exchange!.price!)
+            res.buyMatcherFee = convertNumber(t.exchange!.buyMatcherFee!)
+            res.sellMatcherFee = convertNumber(t.exchange!.sellMatcherFee!)
             res.order1 = orderFromProto(t.exchange!.orders![0])
             res.order2 = orderFromProto(t.exchange!.orders![1])
             break
         case 'lease':
             res.recipient = recipientFromProto(t.lease!.recipient!, t.chainId)
-            res.amount = t.lease!.amount!.toString()
+            res.amount = convertNumber(t.lease!.amount!)
             break
         case 'leaseCancel':
             res.leaseId = base58Encode(t.leaseCancel!.leaseId!)
@@ -139,10 +146,10 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
                 res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
             }
             if (t.massTransfer!.hasOwnProperty('attachment')) {
-                res.attachment = t.massTransfer!.attachment == null ? null : base58Encode(t.massTransfer!.attachment)
-            }
+                res.attachment = t.massTransfer!.attachment == null ? '' : base58Encode(t.massTransfer!.attachment)
+            } else res.attachment = ''
             res.transfers = t.massTransfer!.transfers!.map(({amount, recipient}) => ({
-                amount: amount!.toString(),
+                amount: convertNumber(amount!),
                 recipient: recipientFromProto(recipient!, t.chainId),
             }))
             break
@@ -154,7 +161,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
                     value: base64Prefix(base64Encode(de.binaryValue!)),
                 }
                 if (de.hasOwnProperty('boolValue')) return {key: de.key, type: 'boolean', value: de.boolValue}
-                if (de.hasOwnProperty('intValue')) return {key: de.key, type: 'integer', value: de.intValue!.toString()}
+                if (de.hasOwnProperty('intValue')) return {key: de.key, type: 'integer', value: convertNumber(de.intValue!)}
                 if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue}
                 return {key: de.key}
             })
@@ -163,7 +170,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             res.script = t.setScript!.script == null ? null : base64Prefix(base64Encode(t.setScript!.script!))
             break
         case 'sponsorFee':
-            res.minSponsoredAssetFee = t.sponsorFee!.minFee!.amount!.toString()
+            res.minSponsoredAssetFee = convertNumber(t.sponsorFee!.minFee!.amount!)
             res.assetId = base58Encode(t.sponsorFee!.minFee!.assetId!)
             break
         case 'setAssetScript':
@@ -176,7 +183,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
                 res.call = binary.parserFromSchema(invokeScriptCallSchema)(t.invokeScript!.functionCall!).value //todo: export function call from marshall and use it directly
             }
             res.payment = t.invokeScript!.payments!.map(p => ({
-                amount: p.amount!.toString(),
+                amount: convertNumber(p.amount!),
                 assetId: p.assetId == null ? null : base58Encode(p.assetId),
             }))
             break
@@ -268,7 +275,7 @@ const getSetScriptData = (t: SetScriptTransaction): wavesProto.waves.ISetScriptT
     script: t.script == null ? null : scriptToProto(t.script),
 })
 const getSponsorData = (t: SponsorshipTransaction): wavesProto.waves.ISponsorFeeTransactionData => ({
-    minFee: amountToProto(t.minSponsoredAssetFee, t.assetId),
+    minFee: t.minSponsoredAssetFee === null ? amountToProto(0, t.assetId) : amountToProto(t.minSponsoredAssetFee, t.assetId),
 })
 const getSetAssetScriptData = (t: SetAssetScriptTransaction): wavesProto.waves.ISetAssetScriptTransactionData => ({
     assetId: base58Decode(t.assetId),
@@ -284,7 +291,7 @@ const getUpdateAssetInfoData = (t: UpdateAssetInfoTransaction): wavesProto.waves
     return {
         assetId: base58Decode(t.assetId),
         name: t.name,
-        description: t.description,
+        description: t.description === '' ? null : t.description,
     }
 }
 export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesProto.waves.ITransaction => {
@@ -370,11 +377,11 @@ const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransaction
     // @ts-ignore
     chainId: po.chainId,
     orderType: po.orderSide === wavesProto.waves.Order.Side.BUY ? 'buy' : 'sell',
-    amount: po.amount!.toString(),
-    price: po.price!.toString(),
+    amount: convertNumber(po.amount!),
+    price: convertNumber(po.price!),
     timestamp: po.timestamp!.toNumber(),
     expiration: po.expiration!.toNumber(),
-    matcherFee: po.matcherFee!.amount!.toNumber(),
+    matcherFee: convertNumber(po.matcherFee!.amount!),
     matcherFeeAssetId: po.matcherFee!.assetId == null ? null : base58Encode(po.matcherFee!.assetId),
 })
 
@@ -383,12 +390,12 @@ const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({
     publicKeyHash: !r.startsWith('alias') ? base58Decode(r).slice(2, -4) : undefined,
 })
 const amountToProto = (a: string | number, assetId?: string | null): wavesProto.waves.IAmount => ({
-    amount: Long.fromValue(a),
+    amount: a == 0 ? null : Long.fromValue(a),
     assetId: assetId == null ? null : base58Decode(assetId),
 })
 const massTransferItemToProto = (mti: MassTransferItem): wavesProto.waves.MassTransferTransactionData.ITransfer => ({
     recipient: recipientToProto(mti.recipient),
-    amount: Long.fromValue(mti.amount),
+    amount: mti.amount == 0 ? null : Long.fromValue(mti.amount),
 })
 export const dataEntryToProto = (de: DataTransactionEntry): wavesProto.waves.DataTransactionData.IDataEntry => ({
     key: de.key,

@@ -17,9 +17,9 @@ import {SetAssetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function setAssetScript(params: ISetAssetScriptParams, seed: TSeedTypes): SetAssetScriptTransaction & WithId
-export function setAssetScript(paramsOrTx: ISetAssetScriptParams & WithSender | SetAssetScriptTransaction, seed?: TSeedTypes): SetAssetScriptTransaction & WithId
-export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): SetAssetScriptTransaction & WithId {
+export function setAssetScript(params: ISetAssetScriptParams, seed: TSeedTypes): SetAssetScriptTransaction & WithId & WithProofs
+export function setAssetScript(paramsOrTx: ISetAssetScriptParams & WithSender | SetAssetScriptTransaction, seed?: TSeedTypes): SetAssetScriptTransaction & WithId & WithProofs
+export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): SetAssetScriptTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.SET_ASSET_SCRIPT
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_ASSET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)

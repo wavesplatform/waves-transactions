@@ -1,7 +1,7 @@
 import { auth, serializeAuthData } from '../../src/requests/auth'
 import { verifyAuthData } from '../../src/general'
 import { base58Encode, blake2b } from '@waves/ts-lib-crypto'
-import { address } from '@waves/ts-lib-crypto';
+import { address } from '@waves/ts-lib-crypto'
 
 describe('auth', () => {
 

@@ -3,10 +3,11 @@
  */
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
-import { IOrder, IOrderParams, TOrder, WithId, WithSender } from '../transactions'
+import {IOrderParams, WithId, WithProofs, WithSender} from '../transactions'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
+import {ExchangeTransactionOrder, SignedIExchangeTransactionOrder} from '@waves/ts-types'
 
 
 /**
@@ -54,9 +55,9 @@ import { validate } from '../validators'
  * ```
  *
  */
-export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): TOrder & WithId
-export function order(paramsOrOrder: IOrderParams & WithSender | TOrder, seed?: TSeedTypes): TOrder & WithId
-export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
+export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
+export function order(paramsOrOrder: IOrderParams & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
+export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId {
 
   const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
   const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
@@ -69,8 +70,8 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   const senderPublicKey = paramsOrOrder.senderPublicKey || getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
 
   // Use old versionless order only if it is set to null explicitly
-  const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version || 2
-  const ord: TOrder & WithId = {
+  const version = paramsOrOrder.version === null ? undefined : (paramsOrOrder.version || 2)
+  const ord: SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithId & WithProofs= {
     orderType,
     version,
     assetPair: {
@@ -85,10 +86,11 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
     matcherPublicKey,
     senderPublicKey,
     proofs,
+    matcherFeeAssetId: null,
     id: '',
   }
 
-  if (ord.version === 3) {
+  if (ord.version === 3 || ord.version === 4) {
     ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
   }
 
@@ -101,6 +103,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): TOrder & WithId {
   ord.id = base58Encode(blake2b(bytes))
 
   // OrderV1 uses signature instead of proofs
+  // @ts-ignore
   if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs && ord.proofs[0]
 
   return ord

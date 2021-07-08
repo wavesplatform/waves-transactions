@@ -13,9 +13,9 @@ import {LeaseTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function lease(params: ILeaseParams, seed: TSeedTypes): LeaseTransaction & WithId
-export function lease(paramsOrTx: ILeaseParams & WithSender | LeaseTransaction, seed?: TSeedTypes): LeaseTransaction & WithId
-export function lease(paramsOrTx: any, seed?: TSeedTypes): LeaseTransaction & WithId {
+export function lease(params: ILeaseParams, seed: TSeedTypes): LeaseTransaction & WithId & WithProofs
+export function lease(paramsOrTx: ILeaseParams & WithSender | LeaseTransaction, seed?: TSeedTypes): LeaseTransaction & WithId & WithProofs
+export function lease(paramsOrTx: any, seed?: TSeedTypes): LeaseTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.LEASE
   const version = paramsOrTx.version || DEFAULT_VERSIONS.LEASE
   const seedsAndIndexes = convertToPairs(seed)

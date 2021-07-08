@@ -1,5 +1,5 @@
 import {publicKey} from '@waves/ts-lib-crypto'
-import {data, IDataTransaction, WithId} from '../../src'
+import {data, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {validateTxSignature} from '../../test/utils'
 import {dataMinimalParams} from '../minimalParams'
@@ -20,7 +20,7 @@ describe('data', () => {
             [{key: 'int', value: -1}, {key: 'str', value: 'string'}, {key: 'bool', value: true}, {
                 key: 'bin',
                 type: 'binary',
-                value: 'base64:YWxpY2U='
+                value: 'base64:YWxpY2U=',
             }],
             1,
             base64Decode('DAEOfDELVTFkTjXX6NQIecrcVDMzucL6GfiwihJh+rt7SAAEAANpbnQA//////////8AA3N0cgMABnN0cmluZwAEYm9vbAEBAANiaW4CAAVhbGljZQAAAXSHboAAAAAAAAABhqA='),
@@ -29,7 +29,7 @@ describe('data', () => {
             [{key: 'int', value: -1}, {key: 'str', value: 'string'}, {key: 'bool', value: true}, {
                 key: 'bin',
                 type: 'binary',
-                value: 'base64:YWxpY2U='
+                value: 'base64:YWxpY2U=',
             }],
             2,
             base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggc5ChAKA2ludFD///////////8BCg0KA3N0cmoGc3RyaW5nCggKBGJvb2xYAQoMCgNiaW5iBWFsaWNl'),
@@ -37,7 +37,7 @@ describe('data', () => {
         [
             [{key: 'int', value: 0}, {key: 'str', value: 'string'}, {key: 'bool', value: false}, {
                 key: 'bin',
-                value: Uint8Array.from([1, 2, 3, 4])
+                value: Uint8Array.from([1, 2, 3, 4]),
             }],
             1,
             base64Decode('DAEOfDELVTFkTjXX6NQIecrcVDMzucL6GfiwihJh+rt7SAAEAANpbnQAAAAAAAAAAAAAA3N0cgMABnN0cmluZwAEYm9vbAEAAANiaW4CAAQBAgMEAAABdIdugAAAAAAAAAGGoA=='),
@@ -45,7 +45,7 @@ describe('data', () => {
         [
             [{key: 'int', value: 0}, {key: 'str', value: 'string'}, {key: 'bool', value: false}, {
                 key: 'bin',
-                value: Uint8Array.from([1, 2, 3, 4])
+                value: Uint8Array.from([1, 2, 3, 4]),
             }],
             2,
             base64Decode('CEkSIA58MQtVMWRONdfo1Ah5ytxUMzO5wvoZ+LCKEmH6u3tIGgQQoI0GIICAurvILigCggcvCgcKA2ludFAACg0KA3N0cmoGc3RyaW5nCggKBGJvb2xYAAoLCgNiaW5iBAECAwQ='),
@@ -68,6 +68,8 @@ describe('data', () => {
             version: version,
             fee: fee,
         } as any, senderPk)
+        console.log(makeTxBytes(tx).join(','))
+        console.log(makeTxBytes(tx).length)
         const bytes = tx.version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
         expect(bytes).toEqual(expectedBytes)
     })
@@ -77,8 +79,10 @@ describe('data', () => {
         [[{key: 'bin', value: Array(100).fill(1)}], 2, 100000],
         [[{key: 'bin', value: Array(1000).fill(1)}], 1, 200000],
         [[{key: 'bin', value: Array(1000).fill(1)}], 2, 100000],
-        [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000],
+        [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000], //todo fix feecalc for v1
         [[{key: 'bin', value: Array(10000).fill(1)}], 2, 1000000],
+        [[{key: 'bin', type:'binary', value: libs.crypto.base64Encode(Array(10000).fill(1))}], 1, 1000000],
+        [[{key: 'bin', type:'binary', value: Array(10000).fill(1)}], 1, 1000000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 9800000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 9800000],
         [Array(15).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 14700000],
@@ -127,7 +131,6 @@ describe('data', () => {
         expect(tx.data.length).toEqual(3)
         expect(tx.version).toEqual(2)
         expect(tx.timestamp - expectedTimestamp).toBeLessThan(100)
-        expect(tx.feeAssetId).toEqual(undefined)
         expect(tx.type).toEqual(12)
     })
 })

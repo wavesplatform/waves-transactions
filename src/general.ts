@@ -54,7 +54,8 @@ import {
     MassTransferTransaction,
     ReissueTransaction,
     SetAssetScriptTransaction,
-    SetScriptTransaction,
+    SetScriptTransaction, SignedIExchangeTransactionOrder,
+    SignedTransaction,
     SponsorshipTransaction,
     Transaction,
     TRANSACTION_TYPE,
@@ -64,7 +65,7 @@ import {IAuthParams, ICancelOrder, TTransaction, TTxParams, WithProofs, WithSend
 
 type TLong = string | number
 
-export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxParams & WithTxType, seed: TSeedTypes) => Transaction<TLong> } } = {
+export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxParams & WithTxType, seed: TSeedTypes) => SignedTransaction<Transaction<TLong>> } } = {
     [TRANSACTION_TYPE.ISSUE]: {sign: (x, seed) => issue(x as IssueTransaction<TLong>, seed)},
     [TRANSACTION_TYPE.TRANSFER]: {sign: (x, seed) => transfer(x as TransferTransaction<TLong>, seed)},
     [TRANSACTION_TYPE.REISSUE]: {sign: (x, seed) => reissue(x as ReissueTransaction<TLong>, seed)},
@@ -86,7 +87,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxP
  * @param tx
  * @param seed
  */
-export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedTypes): Transaction {
+export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedTypes): SignedTransaction<Transaction> {
     if (!txTypeMap[tx.type]) throw new Error(`Unknown tx type: ${tx.type}`)
 
     return txTypeMap[tx.type].sign(tx, seed)
@@ -96,7 +97,7 @@ export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedType
  * Converts transaction or order object to Uint8Array
  * @param obj transaction or order
  */
-export function serialize(obj: Transaction | ExchangeTransactionOrder & WithProofs & WithSender): Uint8Array {
+export function serialize(obj: Transaction | SignedIExchangeTransactionOrder<ExchangeTransactionOrder>): Uint8Array {
     if (isOrder(obj)) return binary.serializeOrder(obj)
     return binary.serializeTx(obj)
 }
@@ -107,10 +108,10 @@ export function serialize(obj: Transaction | ExchangeTransactionOrder & WithProo
  * @param proofN - proof index. Takes first proof by default
  * @param publicKey - takes senderPublicKey by default
  */
-export function verify(obj: TTransaction & WithProofs | ExchangeTransactionOrder & WithProofs & WithSender, proofN = 0, publicKey?: string): boolean {
+export function verify(obj: TTransaction & WithProofs | SignedIExchangeTransactionOrder<ExchangeTransactionOrder>, proofN = 0, publicKey?: string): boolean {
     publicKey = publicKey || obj.senderPublicKey
     const bytes = serialize(obj)
-    const signature = obj.version == null ? (obj as any).signature : obj.proofs[proofN]
+    const signature = obj.version == null ? (obj as any).signature : (obj as any).proofs[proofN]
     return verifySignature(publicKey, bytes, signature)
 }
 
