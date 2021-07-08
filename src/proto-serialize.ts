@@ -32,10 +32,6 @@ import {TTransaction, WithChainId} from './transactions'
 
 const invokeScriptCallSchema = {
     ...schemas.txFields.functionCall[1],
-    // withLength: {
-    //     toBytes: serializePrimitives.SHORT,
-    //     fromBytes: parsePrimitives.P_SHORT,
-    // },
 }
 
 const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: number): string => {
