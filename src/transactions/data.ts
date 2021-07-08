@@ -37,8 +37,10 @@ const mapType = <T>(value: T, type: string | undefined): [DataFiledType, number,
     return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
 }
 
-const convertBinaryValue = (type: 'integer' | 'string' | 'binary' | 'boolean', value: Uint8Array | string | number | boolean, opt: string) => {
-    return type === 'binary' && Uint8Array.prototype.isPrototypeOf(value) ? 'base64:' + Buffer.from(value as unknown as any[]).toString('base64') : value
+const convertValue = (type: 'integer' | 'string' | 'binary' | 'boolean', value: Uint8Array | string | number | boolean, opt: string) => {
+    return type === 'binary' && (Uint8Array.prototype.isPrototypeOf(value) || Array.isArray(value))
+        ? 'base64:' + Buffer.from(value as unknown as any[]).toString('base64')
+        : value
 }
 
 /* @echo DOCS */
@@ -61,7 +63,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
             else {
                 const y = {
                     ...x,
-                    value: convertBinaryValue(x.type, x.value, 'defined'),
+                    value: convertValue(x.type, x.value, 'defined'),
                 }
                 return y
             }
@@ -72,20 +74,17 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
                 type,
                 key: x.key,
                 // @ts-ignore
-                value: convertBinaryValue(type, x.value, 'not defined'),
+                value: convertValue(type, x.value, 'not defined'),
             }
         }
     })
 
     const schema = (x: DataTransactionEntry) => {
-        // console.log('x', JSON.stringify(x, null, ' '))
-        // console.log(mapType(x.value, x.type)[1])
-        // console.log(mapType(x.value, x.type)[2](x.value))
         return concat(LEN(SHORT)(STRING)(x.key), [mapType(x.value, x.type)[1]], mapType(x.value, x.type)[2](x.value))
     }
+
     let computedFee
     if (version < 2) {
-        // console.log([mapType(x.value)[1]])
         let bytes = concat(
             BYTE(TRANSACTION_TYPE.DATA),
             BYTE(1),
