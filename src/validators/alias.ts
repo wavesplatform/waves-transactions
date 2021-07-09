@@ -1,4 +1,3 @@
-import { TRANSACTION_TYPE } from '../transactions'
 import {
     isEq,
     orEq,
@@ -11,6 +10,7 @@ import {
     isValidAliasName,
     defaultValue, isPublicKey
 } from './validators'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 const aliasScheme = {
@@ -21,8 +21,8 @@ const aliasScheme = {
     fee: isNumberLike,
     chainId: isNumber,
     timestamp: isNumber,
-    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
- };
+    proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),
+}
 
 
 export const aliasValidator = validateByShema(aliasScheme, getError)

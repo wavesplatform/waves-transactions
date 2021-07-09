@@ -3,10 +3,11 @@
  */
 import { signBytes, blake2b, base58Encode, publicKey, concat, TSeed } from '@waves/ts-lib-crypto'
 import { schemas, serializePrimitives } from '@waves/marshall'
-import { TDataEntry } from '../transactions'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { TPrivateKey } from '../types'
+import {DataFiledType, DataTransactionEntry} from '@waves/ts-types'
+import {DataTransactionDeleteRequest} from '@waves/ts-types/src/parts'
 
 export interface ICustomDataV1 {
   version: 1
@@ -20,7 +21,7 @@ export interface ICustomDataV1 {
 
 export interface ICustomDataV2 {
   version: 2
-  data: TDataEntry[]
+  data: Exclude<DataTransactionEntry, DataTransactionDeleteRequest>[]
   publicKey?: string
 }
 
@@ -52,9 +53,9 @@ export function customData(cData: TCustomData, seed?: TSeed | TPrivateKey): TSig
 
   const hash = base58Encode(blake2b(bytes))
 
-  const pk = cData.publicKey ? cData.publicKey : seed && publicKey(seed);
+  const pk = cData.publicKey ? cData.publicKey : seed && publicKey(seed)
 
-  const signature = seed && signBytes(seed, bytes);
+  const signature = seed && signBytes(seed, bytes)
 
   return {...cData, hash, publicKey: pk, signature}
 }

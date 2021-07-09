@@ -1,4 +1,4 @@
-import { TDataEntry, ITransaction, TTx, WithId } from './transactions'
+import { WithId } from './transactions'
 import * as tx_route from '@waves/node-api-js/cjs/api-node/transactions'
 import * as blocks_route from '@waves/node-api-js/cjs/api-node/blocks'
 import * as addresses_route from '@waves/node-api-js/cjs/api-node/addresses'
@@ -6,6 +6,8 @@ import * as assets_route from '@waves/node-api-js/cjs/api-node/assets'
 import * as rewards_route from '@waves/node-api-js/cjs/api-node/rewards'
 import * as debug_route from '@waves/node-api-js/cjs/api-node/debug'
 import { RequestInit } from '@waves/node-api-js/cjs/tools/request'
+import {DataTransactionEntry, SignedTransaction, Transaction, WithApiMixin} from '@waves/ts-types'
+import {TLong} from '@waves/node-api-js/cjs/interface'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
 
@@ -40,18 +42,18 @@ const DEFAULT_NODE_REQUEST_OPTIONS = {
   apiBase: 'https://nodes.wavesplatform.com',
 }
 
-export const currentHeight = async (apiBase: string, requestOptions?: RequestInit): Promise<number> => {
-  return blocks_route.fetchHeight(apiBase, requestOptions).then(({height}) => height)
+export const currentHeight = async (apiBase: string): Promise<number> => {
+  return blocks_route.fetchHeight(apiBase).then(({height}) => height)
 }
 
-export async function waitForHeight(height: number, options: INodeRequestOptions, requestOptions?: RequestInit) {
+export async function waitForHeight(height: number, options: INodeRequestOptions) {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<number> => currentHeight(apiBase, requestOptions)
+  const promise = (): Promise<number> => currentHeight(apiBase)
     .then(x => {
       if (x >= height) {
         to.cancel()
@@ -69,14 +71,14 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions, requestOptions?: RequestInit): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
+export async function waitForTx(txId: string, options: INodeRequestOptions, requestOptions?: RequestInit): Promise<Transaction & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> =>
+  const promise = (): Promise<Transaction & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> =>
       tx_route.fetchInfo(apiBase, txId, requestOptions)
     .then(x => {
       to.cancel()
@@ -95,7 +97,7 @@ const process400 = (resp: any) => resp.status === 400
   : resp
 
 export async function waitForTxWithNConfirmations(txId: string, confirmations: number, options: INodeRequestOptions, requestOptions?: RequestInit):
-    Promise<TTx & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}>{
+    Promise<Transaction & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}>{
 
 
   const { timeout } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
@@ -111,7 +113,7 @@ export async function waitForTxWithNConfirmations(txId: string, confirmations: n
 
   while (txHeight + confirmations > currentHeight) {
     if (expired) throw new Error('Tx wait stopped: timeout')
-    await waitForHeight(txHeight + confirmations, options, requestOptions)
+    await waitForHeight(txHeight + confirmations, options)
     tx = await waitForTx(txId, options, requestOptions)
     txHeight = (tx as any).height
   }
@@ -121,10 +123,10 @@ export async function waitForTxWithNConfirmations(txId: string, confirmations: n
 
 export async function waitNBlocks(blocksCount: number, options: INodeRequestOptions = DEFAULT_NODE_REQUEST_OPTIONS, requestOptions?: RequestInit) {
   const { apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
-  const height = await currentHeight(apiBase, requestOptions)
+  const height = await currentHeight(apiBase)
   const target = height + blocksCount
   // console.log(`current height: ${height} target: ${target}`)
-  return await waitForHeight(target, options, requestOptions)
+  return await waitForHeight(target, options)
 }
 
 /**
@@ -132,7 +134,7 @@ export async function waitNBlocks(blocksCount: number, options: INodeRequestOpti
  * @param txId - transaction ID as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
-export async function transactionById(txId: string, nodeUrl: string, requestOptions?: RequestInit): Promise<ITransaction & WithId & { height: number }> {
+export async function transactionById(txId: string, nodeUrl: string, requestOptions?: RequestInit): Promise<Transaction & WithId & { height: number }> {
   return tx_route.fetchInfo(nodeUrl, txId, requestOptions) as any //todo: fix types
 }
 
@@ -176,9 +178,9 @@ export interface IAccountDataRequestOptions {
  * @param options - waves address and optional match regular expression. If match is present keys will be filtered by this regexp
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, TDataEntry>>
-export async function accountData(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, TDataEntry>>
-export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, TDataEntry>> {
+export async function accountData(options: IAccountDataRequestOptions, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, DataTransactionEntry>>
+export async function accountData(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, DataTransactionEntry>>
+export async function accountData(options: string | IAccountDataRequestOptions, nodeUrl: string, requestOptions?: RequestInit): Promise<Record<string, DataTransactionEntry>> {
   let address
   let match
   if (typeof options === 'string') {
@@ -191,7 +193,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
       : options.match.source)
   }
 
-  const data: TDataEntry[] =  await addresses_route.data(
+  const data: DataTransactionEntry[] =  await addresses_route.data(
     nodeUrl,
     address,
     { matches: match },
@@ -208,7 +210,7 @@ export async function accountData(options: string | IAccountDataRequestOptions, 
  * @param key - dictionary key
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function accountDataByKey(key: string, address: string, nodeUrl: string, requestOptions?: RequestInit) {
+export async function accountDataByKey(key: string, address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<DataTransactionEntry<TLong> | null> {
   return addresses_route.fetchDataKey(nodeUrl, address, key, requestOptions).catch((e) => {
     if (e.error === 304) return null
     else throw e
@@ -230,8 +232,8 @@ export async function scriptInfo(address: string, nodeUrl: string, requestOption
  * @param address - waves address as base58 string
  * @param nodeUrl - node address to ask data from. E.g. https://nodes.wavesplatform.com/
  */
-export async function scriptMeta(address: string, nodeUrl: string, requestOptions?: RequestInit): Promise<any> {
-  return addresses_route.fetchScriptInfoMeta(nodeUrl, address, requestOptions)
+export async function scriptMeta(address: string, nodeUrl: string): Promise<any> {
+  return addresses_route.fetchScriptInfoMeta(nodeUrl, address)
 }
 
 /**
@@ -259,7 +261,7 @@ export async function rewards(...args: [number, string] | [string]): Promise<any
 }
 
 export interface IStateChangeResponse {
-  data: TDataEntry[],
+  data: DataTransactionEntry[],
   transfers: {
     address: string,
     amount: number,
@@ -282,6 +284,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string, reque
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends TTx>(tx: T, nodeUrl: string, requestOptions?: RequestInit){
-  return tx_route.broadcast(nodeUrl, tx as any, requestOptions)
+export function broadcast<T extends SignedTransaction<Transaction<TLong>>>(tx: T, nodeUrl: string): Promise<T & WithApiMixin> {
+  return tx_route.broadcast(nodeUrl, tx as any)
 }

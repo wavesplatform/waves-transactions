@@ -25,22 +25,22 @@ const orderScheme = {
   assetPair: validatePipe(
       isRequired(true),
       pipe(prop('amountAsset'), isAssetId),
-      pipe(prop('priceAsset'), isAssetId),
+      pipe(prop('priceAsset'), isAssetId)
   ),
   price: isNumberLike,
   amount: isNumberLike,
   matcherFee: isNumberLike,
   expiration: isNumberLike,
   timestamp: isNumber,
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+}
 
 const v1_2_OrderScheme = {
-  matcherFeeAssetId: orEq([undefined, null, 'WAVES'])
+  matcherFeeAssetId: orEq([undefined, null, 'WAVES']),
 }
 
 const v3_OrderScheme = {
-  matcherFeeAssetId: isAssetId
+  matcherFeeAssetId: isAssetId,
 }
 
 const validateOrder = validateByShema(orderScheme, getError)

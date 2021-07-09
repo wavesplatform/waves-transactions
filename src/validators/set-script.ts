@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
   isEq,
   orEq,
@@ -21,7 +21,7 @@ const setScriptScheme = {
   fee: isNumberLike,
   timestamp: isNumber,
   script: ifElse(isEq(null), defaultValue(true), isBase64),
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+}
 
 export const setScriptValidator = validateByShema(setScriptScheme, getError)

@@ -1,4 +1,3 @@
-import { TRANSACTION_TYPE } from '../transactions'
 import {
     isEq,
     orEq,
@@ -12,6 +11,7 @@ import {
     validateByShema,
     ifElse, defaultValue, isPublicKey
 } from './validators'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 const transferScheme = {

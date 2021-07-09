@@ -2,8 +2,9 @@ import { broadcast, ISetScriptParams, libs, massTransfer, setScript, waitForTx }
 import { address, publicKey } from '@waves/ts-lib-crypto'
 import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
 import { data, invokeScript } from '../../src'
-import { DATA_FIELD_TYPE } from '../../src/transactions'
+
 import { txToProtoBytes } from '../../src/proto-serialize'
+import {DATA_FIELD_TYPE} from '@waves/ts-types'
 
 describe('Smart features', () => {
   let account1: string, account2: string
@@ -12,12 +13,13 @@ describe('Smart features', () => {
   beforeAll(async () => {
     const nonce = randomHexString(6)
 
+    jest.setTimeout(60000)
     account1 = 'account1' + nonce
     account2 = 'account2' + nonce
     const mtt = massTransfer({
       transfers: [
         { recipient: address(account1, CHAIN_ID), amount: 1 * wvs },
-        { recipient: address(account2, CHAIN_ID), amount: 1100000 }
+        { recipient: address(account2, CHAIN_ID), amount: 1100000 },
       ]
     }, MASTER_SEED)
     await broadcast(mtt, API_BASE)
@@ -31,21 +33,21 @@ describe('Smart features', () => {
         chainId: CHAIN_ID,
         data: [{
           key: 'int_value',
-          value: 1000
+          value: 1000,
         }, {
           key: 'boolean_value',
-          value: true
+          value: true,
         }, {
           key: 'string_value',
-          value: 'some str'
+          value: 'some str',
         }, {
           key: 'binary_value',
-          value: Uint8Array.from([1, 2, 3])
+          value: Uint8Array.from([1, 2, 3]),
         }, {
           key: 'binary_value_as_base64',
           type: DATA_FIELD_TYPE.BINARY,
-          value: 'AwZd0cYf'
-        }]
+          value: 'AwZd0cYf',
+        }],
       }, account1)
 
       await broadcast(dataTx, API_BASE)
@@ -62,7 +64,7 @@ describe('Smart features', () => {
           key: 'binary_value',
         }, {
           key: 'binary_value_as_base64',
-        }]
+        }],
       }, account1)
       await broadcast(dataTxDel, API_BASE)
     }, TIMEOUT)
@@ -121,7 +123,7 @@ describe('Smart features', () => {
         const script = 'AAIDAAAAAAAAAAcIARIDCgEBAAAAAAAAAAEAAAABaQEAAAADZm9vAAAAAQAAAAFhCQEAAAALVHJhbnNmZXJTZXQAAAABCQAETAAAAAIJAQAAAA5TY3JpcHRUcmFuc2ZlcgAAAAMIBQAAAAFpAAAABmNhbGxlcgUAAAABYQUAAAAEdW5pdAUAAAADbmlsAAAAABk8wBI='
         const txParams: ISetScriptParams = {
           chainId: CHAIN_ID,
-          script
+          script,
         }
         const tx = setScript(txParams, account2)
         console.log(libs.crypto.base64Encode(txToProtoBytes(tx)))
@@ -141,8 +143,8 @@ describe('Smart features', () => {
           chainId: CHAIN_ID,
           dApp: dappAddress,
           call: {
-            function: 'foo', args: [{ type: 'integer', value: 10000 }]
-          }
+            function: 'foo', args: [{ type: 'integer', value: 10000 }],
+          },
         },
         account1)
 

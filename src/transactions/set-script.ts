@@ -1,27 +1,28 @@
 /**
  * @module index
  */
-import { TRANSACTION_TYPE, ISetScriptTransaction, ISetScriptParams, WithId, WithSender } from '../transactions'
+import {ISetScriptParams, WithId, WithProofs, WithSender} from '../transactions'
 import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
 import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, networkByte, fee } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
+import {SetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 /* @echo DOCS */
-export function setScript(params: ISetScriptParams, seed: TSeedTypes): ISetScriptTransaction & WithId
-export function setScript(paramsOrTx: ISetScriptParams & WithSender | ISetScriptTransaction, seed?: TSeedTypes): ISetScriptTransaction & WithId
-export function setScript(paramsOrTx: any, seed?: TSeedTypes): ISetScriptTransaction & WithId {
+export function setScript(params: ISetScriptParams, seed: TSeedTypes): SetScriptTransaction & WithId & WithProofs
+export function setScript(paramsOrTx: ISetScriptParams & WithSender | SetScriptTransaction, seed?: TSeedTypes): SetScriptTransaction & WithId & WithProofs
+export function setScript(paramsOrTx: any, seed?: TSeedTypes): SetScriptTransaction & WithId & WithProofs{
   const type = TRANSACTION_TYPE.SET_SCRIPT
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
-  const tx: ISetScriptTransaction & WithId = {
+  const tx: SetScriptTransaction & WithId & WithProofs= {
     type,
     version,
     senderPublicKey,

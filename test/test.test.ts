@@ -7,110 +7,139 @@ import {data} from '../src/transactions/data'
 import {invokeScript} from '../src/transactions/invoke-script'
 import {address, randomSeed} from '@waves/ts-lib-crypto'
 import {setScript} from '../src/transactions/set-script'
-import {TIMEOUT} from './integration/config'
+import {API_BASE, TIMEOUT} from './integration/config'
 import {waitForTxWithNConfirmations} from '../src/nodeInteraction'
+import {strengthenPassword} from '../src/seedUtils'
 
 const nodeUrl = 'http://localhost:6869'
 const masterSeed = 'waves private node seed with waves tokens'
+const CHAIN_ID = 82
+let dappAddress1 = ''
+let dappAddress2 = ''
+let assetId = ''
+jest.setTimeout(60000)
 
 it('issue', async () => {
     const tx = issue({
         name: 'test',
         description: 'test',
-        quantity: 1,
-        chainId: 82,
+        quantity: 1097654321,
+        chainId: CHAIN_ID,
         fee: 100000000,
     }, masterSeed)
-    console.log(await broadcast(tx, nodeUrl))
+    const {id} = await broadcast(tx, nodeUrl)
+    assetId = id
 })
 
-it('updateAssetInfo', async () => {
-    const tx = updateAssetInfo({
-        name: 'myCoin',
-        description: 'description for myCoin',
-        assetId: '9Qkr6cBZmfPZosCwbnHKVHciEJgFSzahe4H9HL6avmT9',
-        chainId: 82,
-    }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
-})
+// it('updateAssetInfo', async () => {
+//     const tx = updateAssetInfo({
+//         name: 'myCoin',
+//         description: 'description for myCoin',
+//         assetId: '9Qkr6cBZmfPZosCwbnHKVHciEJgFSzahe4H9HL6avmT9',
+//         chainId: CHAIN_ID,
+//     }, masterSeed)
+//     console.log(JSON.stringify(tx, null, 4))
+//     console.log(await broadcast(tx, nodeUrl))
+// })
 
 it('transfer', async () => {
+
+    const recipient = address(randomSeed(), CHAIN_ID)
     const tx = transfer({
-        recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
+        recipient: recipient,
         amount: 1,
-        chainId: 82,
-        attachment: {value: 'hello', type: 'string'},
+        chainId: CHAIN_ID,
+        attachment: '',
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 it('masstransfer', async () => {
+    const r1 = address(randomSeed(), CHAIN_ID)
+    const r2 = address(randomSeed(), CHAIN_ID)
     const tx = massTransfer({
         transfers: [
             {
-                recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
+                recipient: r1,
                 amount: 1,
             },
             {
-                recipient: '3HmFkAoQRs4Y3PE2uR6ohN7wS4VqPBGKv7k',
+                recipient: r2,
                 amount: 1,
             },
         ],
-        chainId: 82,
-        attachment: {value: 'hello', type: 'string'},
+        chainId: CHAIN_ID,
+        attachment: '',
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 it('set data', async () => {
     const tx = data({
-        data: [{key: 'foo', value: 'bar'}],
-        chainId: 82,
+        data: [{key: 'foo', type:'string',value: 'bar'}],
+        chainId: CHAIN_ID,
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 it('drop data', async () => {
     const tx = data({
-        data: [{key: 'foo', value: null}],
-        chainId: 82,
+        data: [{key: 'foo'}],
+        chainId: CHAIN_ID,
     }, masterSeed)
-    console.log(JSON.stringify(tx, null, 4))
-    console.log(await broadcast(tx, nodeUrl))
+    await broadcast(tx, nodeUrl)
 })
 
 
 it('setScriptTest', async () => {
     const script = 'AAIEAAAAAAAAAAQIAhIAAAAAAAAAAAEAAAABaQEAAAADZm9vAAAAAAkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAADa2V5AAAAAAAAAAABCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAANrZXkGCQAETAAAAAIJAQAAAAtTdHJpbmdFbnRyeQAAAAICAAAAA2tleQIAAAADc3RyBQAAAANuaWwAAAAAl/lsvw=='
 
+    const script2 = 'base64:AAIFAAAAAAAAAAsIAhIHCgUBAgQIHwAAAAAAAAABAAAAAWkBAAAABGNhbGwAAAAFAAAAAWEAAAABYgAAAAFjAAAAAWQAAAABZgQAAAAEaW50VgQAAAAHJG1hdGNoMAkAAZEAAAACBQAAAAFmAAAAAAAAAAAAAwkAAAEAAAACBQAAAAckbWF0Y2gwAgAAAANJbnQEAAAAAXQFAAAAByRtYXRjaDAFAAAAAXQJAAACAAAAAQIAAAAOd3JvbmcgYXJnIHR5cGUEAAAABWJ5dGVWBAAAAAckbWF0Y2gwCQABkQAAAAIFAAAAAWYAAAAAAAAAAAEDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAACkJ5dGVWZWN0b3IEAAAAAXQFAAAAByRtYXRjaDAFAAAAAXQJAAACAAAAAQIAAAAOd3JvbmcgYXJnIHR5cGUEAAAABWJvb2xWBAAAAAckbWF0Y2gwCQABkQAAAAIFAAAAAWYAAAAAAAAAAAIDCQAAAQAAAAIFAAAAByRtYXRjaDACAAAAB0Jvb2xlYW4EAAAAAXQFAAAAByRtYXRjaDAFAAAAAXQJAAACAAAAAQIAAAAOd3JvbmcgYXJnIHR5cGUEAAAABHN0clYEAAAAByRtYXRjaDAJAAGRAAAAAgUAAAABZgAAAAAAAAAAAwMJAAABAAAAAgUAAAAHJG1hdGNoMAIAAAAGU3RyaW5nBAAAAAF0BQAAAAckbWF0Y2gwBQAAAAF0CQAAAgAAAAECAAAADndyb25nIGFyZyB0eXBlCQAETAAAAAIJAQAAAAtCaW5hcnlFbnRyeQAAAAICAAAAA2JpbgUAAAABYgkABEwAAAACCQEAAAALQmluYXJ5RW50cnkAAAACAgAAAARib29sBQAAAAVieXRlVgkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAAEaW50MQUAAAABYQkABEwAAAACCQEAAAAMSW50ZWdlckVudHJ5AAAAAgIAAAAEaW50MgUAAAAEaW50VgkABEwAAAACCQEAAAALU3RyaW5nRW50cnkAAAACAgAAAARzdHIxBQAAAAFkCQAETAAAAAIJAQAAAAtTdHJpbmdFbnRyeQAAAAICAAAABHN0cjIFAAAABHN0clYJAARMAAAAAgkBAAAADEJvb2xlYW5FbnRyeQAAAAICAAAABWJvb2wxBQAAAAFjCQAETAAAAAIJAQAAAAxCb29sZWFuRW50cnkAAAACAgAAAAVib29sMgUAAAAFYm9vbFYFAAAAA25pbAAAAAEAAAACdHgBAAAABnZlcmlmeQAAAAAGaGqCnQ=='
     const seed = randomSeed()
-    const addr = address(seed, 82)
-    console.log(addr)
-    console.log(seed)
+    const addr = address(seed, CHAIN_ID)
+
+    const seed2 = randomSeed()
+    const addr2 = address(seed2, CHAIN_ID)
+
+
+    dappAddress1 = addr
+    dappAddress2 = addr2
 
     let tx = transfer({
         recipient: addr,
         amount: 2e8,
-        chainId: 82,
+        chainId: CHAIN_ID,
     }, masterSeed)
-    console.log(await broadcast(tx, nodeUrl))
-    await sleep(15000)
+
+    let tx2 = transfer({
+        recipient: addr2,
+        amount: 2e8,
+        chainId: CHAIN_ID,
+    }, masterSeed)
+
+    await broadcast(tx, nodeUrl)
+    await broadcast(tx2, nodeUrl)
+    await waitForTx(tx.id, {apiBase: nodeUrl, timeout: 10000})
 
     const setScriptTx = setScript({
         script,
-        chainId: 82,
+        chainId: CHAIN_ID,
     }, seed)
-    console.log(await broadcast(setScriptTx, nodeUrl))
+
+    const setScriptTx2 = setScript({
+        script: script2,
+        chainId: CHAIN_ID,
+    }, seed2)
+
+    await broadcast(setScriptTx2, nodeUrl)
+    await broadcast(setScriptTx, nodeUrl)
+    await waitForTx(setScriptTx.id, {apiBase: nodeUrl, timeout: 10000})
     // await sleep(15000);
     // try {
     //     const invokeTx = invokeScript({
     //         dApp: addr,
     //         call: {function: 'foo', args: []},
-    //         chainId: 82,
+    //         chainId: chainId,
     //         fee: 500000,
     //         payment: [{assetId: null, amount: 1}],
     //         feeAssetId: null
@@ -126,7 +155,7 @@ it('setScriptTest', async () => {
     //     const invokeTx1pay = invokeScript({
     //         dApp: addr,
     //         call: {function: 'foo', args: []},
-    //         chainId: 82,
+    //         chainId: chainId,
     //         fee: 500000,
     //         payment: [{amount: 1, assetId: null}],
     //         feeAssetId: null
@@ -143,7 +172,7 @@ it('setScriptTest', async () => {
     //         // dApp: addr,
     //         dApp: '3HaN7nm7LuC7bDpgiG917VdJ1mmJE3iXMPM',
     //         call: {function: 'foo', args: []},
-    //         chainId: 82,
+    //         chainId: chainId,
     //         fee: 500000,
     //         payment: [{amount: 1, assetId: null}, {amount: 1, assetId: null}],
     //     }, masterSeed)
@@ -159,18 +188,83 @@ it('setScriptTest', async () => {
 
 it('invoke test', async () => {
 
+
+    if (dappAddress1 == '') {
+        dappAddress1 = '3MJ2PHxU4Vsf5HfLzuYrRTP3imrQVvhkWyk'
+    }
+
     const invokeTx = invokeScript({
-        dApp: '3MAjRbSNjxihNaMLnhRM5L1JQtyf81AuAHA',
+        dApp: dappAddress1,
         call: {function: 'foo', args: []},
-        chainId: 82,
+        chainId: CHAIN_ID,
         fee: 500000,
         feeAssetId: null,
     }, masterSeed)
     const {id} = await broadcast(invokeTx, nodeUrl)
-    const tx = (await waitForTxWithNConfirmations(id,0, {apiBase: nodeUrl, timeout: TIMEOUT}))
-    console.log(tx)
+    const tx = (await waitForTxWithNConfirmations(id, 0, {apiBase: nodeUrl, timeout: TIMEOUT}))
 }, 100000)
 
+it('invoke with list test', async () => {
+
+    const invokeTx = invokeScript({
+        dApp: dappAddress2,
+        call: {
+            function: 'call', args: [
+                {
+                    'type': 'integer',
+                    'value': 1,
+                },
+                {
+                    'type': 'binary',
+                    'value': 'base64:YWJj',
+                },
+                {
+                    'type': 'boolean',
+                    'value': true,
+                },
+                {
+                    'type': 'string',
+                    'value': 'abc',
+                },
+                {
+                    'type': 'list',
+                    'value': [{
+                        'type': 'integer',
+                        'value': 2,
+                    },
+                        {
+                            'type': 'binary',
+                            'value': 'base64:YWJjZA==',
+                        },
+                        {
+                            'type': 'boolean',
+                            'value': false,
+                        },
+                        {
+                            'type': 'string',
+                            'value': 'abcd',
+                        }],
+                },
+            ],
+        },
+        chainId: CHAIN_ID,
+        payment: [
+            {'amount': 1, 'assetId': null},
+            {'amount': 2, 'assetId': null},
+            {'amount': 3, 'assetId': null},
+            {'amount': 4, 'assetId': null},
+            {'amount': 5, 'assetId': null},
+            {'amount': 21, 'assetId': assetId},
+            {'amount': 22, 'assetId': assetId},
+            {'amount': 23, 'assetId': assetId},
+            {'amount': 24, 'assetId': assetId},
+            {'amount': 25, 'assetId': assetId}],
+        fee: 500000,
+        feeAssetId: null,
+    }, masterSeed)
+    const {id} = await broadcast(invokeTx, nodeUrl)
+    const tx = (await waitForTxWithNConfirmations(id, 0, {apiBase: nodeUrl, timeout: TIMEOUT}))
+}, 100000)
 
 it('transfer test', async () => {
     const conditions = [
@@ -178,36 +272,13 @@ it('transfer test', async () => {
         {attachment: ''},
         {attachment: null},
         {attachment: undefined},
-
-        {version: 3, attachment: 'StV1DL6CwTryKyV'},
-        {version: 3, attachment: ''},
-        {version: 3, attachment: null},
-        {version: 3, attachment: undefined},
-
-        {version: 3, attachment: {type: 'string', value: ''}},
-        {version: 3, attachment: {type: 'string', value: 'hello world'}},
-
-        {version: 3, attachment: {type: 'integer', value: '123'}},
-        {version: 3, attachment: {type: 'integer', value: 123}},
-        {version: 3, attachment: {type: 'integer', value: -1}},
-        {version: 3, attachment: {type: 'integer', value: -1e10}},
-        {version: 3, attachment: {type: 'integer', value: -0}},
-        {version: 3, attachment: {type: 'integer', value: 0}},
-        {version: 3, attachment: {type: 'integer', value: '-9223372036854775808'}},
-        {version: 3, attachment: {type: 'integer', value: '9223372036854775807'}},
-
-        {version: 3, attachment: {type: 'boolean', value: false}},
-        {version: 3, attachment: {type: 'boolean', value: true}},
-
-        {version: 3, attachment: {type: 'binary', value: ''}},
-        {version: 3, attachment: {type: 'binary', value: 'StV1DL6CwTryKyV'}},
     ]
-    console.log(conditions.length)
+    const recipient = address(randomSeed(), CHAIN_ID)
     const makeTx = (cond: any) => transfer({
         ...cond,
-        chainId: 82,
+        chainId: CHAIN_ID,
         amount: 1,
-        recipient: '3Hm3LGoNPmw1VTZ3eRA2pAfeQPhnaBm6YFC',
+        recipient: recipient,
     }, masterSeed)
 
 

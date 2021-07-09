@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import { orderValidator } from './order'
 import {
     isEq,
@@ -30,7 +30,7 @@ const exchangeScheme = {
     sellMatcherFee: isNumberLike,
     fee: isNumberLike,
     timestamp: isNumber,
-    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
+    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 };
 
 export const exchangeValidator = validateByShema(exchangeScheme, getError)

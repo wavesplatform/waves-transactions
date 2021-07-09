@@ -1,10 +1,11 @@
 import {
   WithProofs,
   IBasicParams,
-  WithSender, TOrder
+  WithSender
 } from './transactions'
 import { TPrivateKey, TSeedTypes } from './types'
 import { publicKey, base58Decode } from '@waves/ts-lib-crypto'
+import {ExchangeTransactionOrder} from '@waves/ts-types'
 
 export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f: (v: T) => U): Record<K, U> =>
   Object.entries<T>(obj).map(([k, v]) => [k, f(v)] as [string, U])
@@ -49,7 +50,7 @@ export function convertToPairs(seedObj?: TSeedTypes): [string | TPrivateKey, num
   }
 }
 
-export const isOrder = (p: any): p is TOrder => (<TOrder>p).assetPair !== undefined
+export const isOrder = (p: any): p is ExchangeTransactionOrder & WithProofs & WithSender => (<ExchangeTransactionOrder & WithProofs & WithSender>p).assetPair !== undefined
 
 
 export function networkByte(p: number | string | undefined, def: number): number {

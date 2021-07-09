@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
   isEq,
   orEq,
@@ -27,12 +27,12 @@ const issueScheme = {
   script: ifElse(
       isRequired(true),
       isBase64,
-      defaultValue(true),
+      defaultValue(true)
   ),
   chainId: isNumber,
   fee: isNumberLike,
   timestamp: isNumber,
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+}
 
 export const issueValidator = validateByShema(issueScheme, getError)

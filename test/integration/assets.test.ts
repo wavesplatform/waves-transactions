@@ -20,14 +20,15 @@ describe('Assets', () => {
 
   beforeAll(async () => {
     const nonce = randomHexString(6)
+    jest.setTimeout(60000)
 
     account1 = 'account1' + nonce
     account2 = 'account2' + nonce
     const mtt = massTransfer({
       transfers: [
         { recipient: address(account1, CHAIN_ID), amount: 6 * wvs },
-        { recipient: address(account2, CHAIN_ID), amount: 1 * wvs }
-      ]
+        { recipient: address(account2, CHAIN_ID), amount: 1 * wvs },
+      ],
     }, MASTER_SEED)
     await broadcast(mtt, API_BASE)
     await waitForTx(mtt.id, {apiBase: API_BASE, timeout: TIMEOUT})
@@ -141,7 +142,7 @@ describe('Assets', () => {
       }
       const burnTx = burn(burnParams, account1)
       const respPromise = broadcast(burnTx, API_BASE)
-      await expect(respPromise).rejects.toMatchObject({ error: 308 })
+      await expect(respPromise).rejects.toMatchObject({ error: 112 })
 
     }, TIMEOUT + 20000)
 
@@ -177,14 +178,14 @@ describe('Assets', () => {
         ...issueMinimalParams,
         quantity: 1,
         decimals: 0,
-        chainId: CHAIN_ID
+        chainId: CHAIN_ID,
       }, account1)
 
       const resp = await broadcast(tx, API_BASE)
       await waitForTx(tx.id, {apiBase: API_BASE})
 
       expect(resp.type).toEqual(3)
-    }
+    }, TIMEOUT)
   })
 
   describe('Other', () => {
@@ -234,7 +235,7 @@ describe('Assets', () => {
         amountAsset: assetId,
         priceAsset: null,
         amount: 1,
-        price: 100000000
+        price: 100000000,
       }, account2)
 
       const order2 = order({
@@ -245,7 +246,7 @@ describe('Assets', () => {
         amountAsset: assetId,
         priceAsset: null,
         amount: 1,
-        price: 100000000
+        price: 100000000,
       }, account1)
 
       //await submitOrder(order1, matcherUrl)

@@ -4,9 +4,9 @@ import {
   ICancelLeaseParams, IInvokeScriptParams, IDataParams, IIssueParams,
   ILeaseParams,
   IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
-  TRANSACTION_TYPE,
   ICancelOrderParams
 } from '../src/transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 
 export const aliasMinimalParams: IAliasParams = {
   alias: 'mytestalias',
@@ -40,16 +40,16 @@ export const invokeScriptMinimalParams: IInvokeScriptParams = {
         value: [
             {
               type: 'string',
-              value: 'aaa'
+              value: 'aaa',
             },
             {
               type: 'string',
-              value: 'bbb'
+              value: 'bbb',
             },
-         ]
-      }
-    ]
-  }
+         ],
+      },
+    ],
+  },
 }
 
 export const massTransferMinimalParams: IMassTransferParams = {
@@ -92,7 +92,7 @@ export const dataMinimalParams: IDataParams = {
       value: true,
     },
   ],
-}
+} as any
 
 export const reissueMinimalParams: IReissueParams = {
   assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',

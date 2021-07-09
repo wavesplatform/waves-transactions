@@ -1,7 +1,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { serializeCustomData } from './requests/custom-data';
+import { serializeCustomData } from './requests/custom-data'
 
 export { massTransfer } from './transactions/mass-transfer'
 export { reissue } from './transactions/reissue'
@@ -29,45 +29,21 @@ export { makeTx, makeTxBytes } from './make-tx'
 
 // Export interfaces
 export {
-  ITransaction,
-  TTx,
   TTxParams,
-  IAliasTransaction,
   IAliasParams,
-  IIssueTransaction,
   IIssueParams,
-  IReissueTransaction,
   IReissueParams,
-  IBurnTransaction,
   IBurnParams,
-  IExchangeTransaction,
-  ILeaseTransaction,
   ILeaseParams,
-  ICancelLeaseTransaction,
   ICancelLeaseParams,
-  ITransferTransaction,
   ITransferParams,
-  IMassTransferTransaction,
   IMassTransferParams,
-  IMassTransferItem,
-  ISetAssetScriptTransaction,
   ISetScriptParams,
-  ISponsorshipTransaction,
   ISponsorshipParams,
-  IDataTransaction,
   IDataParams,
-  TDataEntry,
-  ISetScriptTransaction,
   ISetAssetScriptParams,
-  IInvokeScriptTransaction,
   IInvokeScriptParams,
   IUpdateAssetInfoParams,
-  IUpdateAssetInfoTransaction,
-  IOrder,
-  IOrderV1,
-  IOrderV2,
-  IOrderV3,
-  TOrder,
   IOrderParams,
   ICancelOrder,
   ICancelOrderParams,
@@ -75,7 +51,6 @@ export {
   WithSender,
   WithProofs,
   WithTxType,
-  WithChainId,
 } from './transactions'
 
 export { INodeRequestOptions, IStateChangeResponse } from './nodeInteraction'

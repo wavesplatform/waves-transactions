@@ -1,4 +1,4 @@
-import { TRANSACTION_TYPE } from '../transactions'
+import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
   isEq,
   orEq,
@@ -40,7 +40,7 @@ const invokeScheme = {
                   isRequired(true),
                   isValidDataPair
               )
-          ),
+          )
       )
   ),
   payment: validatePipe(
@@ -56,14 +56,8 @@ const invokeScheme = {
   feeAssetId: isAssetId,
   chainId: isNumber,
   timestamp: isNumber,
-  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
-};
+  proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+}
 
 
 export const invokeValidator = validateByShema(invokeScheme, getError)
-
-
-// const tx: IInvokeScriptTransaction & WithId = {
-  //   call: paramsOrTx.call && {args: [], ...paramsOrTx.call},
-  //   payment: mapPayment(paramsOrTx.payment),
-  // }
