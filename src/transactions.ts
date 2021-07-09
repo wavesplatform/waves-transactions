@@ -3,6 +3,7 @@ import {
     GenesisTransaction,
     MassTransferItem,
     PaymentTransaction,
+    SignedTransaction,
     Transaction,
     TRANSACTION_TYPE,
     TransactionType
@@ -336,3 +337,5 @@ export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTran
 export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2>
 
 export type WithChainId = { chainId: number }
+
+export type TTx = SignedTransaction<TTransaction>

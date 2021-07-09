@@ -29,6 +29,7 @@ export { makeTx, makeTxBytes } from './make-tx'
 
 // Export interfaces
 export {
+  TTx,
   TTxParams,
   IAliasParams,
   IIssueParams,

@@ -102,6 +102,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_transactions_.html#ttransaction" class="tsd-kind-icon">TTransaction</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_transactions_.html#ttransactiontype" class="tsd-kind-icon">TTransaction<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_transactions_.html#ttx" class="tsd-kind-icon">TTx</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="_transactions_.html#ttxparams" class="tsd-kind-icon">TTx<wbr>Params</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_transactions_.html#withchainid" class="tsd-kind-icon">With<wbr>Chain<wbr>Id</a></li>
 							</ul>
@@ -117,7 +118,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Transaction</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">GenesisTransaction</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PaymentTransaction</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/6daad44/src/transactions.ts#L334">src/transactions.ts:334</a></li>
+							<li>Defined in build/tmp/src/transactions.ts:335</li>
 						</ul>
 					</aside>
 				</section>
@@ -127,7 +128,17 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">TRANSACTION_TYPE</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">TRANSACTION_TYPE</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/6daad44/src/transactions.ts#L336">src/transactions.ts:336</a></li>
+							<li>Defined in build/tmp/src/transactions.ts:337</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="ttx" class="tsd-anchor"></a>
+					<h3>TTx</h3>
+					<div class="tsd-signature tsd-kind-icon">TTx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SignedTransaction</span><span class="tsd-signature-symbol">&lt;</span><a href="_transactions_.html#ttransaction" class="tsd-signature-type">TTransaction</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in build/tmp/src/transactions.ts:341</li>
 						</ul>
 					</aside>
 				</section>
@@ -137,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTx<wbr>Params&lt;LONG&gt;<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_transactions_.ialiasparams.html" class="tsd-signature-type">IAliasParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.iburnparams.html" class="tsd-signature-type">IBurnParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.iinvokescriptparams.html" class="tsd-signature-type">IInvokeScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.icancelleaseparams.html" class="tsd-signature-type">ICancelLeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.idataparams.html" class="tsd-signature-type">IDataParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.iissueparams.html" class="tsd-signature-type">IIssueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.ileaseparams.html" class="tsd-signature-type">ILeaseParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.imasstransferparams.html" class="tsd-signature-type">IMassTransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.ireissueparams.html" class="tsd-signature-type">IReissueParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.isetassetscriptparams.html" class="tsd-signature-type">ISetAssetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.isetscriptparams.html" class="tsd-signature-type">ISetScriptParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.isponsorshipparams.html" class="tsd-signature-type">ISponsorshipParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.itransferparams.html" class="tsd-signature-type">ITransferParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_transactions_.iupdateassetinfoparams.html" class="tsd-signature-type">IUpdateAssetInfoParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/6daad44/src/transactions.ts#L66">src/transactions.ts:66</a></li>
+							<li>Defined in build/tmp/src/transactions.ts:67</li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -153,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">With<wbr>Chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>chainId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/6daad44/src/transactions.ts#L338">src/transactions.ts:338</a></li>
+							<li>Defined in build/tmp/src/transactions.ts:339</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -263,6 +274,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="_transactions_.html#ttransactiontype" class="tsd-kind-icon">TTransaction<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="_transactions_.html#ttx" class="tsd-kind-icon">TTx</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.html#ttxparams" class="tsd-kind-icon">TTx<wbr>Params</a>

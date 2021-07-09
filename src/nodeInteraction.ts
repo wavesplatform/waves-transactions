@@ -284,6 +284,6 @@ export async function stateChanges(transactionId: string, nodeUrl: string, reque
  * @param tx - transaction to send
  * @param nodeUrl - node address to send tx to. E.g. https://nodes.wavesplatform.com/
  */
-export function broadcast<T extends SignedTransaction<Transaction<TLong>>>(tx: T, nodeUrl: string): Promise<T & WithApiMixin> {
-  return tx_route.broadcast(nodeUrl, tx as any)
+export function broadcast<T extends SignedTransaction<Transaction<TLong>>>(tx: T, nodeUrl: string, requestOptions?: RequestInit ): Promise<T & WithApiMixin> {
+  return tx_route.broadcast(nodeUrl, tx as any, requestOptions)
 }
