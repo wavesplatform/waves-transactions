@@ -421,7 +421,7 @@ You can send tx to any waves node you like:. E.g.:
 * https://nodes-testnet.wavesnodes.com - waves TESTNET nodes hosted by Wavesplatform
 * https://nodes.wavesplatform.com - waves MAINNET nodes hosted by Wavesplatform
 #### Important!!!
-Most transactions require chainId as parameter, e.g: [IBurnParams](https://wavesplatform.github.io/waves-transactions/interfaces/iburnparams.html). By default chainId is 'W', which means MAINNET. To make transaction in TESTNET be sure to pass chainId if it is present in params interface and then send it to TESTNET node
+Most transactions require chainId as parameter, e.g: [IBurnParams](https://wavesplatform.github.io/waves-transactions/interfaces/_transactions_.iburnparams.html). By default chainId is 'W', which means MAINNET. To make transaction in TESTNET be sure to pass chainId if it is present in params interface and then send it to TESTNET node
 
 ### Dependencies
 This library uses `@waves/ts-lib-crypto` for cryptography and `@waves/node-api-js` for interacting with node. 
