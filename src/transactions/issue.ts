@@ -3,7 +3,15 @@
  */
 import { IIssueTransaction, TRANSACTION_TYPE, IIssueParams, WithId, WithSender } from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, base64Prefix, convertToPairs, fee, networkByte } from '../generic'
+import {
+  addProof,
+  getSenderPublicKey,
+  base64Prefix,
+  convertToPairs,
+  fee,
+  networkByte,
+  normalizeAssetId
+} from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
@@ -30,6 +38,7 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IIssueTransaction & W
     decimals: paramsOrTx.decimals == null ? 8 : paramsOrTx.decimals,
     reissuable: paramsOrTx.reissuable || false,
     fee: paramsOrTx.quantity === 1 ? fee(paramsOrTx, 1000000) : fee(paramsOrTx, 100000000),
+    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],

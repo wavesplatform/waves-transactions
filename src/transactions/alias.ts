@@ -28,6 +28,7 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): IAliasTransaction & W
     fee: fee(paramsOrTx, 100000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
+    feeAssetId: paramsOrTx.feeAssetId || null,
     proofs: paramsOrTx.proofs || [],
     id: '',
   }
