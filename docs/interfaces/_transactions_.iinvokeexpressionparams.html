@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ILeaseParams | waves-transactions</title>
+	<title>IInvokeExpressionParams | waves-transactions</title>
 	<meta name="description" content="Documentation for waves-transactions">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules/_transactions_.html">&quot;transactions&quot;</a>
 				</li>
 				<li>
-					<a href="_transactions_.ileaseparams.html">ILeaseParams</a>
+					<a href="_transactions_.iinvokeexpressionparams.html">IInvokeExpressionParams</a>
 				</li>
 			</ul>
-			<h1>Interface ILeaseParams&lt;LONG&gt;</h1>
+			<h1>Interface IInvokeExpressionParams&lt;LONG&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -89,7 +89,7 @@
 						<a href="_transactions_.ibasicparams.html" class="tsd-signature-type">IBasicParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LONG</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ILeaseParams</span>
+								<span class="target">IInvokeExpressionParams</span>
 							</li>
 						</ul>
 					</li>
@@ -102,13 +102,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.ileaseparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_transactions_.ileaseparams.html#amount" class="tsd-kind-icon">amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.ileaseparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.ileaseparams.html#fee" class="tsd-kind-icon">fee</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_transactions_.ileaseparams.html#recipient" class="tsd-kind-icon">recipient</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.ileaseparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.ileaseparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.iinvokeexpressionparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.iinvokeexpressionparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_transactions_.iinvokeexpressionparams.html#expression" class="tsd-kind-icon">expression</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.iinvokeexpressionparams.html#fee" class="tsd-kind-icon">fee</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_transactions_.iinvokeexpressionparams.html#feeassetid" class="tsd-kind-icon">fee<wbr>Asset<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.iinvokeexpressionparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_transactions_.iinvokeexpressionparams.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -133,16 +133,6 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="amount" class="tsd-anchor"></a>
-					<h3>amount</h3>
-					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LONG</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in build/tmp/src/transactions.ts:169</li>
-						</ul>
-					</aside>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="chainid" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chain<wbr>Id</h3>
@@ -162,6 +152,16 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="expression" class="tsd-anchor"></a>
+					<h3>expression</h3>
+					<div class="tsd-signature tsd-kind-icon">expression<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in build/tmp/src/transactions.ts:340</li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="fee" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee</h3>
@@ -179,12 +179,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="recipient" class="tsd-anchor"></a>
-					<h3>recipient</h3>
-					<div class="tsd-signature tsd-kind-icon">recipient<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="feeassetid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee<wbr>Asset<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">fee<wbr>Asset<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in build/tmp/src/transactions.ts:168</li>
+							<li>Defined in build/tmp/src/transactions.ts:339</li>
 						</ul>
 					</aside>
 				</section>
@@ -266,45 +266,45 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.idataparams.html" class="tsd-kind-icon">IData<wbr>Params</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.iinvokeexpressionparams.html" class="tsd-kind-icon">IInvoke<wbr>Expression<wbr>Params</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_transactions_.iinvokeexpressionparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_transactions_.iinvokeexpressionparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_transactions_.iinvokeexpressionparams.html#expression" class="tsd-kind-icon">expression</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_transactions_.iinvokeexpressionparams.html#fee" class="tsd-kind-icon">fee</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_transactions_.iinvokeexpressionparams.html#feeassetid" class="tsd-kind-icon">fee<wbr>Asset<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_transactions_.iinvokeexpressionparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_transactions_.iinvokeexpressionparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.iinvokescriptparams.html" class="tsd-kind-icon">IInvoke<wbr>Script<wbr>Params</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.iissueparams.html" class="tsd-kind-icon">IIssue<wbr>Params</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.ileaseparams.html" class="tsd-kind-icon">ILease<wbr>Params</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_transactions_.ileaseparams.html#additionalfee" class="tsd-kind-icon">additional<wbr>Fee</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_transactions_.ileaseparams.html#amount" class="tsd-kind-icon">amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_transactions_.ileaseparams.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_transactions_.ileaseparams.html#fee" class="tsd-kind-icon">fee</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_transactions_.ileaseparams.html#recipient" class="tsd-kind-icon">recipient</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_transactions_.ileaseparams.html#senderpublickey" class="tsd-kind-icon">sender<wbr>Public<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_transactions_.ileaseparams.html#timestamp" class="tsd-kind-icon">timestamp</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_transactions_.imasstransferparams.html" class="tsd-kind-icon">IMass<wbr>Transfer<wbr>Params</a>
 					</li>

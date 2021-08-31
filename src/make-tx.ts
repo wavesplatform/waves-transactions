@@ -48,7 +48,7 @@ import {
     SponsorshipTransaction,
     TransferTransaction,
     UpdateAssetInfoTransaction,
-    TRANSACTION_TYPE
+    TRANSACTION_TYPE, InvokeExpressionTransaction
 } from '@waves/ts-types'
 
 export type TTransaction<T extends TTransactionType> = TxTypeMap[T]
@@ -69,6 +69,7 @@ export type TxTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: InvokeScriptTransaction
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
+    [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
 }
 export type TTxParamsWithType<T extends TTransactionType> = TxParamsTypeMap[T] & { type: T }
 
@@ -88,6 +89,7 @@ export type TxParamsTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: IInvokeScriptParams
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
+    [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
 }
 
 /**

@@ -22,12 +22,12 @@ import {
     TRANSACTION_TYPE,
     TransactionType,
     TransferTransaction,
-    UpdateAssetInfoTransaction
+    UpdateAssetInfoTransaction,
+    GenesisTransaction
 } from '@waves/ts-types'
 import {base64Prefix, chainIdFromRecipient} from './generic'
 import Long from 'long'
 import {lease} from './transactions/lease'
-import {GenesisTransaction} from '@waves/ts-types/transactions/index'
 import {TTransaction, WithChainId} from './transactions'
 
 const invokeScriptCallSchema = {
@@ -422,6 +422,7 @@ const nameByType = {
     15: 'setAssetScript' as 'setAssetScript',
     16: 'invokeScript' as 'invokeScript',
     17: 'updateAssetInfo' as 'updateAssetInfo',
+    18: 'invokeExpression' as 'invokeExpression',
 }
 const typeByName = {
     'genesis': 1 as 1,
@@ -441,5 +442,6 @@ const typeByName = {
     'setAssetScript': 15 as 15,
     'invokeScript': 16 as 16,
     'updateAssetInfo': 17 as 17,
+    'invokeExpression': 18 as 18,
 }
 

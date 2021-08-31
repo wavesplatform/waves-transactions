@@ -4,7 +4,7 @@
 import {ICancelLeaseParams, WithId, WithProofs, WithSender} from '../transactions'
 import { binary } from '@waves/marshall'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, networkByte, fee } from '../generic'
+import {addProof, getSenderPublicKey, convertToPairs, networkByte, fee, normalizeAssetId} from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
@@ -21,12 +21,13 @@ export function cancelLease(paramsOrTx: any, seed?: TSeedTypes): CancelLeaseTran
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: CancelLeaseTransaction & WithId & WithProofs = {
+  const tx: CancelLeaseTransaction & WithId & WithProofs & {feeAssetId: string | null} = {
     type,
     version,
     senderPublicKey,
     leaseId: paramsOrTx.leaseId,
     fee: fee(paramsOrTx, 100000),
+    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],

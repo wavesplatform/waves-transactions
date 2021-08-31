@@ -48,7 +48,7 @@ const invokeScheme = {
       (data: Array<unknown>) => data.every(
           validatePipe(
               pipe(prop('amount'), isNumberLike),
-              pipe(prop('assetId'), isAssetId),
+              pipe(prop('assetId'), isAssetId)
           )
       )
   ),
