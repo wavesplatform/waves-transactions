@@ -134,3 +134,8 @@ export const minimalParams = {
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: setAssetScriptMinimalParams,
   [TRANSACTION_TYPE.INVOKE_SCRIPT]: invokeScriptMinimalParams,
 }
+
+export const invokeExpressionMinimalParams: IInvokeExpressionParams = {
+  expression: 'base64:/wYJAARMAAAAAgkBAAAADEJvb2xlYW5FbnRyeQAAAAICAAAABHRlc3QGBQAAAANuaWxv62W3',
+
+}
