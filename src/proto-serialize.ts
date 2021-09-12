@@ -44,6 +44,7 @@ const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: num
 }
 
 export function txToProtoBytes(obj: TTransaction): Uint8Array {
+    console.log(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
     return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
 }
 
@@ -187,6 +188,9 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             res.assetId = base58Encode(t.updateAssetInfo!.assetId!)
             res.name = t.updateAssetInfo!.name
             res.description = t.updateAssetInfo!.description
+            break
+        case 'invokeExpression':
+            res.expression = t.invokeExpression!.expression
             break
         default:
             throw new Error(`Unsupported tx type ${t.data}`)
