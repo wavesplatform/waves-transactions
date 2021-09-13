@@ -3,22 +3,15 @@ import {
     isEq,
     orEq,
     isAssetId,
-    isRecipient,
     isNumber,
     isNumberLike,
-    prop,
     isArray,
     getError,
     validateByShema,
     ifElse,
     defaultValue,
     isPublicKey,
-    isRequired,
-    validatePipe,
-    pipe,
-    isString,
-    gte,
-    isValidDataPair, isBase64
+    isBase64
 } from './validators'
 
 

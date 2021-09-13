@@ -16,7 +16,7 @@ export function invokeExpression(params: IInvokeExpressionParams, seed: TSeedTyp
 export function invokeExpression(paramsOrTx: IInvokeExpressionParams & WithSender | InvokeExpressionTransaction, seed?: TSeedTypes): InvokeExpressionTransaction & WithId & WithProofs
 export function invokeExpression(paramsOrTx: any, seed?: TSeedTypes): InvokeExpressionTransaction & WithId & WithProofs{
     const type = TRANSACTION_TYPE.INVOKE_EXPRESSION
-    const version = paramsOrTx.version || DEFAULT_VERSIONS.INVOKE_SCRIPT
+    const version = paramsOrTx.version || DEFAULT_VERSIONS.INVOKE_EXPRESSION
     const seedsAndIndexes = convertToPairs(seed)
     const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
@@ -34,8 +34,7 @@ export function invokeExpression(paramsOrTx: any, seed?: TSeedTypes): InvokeExpr
     }
 
     validate.invokeExpression(tx)
-
-    const bytes = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
+    const bytes = txToProtoBytes(tx)
 
     seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
     tx.id = base58Encode(base58Encode(blake2b(bytes)))
