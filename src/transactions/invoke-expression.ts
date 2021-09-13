@@ -2,10 +2,17 @@
  * @module index
  */
 import {IInvokeExpressionParams, WithId, WithProofs, WithSender} from '../transactions'
-import {base58Encode, base64Encode, blake2b, signBytes,} from '@waves/ts-lib-crypto'
-import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte, normalizeAssetId} from '../generic'
+import {base58Encode, blake2b, signBytes,} from '@waves/ts-lib-crypto'
+import {
+    addProof,
+    base64Prefix,
+    convertToPairs,
+    fee,
+    getSenderPublicKey,
+    networkByte,
+    normalizeAssetId
+} from '../generic'
 import {TSeedTypes} from '../types'
-import {binary} from '@waves/marshall'
 import {validate} from '../validators'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
@@ -24,7 +31,7 @@ export function invokeExpression(paramsOrTx: any, seed?: TSeedTypes): InvokeExpr
         type,
         version,
         senderPublicKey,
-        expression: base64Encode(paramsOrTx.expression),
+        expression: base64Prefix(paramsOrTx.expression) || '',
         fee: fee(paramsOrTx, 500000),
         feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
         timestamp: paramsOrTx.timestamp || Date.now(),
