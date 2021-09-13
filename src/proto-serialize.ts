@@ -23,7 +23,7 @@ import {
     TransactionType,
     TransferTransaction,
     UpdateAssetInfoTransaction,
-    GenesisTransaction
+    GenesisTransaction, InvokeExpressionTransaction
 } from '@waves/ts-types'
 import {base64Prefix, chainIdFromRecipient} from './generic'
 import Long from 'long'
@@ -44,7 +44,6 @@ const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: num
 }
 
 export function txToProtoBytes(obj: TTransaction): Uint8Array {
-    console.log(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
     return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
 }
 
@@ -190,7 +189,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             res.description = t.updateAssetInfo!.description
             break
         case 'invokeExpression':
-            res.expression = t.invokeExpression!.expression
+            res.expression = t.invokeExpression?.expression == null ? null : base64Prefix(base64Encode(t.invokeExpression?.expression))
             break
         default:
             throw new Error(`Unsupported tx type ${t.data}`)
@@ -294,6 +293,12 @@ const getUpdateAssetInfoData = (t: UpdateAssetInfoTransaction): wavesProto.waves
         description: t.description === '' ? null : t.description,
     }
 }
+const getInvokeExpressionData = (t: InvokeExpressionTransaction): wavesProto.waves.IInvokeExpressionTransactionData => {
+    return {
+        expression: t.expression == null ? null : scriptToProto(t.expression),
+    }
+}
+
 export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesProto.waves.ITransaction => {
     const common = getCommonFields(t)
     let txData
@@ -342,6 +347,9 @@ export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesPr
             break
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             txData = getUpdateAssetInfoData(t)
+            break
+        case TRANSACTION_TYPE.INVOKE_EXPRESSION:
+            txData = getInvokeExpressionData(t)
             break
     }
     return {...common, [common.data]: txData}
