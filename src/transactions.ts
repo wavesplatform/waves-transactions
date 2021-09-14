@@ -79,6 +79,7 @@ export type TTxParams<LONG = string | number> =
     | ISponsorshipParams<LONG>
     | ITransferParams<LONG>
     | IUpdateAssetInfoParams<LONG>
+    | IInvokeExpressionParams<LONG>
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
