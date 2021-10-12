@@ -21,7 +21,7 @@ const orderScheme = {
   orderType: orEq(['sell', 'buy']),
   senderPublicKey: isPublicKey,
   matcherPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2, 3]),
+  version: orEq([undefined, 0, 1, 2, 3, 4]),
   assetPair: validatePipe(
       isRequired(true),
       pipe(prop('amountAsset'), isAssetId),
@@ -50,7 +50,7 @@ const validateOrderV3 = validateByShema(v3_OrderScheme, getError)
 export const orderValidator = validatePipe(
     validateOrder,
     ifElse(
-        pipe(prop('version'), isEq(3)),
+        pipe(prop('version'), (v: number) => v >= 3),
         validateOrderV3,
         validateOrderV2
     )

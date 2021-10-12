@@ -363,7 +363,7 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => ({
 })
 
 const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithChainId => ({
-    version: po.version! as 1 | 2 | 3,
+    version: po.version! as 1 | 2 | 3 | 4,
     senderPublicKey: base58Encode(po.senderPublicKey!),
     matcherPublicKey: base58Encode(po.matcherPublicKey!),
     assetPair: {
