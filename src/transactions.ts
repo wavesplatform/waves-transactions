@@ -307,7 +307,7 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
     call?: {
         function: string
         args?: Array<InvokeScriptCallArgument<LONG>>
-    },
+    } | null,
     payment?: {
         assetId?: string | null
         amount: LONG

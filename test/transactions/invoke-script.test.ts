@@ -3,6 +3,7 @@ import { invokeScriptMinimalParams } from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
 import { IInvokeScriptParams } from '../../src'
 import { validateTxSignature } from '../../test/utils'
+import {protoBytesToTx, txToProtoBytes} from '../../src/proto-serialize'
 
 describe('invokeScript', () => {
 
@@ -19,6 +20,16 @@ describe('invokeScript', () => {
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
   })
 
+
+  it('Should build with nullable call field', () => {
+    const stringSeed2 = 'shiver excess resource rather roast nation rib clump nerve reject skirt soccer congress pelican involve'
+    const tx = invokeScript({
+      ...invokeScriptMinimalParams,
+      payment: [{ amount: 100, assetId: null }],
+    }, [stringSeed2])
+
+    console.log(protoBytesToTx(txToProtoBytes(tx)))
+  })
 
   it('should build from minimal set of params with payment', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, payment: [{ amount: 100, assetId: null }] }, stringSeed)

@@ -279,7 +279,7 @@ const getSetAssetScriptData = (t: SetAssetScriptTransaction): wavesProto.waves.I
 })
 const getInvokeData = (t: InvokeScriptTransaction): wavesProto.waves.IInvokeScriptTransactionData => ({
     dApp: recipientToProto(t.dApp),
-    functionCall: binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call), //todo: export function call from marshall and use it directly
+    functionCall: !!t.call ? binary.serializerFromSchema((schemas.invokeScriptSchemaV1 as any).schema[5][1])(t.call) : null, //todo: export function call from marshall and use it directly
     payments: t.payment == null ? null : t.payment.map(({amount, assetId}) => amountToProto(amount, assetId)),
 })
 
