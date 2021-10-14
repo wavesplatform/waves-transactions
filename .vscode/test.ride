@@ -1,0 +1,50 @@
+{-# STDLIB_VERSION 5 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+
+@Callable(i)
+func call() = {
+  let asset = Issue("Asset", "", 1, 0, true, unit, 0)
+  let assetId = asset.calculateAssetId()
+
+  let x = getBinary(Address(base58''), "dfd")
+  let u = getString(Address(base58''), "")
+
+  let n=1
+
+  let str1 = "Abra Shvabra Kadabra"
+  let str2 = "8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFC"
+
+  let bv1 = base58'8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFA'
+  let bv2 = base58'8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFB'
+  let bv3 = base58'8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFC'
+
+  let bvList = [bv1, bv2, bv3]
+
+  let intList = [1,2,3,4,5]
+
+  let strList = [str1, str2]
+
+  let ad11 = Address(base58'3PDfnPknnYrg2k2HMvkNLDb3Y1tDTtEnp9X')
+  
+  let list11 = [StringEntry("key1", "value"), IntegerEntry("key2", 123)
+]
+  let ff = getBinary(list11,str1)
+  
+  # Script execution results
+  # More details in docs: https://docs.wavesplatform.com/en/ride/functions/callable-function#callable-functions-in-standard-library-v4 
+  [
+    BinaryEntry("bin", base58''), # base16, base58, base64 or any other ByteVector values
+    BooleanEntry("bool", true),
+    IntegerEntry("int", 1),
+    StringEntry("str", ""),
+    DeleteEntry("str"),
+    asset,
+    Reissue(assetId, 1, false),
+    Burn(assetId, 1),
+    ScriptTransfer(i.caller, 1, assetId)
+  ]
+}
+
+@Verifier(tx)
+func verify() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
