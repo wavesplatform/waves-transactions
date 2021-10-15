@@ -1,0 +1,45 @@
+{
+    "keywords": [
+        "let",
+        "true",
+        "false",
+        "if",
+        "then",
+        "else",
+        "case",
+        "func"
+    ],
+    "directives": [
+        "{-# STDLIB_VERSION 1 #-}",
+        "{-# STDLIB_VERSION 2 #-}",
+        "{-# STDLIB_VERSION 3 #-}",
+        "{-# SCRIPT_TYPE ACCOUNT #-}",
+        "{-# SCRIPT_TYPE ASSET #-}",
+        "{-# CONTENT_TYPE DAPP #-}",
+        "{-# CONTENT_TYPE EXPRESSION #-}"
+    ],
+    "snippets": [
+        {
+            "label": "ifelse",
+            "insertText": "if (${1:condition}) then $2 else $3",
+            "insertTextFormat": 2
+        }, {
+            "label": "match",
+            "insertText": "match (${1:tx}) {\n    case t:${2:type} => $0\n    case _ =>\n  }",
+            "insertTextFormat": 2
+        }, {
+            "label": "base58",
+            "insertText": "base58'$1'",
+            "insertTextFormat": 2
+        }, {
+            "label": "base64",
+            "insertText": "base64'$1'",
+            "insertTextFormat": 2
+        },
+        {
+            "label": "base16",
+            "insertText": "base16'$1'",
+            "insertTextFormat": 2
+        }
+    ]
+}
