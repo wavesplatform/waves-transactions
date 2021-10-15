@@ -32,4 +32,39 @@ describe('transfer', () => {
     expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should build with correct fee', () => {
+    const tx = transfer({ ...transferMinimalParams } , stringSeed)
+     expect(tx.fee).toEqual(100000)
+  })
+
+  it('Should build with correct feeAssetId', () => {
+    const faId = "DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv"
+    const tx = transfer({ ...transferMinimalParams, feeAssetId: faId} , stringSeed)
+    expect(tx.feeAssetId).toEqual(faId)
+  })
+
+  it('Should build with correct attachment', () => {
+    const att = "3vrgtyozxuY88J9RqMBBAci2UzAq9DBMFTpMWLPzMygGeSWnD7k"
+    const tx = transfer({ ...transferMinimalParams, attachment: att } , stringSeed)
+    expect(tx.attachment).toEqual(att)
+  })
+
+  it('Should build with null attachment', () => {
+    const att = ""
+    const tx = transfer({ ...transferMinimalParams, attachment: att } , stringSeed)
+    expect(tx.attachment).toEqual(att)
+  })
+
+  it('Should build with zero fee', () => {
+    const tx = transfer({ ...transferMinimalParams, fee: 0 } , stringSeed)
+    expect(tx).toMatchObject({ ...transferMinimalParams })
+  })
+
+  it('Should build with negative fee', () => {
+    const tx = transfer({ ...transferMinimalParams, fee: -1 } , stringSeed)
+    expect(tx).toMatchObject({ ...transferMinimalParams })
+  })
+
+
 })
