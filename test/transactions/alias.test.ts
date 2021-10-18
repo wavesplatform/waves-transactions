@@ -45,4 +45,39 @@ describe('alias', () => {
     expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should build from minimal set of params and correct fee', () => {
+    const tx = alias({ ...aliasMinimalParams }, stringSeed)
+    expect(tx.fee).toEqual(100000)
+  })
+
+  it('Should build with zero fee', () => {
+    const tx = alias({ ...aliasMinimalParams, fee: 0 }, stringSeed)
+    expect(tx).toMatchObject({ ...aliasMinimalParams })
+  })
+
+  it('Should build with negative fee', () => {
+    const tx = alias({ ...aliasMinimalParams, fee: 0 }, stringSeed)
+    expect(tx).toMatchObject({ ...aliasMinimalParams })
+  })
+
+  it('Should build with minimal alias name', () => {
+    const tx = alias({ ...aliasMinimalParams, alias: "west"}, stringSeed)
+    expect(tx.alias).toEqual("west")
+  })
+
+  it('Should build with extra minimal alias name', () => {
+    const tx = alias({ ...aliasMinimalParams, alias: "pip"}, stringSeed)
+    expect(tx.alias).toEqual("pip")
+  })
+
+  it('Should build with maximal alias name', () => {
+    const tx = alias({ ...aliasMinimalParams, alias: "fordmersedesbmwtoyotasuzukiraf"}, stringSeed)
+    expect(tx.alias).toEqual("fordmersedesbmwtoyotasuzukiraf")
+  })
+
+  it('Should build with extra maximal alias name', () => {
+    const tx = alias({ ...aliasMinimalParams, alias: "fordmersedesbmwtoyotasuzukiraff"}, stringSeed)
+    expect(tx.alias).toEqual("fordmersedesbmwtoyotasuzukiraff")
+  })
 })
