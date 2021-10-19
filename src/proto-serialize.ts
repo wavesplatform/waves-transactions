@@ -74,6 +74,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
         | 'setAssetScript'
         | 'invokeScript'
         | 'updateAssetInfo'
+        | 'invokeExpression'
     let res: any = {
         version: t.version,
         type: typeByName[t.data! as transactionTypes] as TransactionType,
