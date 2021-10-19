@@ -33,4 +33,15 @@ describe('burn', () => {
     expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should build with zero amount', () => {
+    const tx = burn({ ...burnMinimalParams, amount: 0 }, stringSeed)
+    expect(tx).toMatchObject({ ...burnMinimalParams })
+  })
+
+  it('Should build with negative amount', () => {
+    const tx = burn({ ...burnMinimalParams, amount: -1 }, stringSeed)
+    expect(tx).toMatchObject({ ...burnMinimalParams })
+  })
+
 })

@@ -28,4 +28,58 @@ describe('massTransfer', () => {
     expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should throw on transfers with minimal quantity of receivers', () => {
+    const transfersList = []
+    const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: 1}
+    transfersList.push(t)
+    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    expect(tx.transfers).toMatchObject({ ...transfersList })
+  })
+
+  it('Should throw on transfers with zero quantity of receivers', () => {
+    const transfersList = []
+    //const t = ""
+    //transfersList.push(t)
+    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    expect(tx.transfers).toMatchObject({ ...transfersList })
+  })
+
+  it('Should throw on transfers with maximal quantity of receivers', () => {
+    const transfersList = []
+    for (let i = 0; i < 100; i++) {
+      const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: i+1}
+      transfersList.push(t)
+    }
+    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    expect(tx.transfers).toMatchObject({ ...transfersList })
+  })
+
+  it('Should throw on transfers with extra maximal quantity of receivers', () => {
+    const transfersList = []
+    for (let i = 0; i < 101; i++) {
+      const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: i+1}
+      transfersList.push(t)
+    }
+    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    expect(tx.transfers).toMatchObject({ ...transfersList })
+  })
+
+  it('Should throw on transfers with zero amount', () => {
+    const transfersList = []
+    const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: 0}
+    transfersList.push(t)
+    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    expect(tx.transfers).toMatchObject({ ...transfersList })
+  })
+
+  it('Should throw on transfers with negative amount', () => {
+    const transfersList = []
+    const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: -1}
+    transfersList.push(t)
+    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    expect(tx.transfers).toMatchObject({ ...transfersList })
+  })
+
+
 })
