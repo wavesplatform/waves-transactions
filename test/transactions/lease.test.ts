@@ -1,7 +1,7 @@
 import { publicKey } from '@waves/ts-lib-crypto'
-import { lease } from '../../src'
+import {alias, lease} from '../../src'
 import { validateTxSignature } from '../../test/utils'
-import { leaseMinimalParams } from '../minimalParams'
+import {aliasMinimalParams, leaseMinimalParams} from '../minimalParams'
 
 describe('lease', () => {
 
@@ -31,4 +31,46 @@ describe('lease', () => {
     expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should get correct fee', () => {
+    const tx = lease({ ...leaseMinimalParams }, stringSeed)
+    expect(tx.fee).toEqual(100000)
+  })
+
+  it('Should build with zero fee', () => {
+    const tx = lease({ ...leaseMinimalParams, fee: 0 }, stringSeed)
+    expect(tx.fee).toEqual(0)
+  })
+
+  it('Should build with negative fee', () => {
+    const tx = lease({ ...leaseMinimalParams, fee: -1 }, stringSeed)
+    expect(tx.fee).toEqual(-1)
+  })
+
+  it('Should build with set fee', () => {
+    const tx = lease({ ...leaseMinimalParams, fee: 500000 }, stringSeed)
+    expect(tx.fee).toEqual(500000)
+  })
+
+  it('Should build with set amount', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: 500000 }, stringSeed)
+    expect(tx.amount).toEqual(500000)
+  })
+
+  it('Should build with zero amount', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: 0 }, stringSeed)
+    expect(tx.amount).toEqual(0)
+  })
+
+  it('Should build with negative amount', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: -1 }, stringSeed)
+    expect(tx.amount).toEqual(-1)
+  })
+
+  it('Should build with alias', () => {
+    const talx = alias({ ...aliasMinimalParams, alias: "west"}, stringSeed)
+    const tx = lease({ ...leaseMinimalParams, recipient: talx }, stringSeed)
+    expect(tx.recipient).toEqual(talx)
+  })
+
 })
