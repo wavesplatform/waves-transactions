@@ -4,7 +4,7 @@ import {
   ICancelLeaseParams, IInvokeScriptParams, IDataParams, IIssueParams,
   ILeaseParams,
   IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
-  ICancelOrderParams, ISponsorshipParams,
+  ICancelOrderParams, ISponsorshipParams, IUpdateAssetInfoParams,
 } from '../src/transactions'
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 
@@ -125,6 +125,12 @@ export const sponsorshipMinimalParams: ISponsorshipParams = {
   minSponsoredAssetFee: 100
 }
 
+export const updateAssetInfoMinimalParams: IUpdateAssetInfoParams = {
+  name: "xxxx",
+  description: "xxxxXXXXxxxx",
+ // chainId: 84
+}
+
 export const minimalParams = {
   [TRANSACTION_TYPE.ISSUE]: issueMinimalParams,
   [TRANSACTION_TYPE.TRANSFER]: transferMinimalParams,
@@ -139,4 +145,5 @@ export const minimalParams = {
   [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: setAssetScriptMinimalParams,
   [TRANSACTION_TYPE.INVOKE_SCRIPT]: invokeScriptMinimalParams,
   [TRANSACTION_TYPE.SPONSORSHIP]: sponsorshipMinimalParams,
+  [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: updateAssetInfoMinimalParams,
 }
