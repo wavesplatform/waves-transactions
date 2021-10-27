@@ -104,4 +104,6 @@ describe('updateAssetInfo', () => {
         }
         console.log(descmax)
     })
+
+
 })
