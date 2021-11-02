@@ -3,14 +3,14 @@ import {
   isEq,
   orEq,
   isNumber,
-  isNumberLike,
   isArray,
   getError,
   validateByShema,
   ifElse,
   defaultValue,
   isAssetId,
-  isPublicKey, isBoolean
+  isPublicKey, isBoolean,
+  isNaturalNumber
 } from './validators'
 
 const reissueScheme = {
@@ -18,10 +18,10 @@ const reissueScheme = {
   senderPublicKey: isPublicKey,
   version: orEq([undefined, 2, 3]),
   assetId: isAssetId,
-  quantity: isNumberLike,
+  quantity: isNaturalNumber,
   reissuable: isBoolean,
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumber,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

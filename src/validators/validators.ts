@@ -80,6 +80,8 @@ export const isByteArray = (value: unknown) => {
 
 export const isArray = (value: unknown) => Array.isArray(value)
 
+export const isNaturalNumber = (value: unknown) => isNumberLike(value) && Number.isInteger(value) && Number(value) > 0
+
 export const bytesLength = (length: number) => (value: unknown) => {
     try {
         return Uint8Array.from(value as ArrayLike<number>).length === length

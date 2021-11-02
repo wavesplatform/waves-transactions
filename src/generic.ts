@@ -65,7 +65,7 @@ export function networkByte(p: number | string | undefined, def: number): number
 }
 
 export function fee(params: IBasicParams, def: number) {
-  if (params.fee) return params.fee
+  if (params.fee && params.fee > 0) return params.fee
   if (!params.additionalFee) return def
   return def + params.additionalFee
 }
