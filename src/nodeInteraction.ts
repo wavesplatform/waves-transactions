@@ -66,19 +66,25 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
   return promise()
 }
 
+type PropsApplicationStatus = {
+  applicationStatus?: 'succeeded' | 'script_execution_failed'
+}
+
+type TxStatus = Transaction & PropsApplicationStatus;
+
 /**
  * Resolves when specified txId is mined into block
  * @param txId - waves address as base58 string
  * @param options
  */
-export async function waitForTx(txId: string, options: INodeRequestOptions, requestOptions?: RequestInit): Promise<Transaction & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> {
+export async function waitForTx(txId: string, options: INodeRequestOptions, requestOptions?: RequestInit): Promise<TxStatus> {
   const { timeout, apiBase } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
   let expired = false
   const to = delay(timeout)
   to.then(() => expired = true)
 
-  const promise = (): Promise<Transaction & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}> =>
+  const promise = (): Promise<TxStatus> =>
       tx_route.fetchInfo(apiBase, txId, requestOptions)
     .then(x => {
       to.cancel()
@@ -96,9 +102,12 @@ const process400 = (resp: any) => resp.status === 400
   ? Promise.reject(Object.assign(new Error(), resp.data))
   : resp
 
-export async function waitForTxWithNConfirmations(txId: string, confirmations: number, options: INodeRequestOptions, requestOptions?: RequestInit):
-    Promise<Transaction & {applicationStatus?: 'succeed' | 'scriptExecutionFailed'}>{
-
+export async function waitForTxWithNConfirmations(
+  txId: string,
+  confirmations: number,
+  options: INodeRequestOptions,
+  requestOptions?: RequestInit
+): Promise<TxStatus> {
 
   const { timeout } = { ...DEFAULT_NODE_REQUEST_OPTIONS, ...options }
 
