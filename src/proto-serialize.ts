@@ -63,7 +63,7 @@ export function protoBytesToSignedTx(bytes: Uint8Array): TTx {
 
     const signedTx: TTx = {
         ...tx,
-        proofs: (txData.proofs || []).map(Uint8Array2proof)
+        proofs: (txData.proofs || []).map(uint8Array2proof)
     };
 
     return signedTx;
@@ -502,9 +502,9 @@ const typeByName = {
 }
 
 const proof2Uint8Array = (proof: string): Uint8Array => {
-    return new Uint8Array([123]);
+    return base58Decode(proof);
 };
 
-const Uint8Array2proof = (): string => {
-    return 'proof';
+const uint8Array2proof = (proofBytes: Uint8Array): string => {
+    return base58Encode(proofBytes);
 };
