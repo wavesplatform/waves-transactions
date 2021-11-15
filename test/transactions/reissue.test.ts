@@ -2,6 +2,7 @@ import { publicKey } from '@waves/ts-lib-crypto'
 import { reissue } from '../../src'
 import { validateTxSignature } from '../../test/utils'
 import { reissueMinimalParams } from '../minimalParams'
+import {fee} from "../../src/generic";
 
 describe('reissue', () => {
 
@@ -24,4 +25,41 @@ describe('reissue', () => {
     expect(validateTxSignature(tx, 2, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should build with zero fee', () => {
+    const tx = reissue({ ...reissueMinimalParams, fee: 0 }as any, stringSeed)
+    expect(tx.fee).toEqual(0)
+    //toMatchObject({ ...reissueMinimalParams })
+  })
+
+  it('Should build with negative fee', () => {
+    const tx = reissue({ ...reissueMinimalParams, fee: -1 }as any, stringSeed)
+    expect(tx.fee).toEqual(-1)
+    //toMatchObject({ ...reissueMinimalParams })
+  })
+
+  it('Should build with minimal fee', () => {
+    const tx = reissue({ ...reissueMinimalParams, fee: 100000 }as any, stringSeed)
+    expect(tx.fee).toEqual(100000)
+    //toMatchObject({ ...reissueMinimalParams })
+  })
+
+  it('Should build with minimal quantity', () => {
+    const tx = reissue({ ...reissueMinimalParams, quantity: 1 }as any, stringSeed)
+    expect(tx.quantity).toEqual(1)
+    //toMatchObject({ ...reissueMinimalParams })
+  })
+
+  it('Should build with zero quantity', () => {
+    const tx = reissue({ ...reissueMinimalParams, quantity: 0 }as any, stringSeed)
+    expect(tx.quantity).toEqual(0)
+    //toMatchObject({ ...reissueMinimalParams })
+  })
+
+  it('Should build with negative quantity', () => {
+    const tx = reissue({ ...reissueMinimalParams, quantity: -1 }as any, stringSeed)
+    expect(tx.quantity).toEqual(-1)
+    //toMatchObject({ ...reissueMinimalParams })
+  })
+
 })

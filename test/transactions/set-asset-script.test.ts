@@ -1,6 +1,7 @@
 import { publicKey, } from '@waves/ts-lib-crypto'
 import { setAssetScript } from '../../src'
 import { validateTxSignature } from '../../test/utils'
+import {fee} from "../../src/generic";
 
 describe('setAssetScript', () => {
 
@@ -55,6 +56,27 @@ describe('setAssetScript', () => {
     expect(signedTx.proofs[0]).toEqual('')
     expect(signedTx.proofs[1]).toEqual('')
     expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
+  })
+
+  it('Should generate correct signed setAssetScript transaction with zero fee', () => {
+    const txParams = { script: compiledContract, assetId: '', fee: 0 }
+    const signedTx = setAssetScript(txParams, seed)
+
+    expect(signedTx.fee).toEqual(0)
+  })
+
+  it('Should generate correct signed setAssetScript transaction with negative fee', () => {
+    const txParams = { script: compiledContract, assetId: '', fee: -1 }
+    const signedTx = setAssetScript(txParams, seed)
+
+    expect(signedTx.fee).toEqual(-1)
+  })
+
+  it('Should generate correct signed setAssetScript transaction with minimal fee', () => {
+    const txParams = { script: compiledContract, assetId: '', fee: 100000 }
+    const signedTx = setAssetScript(txParams, seed)
+
+    expect(signedTx.fee).toEqual(100000)
   })
 
 })

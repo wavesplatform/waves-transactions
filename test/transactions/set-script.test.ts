@@ -63,4 +63,25 @@ describe('setScript', () => {
     expect(validateTxSignature(signedTx, 1, 2, publicKey(seed2))).toBe(true)
   })
 
+  it('Should generate correct signed setScript transaction with minimal fee', () => {
+    const txParams = { script: compiledContract, fee: 100000 }
+    const signedTx = setScript(txParams, seed)
+
+    expect(signedTx.fee).toEqual(100000)
+  })
+
+  it('Should generate correct signed setScript transaction with zero fee', () => {
+    const txParams = { script: compiledContract, fee: 0 }
+    const signedTx = setScript(txParams, seed)
+
+    expect(signedTx.fee).toEqual(0)
+  })
+
+  it('Should generate correct signed setScript transaction with negative fee', () => {
+    const txParams = { script: compiledContract, fee: -1 }
+    const signedTx = setScript(txParams, seed)
+
+    expect(signedTx.fee).toEqual(-1)
+  })
+
 })
