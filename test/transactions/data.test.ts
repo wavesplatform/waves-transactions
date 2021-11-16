@@ -1,5 +1,5 @@
 import {publicKey} from '@waves/ts-lib-crypto'
-import {broadcast, data, libs, makeTxBytes, WithId} from '../../src'
+import {broadcast, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {validateTxSignature} from '../../test/utils'
 import {dataMinimalParams} from '../minimalParams'
@@ -173,7 +173,6 @@ describe('data', () => {
             {key: 'bl3', value: Array(5000).fill(1)},
             {key: 'bl4', value: Array(517).fill(1)},
             ];
-        //const de =
 
         const tx = data({
             data: d,
@@ -187,4 +186,37 @@ describe('data', () => {
 
     });
 
+    it('Should get data with minimal fee', () => {
+        const tx = data({...dataMinimalParams, fee: 100000}, senderPk)
+        expect(tx.fee).toEqual(100000)
+    })
+
+    it('Should get data with zero fee', () => {
+        const tx = data({...dataMinimalParams, fee: 0}, senderPk)
+        expect(tx.fee).toEqual(0)
+    })
+
+    it('Should get data with negative fee', () => {
+        const tx = data({...dataMinimalParams, fee: -1}, senderPk)
+        expect(tx.fee).toEqual(-1)
+    })
+
+    const maxKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678"
+    const testMaxKeyParams = {
+        data: [
+            {
+                key: maxKey,
+                type: 'binary',
+                value: 'base64:YXNkYQ==',
+            }, {
+                key: maxKey,
+                type: 'boolean'
+                value: true,
+            }, {
+                key: maxKey,
+                type: 'integer',
+                value: 1234567890,
+            }
+        ],
+    }
 })
