@@ -202,6 +202,7 @@ describe('data', () => {
     })
 
     const maxKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678"
+    const extraMaxKey = maxKey + "A"
     const testMaxKeyParams = {
         data: [
             {
@@ -216,7 +217,50 @@ describe('data', () => {
                 key: maxKey,
                 type: 'integer',
                 value: 1234567890,
+            }, {
+                key: maxKey,
+                type: 'string',
+                value: "Abra Shvabra Kadabra",
             }
         ],
     }
+
+    const testExtraMaxKeyParams = {
+        data: [
+            {
+                key: extraMaxKey,
+                type: 'binary',
+                value: 'base16:52696465',
+            }, {
+                key: extraMaxKey,
+                type: 'boolean'
+                value: false,
+            }, {
+                key: extraMaxKey,
+                type: 'integer',
+                value: 223322,
+            }, {
+                key: extraMaxKey,
+                type: 'string',
+                value: "Abra Shvabra Kadabra Bums",
+            }
+        ],
+    }
+
+    it('Should get data with max key', () => {
+        const tx = data(testMaxKeyParams, senderPk)
+        expect(tx.data[0].value).toEqual('base64:YXNkYQ==')
+        expect(tx.data[1].value).toEqual(true)
+        expect(tx.data[2].value).toEqual(1234567890)
+        expect(tx.data[3].value).toEqual("Abra Shvabra Kadabra")
+    })
+
+    it('Should get data with extra max key', () => {
+        const tx = data(testExtraMaxKeyParams, senderPk)
+        expect(tx.data[0].value).toEqual('base16:52696465')
+        expect(tx.data[1].value).toEqual(false)
+        expect(tx.data[2].value).toEqual(223322)
+        expect(tx.data[3].value).toEqual("Abra Shvabra Kadabra Bums")
+    })
+
 })
