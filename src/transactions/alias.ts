@@ -5,7 +5,7 @@ import {IAliasParams, WithId, WithProofs, WithSender} from '../transactions'
 import { binary } from '@waves/marshall'
 import { base58Encode, blake2b, signBytes } from '@waves/ts-lib-crypto'
 import { txToProtoBytes } from '../proto-serialize'
-import { addProof, convertToPairs, fee, getSenderPublicKey, networkByte } from '../generic'
+import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte, normalizeAssetId} from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { DEFAULT_VERSIONS } from '../defaultVersions'
@@ -21,12 +21,13 @@ export function alias(paramsOrTx: any, seed?: TSeedTypes): AliasTransaction & Wi
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: AliasTransaction & WithId & WithProofs = {
+  const tx: AliasTransaction & WithId & WithProofs & {feeAssetId: string | null}= {
     type,
     version,
     senderPublicKey,
     alias: paramsOrTx.alias,
     fee: fee(paramsOrTx, 100000),
+    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],

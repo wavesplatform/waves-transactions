@@ -70,7 +70,7 @@ type PropApplicationStatus = {
   applicationStatus?: 'succeeded' | 'script_execution_failed'
 }
 
-type TxStatus = Transaction & PropApplicationStatus;
+type TxStatus = Transaction & PropApplicationStatus
 
 /**
  * Resolves when specified txId is mined into block

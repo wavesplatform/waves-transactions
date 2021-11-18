@@ -21,11 +21,12 @@ import {
     TRANSACTION_TYPE,
     TransactionType,
     TransferTransaction,
-    UpdateAssetInfoTransaction
+    UpdateAssetInfoTransaction,
+    GenesisTransaction, InvokeExpressionTransaction
 } from '@waves/ts-types'
 import { base64Prefix, chainIdFromRecipient } from './generic'
 import Long from 'long'
-import {GenesisTransaction} from '@waves/ts-types/transactions/index'
+import {lease} from './transactions/lease'
 import {TTx, TTransaction, WithChainId} from './transactions'
 
 const invokeScriptCallSchema = {
@@ -37,43 +38,43 @@ const recipientFromProto = (recipient: wavesProto.waves.IRecipient, chainId: num
         return `alias:${String.fromCharCode(chainId)}:${recipient.alias}`
     }
 
-    const rawAddress = concat([1], [chainId], recipient!.publicKeyHash!);
-    const checkSum = keccak(blake2b(rawAddress)).slice(0, 4);
+    const rawAddress = concat([1], [chainId], recipient!.publicKeyHash!)
+    const checkSum = keccak(blake2b(rawAddress)).slice(0, 4)
 
-    return base58Encode(concat(rawAddress, checkSum));
+    return base58Encode(concat(rawAddress, checkSum))
 }
 
 function convertNumber(n: Long) {
     const maxJsNumber = 2 ** 53 - 1
 
-    return n.toNumber() > maxJsNumber ? n.toString() : n.toNumber();
+    return n.toNumber() > maxJsNumber ? n.toString() : n.toNumber()
 }
 
 export function txToProtoBytes(obj: TTransaction): Uint8Array {
-    return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish());
+    return new Uint8Array(wavesProto.waves.Transaction.encode(txToProto(obj)).finish())
 }
 
 export function signedTxToProtoBytes(obj: TTx): Uint8Array {
-    return new Uint8Array(wavesProto.waves.SignedTransaction.encode(signedTxToProto(obj)).finish());
+    return new Uint8Array(wavesProto.waves.SignedTransaction.encode(signedTxToProto(obj)).finish())
 }
 
 export function protoBytesToSignedTx(bytes: Uint8Array): TTx {
-    const txData = wavesProto.waves.SignedTransaction.decode(bytes);
-    const tx: TTransaction = protoTxDataToTx(txData.transaction as wavesProto.waves.Transaction);
+    const txData = wavesProto.waves.SignedTransaction.decode(bytes)
+    const tx: TTransaction = protoTxDataToTx(txData.transaction as wavesProto.waves.Transaction)
 
     const signedTx: TTx = {
         ...tx,
-        proofs: (txData.proofs || []).map(uint8Array2proof)
-    };
+        proofs: (txData.proofs || []).map(uint8Array2proof),
+    }
 
-    return signedTx;
+    return signedTx
 }
 
 export function protoBytesToTx(bytes: Uint8Array): TTransaction {
-    const t = wavesProto.waves.Transaction.decode(bytes);
-    const res = protoTxDataToTx(t);
+    const t = wavesProto.waves.Transaction.decode(bytes)
+    const res = protoTxDataToTx(t)
 
-    return res;
+    return res
 }
 
 export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
@@ -94,7 +95,8 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
         | 'sponsorFee'
         | 'setAssetScript'
         | 'invokeScript'
-        | 'updateAssetInfo';
+        | 'updateAssetInfo'
+        | 'invokeExpression'
 
     let res: any = {
         version: t.version,
@@ -103,10 +105,10 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
         timestamp: t.timestamp.toNumber(),
         fee: convertNumber(t.fee!.amount!),
         // chainId: t.chainId
-    };
+    }
 
     if (t.fee!.hasOwnProperty('assetId')) {
-        res.feeAssetId = base58Encode(t.fee!.assetId!);
+        res.feeAssetId = base58Encode(t.fee!.assetId!)
     }
 
     if (t.hasOwnProperty('chainId')) {
@@ -211,6 +213,9 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             res.name = t.updateAssetInfo!.name
             res.description = t.updateAssetInfo!.description
             break
+        case 'invokeExpression':
+            res.expression = t.invokeExpression?.expression == null ? null : base64Prefix(base64Encode(t.invokeExpression?.expression))
+            break
         default:
             throw new Error(`Unsupported tx type ${t.data}`)
     }
@@ -249,13 +254,13 @@ const getCommonFields = ({senderPublicKey, fee, timestamp, type, version, ...res
 }
 
 const getCommonSignedFields = (tx: TTx) => {
-    const fields: any = getCommonFields(tx);
+    const fields: any = getCommonFields(tx)
 
     if (tx.hasOwnProperty('proofs')) {
-        fields.proofs = tx.proofs;
+        fields.proofs = tx.proofs
     }
 
-    return fields;
+    return fields
 }
 
 const getIssueData = (t: IssueTransaction): wavesProto.waves.IIssueTransactionData => ({
@@ -325,8 +330,14 @@ const getUpdateAssetInfoData = (t: UpdateAssetInfoTransaction): wavesProto.waves
     }
 }
 
+const getInvokeExpressionData = (t: InvokeExpressionTransaction): wavesProto.waves.IInvokeExpressionTransactionData => {
+    return {
+        expression: t.expression == null ? null : scriptToProto(t.expression),
+    }
+}
+
 const getTxData = (t: Exclude<TTransaction, GenesisTransaction>): any /*wavesProto.waves.ITransaction*/ => {
-    let txData;
+    let txData
 
     switch (t.type) {
         case TRANSACTION_TYPE.ISSUE:
@@ -374,32 +385,36 @@ const getTxData = (t: Exclude<TTransaction, GenesisTransaction>): any /*wavesPro
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             txData = getUpdateAssetInfoData(t)
             break
+        case TRANSACTION_TYPE.INVOKE_EXPRESSION:
+            txData = getInvokeExpressionData(t)
+            break
     }
 
-    return txData;
+    return txData
 }
 
 export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesProto.waves.ITransaction => {
     const common = getCommonFields(t)
-    const txData = getTxData(t);
+    const txData = getTxData(t)
 
     return {
         ...common,
-        [common.data]: txData
-    };
+        [common.data]: txData,
+    }
 }
+
 
 export const signedTxToProto = (t: Exclude<TTx, GenesisTransaction>): wavesProto.waves.ISignedTransaction => {
     const common = getCommonSignedFields(t)
-    const txData = getTxData(t);
+    const txData = getTxData(t)
 
     return {
         transaction: {
             ...common,
-            [common.data]: txData
+            [common.data]: txData,
         },
-        proofs: (t.proofs || []).map(proof2Uint8Array)
-    };
+        proofs: (t.proofs || []).map(proof2Uint8Array),
+    }
 }
 
 const orderToProto = (o: any): wavesProto.waves.IOrder => ({
@@ -480,6 +495,7 @@ const nameByType = {
     15: 'setAssetScript' as 'setAssetScript',
     16: 'invokeScript' as 'invokeScript',
     17: 'updateAssetInfo' as 'updateAssetInfo',
+    18: 'invokeExpression' as 'invokeExpression',
 }
 const typeByName = {
     'genesis': 1 as 1,
@@ -499,12 +515,13 @@ const typeByName = {
     'setAssetScript': 15 as 15,
     'invokeScript': 16 as 16,
     'updateAssetInfo': 17 as 17,
+    'invokeExpression': 18 as 18,
 }
 
 const proof2Uint8Array = (proof: string): Uint8Array => {
-    return base58Decode(proof);
-};
+    return base58Decode(proof)
+}
 
 const uint8Array2proof = (proofBytes: Uint8Array): string => {
-    return base58Encode(proofBytes);
-};
+    return base58Encode(proofBytes)
+}

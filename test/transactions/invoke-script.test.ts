@@ -62,7 +62,7 @@ describe('invokeScript', () => {
     const stringSeed2 = 'example seed 2'
     const tx = invokeScript({
       ...invokeScriptMinimalParams,
-      payment: [{ amount: 100, assetId: null }]
+      payment: [{ amount: 100, assetId: null }],
     }, [null, stringSeed, null, stringSeed2])
 
     expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()

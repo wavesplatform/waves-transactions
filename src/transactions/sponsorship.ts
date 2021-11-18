@@ -3,7 +3,7 @@
  */
 import {ISponsorshipParams, WithId, WithProofs, WithSender} from '../transactions'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, fee, networkByte } from '../generic'
+import {addProof, getSenderPublicKey, convertToPairs, fee, networkByte, normalizeAssetId} from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
@@ -21,13 +21,14 @@ export function sponsorship(paramsOrTx: any, seed?: TSeedTypes): SponsorshipTran
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: SponsorshipTransaction & WithId & WithProofs= {
+  const tx: SponsorshipTransaction & WithId & WithProofs & {feeAssetId: string | null}= {
     type,
     version,
     senderPublicKey,
     minSponsoredAssetFee: paramsOrTx.minSponsoredAssetFee,
     assetId: paramsOrTx.assetId,
     fee: fee(paramsOrTx, 1e5),
+    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],

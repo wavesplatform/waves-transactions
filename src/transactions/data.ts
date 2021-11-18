@@ -5,7 +5,7 @@ import * as wavesProto from '@waves/protobuf-serialization'
 import {binary, serializePrimitives} from '@waves/marshall'
 import {base58Encode, blake2b, concat, signBytes} from '@waves/ts-lib-crypto'
 import {IDataParams, WithId, WithProofs, WithSender} from '../transactions'
-import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
+import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte, normalizeAssetId} from '../generic'
 import {TSeedTypes} from '../types'
 import {validate} from '../validators'
 import {dataEntryToProto, txToProtoBytes} from '../proto-serialize'
@@ -98,11 +98,12 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     }
 
 
-    const tx: DataTransaction & WithId & WithProofs = {
+    const tx: DataTransaction & WithId & WithProofs & {feeAssetId?: string | null} = {
         type,
         version,
         senderPublicKey,
         fee: fee(paramsOrTx, computedFee),
+        feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
         timestamp: _timestamp,
         proofs: paramsOrTx.proofs || [],
         chainId: networkByte(paramsOrTx.chainId, 87),
