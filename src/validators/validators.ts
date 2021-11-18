@@ -92,10 +92,10 @@ export const isBase58 = (value: unknown) => {
     try {
         base58Decode(value as string)
     } catch (e) {
-        return false;
+        return false
     }
 
-    return true;
+    return true
 }
 
 export const isBase64 = (value: unknown) => {
@@ -184,7 +184,7 @@ export const isAssetId = ifElse(
     orEq(['', null, undefined, 'WAVES']),
     defaultValue(true),
     isHash
-);
+)
 
 export const isAttachment = ifElse(
     orEq([null, undefined]),
@@ -219,8 +219,8 @@ const validateType = {
     boolean: isBoolean,
     string: isString,
     binary: isBase64,
-    list: isArray
-};
+    list: isArray,
+}
 
 export const isValidDataPair = (data: { type: keyof typeof validateType, value: unknown }) =>
     !!(validateType[data.type] && validateType[data.type](data.value))
@@ -280,5 +280,5 @@ export const validateByShema = (shema: Record<string, Function>, errorTpl: (key:
 }
 
 export const getError = (key: string, value: any) => {
-    return `tx "${key}", has wrong data: ${JSON.stringify(value)}. Check tx data.`;
+    return `tx "${key}", has wrong data: ${JSON.stringify(value)}. Check tx data.`
 }

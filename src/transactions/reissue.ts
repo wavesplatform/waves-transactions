@@ -8,7 +8,7 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
-import { DEFAULT_VERSIONS } from '../defaultVersions';
+import { DEFAULT_VERSIONS } from '../defaultVersions'
 import {ReissueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 

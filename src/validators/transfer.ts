@@ -25,8 +25,8 @@ const transferScheme = {
     attachment: isAttachment,
     fee: isNumberLike,
     timestamp: isNumber,
-    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
- };
+    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+ }
 
 
 export const transferValidator = validateByShema(transferScheme, getError)

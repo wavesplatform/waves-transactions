@@ -26,7 +26,7 @@ const customDataV2Scheme = {
                 isRequired(true),
                 isValidDataPair
             )
-        ),
+        )
     ),
 }
 
@@ -36,5 +36,5 @@ const v2Validator = validateByShema(customDataV2Scheme, getError)
 export const customDataValidator = ifElse(
     pipe(prop('version'), isEq(1)),
     v1Validator, 
-    v2Validator,
+    v2Validator
 )

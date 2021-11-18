@@ -20,7 +20,7 @@ describe('Smart features', () => {
       transfers: [
         { recipient: address(account1, CHAIN_ID), amount: 1 * wvs },
         { recipient: address(account2, CHAIN_ID), amount: 1100000 },
-      ]
+      ],
     }, MASTER_SEED)
     await broadcast(mtt, API_BASE)
     await waitForTx(mtt.id, { apiBase: API_BASE, timeout: TIMEOUT })
