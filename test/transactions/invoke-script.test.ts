@@ -68,4 +68,20 @@ describe('invokeScript', () => {
     expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
   })
+
+  it('Should build with minimal fee', () => {
+    const tx = invokeScript({ ...invokeScriptMinimalParams, fee: 100000 }, stringSeed)
+    expect(tx.fee).toEqual(100000)
+  })
+
+  it('Should build with zero fee', () => {
+    const tx = invokeScript({ ...invokeScriptMinimalParams, fee: 0 }, stringSeed)
+    expect(tx.fee).toEqual(0)
+  })
+
+  it('Should build with negative fee', () => {
+    const tx = invokeScript({ ...invokeScriptMinimalParams, fee: -1 }, stringSeed)
+    expect(tx.fee).toEqual(-1)
+  })
+
 })
