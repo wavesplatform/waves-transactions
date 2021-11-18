@@ -6,7 +6,7 @@ describe('invoke-expression', () => {
     const stringSeed = 'visual order dream december rifle bachelor split mountain between slam figure minor section tongue recycle'
 
     it('should build and broadcast', async () => {
-        const senderPublicKey = 'CpgZLkDgsjH5cwzFNH2w1GBfUSc1c3ndK56WkjQpEWjm',
+        const senderPublicKey = 'CpgZLkDgsjH5cwzFNH2w1GBfUSc1c3ndK56WkjQpEWjm'
         const tx = invokeExpression({
             'type': 18,
             'version': 1,
