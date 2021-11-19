@@ -1,0 +1,36 @@
+export const txs = {
+    'SponsorFee TX (type 14 v2)  case 1': {
+        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoI0GIKjxkL2mLygCkgcuCiwKIOQt6VHG7an7FIw6Rvt44jtBL/LIHaogX6oHdthqs7EgEP//////////fw==',
+        'Json': {
+            'id': 'A8Ht1dxzF831Np323RQVHhLXswwcEHGHr8mLgixPZQRs',
+            'type': 14,
+            'version': 2,
+            'chainId': 84,
+            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
+            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
+            'assetId': 'GMiZSiRUd2kWrc2PDVWGGE2bB219wp2CHCBUipeJkvVm',
+            'minSponsoredAssetFee': '9223372036854775807',
+            'fee': 100000,
+            'feeAssetId': null,
+            'timestamp': 1625236453544,
+            'proofs': ['5pxTMmDPuJ8ARSATTKcDcTMXHHESdnfPZv6Q3XNVWi4xsvUHeJuVA4SmHnUBGEzmpMqupsJuWou6hVqvD1iwQwLJ'],
+        },
+    },
+    'SponsorFee TX (type 14 v2)  case 2': {
+        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGiwKIMoaglOigu8JmH4V0CybQhURZvAmnXAhYMYSGV4ZSfbrEP//////////fyCs8ZC9pi8oApIHJAoiCiDKGoJTooLvCZh+FdAsm0IVEWbwJp1wIWDGEhleGUn26w==',
+        'Json': {
+            'id': 'FsJVMQiBS1w9m7JTYBnL17kiDR9t8uSP3mJRrQ8pt1xk',
+            'type': 14,
+            'version': 2,
+            'chainId': 84,
+            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
+            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
+            'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ',
+            'minSponsoredAssetFee': 0,
+            'fee': '9223372036854775807',
+            'feeAssetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ',
+            'timestamp': 1625236453548,
+            'proofs': ['2TaSK17Gg9MsQmRAatgoDdEqvzWQ8Agi5WMR5JKK7rHLQnyX629dZ3dxbU38PjuDVUXQV4iYpk7miRCdnF4qJwe5'],
+        },
+    },
+}

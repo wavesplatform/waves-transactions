@@ -1,0 +1,38 @@
+export const txs = {
+    'Reissue TX (type 5 v3)  case 1': {
+        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IObskL2mLygDygYuCiwKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfTEP//////////fw==',
+        'Json': {
+            'id': '6gWMT9HJy2RMRKpUmJgNvHsi37Njd9U4VA2BMv2Szjrj',
+            'type': 5,
+            'version': 3,
+            'chainId': 84,
+            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
+            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
+            'assetId': 'DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv',
+            'quantity': '9223372036854775807',
+            'reissuable': false,
+            'fee': '9223372036854775807',
+            'feeAssetId': null,
+            'timestamp': 1625236452966,
+            'proofs': ['37CFrkNoujidUTxAmrEVBqjTFUQwfBusv2ajuo9BqjCHSg8WZzYDwVHdEwSJN8wBs813fyodqk2Xsr5wgsVm9sgh'],
+        },
+    },
+    'Reissue TX (type 5 v3)  case 2': {
+        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoI0GIOrskL2mLygDygYmCiIKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfTEAE=',
+        'Json': {
+            'id': 'pzXgBkiL4uSuUgcvF3dy7vcXDYxVeRRLFUKdEMvnPEQ',
+            'type': 5,
+            'version': 3,
+            'chainId': 84,
+            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
+            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
+            'assetId': 'DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv',
+            'quantity': 0,
+            'reissuable': true,
+            'fee': 100000,
+            'feeAssetId': null,
+            'timestamp': 1625236452970,
+            'proofs': ['28FGxpaUG8jCxhZtwKc6tsFgLA3tkRAvjLZMKJR8HK6KfpmYTK2AnJF66BAvRdMYhgDYzFdsobn3JqDySMRLuwvd'],
+        },
+    },
+}
