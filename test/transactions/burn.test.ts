@@ -36,12 +36,31 @@ describe('burn', () => {
 
   it('Should build with zero amount', () => {
     const tx = burn({ ...burnMinimalParams, amount: 0 }, stringSeed)
-    expect(tx).toMatchObject({ ...burnMinimalParams })
+    expect(tx.amount).toEqual(0)
   })
 
   it('Should build with negative amount', () => {
     const tx = burn({ ...burnMinimalParams, amount: -1 }, stringSeed)
-    expect(tx).toMatchObject({ ...burnMinimalParams })
+    expect(tx.amount).toEqual(-1)
   })
 
+  it('Should build with minimal fee', () => {
+    const tx = burn({ ...burnMinimalParams, fee: 100000 }, stringSeed)
+    expect(tx.fee).toEqual(100000)
+  })
+
+  it('Should build with zero fee', () => {
+    const tx = burn({ ...burnMinimalParams, fee: 0 }, stringSeed)
+    expect(tx.fee).toEqual(0)
+  })
+
+  it('Should build with negative fee', () => {
+    const tx = burn({ ...burnMinimalParams, fee: -1 }, stringSeed)
+    expect(tx.fee).toEqual(-1)
+  })
+
+  it('Should serialize/deserialize', () => {
+    const tx = burn({ ...burnMinimalParams, fee: -1 }, stringSeed)
+    expect(tx.fee).toEqual(-1)
+  })
 })

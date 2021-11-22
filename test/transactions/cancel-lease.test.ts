@@ -60,6 +60,11 @@ describe('cancel-lease', () => {
     expect(tx).toMatchObject({ ...cancelLeaseTestParams })
   })
 
+  it('Should build with zero fee', () => {
+    const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: 0 }, stringSeed)
+    expect(tx.fee).toEqual(0)
+  })
+
   it('Should build with negative fee', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: -1 }, stringSeed)
     expect(tx.fee).toEqual(-1)
