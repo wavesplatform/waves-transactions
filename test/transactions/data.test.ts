@@ -112,6 +112,13 @@ describe('data', () => {
         expect(tx).toThrow(expectedError)
     })
 
+    let sMax ="1234567";
+    const smenc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    for(let i=0;i<630;i++) {
+        sMax+=smenc;
+    }
+
     it('should get correct signature', () => {
         const tx = data({...dataMinimalParams}, senderPk)
         expect(validateTxSignature(tx, 1)).toBeTruthy()
@@ -263,4 +270,25 @@ describe('data', () => {
         expect(tx.data[3].value).toEqual("Abra Shvabra Kadabra Bums")
     })
 
+    const testMaxValueParams = {
+        data: [
+            {
+                key: maxKey,
+                type: 'string',
+                value: sMax,
+            }, {
+                key: extraMaxKey,
+                type: 'boolean'
+                value: false,
+            }, {
+                key: extraMaxKey,
+                type: 'integer',
+                value: 223322,
+            }, {
+                key: extraMaxKey,
+                type: 'string',
+                value: "Abra Shvabra Kadabra Bums",
+            }
+        ],
+    }
 })
