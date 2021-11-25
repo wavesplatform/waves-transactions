@@ -58,6 +58,11 @@ describe('updateAssetInfo', () => {
         expect(tx.fee).toEqual(-1)
     })
 
+    it('Should create update asset info transaction with minimal fee', () => {
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId}, stringSeed)
+        expect(tx.fee).toEqual(100000)
+    })
+
     it('Should create update asset info transaction with maximal description', () => {
         let descmax = ""
 

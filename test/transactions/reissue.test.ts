@@ -35,7 +35,11 @@ describe('reissue', () => {
   it('Should build with negative fee', () => {
     const tx = reissue({ ...reissueMinimalParams, fee: -1 }as any, stringSeed)
     expect(tx.fee).toEqual(-1)
-    //toMatchObject({ ...reissueMinimalParams })
+  })
+
+  it('Should build with maximal fee', () => {
+    const tx = reissue({ ...reissueMinimalParams, fee: '9223372036854775807' }as any, stringSeed)
+    expect(tx.fee).toEqual('9223372036854775807')
   })
 
   it('Should build with minimal fee', () => {

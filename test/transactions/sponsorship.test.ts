@@ -13,19 +13,34 @@ describe('setSponsorship', () => {
       expect(tx).toMatchObject({...sponsorshipMinimalParams})
     })
 
-    it('Should create sponsorship transaction with specified fee', () => {
+    it('Should create sponsorship transaction with specified sponsor fee', () => {
         const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: 150 }, stringSeed)
         expect(tx.minSponsoredAssetFee).toEqual(150)
     })
 
-    it('Should create sponsorship transaction with zero fee', () => {
+    it('Should create sponsorship transaction with zero sponsor fee', () => {
         const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: 0 }, stringSeed)
         expect(tx.minSponsoredAssetFee).toEqual(0)
     })
 
-    it('Should create sponsorship transaction with negative fee', () => {
+    it('Should create sponsorship transaction with negative sponsor fee', () => {
         const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed)
         expect(tx.minSponsoredAssetFee).toEqual(-1)
+    })
+
+    it('Should create sponsorship transaction with minimal fee', () => {
+        const tx = sponsorship({ ...sponsorshipMinimalParams }, stringSeed)
+        expect(tx.fee).toEqual(100000)
+    })
+
+    it('Should create sponsorship transaction with zero fee', () => {
+        const tx = sponsorship({ ...sponsorshipMinimalParams, fee: 0 }, stringSeed)
+        expect(tx.fee).toEqual(0)
+    })
+
+    it('Should create sponsorship transaction with negative fee', () => {
+        const tx = sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed)
+        expect(tx.fee).toEqual(-1)
     })
 
 })

@@ -58,13 +58,16 @@ describe('transfer', () => {
 
   it('Should build with zero fee', () => {
     const tx = transfer({ ...transferMinimalParams, fee: 0 } , stringSeed)
-    expect(tx).toMatchObject({ ...transferMinimalParams })
+    expect(tx.fee).toEqual(0)
   })
 
   it('Should build with negative fee', () => {
     const tx = transfer({ ...transferMinimalParams, fee: -1 } , stringSeed)
-    expect(tx).toMatchObject({ ...transferMinimalParams })
+    expect(tx.fee).toEqual(-1)
   })
 
-
+  it('Should build with minimal fee', () => {
+    const tx = transfer({ ...transferMinimalParams} , stringSeed)
+    expect(tx.fee).toEqual(100000)
+  })
 })

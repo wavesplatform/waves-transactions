@@ -291,4 +291,9 @@ describe('data', () => {
             }
         ],
     }
+
+    it('Should get data with max value', () => {
+        const tx = data(testMaxValueParams, senderPk)
+        expect(tx.data[0].value).toEqual(sMax)
+    })
 })

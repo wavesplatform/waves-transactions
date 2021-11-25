@@ -57,6 +57,11 @@ describe('lease', () => {
     expect(tx.amount).toEqual(500000)
   })
 
+  it('Should build with minimal amount', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: 1 }, stringSeed)
+    expect(tx.amount).toEqual(1)
+  })
+
   it('Should build with zero amount', () => {
     const tx = lease({ ...leaseMinimalParams, amount: 0 }, stringSeed)
     expect(tx.amount).toEqual(0)
@@ -65,6 +70,29 @@ describe('lease', () => {
   it('Should build with negative amount', () => {
     const tx = lease({ ...leaseMinimalParams, amount: -1 }, stringSeed)
     expect(tx.amount).toEqual(-1)
+  })
+
+  it('Should build with maximal amount', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: '9223372036854775807' }, stringSeed)
+    expect(tx.amount).toEqual('9223372036854775807')
+  })
+
+  it('Should build with maximal amount and fee', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: '9223372036854775807', fee:'9223372036854775807' }, stringSeed)
+    expect(tx.amount).toEqual('9223372036854775807')
+    expect(tx.fee).toEqual('9223372036854775807')
+  })
+
+  it('Should build with maximal amount and minimal fee', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: '9223372036854775807', fee: 100000 }, stringSeed)
+    expect(tx.amount).toEqual('9223372036854775807')
+    expect(tx.fee).toEqual(100000)
+  })
+
+  it('Should build with minimal amount and  fee', () => {
+    const tx = lease({ ...leaseMinimalParams, amount: 1, fee: 100000 }, stringSeed)
+    expect(tx.amount).toEqual(1)
+    expect(tx.fee).toEqual(100000)
   })
 
   it('Should build with alias', () => {
