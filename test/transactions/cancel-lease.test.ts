@@ -1,7 +1,12 @@
 import { publicKey } from '@waves/ts-lib-crypto'
-import {cancelLease, ICancelLeaseParams} from '../../src'
+import {cancelLease, ICancelLeaseParams, libs} from '../../src'
 import { cancelLeaseMinimalParams } from '../minimalParams'
 import { validateTxSignature } from '../../test/utils'
+import {exampleTxs} from "../exampleTxs";
+import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
+import {cancelLeaseTx} from "./expected/cancel-lease.tx";
+import Bytes = jest.Bytes;
+
 
 describe('cancel-lease', () => {
 
@@ -69,4 +74,28 @@ describe('cancel-lease', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: -1 }, stringSeed)
     expect(tx.fee).toEqual(-1)
   })
-})
+
+  const deleteProofsAndId = (t:any) => {
+    const tx: any = t
+    delete tx.id
+    delete tx.proofs
+    return tx
+  }
+
+  const txss = Object.entries(cancelLeaseTx).forEach([name, { Bytes, Json }])
+   txss.forEach(cancelLeaseTx => {
+    it('name: ' + txss.type, () => {
+      txss = deleteProofsAndId(txss)
+      let tx1 = txToProtoBytes(txss)
+      const parsed = protoBytesToTx(tx1)
+      expect(parsed).toMatchObject(txss)
+
+      const actualBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
+      const expectedBytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
+      expect(expectedBytes).toBe(actualBytes)
+
+
+    })
+
+
+  })
