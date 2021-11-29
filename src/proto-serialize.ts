@@ -1,14 +1,22 @@
 import * as wavesProto from '@waves/protobuf-serialization'
-import {base58Decode, base58Encode, base64Decode, base64Encode, blake2b, concat, keccak} from '@waves/ts-lib-crypto'
-import {binary, parsePrimitives, schemas, serializePrimitives} from '@waves/marshall'
+import {
+    address,
+    base58Decode,
+    base58Encode,
+    base64Decode,
+    base64Encode,
+    blake2b,
+    concat,
+    keccak
+} from '@waves/ts-lib-crypto'
+import {binary, schemas} from '@waves/marshall'
 import {
     AliasTransaction,
     BurnTransaction,
     CancelLeaseTransaction,
     DataTransaction,
     DataTransactionEntry,
-    ExchangeTransaction,
-    ExchangeTransactionOrder, ExchangeTransactionV1, ExchangeTransactionV2, ExchangeTransactionV3,
+    ExchangeTransactionOrder,
     InvokeScriptTransaction,
     IssueTransaction,
     LeaseTransaction,
@@ -17,7 +25,7 @@ import {
     ReissueTransaction,
     SetAssetScriptTransaction,
     SetScriptTransaction,
-    SignedIExchangeTransactionOrder, SignedTransaction,
+    SignedIExchangeTransactionOrder,
     SponsorshipTransaction,
     TRANSACTION_TYPE,
     TransactionType,
@@ -84,6 +92,8 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
     }
     if (t.fee!.hasOwnProperty('assetId')) {
         res.feeAssetId = base58Encode(t.fee!.assetId!)
+    } else {
+        res.feeAssetId = null
     }
 
     if (t.hasOwnProperty('chainId')) {
@@ -157,7 +167,11 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
                     value: base64Prefix(base64Encode(de.binaryValue!)),
                 }
                 if (de.hasOwnProperty('boolValue')) return {key: de.key, type: 'boolean', value: de.boolValue}
-                if (de.hasOwnProperty('intValue')) return {key: de.key, type: 'integer', value: convertNumber(de.intValue!)}
+                if (de.hasOwnProperty('intValue')) return {
+                    key: de.key,
+                    type: 'integer',
+                    value: convertNumber(de.intValue!)
+                }
                 if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue}
                 return {key: de.key}
             })
@@ -190,6 +204,15 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             break
         default:
             throw new Error(`Unsupported tx type ${t.data}`)
+    }
+
+    if (res.hasOwnProperty('chainId')) {
+        res.sender = address({publicKey: t.senderPublicKey}, t.chainId)
+    } else {
+        let recipient = res.recipient || res.dApp || (res.transfers && res.transfers[0] && res.transfers[0].recipient);
+        if (recipient) {
+            res.sender = address({publicKey: t.senderPublicKey}, chainIdFromRecipient(recipient))
+        }
     }
 
     return res

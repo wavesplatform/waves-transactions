@@ -1,11 +1,22 @@
-import { publicKey } from '@waves/ts-lib-crypto'
+import {
+  address,
+  base16Encode,
+  base58Decode,
+  base58Encode,
+  base64Decode,
+  buildAddress,
+  concat,
+  publicKey, TBase58, TBinaryIn
+} from '@waves/ts-lib-crypto'
 import {cancelLease, ICancelLeaseParams, libs} from '../../src'
 import { cancelLeaseMinimalParams } from '../minimalParams'
-import { validateTxSignature } from '../../test/utils'
+import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {exampleTxs} from "../exampleTxs";
 import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
 import {cancelLeaseTx} from "./expected/cancel-lease.tx";
-import Bytes = jest.Bytes;
+import {CancelLeaseTransaction} from "@waves/ts-types";
+import {_hashChain} from "@waves/ts-lib-crypto/crypto/hashing";
+
 
 
 describe('cancel-lease', () => {
@@ -39,15 +50,9 @@ describe('cancel-lease', () => {
 
   const cancelLeaseTestParams = {
     leaseId: "DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr",
-    originTransactionId: "BhHPPHBZpfp8FBy8DE7heTpWGJySYg2uU2r4YM6qaisw",
-    sender: "3Mx7kNAFcGrAeCebnt3yXceiRSwru6N3XZd",
-    recipient: "3Mz9N7YPfZPWGd4yYaX6H53Gcgrq6ifYiH7",
-    amount: 124935000,
-    height: 1551763,
-    status: "canceled"
-  }
+    senderPublicKey: "Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt"
+  };
 
-  //const leaseId = "DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr"
 
   it('Should build from minimal set of params check fee', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams }, stringSeed)
@@ -65,37 +70,31 @@ describe('cancel-lease', () => {
     expect(tx).toMatchObject({ ...cancelLeaseTestParams })
   })
 
-  it('Should build with zero fee', () => {
+  it('Should not build with zero fee', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: 0 }, stringSeed)
     expect(tx.fee).toEqual(0)
   })
 
-  it('Should build with negative fee', () => {
+  it('Should not build with negative fee', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: -1 }, stringSeed)
     expect(tx.fee).toEqual(-1)
   })
 
-  const deleteProofsAndId = (t:any) => {
-    const tx: any = t
-    delete tx.id
-    delete tx.proofs
-    return tx
-  }
+});
 
-  const txss = Object.entries(cancelLeaseTx).forEach([name, { Bytes, Json }])
-   txss.forEach(cancelLeaseTx => {
-    it('name: ' + txss.type, () => {
-      txss = deleteProofsAndId(txss)
-      let tx1 = txToProtoBytes(txss)
-      const parsed = protoBytesToTx(tx1)
-      expect(parsed).toMatchObject(txss)
+describe('serialize/deserialize cancel lease tx', () => {
 
-      const actualBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
-      const expectedBytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
-      expect(expectedBytes).toBe(actualBytes)
+  Object.entries(cancelLeaseTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        const tx = deleteProofsAndId(Json);
+        const protoBytes = txToProtoBytes(tx);
+        const parsed = protoBytesToTx(protoBytes);
+        expect(parsed).toMatchObject(tx);
 
+        const actualBytes = base16Encode(protoBytes);
+        const expectedBytes = base16Encode(base64Decode(Bytes));
+        expect(expectedBytes).toBe(actualBytes)
 
-    })
+      }))
 
-
-  })
+});

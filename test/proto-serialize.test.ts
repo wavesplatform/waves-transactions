@@ -19,6 +19,7 @@ import { updateAssetInfo } from '../src/transactions/update-asset-info'
 import {randomHexString, TIMEOUT} from './integration/config'
 import {address} from '@waves/ts-lib-crypto'
 import {issueMinimalParams} from './minimalParams'
+import {deleteProofsAndId} from "./utils";
 
 
 
@@ -33,20 +34,18 @@ let assetId = ''
  * Longs as strings, remove unnecessary fields
  * @param t
  */
-const deleteProofsAndId = (t:any) => {
-  const tx: any = t
-  delete tx.id
-  delete tx.proofs
-  return tx
-}
+
 
 describe('serialize/deserialize', () => {
   const txss = Object.keys(exampleTxs).map(x => (<any>exampleTxs)[x] as any)
   txss.forEach(tx => {
     it('type: ' + tx.type, () => {
-      tx = deleteProofsAndId(tx)
-      const parsed = protoBytesToTx(txToProtoBytes(tx))
-      expect(parsed).toMatchObject(tx)
+      // deleteProofsAndId(tx)
+      //const parsed = protoBytesToTx(txToProtoBytes(tx))
+      const txWithoutProofAndId = deleteProofsAndId(tx);
+      const protoBytes = txToProtoBytes(txWithoutProofAndId);
+      const parsed = protoBytesToTx(protoBytes);
+      expect(parsed).toMatchObject(txWithoutProofAndId);
     })
   })
 
