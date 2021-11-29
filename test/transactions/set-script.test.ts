@@ -11,7 +11,9 @@ describe('setScript', () => {
   it('Should generate correct signed setScript transaction', () => {
     const txParams = { script: compiledContract }
     const signedTx = setScript(txParams, seed)
-
+for (let i =0, i<90, i++){
+  
+}
     expect(validateTxSignature(signedTx, 1)).toBe(true)
   })
 
