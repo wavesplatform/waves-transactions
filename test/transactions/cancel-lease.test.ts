@@ -11,11 +11,9 @@ import {
 import {cancelLease, ICancelLeaseParams, libs} from '../../src'
 import { cancelLeaseMinimalParams } from '../minimalParams'
 import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {exampleTxs} from "../exampleTxs";
 import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
 import {cancelLeaseTx} from "./expected/cancel-lease.tx";
-import {CancelLeaseTransaction} from "@waves/ts-types";
-import {_hashChain} from "@waves/ts-lib-crypto/crypto/hashing";
+
 
 
 

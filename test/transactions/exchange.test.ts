@@ -614,5 +614,4 @@ describe('exchange', () => {
         expect(tx).toMatchObject({...txOk})
     })
 
-
 })

@@ -128,6 +128,7 @@ export const sponsorshipMinimalParams: ISponsorshipParams = {
 export const updateAssetInfoMinimalParams: IUpdateAssetInfoParams = {
   name: "xxxx",
   description: "xxxxXXXXxxxx",
+  assetId: "syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ"
  // chainId: 84
 }
 

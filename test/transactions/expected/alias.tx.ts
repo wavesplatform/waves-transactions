@@ -1,4 +1,4 @@
-export const txs = {
+export const aliasTx = {
     'Create Alias TX (type 10 v3)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IOfekL2mLygD8gYgCh5fcmljaC1hY2NvdW50LndpdGhAMzBfc3ltYm9sc18=',
         'Json': {

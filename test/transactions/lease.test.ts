@@ -89,7 +89,7 @@ describe('lease', () => {
     expect(tx.fee).toEqual(100000)
   })
 
-  it('Should build with minimal amount and  fee', () => {
+  it('Should build with minimal amount and fee', () => {
     const tx = lease({ ...leaseMinimalParams, amount: 1, fee: 100000 }, stringSeed)
     expect(tx.amount).toEqual(1)
     expect(tx.fee).toEqual(100000)

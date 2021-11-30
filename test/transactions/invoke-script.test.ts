@@ -1,9 +1,10 @@
-import { publicKey } from '@waves/ts-lib-crypto'
+import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
 import { invokeScriptMinimalParams } from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
 import { IInvokeScriptParams } from '../../src'
-import { validateTxSignature } from '../../test/utils'
-import {binary} from "@waves/marshall";
+import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
+import {invokeScriptTx} from "./expected/invoke-script.tx";
 
 describe('invokeScript', () => {
 
@@ -147,4 +148,21 @@ describe('invokeScript', () => {
     expect(tx.call!.args[4].value[3].value).toEqual("Porto Franko")
 
   })
-})
+});
+
+describe('serialize/deserialize cancel lease tx', () => {
+
+  Object.entries(invokeScriptTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        const tx = deleteProofsAndId(Json);
+        const protoBytes = txToProtoBytes(tx);
+        const parsed = protoBytesToTx(protoBytes);
+        expect(parsed).toMatchObject(tx);
+
+        const actualBytes = base16Encode(protoBytes);
+        const expectedBytes = base16Encode(base64Decode(Bytes));
+        expect(expectedBytes).toBe(actualBytes)
+
+      }))
+
+});

@@ -1,4 +1,4 @@
-export const txs = {
+export const invokeScriptTx = {
     'InvokeScript TX (type 16 v2)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoMIeIPTlkL2mLygCogcbChYKFMCJgEpQH4BNVdKzU7jR4jDzcS12EgEA',
         'Json': {
@@ -36,7 +36,7 @@ export const txs = {
             'timestamp': 1625236452093,
             'proofs': ['57bggAeTpEzjf5d5Lcuc8bKo5NH3bzKtUG2CJZCE4w2HcNoY4DncAMmvVGfc5aMz5Unoa6KxKPv3TYjUo99N71rs'],
         },
-    },
+    },/*
     'InvokeScript TX (type 16 v2)  case 3': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoMIeIP/lkL2mLygCogeIAQoWChTAiYBKUB+ATVXSs1O40eIw83EtdhJIAQkBAAAADnRlc3RGdW5jdGlvblYyAAAABwYHAQAAAAZhYWFhYWEAf/////////8AAAAAAAAAAAACAAAABmFhYWFhYQIAAAAAGiQKIMoaglOigu8JmH4V0CybQhURZvAmnXAhYMYSGV4ZSfbrEBQ=',
         'Json': {
@@ -152,5 +152,5 @@ export const txs = {
             'timestamp': 1625236452097,
             'proofs': ['2RfTMxn8U9KYB3FRKyGNXRp5mbNCPutXi4HpF43ZnNEmMDfLiv68YsJyKodaD1akVHX8KEtKb7C6U1vsjhAeDChP'],
         },
-    },
+    },*/
 }

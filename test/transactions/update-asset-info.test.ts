@@ -23,43 +23,43 @@ describe('updateAssetInfo', () => {
     }
 
     it('Should create update asset info transaction', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams}, stringSeed)
         expect(tx).toMatchObject({...updateAssetInfoMinimalParams})
     })
 
     it('Should create update asset info transaction with minimal name', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, name: "yyyy"}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, name: "yyyy"}, stringSeed)
         expect(tx.name).toEqual("yyyy")
     })
 
     it('Should create update asset info transaction with extra minimal name', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, name: "yyy"}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, name: "yyy"}, stringSeed)
         expect(tx.name).toEqual("yyy")
     })
 
     it('Should create update asset info transaction with maximal name', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, name: "aaaaddddmmmmyyyy"}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, name: "aaaaddddmmmmyyyy"}, stringSeed)
         expect(tx.name).toEqual("aaaaddddmmmmyyyy")
     })
 
     it('Should create update asset info transaction with extra maximal name', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, name: "aaaaddddmmmmyyyyz"}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, name: "aaaaddddmmmmyyyyz"}, stringSeed)
         expect(tx.name).toEqual("aaaaddddmmmmyyyyz")
     })
 
 
     it('Should create update asset info transaction with zero fee', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, fee: 0}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, fee: 0}, stringSeed)
         expect(tx.fee).toEqual(0)
     })
 
     it('Should create update asset info transaction with negative fee', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, fee: -1}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, fee: -1}, stringSeed)
         expect(tx.fee).toEqual(-1)
     })
 
     it('Should create update asset info transaction with minimal fee', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams}, stringSeed)
         expect(tx.fee).toEqual(100000)
     })
 
@@ -75,7 +75,7 @@ describe('updateAssetInfo', () => {
             }
 
         }
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, description: descmax}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, description: descmax}, stringSeed)
         expect(tx.description).toEqual(descmax)
         console.log(tx.description)
 
@@ -91,23 +91,8 @@ describe('updateAssetInfo', () => {
             }
 
         }
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, assetId, description: descmax+"z"}, stringSeed)
+        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, description: descmax+"z"}, stringSeed)
         expect(tx.description).toEqual(descmax+"z")
-    })
-
-    it('should build from minimal set of params', () => {
-        let descmax = ""
-
-        while (descmax.length<1001) {
-            let n=Math.random()*(122-65)+65
-            let m=Math.round(n)
-
-            if((m<91)||(m>96)) {
-                descmax+=String.fromCharCode(m)
-            }
-
-        }
-        console.log(descmax)
     })
 
 

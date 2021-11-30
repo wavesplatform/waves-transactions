@@ -1,4 +1,4 @@
-export const txs = {
+export const burnTx = {
     'Burn TX (type 6 v3)  max value': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IILUkL2mLygD0gYuCiwKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfTEP//////////fw==',
         'Json': {
