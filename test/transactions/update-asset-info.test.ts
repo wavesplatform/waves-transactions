@@ -1,8 +1,11 @@
-import { publicKey, } from '@waves/ts-lib-crypto'
+import {base16Encode, base64Decode, publicKey,} from '@waves/ts-lib-crypto'
 import {reissue, setScript, sponsorship} from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {updateAssetInfoMinimalParams} from "../minimalParams";
 import {updateAssetInfo} from "../../src/transactions/update-asset-info";
+import {cancelLeaseTx} from "./expected/cancel-lease.tx";
+import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
+import {updateAssetInfoTx} from "./expected/update-asset-info.tx";
 
 describe('updateAssetInfo', () => {
 
@@ -95,5 +98,21 @@ describe('updateAssetInfo', () => {
         expect(tx.description).toEqual(descmax+"z")
     })
 
+});
 
-})
+describe('serialize/deserialize cancel lease tx', () => {
+
+    Object.entries(updateAssetInfoTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            const tx = deleteProofsAndId(Json);
+            const protoBytes = txToProtoBytes(tx);
+            const parsed = protoBytesToTx(protoBytes);
+            expect(parsed).toMatchObject(tx);
+
+            const actualBytes = base16Encode(protoBytes);
+            const expectedBytes = base16Encode(base64Decode(Bytes));
+            expect(expectedBytes).toBe(actualBytes)
+
+        }))
+
+});

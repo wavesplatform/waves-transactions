@@ -1,8 +1,11 @@
-import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
+import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
 import { transfer } from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import { transferMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
+import {updateAssetInfoTx} from "./expected/update-asset-info.tx";
+import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
+import {transferTx} from "./expected/transfer.tx";
 
 describe('transfer', () => {
 
@@ -70,4 +73,22 @@ describe('transfer', () => {
     const tx = transfer({ ...transferMinimalParams} , stringSeed)
     expect(tx.fee).toEqual(100000)
   })
-})
+
+});
+
+describe('serialize/deserialize cancel lease tx', () => {
+
+  Object.entries(transferTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        const tx = deleteProofsAndId(Json);
+        const protoBytes = txToProtoBytes(tx);
+        const parsed = protoBytesToTx(protoBytes);
+        expect(parsed).toMatchObject(tx);
+
+        const actualBytes = base16Encode(protoBytes);
+        const expectedBytes = base16Encode(base64Decode(Bytes));
+        expect(expectedBytes).toBe(actualBytes)
+
+      }))
+
+});

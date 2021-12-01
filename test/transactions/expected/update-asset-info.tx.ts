@@ -1,4 +1,4 @@
-export const txs = {
+export const updateAssetInfoTx = {
     'UpdateAssetInfo TX (type 17 v1)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoI0GIKT0kL2mLygBqgcoCiCmD2m17pwNNl0VrDjxrM/QOUsMn3uKIxmo1gqbN4tjFxIEYWFhYQ==',
         'Json': {

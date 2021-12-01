@@ -1,4 +1,4 @@
-export const txs = {
+export const transferTx = {
     'Transfer TX (type 4 v3)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGiwKIJRjWHGOPhB+jKCoAQaVBkscvc4D3bVoyGe0prXCZPi8EP//////////fyDn8pC9pi8oA8IGUAogEh5fcmljaC1hY2NvdW50LndpdGhAMzBfc3ltYm9sc18SLAoglGNYcY4+EH6MoKgBBpUGSxy9zgPdtWjIZ7SmtcJk+LwQ//////////9/',
         'Json': {
@@ -17,7 +17,7 @@ export const txs = {
             'timestamp': 1625236453735,
             'proofs': ['2F3Q1rGAu1wMRpcBwqPTUv5VTLSpMK3Xnih53WbtNYeYsN4h7qYLA44mu2MazvTo4ojijcC3EyXmg78XjAx81q8Y'],
         },
-    },
+    },/*
     'Transfer TX (type 4 v3)  case 2': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGiwKIJRjWHGOPhB+jKCoAQaVBkscvc4D3bVoyGe0prXCZPi8EP//////////fyDs8pC9pi8oA8IGJAoWChS9dlzzmCRnWwR2WyBD11RL65Az6hIKEP//////////fw==',
         'Json': {
@@ -74,5 +74,5 @@ export const txs = {
             'timestamp': 1625236453741,
             'proofs': ['3bQfv3Ghgk58wxSwTT6EJCZenyFocStW9QCZ9C8srkK1hvSabWTdK3zgS4PvKu1UDA5BP9GYjHwcxLj3TeMrBzhR'],
         },
-    },
+    },*/
 }
