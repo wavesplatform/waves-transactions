@@ -107,22 +107,13 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             res.quantity = convertNumber(t.issue!.amount!);
             res.decimals = t.issue!.decimals;
             res.reissuable = t.issue!.reissuable;
-            if (t.issue!.hasOwnProperty('script')) {
-                res.script = t.issue!.script && base64Prefix(base64Encode(t.issue!.script))
-            }
+            res.script = (t.issue!.hasOwnProperty('script')) ? base64Prefix(base64Encode(t.issue!.script!)) : null;
             break;
         case 'transfer':
             res.amount = convertNumber(t.transfer!.amount!.amount!);
             res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId);
-            if (t.transfer!.hasOwnProperty('attachment')) {
-                res.attachment = base58Encode(t.transfer!.attachment!)
-            } else {
-                res.attachment = ''
-            }
-
-            if (t.transfer!.amount!.hasOwnProperty('assetId')) {
-                res.assetId = t.transfer!.amount!.assetId == null ? null : base58Encode(t.transfer!.amount!.assetId)
-            }
+            res.attachment =  (t.transfer!.hasOwnProperty('attachment')) ?  base58Encode(t.transfer!.attachment!) : '';
+            res.assetId = (t.transfer!.amount!.hasOwnProperty('assetId')) ? base58Encode(t.transfer!.amount!.assetId!) : null;
             break;
         case 'reissue':
             res.quantity = convertNumber(t.reissue!.assetAmount!.amount!)
@@ -152,14 +143,10 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             res.alias = t.createAlias!.alias;
             break;
         case 'massTransfer':
-            if (t.massTransfer!.hasOwnProperty('assetId')) {
-                res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
-            }
-            if (t.massTransfer!.hasOwnProperty('attachment')) {
-                res.attachment = base58Encode(t.massTransfer!.attachment!)
-            } else {
-                res.attachment = ''
-            }
+
+            res.assetId = (t.massTransfer!.hasOwnProperty('assetId')) ? base58Encode(t.massTransfer!.assetId!) : null;
+            res.attachment =  (t.massTransfer!.hasOwnProperty('attachment')) ?  base58Encode(t.massTransfer!.attachment!) : '';
+
             res.transfers = t.massTransfer!.transfers!.map(({amount, recipient}) => ({
                 amount: convertNumber(amount!),
                 recipient: recipientFromProto(recipient!, t.chainId),
