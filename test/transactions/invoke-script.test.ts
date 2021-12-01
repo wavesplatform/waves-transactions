@@ -16,7 +16,7 @@ describe('invokeScript', () => {
   })
 
   it('should build from minimal set of params for tx version 1', () => {
-    const tx = invokeScript({ version: 1 , ...invokeScriptMinimalParams,}, stringSeed)
+    const tx = invokeScript({ version: 1 , ...invokeScriptMinimalParams}, stringSeed)
     console.log(tx)
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
   })

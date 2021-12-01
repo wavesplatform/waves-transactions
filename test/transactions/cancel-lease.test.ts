@@ -10,9 +10,9 @@ import {
 } from '@waves/ts-lib-crypto'
 import {cancelLease, ICancelLeaseParams, libs} from '../../src'
 import { cancelLeaseMinimalParams } from '../minimalParams'
-import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
+import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {cancelLeaseTx} from "./expected/cancel-lease.tx";
+
 
 
 
@@ -84,15 +84,7 @@ describe('serialize/deserialize cancel lease tx', () => {
 
   Object.entries(cancelLeaseTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        const tx = deleteProofsAndId(Json);
-        const protoBytes = txToProtoBytes(tx);
-        const parsed = protoBytesToTx(protoBytes);
-        expect(parsed).toMatchObject(tx);
-
-        const actualBytes = base16Encode(protoBytes);
-        const expectedBytes = base16Encode(base64Decode(Bytes));
-        expect(expectedBytes).toBe(actualBytes)
-
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

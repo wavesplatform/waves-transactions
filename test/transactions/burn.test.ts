@@ -1,10 +1,9 @@
 import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
 import { burn } from '../../src'
 import { burnMinimalParams } from '../minimalParams'
-import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {aliasTx} from "./expected/alias.tx";
-import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
+import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {burnTx} from "./expected/burn.tx";
+
 
 describe('burn', () => {
 
@@ -68,19 +67,11 @@ describe('burn', () => {
   })
 });
 
-describe('serialize/deserialize cancel lease tx', () => {
+describe('serialize/deserialize burn tx', () => {
 
   Object.entries(burnTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        const tx = deleteProofsAndId(Json);
-        const protoBytes = txToProtoBytes(tx);
-        const parsed = protoBytesToTx(protoBytes);
-        expect(parsed).toMatchObject(tx);
-
-        const actualBytes = base16Encode(protoBytes);
-        const expectedBytes = base16Encode(base64Decode(Bytes));
-        expect(expectedBytes).toBe(actualBytes)
-
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

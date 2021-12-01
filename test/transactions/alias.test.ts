@@ -2,8 +2,9 @@ import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
 import { alias } from '../../src'
 import { aliasMinimalParams } from '../minimalParams'
 import { protoBytesToTx, txToProtoBytes } from '../../src/proto-serialize'
-import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {aliasTx} from "./expected/alias.tx";
+
 
 describe('alias', () => {
 
@@ -83,19 +84,11 @@ describe('alias', () => {
   })
 });
 
-describe('serialize/deserialize cancel lease tx', () => {
+describe('serialize/deserialize alias tx', () => {
 
   Object.entries(aliasTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        const tx = deleteProofsAndId(Json);
-        const protoBytes = txToProtoBytes(tx);
-        const parsed = protoBytesToTx(protoBytes);
-        expect(parsed).toMatchObject(tx);
-
-        const actualBytes = base16Encode(protoBytes);
-        const expectedBytes = base16Encode(base64Decode(Bytes));
-        expect(expectedBytes).toBe(actualBytes)
-
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

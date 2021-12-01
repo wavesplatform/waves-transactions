@@ -2,9 +2,6 @@ import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-
 import { transfer } from '../../src'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import { transferMinimalParams } from '../minimalParams'
-import { binary } from '@waves/marshall'
-import {updateAssetInfoTx} from "./expected/update-asset-info.tx";
-import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
 import {transferTx} from "./expected/transfer.tx";
 
 describe('transfer', () => {
