@@ -1,9 +1,9 @@
-import {verifySignature} from '@waves/ts-lib-crypto'
+import {base16Encode, base64Decode, verifySignature} from '@waves/ts-lib-crypto'
 import {binary} from '@waves/marshall'
 
 import {TTx} from '../src'
 
-import {txToProtoBytes} from '../src/proto-serialize'
+import {protoBytesToTx, txToProtoBytes} from '../src/proto-serialize'
 
 function validateTxSignature(tx: TTx, protoBytesMinVersion: number, proofNumber = 0, publicKey?: string): boolean {
     const bytes = tx.version > protoBytesMinVersion ? txToProtoBytes(tx) : binary.serializeTx(tx)
@@ -24,5 +24,17 @@ export const deleteProofsAndId = (t: any) => {
     delete tx.id;
     delete tx.proofs;
     return tx
+}
+
+export function checkSerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
+    const tx = deleteProofsAndId(Json);
+    const protoBytes = txToProtoBytes(tx);
+    const parsed = protoBytesToTx(protoBytes);
+    expect(parsed).toMatchObject(tx);
+
+    const actualBytes = base16Encode(protoBytes);
+    const expectedBytes = base16Encode(base64Decode(Bytes));
+    expect(expectedBytes).toBe(actualBytes)
+
 }
 

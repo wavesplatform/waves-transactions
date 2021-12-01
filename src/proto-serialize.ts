@@ -89,7 +89,8 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
         timestamp: t.timestamp.toNumber(),
         fee: convertNumber(t.fee!.amount!),
         // chainId: t.chainId
-    }
+    };
+
     if (t.fee!.hasOwnProperty('assetId')) {
         res.feeAssetId = base58Encode(t.fee!.assetId!)
     } else {
@@ -101,107 +102,112 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
     }
     switch (t.data) {
         case 'issue':
-            res.name = t.issue!.name!
-            res.description = t.issue!.description!
-            res.quantity = convertNumber(t.issue!.amount!)
-            res.decimals = t.issue!.decimals
-            res.reissuable = t.issue!.reissuable
+            res.name = t.issue!.name!;
+            res.description = t.issue!.description!;
+            res.quantity = convertNumber(t.issue!.amount!);
+            res.decimals = t.issue!.decimals;
+            res.reissuable = t.issue!.reissuable;
             if (t.issue!.hasOwnProperty('script')) {
                 res.script = t.issue!.script && base64Prefix(base64Encode(t.issue!.script))
             }
-            break
+            break;
         case 'transfer':
-            res.amount = convertNumber(t.transfer!.amount!.amount!)
-            res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId)
+            res.amount = convertNumber(t.transfer!.amount!.amount!);
+            res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId);
             if (t.transfer!.hasOwnProperty('attachment')) {
-                res.attachment = t.transfer!.attachment == null ? null : base58Encode(t.transfer!.attachment)
+                res.attachment = base58Encode(t.transfer!.attachment!)
+            } else {
+                res.attachment = ''
             }
-            if (t.transfer!.hasOwnProperty('assetId')) {
+
+            if (t.transfer!.amount!.hasOwnProperty('assetId')) {
                 res.assetId = t.transfer!.amount!.assetId == null ? null : base58Encode(t.transfer!.amount!.assetId)
             }
-            break
+            break;
         case 'reissue':
             res.quantity = convertNumber(t.reissue!.assetAmount!.amount!)
             res.assetId = t.reissue!.assetAmount!.assetId == null ? null : base58Encode(t.reissue!.assetAmount!.assetId)
             res.reissuable = t.reissue!.reissuable
-            break
+            break;
         case 'burn':
-            res.amount = convertNumber(t.burn!.assetAmount!.amount!)
-            res.assetId = base58Encode(t.burn!.assetAmount!.assetId!)
-            break
+            res.amount = convertNumber(t.burn!.assetAmount!.amount!);
+            res.assetId = base58Encode(t.burn!.assetAmount!.assetId!);
+            break;
         case 'exchange':
-            res.amount = convertNumber(t.exchange!.amount!)
-            res.price = convertNumber(t.exchange!.price!)
-            res.buyMatcherFee = convertNumber(t.exchange!.buyMatcherFee!)
-            res.sellMatcherFee = convertNumber(t.exchange!.sellMatcherFee!)
-            res.order1 = orderFromProto(t.exchange!.orders![0])
-            res.order2 = orderFromProto(t.exchange!.orders![1])
-            break
+            res.amount = convertNumber(t.exchange!.amount!);
+            res.price = convertNumber(t.exchange!.price!);
+            res.buyMatcherFee = convertNumber(t.exchange!.buyMatcherFee!);
+            res.sellMatcherFee = convertNumber(t.exchange!.sellMatcherFee!);
+            res.order1 = orderFromProto(t.exchange!.orders![0]);
+            res.order2 = orderFromProto(t.exchange!.orders![1]);
+            break;
         case 'lease':
-            res.recipient = recipientFromProto(t.lease!.recipient!, t.chainId)
-            res.amount = convertNumber(t.lease!.amount!)
-            break
+            res.recipient = recipientFromProto(t.lease!.recipient!, t.chainId);
+            res.amount = convertNumber(t.lease!.amount!);
+            break;
         case 'leaseCancel':
-            res.leaseId = base58Encode(t.leaseCancel!.leaseId!)
-            break
+            res.leaseId = base58Encode(t.leaseCancel!.leaseId!);
+            break;
         case 'createAlias':
-            res.alias = t.createAlias!.alias
-            break
+            res.alias = t.createAlias!.alias;
+            break;
         case 'massTransfer':
             if (t.massTransfer!.hasOwnProperty('assetId')) {
                 res.assetId = t.massTransfer!.assetId == null ? null : base58Encode(t.massTransfer!.assetId)
             }
             if (t.massTransfer!.hasOwnProperty('attachment')) {
-                res.attachment = t.massTransfer!.attachment == null ? '' : base58Encode(t.massTransfer!.attachment)
-            } else res.attachment = ''
+                res.attachment = base58Encode(t.massTransfer!.attachment!)
+            } else {
+                res.attachment = ''
+            }
             res.transfers = t.massTransfer!.transfers!.map(({amount, recipient}) => ({
                 amount: convertNumber(amount!),
                 recipient: recipientFromProto(recipient!, t.chainId),
-            }))
-            break
+            }));
+            break;
         case 'dataTransaction':
             res.data = t.dataTransaction!.data!.map(de => {
                 if (de.hasOwnProperty('binaryValue')) return {
                     key: de.key,
                     type: 'binary',
                     value: base64Prefix(base64Encode(de.binaryValue!)),
-                }
-                if (de.hasOwnProperty('boolValue')) return {key: de.key, type: 'boolean', value: de.boolValue}
+                };
+                if (de.hasOwnProperty('boolValue')) return {key: de.key, type: 'boolean', value: de.boolValue};
                 if (de.hasOwnProperty('intValue')) return {
                     key: de.key,
                     type: 'integer',
                     value: convertNumber(de.intValue!)
-                }
-                if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue}
+                };
+                if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue};
                 return {key: de.key}
-            })
-            break
+            });
+            break;
         case 'setScript':
-            res.script = t.setScript!.script == null ? null : base64Prefix(base64Encode(t.setScript!.script!))
-            break
+            res.script = t.setScript!.script == null ? null : base64Prefix(base64Encode(t.setScript!.script!));
+            break;
         case 'sponsorFee':
-            res.minSponsoredAssetFee = convertNumber(t.sponsorFee!.minFee!.amount!)
-            res.assetId = base58Encode(t.sponsorFee!.minFee!.assetId!)
-            break
+            res.minSponsoredAssetFee = convertNumber(t.sponsorFee!.minFee!.amount!);
+            res.assetId = base58Encode(t.sponsorFee!.minFee!.assetId!);
+            break;
         case 'setAssetScript':
-            res.assetId = base58Encode(t.setAssetScript!.assetId!)
-            res.script = base64Prefix(base64Encode(t.setAssetScript!.script!))
-            break
+            res.assetId = base58Encode(t.setAssetScript!.assetId!);
+            res.script = base64Prefix(base64Encode(t.setAssetScript!.script!));
+            break;
         case 'invokeScript':
-            res.dApp = recipientFromProto(t.invokeScript!.dApp!, t.chainId)
+            res.dApp = recipientFromProto(t.invokeScript!.dApp!, t.chainId);
             if (t.invokeScript!.functionCall! != null) {
                 res.call = binary.parserFromSchema(invokeScriptCallSchema)(t.invokeScript!.functionCall!).value //todo: export function call from marshall and use it directly
             }
             res.payment = t.invokeScript!.payments!.map(p => ({
                 amount: convertNumber(p.amount!),
                 assetId: p.assetId == null ? null : base58Encode(p.assetId),
-            }))
-            break
+            }));
+            break;
         case 'updateAssetInfo':
-            res.assetId = base58Encode(t.updateAssetInfo!.assetId!)
-            res.name = t.updateAssetInfo!.name
-            res.description = t.updateAssetInfo!.description
-            break
+            res.assetId = base58Encode(t.updateAssetInfo!.assetId!);
+            res.name = t.updateAssetInfo!.name;
+            res.description = t.updateAssetInfo!.description;
+            break;
         default:
             throw new Error(`Unsupported tx type ${t.data}`)
     }

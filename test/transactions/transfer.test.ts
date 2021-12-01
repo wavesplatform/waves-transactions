@@ -1,6 +1,6 @@
 import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
 import { transfer } from '../../src'
-import {deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import { transferMinimalParams } from '../minimalParams'
 import { binary } from '@waves/marshall'
 import {updateAssetInfoTx} from "./expected/update-asset-info.tx";
@@ -76,19 +76,11 @@ describe('transfer', () => {
 
 });
 
-describe('serialize/deserialize cancel lease tx', () => {
+describe('serialize/deserialize transfer tx', () => {
 
   Object.entries(transferTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        const tx = deleteProofsAndId(Json);
-        const protoBytes = txToProtoBytes(tx);
-        const parsed = protoBytesToTx(protoBytes);
-        expect(parsed).toMatchObject(tx);
-
-        const actualBytes = base16Encode(protoBytes);
-        const expectedBytes = base16Encode(base64Decode(Bytes));
-        expect(expectedBytes).toBe(actualBytes)
-
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });
