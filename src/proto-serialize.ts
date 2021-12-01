@@ -200,7 +200,7 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
             }
             res.payment = t.invokeScript!.payments!.map(p => ({
                 amount: convertNumber(p.amount!),
-                assetId: p.assetId == null ? null : base58Encode(p.assetId),
+                assetId: p.hasOwnProperty('assetId') ? base58Encode(p.assetId!) : null
             }));
             break;
         case 'updateAssetInfo':
