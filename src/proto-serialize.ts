@@ -166,11 +166,11 @@ export function protoBytesToTx(bytes: Uint8Array): TTransaction {
                     value: convertNumber(de.intValue!)
                 };
                 if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue};
-                return {key: de.key}
+                return {key: de.key, value: null}
             });
             break;
         case 'setScript':
-            res.script = t.setScript!.script == null ? null : base64Prefix(base64Encode(t.setScript!.script!));
+            res.script = (t.setScript!.hasOwnProperty("script")) ? base64Prefix(base64Encode(t.setScript!.script!)) : null;
             break;
         case 'sponsorFee':
             res.minSponsoredAssetFee = convertNumber(t.sponsorFee!.minFee!.amount!);
