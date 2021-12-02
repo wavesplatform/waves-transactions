@@ -1,4 +1,4 @@
-export const txs = {
+export const leaseTx = {
     'Lease TX (type 8 v3) case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IOLpkL2mLygD4gYiChYKFFcIkVxjWTvmPEJhGqt/lw3DCksGEP//////////fw==',
         'Json': {

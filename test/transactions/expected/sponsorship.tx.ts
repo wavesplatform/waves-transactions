@@ -1,4 +1,4 @@
-export const txs = {
+export const sponsorshipTx = {
     'SponsorFee TX (type 14 v2)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoI0GIKjxkL2mLygCkgcuCiwKIOQt6VHG7an7FIw6Rvt44jtBL/LIHaogX6oHdthqs7EgEP//////////fw==',
         'Json': {

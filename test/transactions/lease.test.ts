@@ -1,7 +1,8 @@
 import { publicKey } from '@waves/ts-lib-crypto'
 import {alias, lease} from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {aliasMinimalParams, leaseMinimalParams} from '../minimalParams'
+import {leaseTx} from "./expected/lease.tx";
 
 describe('lease', () => {
 
@@ -101,4 +102,14 @@ describe('lease', () => {
     expect(tx.recipient).toEqual(talx)
   })
 
-})
+});
+
+describe('serialize/deserialize lease tx', () => {
+
+  Object.entries(leaseTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+

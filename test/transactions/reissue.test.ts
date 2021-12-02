@@ -1,8 +1,8 @@
 import { publicKey } from '@waves/ts-lib-crypto'
 import { reissue } from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import { reissueMinimalParams } from '../minimalParams'
-import {fee} from "../../src/generic";
+import {reissueTx} from "./expected/reissue.tx";
 
 describe('reissue', () => {
 
@@ -66,4 +66,13 @@ describe('reissue', () => {
     //toMatchObject({ ...reissueMinimalParams })
   })
 
-})
+});
+
+describe('serialize/deserialize reissue tx', () => {
+
+  Object.entries(reissueTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});

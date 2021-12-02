@@ -1,4 +1,4 @@
-export const txs = {
+export const setAssetScriptTx = {
     'SetAssetScriptTx (type 15 v2)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgUQgMLXLyCi7pC9pi8oApoHKgogwkoWDCcBbsGA9lONNps+7njcvr8W9YwxrrjLKquI23gSBgMGXdHGHw==',
         'Json': {

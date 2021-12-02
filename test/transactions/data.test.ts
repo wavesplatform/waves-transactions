@@ -1,11 +1,11 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {broadcast, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
-import {validateTxSignature} from '../../test/utils'
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
 import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
-import {TSeedTypes} from '../../src/types'
+import {dataTx} from "./expected/data.tx";
 
 
 describe('data', () => {
@@ -296,4 +296,13 @@ describe('data', () => {
         const tx = data(testMaxValueParams, senderPk)
         expect(tx.data[0].value).toEqual(sMax)
     })
-})
+});
+
+describe('serialize/deserialize data tx', () => {
+
+    Object.entries(dataTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});

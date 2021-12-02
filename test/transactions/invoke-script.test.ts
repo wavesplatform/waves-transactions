@@ -3,7 +3,6 @@ import { invokeScriptMinimalParams } from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
 import { IInvokeScriptParams } from '../../src'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {protoBytesToTx, txToProtoBytes} from "../../src/proto-serialize";
 import {invokeScriptTx} from "./expected/invoke-script.tx";
 
 describe('invokeScript', () => {

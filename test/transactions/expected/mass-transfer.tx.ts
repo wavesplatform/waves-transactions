@@ -1,4 +1,4 @@
-export const txs = {
+export const massTransferTx = {
     'MassTransfer TX (type 11 v2)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IKLrkL2mLygC+gZDEiwKIBIeX3JpY2gtYWNjb3VudC53aXRoQDMwX3N5bWJvbHNfEP//////////fxIICgYSBF9taW4aCXR0dHR0dHR0dA==',
         'Json': {

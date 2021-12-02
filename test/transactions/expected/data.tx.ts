@@ -1,4 +1,4 @@
-export const txs = {
+export const dataTx = {
     'DataTransaction TX (type 12 v2)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IKrkkL2mLygCggdNCggKBGJvb2xYAQoPCgNpbnRQ//////////9/ChIKA2JpbmILc29tZSBzdHJpbmcKEgoDc3Ryagtzb21lIHN0cmluZwoICgZkZWxLZXk=',
         'Json': {

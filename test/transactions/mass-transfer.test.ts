@@ -1,7 +1,8 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { massTransfer } from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import { massTransferMinimalParams } from '../minimalParams'
+import {massTransferTx} from "./expected/mass-transfer.tx";
 
 describe('massTransfer', () => {
 
@@ -81,5 +82,14 @@ describe('massTransfer', () => {
     expect(tx.transfers).toMatchObject({ ...transfersList })
   })
 
+});
 
-})
+describe('serialize/deserialize mass transfer tx', () => {
+
+  Object.entries(massTransferTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+

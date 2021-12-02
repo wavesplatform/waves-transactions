@@ -1,7 +1,8 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import { issue } from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import { issueMinimalParams } from '../minimalParams'
+import {issueTx} from "./expected/issue.tx";
 
 describe('issue', () => {
 
@@ -88,4 +89,13 @@ describe('issue', () => {
     expect(tx.fee).toEqual(-1)
   })
 
-})
+});
+
+describe('serialize/deserialize issue tx', () => {
+
+  Object.entries(issueTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});

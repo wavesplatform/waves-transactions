@@ -1,4 +1,4 @@
-export const txs = {
+export const issueTx = {
     'Issue TX (type 3 v3)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgUQgMLXLyC655C9pi8oA7oGEgoEYWFhYRj//////////38oAQ==',
         'Json': {

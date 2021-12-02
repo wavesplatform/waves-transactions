@@ -1,8 +1,7 @@
-import { publicKey, } from '@waves/ts-lib-crypto'
-import {reissue, setScript} from '../../src'
-import { validateTxSignature } from '../../test/utils'
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {reissueMinimalParams, sponsorshipMinimalParams} from "../minimalParams";
 import {sponsorship} from "../../src/transactions/sponsorship";
+import {sponsorshipTx} from "./expected/sponsorship.tx";
 
 describe('setSponsorship', () => {
 
@@ -43,4 +42,13 @@ describe('setSponsorship', () => {
         expect(tx.fee).toEqual(-1)
     })
 
-})
+});
+
+describe('serialize/deserialize sponsorship tx', () => {
+
+    Object.entries(sponsorshipTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});

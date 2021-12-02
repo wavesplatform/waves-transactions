@@ -1,4 +1,4 @@
-export const txs = {
+export const reissueTx = {
     'Reissue TX (type 5 v3)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/IObskL2mLygDygYuCiwKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfTEP//////////fw==',
         'Json': {

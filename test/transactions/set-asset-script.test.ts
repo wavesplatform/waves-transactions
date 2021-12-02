@@ -1,7 +1,7 @@
 import { publicKey, } from '@waves/ts-lib-crypto'
 import { setAssetScript } from '../../src'
-import { validateTxSignature } from '../../test/utils'
-import {fee} from "../../src/generic";
+import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
+import {setAssetScriptTx} from "./expected/set-asset-script.tx";
 
 describe('setAssetScript', () => {
 
@@ -79,4 +79,13 @@ describe('setAssetScript', () => {
     expect(signedTx.fee).toEqual(100000)
   })
 
-})
+});
+
+describe('serialize/deserialize set asset script tx', () => {
+
+  Object.entries(setAssetScriptTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});

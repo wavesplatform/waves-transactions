@@ -1,4 +1,4 @@
-export const txs = {
+export const setScriptTx = {
     'SetScript TX (type 13 v2)  case 1': {
         'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQwIQ9IPDvkL2mLygCigcICgYDBl3Rxh8=',
         'Json': {
