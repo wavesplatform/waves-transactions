@@ -54,7 +54,7 @@ export const massTransferTx = {
             'transfers': [{
                 'recipient': '3N3xeDHzzC16aoj9jtbo6ZL69VWtYSqJs4M',
                 'amount': '9223372036854775807',
-            }, {'recipient': 'alias:W:_min', 'amount': 1}],
+            }, {'recipient': 'alias:T:_min', 'amount': 1}],
             'fee': 200000,
             'feeAssetId': null,
             'timestamp': 1625244617567,
