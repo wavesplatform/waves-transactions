@@ -40,9 +40,9 @@ describe('massTransfer', () => {
 
   it('Should throw on transfers with zero quantity of receivers', () => {
     const transfersList = []
-    //const t = ""
-    //transfersList.push(t)
-    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
+    const t = {recipient: "", amount: 0}
+    transfersList.push(t)
+    const tx =  massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed)
     expect(tx.transfers).toMatchObject({ ...transfersList })
   })
 

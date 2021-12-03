@@ -210,15 +210,14 @@ describe('data', () => {
 
     const maxKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678"
     const extraMaxKey = maxKey + "A"
-    const testMaxKeyParams = {
-        data: [
+    const testMaxKeyParams = [
             {
                 key: maxKey,
                 type: 'binary',
                 value: 'base64:YXNkYQ==',
             }, {
                 key: maxKey,
-                type: 'boolean'
+                type: 'boolean',
                 value: true,
             }, {
                 key: maxKey,
@@ -229,18 +228,17 @@ describe('data', () => {
                 type: 'string',
                 value: "Abra Shvabra Kadabra",
             }
-        ],
-    }
+    ];
 
-    const testExtraMaxKeyParams = {
-        data: [
+
+    const testExtraMaxKeyParams = [
             {
                 key: extraMaxKey,
                 type: 'binary',
                 value: 'base16:52696465',
             }, {
                 key: extraMaxKey,
-                type: 'boolean'
+                type: 'boolean',
                 value: false,
             }, {
                 key: extraMaxKey,
@@ -251,11 +249,11 @@ describe('data', () => {
                 type: 'string',
                 value: "Abra Shvabra Kadabra Bums",
             }
-        ],
-    }
+    ];
+
 
     it('Should get data with max key', () => {
-        const tx = data(testMaxKeyParams, senderPk)
+        const tx = data({data: testMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
         expect(tx.data[0].value).toEqual('base64:YXNkYQ==')
         expect(tx.data[1].value).toEqual(true)
         expect(tx.data[2].value).toEqual(1234567890)
@@ -263,7 +261,7 @@ describe('data', () => {
     })
 
     it('Should get data with extra max key', () => {
-        const tx = data(testExtraMaxKeyParams, senderPk)
+        const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
         expect(tx.data[0].value).toEqual('base16:52696465')
         expect(tx.data[1].value).toEqual(false)
         expect(tx.data[2].value).toEqual(223322)
@@ -278,7 +276,7 @@ describe('data', () => {
                 value: sMax,
             }, {
                 key: extraMaxKey,
-                type: 'boolean'
+                type: 'boolean',
                 value: false,
             }, {
                 key: extraMaxKey,
@@ -293,7 +291,7 @@ describe('data', () => {
     }
 
     it('Should get data with max value', () => {
-        const tx = data(testMaxValueParams, senderPk)
+        const tx = data({data:testMaxValueParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
         expect(tx.data[0].value).toEqual(sMax)
     })
 });
