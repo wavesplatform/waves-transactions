@@ -8,13 +8,10 @@ import {
   concat,
   publicKey, TBase58, TBinaryIn
 } from '@waves/ts-lib-crypto'
-import {cancelLease, ICancelLeaseParams, libs} from '../../src'
-import { cancelLeaseMinimalParams } from '../minimalParams'
+import {burn, cancelLease, ICancelLeaseParams, libs} from '../../src'
+import {burnMinimalParams, cancelLeaseMinimalParams} from '../minimalParams'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {cancelLeaseTx} from "./expected/cancel-lease.tx";
-
-
-
 
 
 describe('cancel-lease', () => {
@@ -62,20 +59,22 @@ describe('cancel-lease', () => {
     expect(tx.fee).toEqual(500000)
   })
 
-  it('Should build with complex params', () => {
+  it('Should create with complex params', () => {
     const tx = cancelLease({ ...cancelLeaseTestParams }, stringSeed)
-    //expect(tx.fee).toEqual(-1)
     expect(tx).toMatchObject({ ...cancelLeaseTestParams })
   })
 
-  it('Should not build with zero fee', () => {
+  // fix me?
+  it('Should not create with zero fee', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: 0 }, stringSeed)
-    expect(tx.fee).toEqual(0)
+    expect(tx.fee).toEqual(100000)
   })
 
-  it('Should not build with negative fee', () => {
-    const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: -1 }, stringSeed)
-    expect(tx.fee).toEqual(-1)
+  it('Should not create with negative fee', () => {
+    expect(() =>cancelLease({ ...cancelLeaseMinimalParams, fee: -1}, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: -1 }, stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
 });

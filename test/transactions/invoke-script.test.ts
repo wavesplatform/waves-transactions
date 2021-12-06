@@ -1,7 +1,7 @@
 import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
-import { invokeScriptMinimalParams } from '../minimalParams'
+import {dataMinimalParams, invokeScriptMinimalParams} from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
-import { IInvokeScriptParams } from '../../src'
+import {data, IInvokeScriptParams} from '../../src'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {invokeScriptTx} from "./expected/invoke-script.tx";
 
@@ -15,7 +15,7 @@ describe('invokeScript', () => {
   })
 
   it('should build from minimal set of params for tx version 1', () => {
-    const tx = invokeScript({ version: 1 , ...invokeScriptMinimalParams}, stringSeed)
+    const tx = invokeScript({ ...invokeScriptMinimalParams, version:1} as any, stringSeed)
     console.log(tx)
     expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
   })
@@ -70,7 +70,7 @@ describe('invokeScript', () => {
     expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 
-  const testInvokeScriptParams= {
+  const testInvokeScriptParams: IInvokeScriptParams = {
     dApp: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
     call: {
       function: 'foo',
@@ -89,7 +89,7 @@ describe('invokeScript', () => {
         },
         {
           type: 'string',
-          value: "Abra Shvabra Kadabra",
+          value: "Test Test123 test321",
         },
         {
           type: 'list',
@@ -116,27 +116,30 @@ describe('invokeScript', () => {
     },
   }
 
-  it('Should build with minimal fee', () => {
+  it('Should create with minimal fee', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, fee: 100000 }, stringSeed)
     expect(tx.fee).toEqual(100000)
   })
 
-  it('Should build with zero fee', () => {
+  // fix me?
+  it('Should not create with zero fee', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, fee: 0 }, stringSeed)
-    expect(tx.fee).toEqual(0)
+    expect(tx.fee).toEqual(500000)
   })
 
-  it('Should build with negative fee', () => {
-    const tx = invokeScript({ ...invokeScriptMinimalParams, fee: -1 }, stringSeed)
-    expect(tx.fee).toEqual(-1)
+  it('Should not create with negative fee', () => {
+    expect(() =>invokeScript({ ...invokeScriptMinimalParams, fee: -1}, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = invokeScript({ ...invokeScriptMinimalParams, fee: -1 }, stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
   it('Should build with test set params', () => {
-    const tx = invokeScript(testInvokeScriptParams, stringSeed)
+    const tx = invokeScript({testInvokeScriptParams} as any, stringSeed)
     expect(tx.call!.args[0].value).toEqual('base64:AQa3b8tH')
     expect(tx.call!.args[1].value).toEqual(true)
     expect(tx.call!.args[2].value).toEqual(1234567890)
-    expect(tx.call!.args[3].value).toEqual("Abra Shvabra Kadabra")
+    expect(tx.call!.args[3].value).toEqual("Test Test123 test321")
     //@ts-ignore
     expect(tx.call!.args[4].value[0].value).toEqual('base64:UmlkZQ==')
     //@ts-ignore

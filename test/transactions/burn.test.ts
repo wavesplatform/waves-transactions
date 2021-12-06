@@ -1,6 +1,6 @@
 import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
-import { burn } from '../../src'
-import { burnMinimalParams } from '../minimalParams'
+import {alias, burn} from '../../src'
+import {aliasMinimalParams, burnMinimalParams} from '../minimalParams'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {burnTx} from "./expected/burn.tx";
 
@@ -36,35 +36,36 @@ describe('burn', () => {
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 
-  it('Should build with zero amount', () => {
+  it('Should create with zero amount', () => {
     const tx = burn({ ...burnMinimalParams, amount: 0 }, stringSeed)
     expect(tx.amount).toEqual(0)
   })
 
-  it('Should build with negative amount', () => {
-    const tx = burn({ ...burnMinimalParams, amount: -1 }, stringSeed)
-    expect(tx.amount).toEqual(-1)
+  it('Should not create with negative amount', () => {
+    expect(() =>burn({ ...burnMinimalParams, amount: -1}, stringSeed))
+        .toThrowError('tx "amount", has wrong data: "-1". Check tx data.')
+    //const tx = burn({ ...burnMinimalParams, amount: -1 }, stringSeed)
+    //expect(tx.amount).toEqual(-1)
   })
 
-  it('Should build with minimal fee', () => {
+  it('Should create with minimal fee', () => {
     const tx = burn({ ...burnMinimalParams, fee: 100000 }, stringSeed)
     expect(tx.fee).toEqual(100000)
   })
 
-  it('Should build with zero fee', () => {
+  // fix me?
+  it('Should create with zero fee', () => {
     const tx = burn({ ...burnMinimalParams, fee: 0 }, stringSeed)
-    expect(tx.fee).toEqual(0)
+    expect(tx.fee).toEqual(100000)
   })
 
-  it('Should build with negative fee', () => {
-    const tx = burn({ ...burnMinimalParams, fee: -1 }, stringSeed)
-    expect(tx.fee).toEqual(-1)
+  it('Should not create with negative fee', () => {
+    expect(() =>burn({ ...burnMinimalParams, fee: -1}, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = burn({ ...burnMinimalParams, fee: -1 }, stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
-  it('Should serialize/deserialize', () => {
-    const tx = burn({ ...burnMinimalParams, fee: -1 }, stringSeed)
-    expect(tx.fee).toEqual(-1)
-  })
 });
 
 describe('serialize/deserialize burn tx', () => {

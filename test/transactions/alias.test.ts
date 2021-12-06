@@ -53,29 +53,29 @@ describe('alias', () => {
     expect(tx.fee).toEqual(100000)
   })
 
+  //fix me?
   it('Should create with zero fee', () => {
     const tx = alias({ ...aliasMinimalParams, fee: 0 }, stringSeed)
-    expect(tx).toThrowError("tx \"alias\", has wrong data: \"0\". Check tx data.")
+    expect(tx.fee).toEqual(100000)
+    //expect(tx).toThrowError("tx \"alias\", has wrong data: \"0\". Check tx data.")
     //expect(tx).toMatchObject({ ...aliasMinimalParams })
   })
 
-  it('Should build with negative fee', () => {
-    const tx = alias({ ...aliasMinimalParams, fee: -1 }, stringSeed)
-    expect(tx).toThrowError("tx \"alias\", has wrong data: \"-1\". Check tx data.")
-    //toMatchObject({ ...aliasMinimalParams })
+  it('Should not create with negative fee', () => {
+    expect(() =>alias({ ...aliasMinimalParams, fee: -1}, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = alias({ ...aliasMinimalParams, fee: -1 }, stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
-  it('Should build with minimal alias name', () => {
+  it('Should create with minimal alias name', () => {
     const tx = alias({ ...aliasMinimalParams, alias: "west"}, stringSeed)
     expect(tx.alias).toEqual("west")
   })
 
-  it('Should build with extra minimal alias name', () => {
-    //const tx = alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed)
-    expect(() =>alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed)).toThrowError('tx "alias", has wrong data: "abc". Check tx data.')
-    //expect(tx).toThrow('tx "alias", has wrong data: "abc". Check tx data.')
-    //toThrowError("tx \"alias\", has wrong data: \"abc\". Check tx data.")
-    //toEqual("abc")
+  it('Should not create with extra minimal alias name', () => {
+    expect(() =>alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed))
+        .toThrowError('tx "alias", has wrong data: "abc". Check tx data.')
   })
 
   it('Should build with maximal alias name', () => {
@@ -83,9 +83,9 @@ describe('alias', () => {
     expect(tx.alias).toEqual("abcdefghijklmnoprstquvwxyztest")
   })
 
-  it('Should build with extra maximal alias name', () => {
-    const tx = alias({ ...aliasMinimalParams, alias: "fordmersedesbmwtoyotasuzukiraff"}, stringSeed)
-    expect(tx.alias).toEqual("fordmersedesbmwtoyotasuzukiraff")
+  it('Should not create with extra maximal alias name', () => {
+    expect(() =>alias({ ...aliasMinimalParams, alias: "abcdefghijklmnoprstquvwxyztestA"}, stringSeed))
+        .toThrowError('tx "alias", has wrong data: "abcdefghijklmnoprstquvwxyztestA". Check tx data.')
   })
 });
 

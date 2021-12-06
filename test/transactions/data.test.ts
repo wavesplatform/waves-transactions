@@ -1,8 +1,8 @@
 import {publicKey} from '@waves/ts-lib-crypto'
-import {broadcast, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
+import {broadcast, cancelLease, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
-import {dataMinimalParams} from '../minimalParams'
+import {cancelLeaseMinimalParams, dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
 import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
 import {dataTx} from "./expected/data.tx";
@@ -193,19 +193,22 @@ describe('data', () => {
 
     });
 
-    it('Should get data with minimal fee', () => {
+    it('Should create data with minimal fee', () => {
         const tx = data({...dataMinimalParams, fee: 100000}, senderPk)
         expect(tx.fee).toEqual(100000)
     })
 
-    it('Should get data with zero fee', () => {
+    //fix me?
+    it('Should not create data with zero fee', () => {
         const tx = data({...dataMinimalParams, fee: 0}, senderPk)
-        expect(tx.fee).toEqual(0)
+        expect(tx.fee).toEqual(100000)
     })
 
-    it('Should get data with negative fee', () => {
-        const tx = data({...dataMinimalParams, fee: -1}, senderPk)
-        expect(tx.fee).toEqual(-1)
+    it('Should not create data with negative fee', () => {
+        expect(() =>data({ ...dataMinimalParams, fee: -1}, senderPk))
+            .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        //const tx = data({...dataMinimalParams, fee: -1}, senderPk)
+        //expect(tx.fee).toEqual(-1)
     })
 
     const maxKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678"
@@ -226,7 +229,7 @@ describe('data', () => {
             }, {
                 key: maxKey,
                 type: 'string',
-                value: "Abra Shvabra Kadabra",
+                value: "Test Test123 Test321",
             }
     ];
 
@@ -247,12 +250,12 @@ describe('data', () => {
             }, {
                 key: extraMaxKey,
                 type: 'string',
-                value: "Abra Shvabra Kadabra Bums",
+                value: "Test Test123 Test321 TEST",
             }
     ];
 
 
-    it('Should get data with max key', () => {
+    it('Should create data with max key', () => {
         const tx = data({data: testMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
         expect(tx.data[0].value).toEqual('base64:YXNkYQ==')
         expect(tx.data[1].value).toEqual(true)
@@ -260,12 +263,14 @@ describe('data', () => {
         expect(tx.data[3].value).toEqual("Abra Shvabra Kadabra")
     })
 
-    it('Should get data with extra max key', () => {
-        const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
+    it('Should not create data with extra max key', () => {
+        expect(() =>data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk))
+            .toThrowError('tx "key", has wrong data: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678A". Check tx data.')
+       /* const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
         expect(tx.data[0].value).toEqual('base16:52696465')
         expect(tx.data[1].value).toEqual(false)
         expect(tx.data[2].value).toEqual(223322)
-        expect(tx.data[3].value).toEqual("Abra Shvabra Kadabra Bums")
+        expect(tx.data[3].value).toEqual("Test Test123 Test321 TEST")*/
     })
 
     const testMaxValueParams = {
