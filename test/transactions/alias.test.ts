@@ -53,7 +53,7 @@ describe('alias', () => {
     expect(tx.fee).toEqual(100000)
   })
 
-  it('Should build with zero fee', () => {
+  it('Should create with zero fee', () => {
     const tx = alias({ ...aliasMinimalParams, fee: 0 }, stringSeed)
     expect(tx).toThrowError("tx \"alias\", has wrong data: \"0\". Check tx data.")
     //expect(tx).toMatchObject({ ...aliasMinimalParams })
@@ -71,8 +71,9 @@ describe('alias', () => {
   })
 
   it('Should build with extra minimal alias name', () => {
-    const tx = alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed)
-    expect(tx).toThrowError("tx \"alias\", has wrong data: \"abc\". Check tx data.")
+    //const tx = alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed)
+    expect(() =>alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed)).toThrowError('tx "alias", has wrong data: "abc". Check tx data.')
+    //expect(tx).toThrow('tx "alias", has wrong data: "abc". Check tx data.')
     //toThrowError("tx \"alias\", has wrong data: \"abc\". Check tx data.")
     //toEqual("abc")
   })
