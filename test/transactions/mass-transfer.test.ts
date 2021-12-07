@@ -74,6 +74,7 @@ describe('massTransfer', () => {
     expect(tx.transfers).toMatchObject({ ...transfersList })
   })
 
+  // fixme?
   it('Should throw on transfers with negative amount', () => {
     const transfersList = []
     const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: -1}

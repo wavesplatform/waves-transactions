@@ -1,7 +1,7 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
-import { issue } from '../../src'
+import {invokeScript, issue} from '../../src'
 import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
-import { issueMinimalParams } from '../minimalParams'
+import {invokeScriptMinimalParams, issueMinimalParams} from '../minimalParams'
 import {issueTx} from "./expected/issue.tx";
 
 describe('issue', () => {
@@ -19,18 +19,21 @@ describe('issue', () => {
     expect(tx.quantity).toEqual(1)
   })
 
-  it('should build from minimal set of params with zero quantity', () => {
+  // fix me?
+  it('should create from minimal set of params with zero quantity', () => {
     const tx = issue({ ...issueMinimalParams, quantity: 0 }, stringSeed)
     expect(tx.quantity).toEqual(0)
   })
 
-  it('should build from minimal set of params with negative quantity', () => {
-    const tx = issue({ ...issueMinimalParams, quantity: -1 }, stringSeed)
-    expect(tx.quantity).toEqual(-1)
+  it('should not create from minimal set of params with negative quantity', () => {
+    expect(() =>issue({ ...issueMinimalParams, quantity: -1}, stringSeed))
+        .toThrowError('tx "quantity", has wrong data: "-1". Check tx data.')
+    //const tx = issue({ ...issueMinimalParams, quantity: -1 }, stringSeed)
+    //expect(tx.quantity).toEqual(-1)
   })
 
   const maxQuantity = '9223372036854775807';
-  it('should build from minimal set of params with maximal quantity', () => {
+  it('should create from minimal set of params with maximal quantity', () => {
     const tx = issue({ ...issueMinimalParams, quantity: maxQuantity }, stringSeed)
     expect(tx.quantity).toEqual(maxQuantity)
   })
@@ -74,19 +77,22 @@ describe('issue', () => {
     expect(validateTxSignature(tx, protoBytesMinVersion, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 
-  it('should correctly with minimal fee', () => {
+  it('should create correctly with minimal fee', () => {
     const tx = issue({ ...issueMinimalParams, fee: 100000}, stringSeed)
     expect(tx.fee).toEqual(100000)
   })
 
-  it('should correctly with zero fee', () => {
+  // fixme?
+  it('should create correctly with zero fee', () => {
     const tx = issue({ ...issueMinimalParams, fee: 0}, stringSeed)
     expect(tx.fee).toEqual(0)
   })
 
-  it('should correctly with negative fee', () => {
-    const tx = issue({ ...issueMinimalParams, fee: -1}, stringSeed)
-    expect(tx.fee).toEqual(-1)
+  it('should not create correctly with negative fee', () => {
+    expect(() =>issue({ ...issueMinimalParams, fee: -1}, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = issue({ ...issueMinimalParams, fee: -1}, stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
 });

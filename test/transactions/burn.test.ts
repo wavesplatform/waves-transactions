@@ -53,10 +53,10 @@ describe('burn', () => {
     expect(tx.fee).toEqual(100000)
   })
 
-  // fix me?
+  // fixme?
   it('Should create with zero fee', () => {
     const tx = burn({ ...burnMinimalParams, fee: 0 }, stringSeed)
-    expect(tx.fee).toEqual(100000)
+    expect(tx.fee).toEqual(0)
   })
 
   it('Should not create with negative fee', () => {

@@ -1,5 +1,5 @@
 import { publicKey, } from '@waves/ts-lib-crypto'
-import { setScript } from '../../src'
+import {setAssetScript, setScript} from '../../src'
 import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {setScriptTx} from "./expected/set-script.tx";
 
@@ -71,6 +71,7 @@ describe('setScript', () => {
     expect(signedTx.fee).toEqual(100000)
   })
 
+  // fixme?
   it('Should generate correct signed setScript transaction with zero fee', () => {
     const txParams = { script: compiledContract, fee: 0 }
     const signedTx = setScript(txParams, seed)
@@ -78,11 +79,13 @@ describe('setScript', () => {
     expect(signedTx.fee).toEqual(0)
   })
 
-  it('Should generate correct signed setScript transaction with negative fee', () => {
-    const txParams = { script: compiledContract, fee: -1 }
-    const signedTx = setScript(txParams, seed)
+  it('Should not create correct signed setScript transaction with negative fee', () => {
+    expect(() =>setScript({script: compiledContract, fee: -1 }, seed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const txParams = { script: compiledContract, fee: -1 }
+    //const signedTx = setScript(txParams, seed)
 
-    expect(signedTx.fee).toEqual(-1)
+    //expect(signedTx.fee).toEqual(-1)
   })
 
 });

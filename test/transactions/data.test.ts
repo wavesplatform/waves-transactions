@@ -198,10 +198,10 @@ describe('data', () => {
         expect(tx.fee).toEqual(100000)
     })
 
-    //fix me?
+    //fixme?
     it('Should not create data with zero fee', () => {
         const tx = data({...dataMinimalParams, fee: 0}, senderPk)
-        expect(tx.fee).toEqual(100000)
+        expect(tx.fee).toEqual(0)
     })
 
     it('Should not create data with negative fee', () => {
@@ -260,7 +260,7 @@ describe('data', () => {
         expect(tx.data[0].value).toEqual('base64:YXNkYQ==')
         expect(tx.data[1].value).toEqual(true)
         expect(tx.data[2].value).toEqual(1234567890)
-        expect(tx.data[3].value).toEqual("Abra Shvabra Kadabra")
+        expect(tx.data[3].value).toEqual("Test Test123 Test321")
     })
 
     it('Should not create data with extra max key', () => {
@@ -290,7 +290,7 @@ describe('data', () => {
             }, {
                 key: extraMaxKey,
                 type: 'string',
-                value: "Abra Shvabra Kadabra Bums",
+                value: "Test Test123 Test321 TEST",
             }
         ],
     }

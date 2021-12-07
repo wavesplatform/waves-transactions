@@ -53,10 +53,10 @@ describe('alias', () => {
     expect(tx.fee).toEqual(100000)
   })
 
-  //fix me?
+  //fixme?
   it('Should create with zero fee', () => {
     const tx = alias({ ...aliasMinimalParams, fee: 0 }, stringSeed)
-    expect(tx.fee).toEqual(100000)
+    expect(tx.fee).toEqual(0)
     //expect(tx).toThrowError("tx \"alias\", has wrong data: \"0\". Check tx data.")
     //expect(tx).toMatchObject({ ...aliasMinimalParams })
   })

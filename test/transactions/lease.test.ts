@@ -1,7 +1,7 @@
 import { publicKey } from '@waves/ts-lib-crypto'
-import {alias, lease} from '../../src'
+import {alias, issue, lease} from '../../src'
 import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
-import {aliasMinimalParams, leaseMinimalParams} from '../minimalParams'
+import {aliasMinimalParams, issueMinimalParams, leaseMinimalParams} from '../minimalParams'
 import {leaseTx} from "./expected/lease.tx";
 
 describe('lease', () => {
@@ -33,44 +33,50 @@ describe('lease', () => {
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 
-  it('Should get correct fee', () => {
+  it('Should create with correct fee', () => {
     const tx = lease({ ...leaseMinimalParams }, stringSeed)
     expect(tx.fee).toEqual(100000)
   })
 
-  it('Should build with zero fee', () => {
+  // fixme?
+  it('Should create with zero fee', () => {
     const tx = lease({ ...leaseMinimalParams, fee: 0 }, stringSeed)
     expect(tx.fee).toEqual(0)
   })
 
-  it('Should build with negative fee', () => {
-    const tx = lease({ ...leaseMinimalParams, fee: -1 }, stringSeed)
-    expect(tx.fee).toEqual(-1)
+  it('Should not create with negative fee', () => {
+    expect(() =>lease({ ...leaseMinimalParams, fee: -1 }, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = lease({ ...leaseMinimalParams, fee: -1 }, stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
-  it('Should build with set fee', () => {
+  it('Should create with set fee', () => {
     const tx = lease({ ...leaseMinimalParams, fee: 500000 }, stringSeed)
     expect(tx.fee).toEqual(500000)
   })
 
-  it('Should build with set amount', () => {
+  it('Should create with set amount', () => {
     const tx = lease({ ...leaseMinimalParams, amount: 500000 }, stringSeed)
     expect(tx.amount).toEqual(500000)
   })
 
-  it('Should build with minimal amount', () => {
+  it('Should create with minimal amount', () => {
     const tx = lease({ ...leaseMinimalParams, amount: 1 }, stringSeed)
     expect(tx.amount).toEqual(1)
   })
 
-  it('Should build with zero amount', () => {
+  // fixme?
+  it('Should create with zero amount', () => {
     const tx = lease({ ...leaseMinimalParams, amount: 0 }, stringSeed)
     expect(tx.amount).toEqual(0)
   })
 
-  it('Should build with negative amount', () => {
-    const tx = lease({ ...leaseMinimalParams, amount: -1 }, stringSeed)
-    expect(tx.amount).toEqual(-1)
+  it('Should not create with negative amount', () => {
+    expect(() =>lease({ ...leaseMinimalParams, amount: -1 }, stringSeed))
+        .toThrowError('tx "amount", has wrong data: "-1". Check tx data.')
+    //const tx = lease({ ...leaseMinimalParams, amount: -1 }, stringSeed)
+    //expect(tx.amount).toEqual(-1)
   })
 
   it('Should build with maximal amount', () => {
@@ -98,7 +104,7 @@ describe('lease', () => {
 
   it('Should build with alias', () => {
     const talx = alias({ ...aliasMinimalParams, alias: "west"}, stringSeed)
-    const tx = lease({ ...leaseMinimalParams, recipient: talx }, stringSeed)
+    const tx = lease({ ...leaseMinimalParams, recipient: talx } as any, stringSeed)
     expect(tx.recipient).toEqual(talx)
   })
 
