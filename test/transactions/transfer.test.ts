@@ -1,7 +1,7 @@
 import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
-import { transfer } from '../../src'
+import {sponsorship, transfer} from '../../src'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import { transferMinimalParams } from '../minimalParams'
+import {sponsorshipMinimalParams, transferMinimalParams} from '../minimalParams'
 import {transferTx} from "./expected/transfer.tx";
 
 describe('transfer', () => {
@@ -56,17 +56,20 @@ describe('transfer', () => {
     expect(tx.attachment).toEqual(att)
   })
 
+  // fixme?
   it('Should build with zero fee', () => {
     const tx = transfer({ ...transferMinimalParams, fee: 0 } , stringSeed)
     expect(tx.fee).toEqual(0)
   })
 
-  it('Should build with negative fee', () => {
-    const tx = transfer({ ...transferMinimalParams, fee: -1 } , stringSeed)
-    expect(tx.fee).toEqual(-1)
+  it('Should not create with negative fee', () => {
+    expect(() =>transfer({ ...transferMinimalParams, fee: -1 }, stringSeed))
+        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+    //const tx = transfer({ ...transferMinimalParams, fee: -1 } , stringSeed)
+    //expect(tx.fee).toEqual(-1)
   })
 
-  it('Should build with minimal fee', () => {
+  it('Should create with minimal fee', () => {
     const tx = transfer({ ...transferMinimalParams} , stringSeed)
     expect(tx.fee).toEqual(100000)
   })

@@ -2,6 +2,7 @@ import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {reissueMinimalParams, sponsorshipMinimalParams} from "../minimalParams";
 import {sponsorship} from "../../src/transactions/sponsorship";
 import {sponsorshipTx} from "./expected/sponsorship.tx";
+import {setScript} from "../../src";
 
 describe('setSponsorship', () => {
 
@@ -17,14 +18,17 @@ describe('setSponsorship', () => {
         expect(tx.minSponsoredAssetFee).toEqual(150)
     })
 
+    // fixme?
     it('Should create sponsorship transaction with zero sponsor fee', () => {
         const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: 0 }, stringSeed)
         expect(tx.minSponsoredAssetFee).toEqual(0)
     })
 
-    it('Should create sponsorship transaction with negative sponsor fee', () => {
-        const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed)
-        expect(tx.minSponsoredAssetFee).toEqual(-1)
+    it('Should not create sponsorship transaction with negative sponsor fee', () => {
+        expect(() =>sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed))
+            .toThrowError('tx "minSponsoredAssetFee", has wrong data: "-1". Check tx data.')
+       //const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed)
+        //expect(tx.minSponsoredAssetFee).toEqual(-1)
     })
 
     it('Should create sponsorship transaction with minimal fee', () => {
@@ -32,14 +36,17 @@ describe('setSponsorship', () => {
         expect(tx.fee).toEqual(100000)
     })
 
+    // fixme?
     it('Should create sponsorship transaction with zero fee', () => {
         const tx = sponsorship({ ...sponsorshipMinimalParams, fee: 0 }, stringSeed)
         expect(tx.fee).toEqual(0)
     })
 
-    it('Should create sponsorship transaction with negative fee', () => {
-        const tx = sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed)
-        expect(tx.fee).toEqual(-1)
+    it('Should not create sponsorship transaction with negative fee', () => {
+        expect(() =>sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed))
+            .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        //const tx = sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed)
+        //expect(tx.fee).toEqual(-1)
     })
 
 });

@@ -1,7 +1,8 @@
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {updateAssetInfoMinimalParams} from "../minimalParams";
+import {transferMinimalParams, updateAssetInfoMinimalParams} from "../minimalParams";
 import {updateAssetInfo} from "../../src/transactions/update-asset-info";
 import {updateAssetInfoTx} from "./expected/update-asset-info.tx";
+import {transfer} from "../../src";
 
 describe('updateAssetInfo', () => {
 
@@ -52,9 +53,11 @@ describe('updateAssetInfo', () => {
         expect(tx.fee).toEqual(0)
     })
 
-    it('Should create update asset info transaction with negative fee', () => {
-        const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, fee: -1}, stringSeed)
-        expect(tx.fee).toEqual(-1)
+    it('Should not create update asset info transaction with negative fee', () => {
+        expect(() =>updateAssetInfo({ ...updateAssetInfoMinimalParams, fee: -1}, stringSeed))
+            .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        //const tx = updateAssetInfo({ ...updateAssetInfoMinimalParams, fee: -1}, stringSeed)
+        //expect(tx.fee).toEqual(-1)
     })
 
     it('Should create update asset info transaction with minimal fee', () => {
