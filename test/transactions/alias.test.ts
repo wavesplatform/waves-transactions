@@ -4,6 +4,7 @@ import { aliasMinimalParams } from '../minimalParams'
 import { protoBytesToTx, txToProtoBytes } from '../../src/proto-serialize'
 import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {aliasTx} from "./expected/alias.tx";
+import {aliasBinaryTx} from "./expected/binary/alias.tx";
 
 
 describe('alias', () => {
@@ -92,6 +93,15 @@ describe('alias', () => {
 describe('serialize/deserialize alias tx', () => {
 
   Object.entries(aliasTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+
+describe('serialize/deserialize binary alias tx', () => {
+
+  Object.entries(aliasBinaryTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
         checkSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
