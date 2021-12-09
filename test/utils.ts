@@ -38,3 +38,15 @@ export function checkSerializeDeserialize({Json, Bytes}: { Json: any, Bytes: str
 
 }
 
+export function checkBinarySerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
+    const tx = deleteProofsAndId(Json);
+    const binaryBytes = binary.serializeTx(tx);
+    const parsed = binary.parseTx(binaryBytes);
+    expect(parsed).toMatchObject(tx);
+
+    const actualBytes = base16Encode(binaryBytes);
+    const expectedBytes = base16Encode(base64Decode(Bytes));
+    expect(expectedBytes).toBe(actualBytes)
+
+}
+
