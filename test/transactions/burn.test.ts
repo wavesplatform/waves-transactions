@@ -1,8 +1,8 @@
 import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
 import {alias, burn} from '../../src'
 import {aliasMinimalParams, burnMinimalParams} from '../minimalParams'
-import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {burnTx} from "./expected/burn.tx";
+import {checkProtoSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {burnTx} from "./expected/proto/burn.tx";
 
 
 describe('burn', () => {
@@ -43,7 +43,7 @@ describe('burn', () => {
 
   it('Should not create with negative amount', () => {
     expect(() =>burn({ ...burnMinimalParams, amount: -1}, stringSeed))
-        .toThrowError('tx "amount", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "amount", has wrong data: -1. Check tx data.')
     //const tx = burn({ ...burnMinimalParams, amount: -1 }, stringSeed)
     //expect(tx.amount).toEqual(-1)
   })
@@ -61,7 +61,7 @@ describe('burn', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>burn({ ...burnMinimalParams, fee: -1}, stringSeed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const tx = burn({ ...burnMinimalParams, fee: -1 }, stringSeed)
     //expect(tx.fee).toEqual(-1)
   })
@@ -72,7 +72,7 @@ describe('serialize/deserialize burn tx', () => {
 
   Object.entries(burnTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

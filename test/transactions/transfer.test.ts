@@ -1,8 +1,8 @@
 import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
 import {sponsorship, transfer} from '../../src'
-import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {checkProtoSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
 import {sponsorshipMinimalParams, transferMinimalParams} from '../minimalParams'
-import {transferTx} from "./expected/transfer.tx";
+import {transferTx} from "./expected/proto/transfer.tx";
 
 describe('transfer', () => {
 
@@ -64,7 +64,7 @@ describe('transfer', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>transfer({ ...transferMinimalParams, fee: -1 }, stringSeed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const tx = transfer({ ...transferMinimalParams, fee: -1 } , stringSeed)
     //expect(tx.fee).toEqual(-1)
   })
@@ -80,7 +80,7 @@ describe('serialize/deserialize transfer tx', () => {
 
   Object.entries(transferTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

@@ -10,6 +10,8 @@ import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
 import { DEFAULT_VERSIONS } from '../defaultVersions'
 import {IssueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+import {txFields} from "@waves/marshall/dist/schemas";
+import decimals = txFields.decimals;
 
 /* @echo DOCS */
 export function issue(params: IIssueParams, seed: TSeedTypes): IssueTransaction & WithId & WithProofs
@@ -30,7 +32,7 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & Wi
     script: paramsOrTx.script == null ? null : base64Prefix(paramsOrTx.script)!,
     decimals: paramsOrTx.decimals == null ? 8 : paramsOrTx.decimals,
     reissuable: paramsOrTx.reissuable || false,
-    fee: paramsOrTx.quantity === 1 ? fee(paramsOrTx, 1000000) : fee(paramsOrTx, 100000000),
+    fee: paramsOrTx.quantity === 1 && paramsOrTx.reissuable == false && paramsOrTx.decimals == 0 ? fee(paramsOrTx, 100000) : fee(paramsOrTx, 100000000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],

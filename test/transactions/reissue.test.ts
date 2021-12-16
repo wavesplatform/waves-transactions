@@ -1,8 +1,8 @@
 import { publicKey } from '@waves/ts-lib-crypto'
 import {lease, reissue} from '../../src'
-import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
+import {checkProtoSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {leaseMinimalParams, reissueMinimalParams} from '../minimalParams'
-import {reissueTx} from "./expected/reissue.tx";
+import {reissueTx} from "./expected/proto/reissue.tx";
 
 describe('reissue', () => {
 
@@ -35,7 +35,7 @@ describe('reissue', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>reissue({ ...reissueMinimalParams, fee: -1 }, stringSeed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const tx = reissue({ ...reissueMinimalParams, fee: -1 }as any, stringSeed)
     //expect(tx.fee).toEqual(-1)
   })
@@ -66,7 +66,7 @@ describe('reissue', () => {
 
   it('Should build with negative quantity', () => {
     expect(() =>reissue({ ...reissueMinimalParams, quantity: -1 }, stringSeed))
-        .toThrowError('tx "quantity", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "quantity", has wrong data: -1. Check tx data.')
     //const tx = reissue({ ...reissueMinimalParams, quantity: -1 }as any, stringSeed)
    // expect(tx.quantity).toEqual(-1)
   })
@@ -77,7 +77,7 @@ describe('serialize/deserialize reissue tx', () => {
 
   Object.entries(reissueTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

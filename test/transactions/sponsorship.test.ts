@@ -1,7 +1,7 @@
-import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
+import {checkProtoSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {reissueMinimalParams, sponsorshipMinimalParams} from "../minimalParams";
 import {sponsorship} from "../../src/transactions/sponsorship";
-import {sponsorshipTx} from "./expected/sponsorship.tx";
+import {sponsorshipTx} from "./expected/proto/sponsorship.tx";
 import {setScript} from "../../src";
 
 describe('setSponsorship', () => {
@@ -26,7 +26,7 @@ describe('setSponsorship', () => {
 
     it('Should not create sponsorship transaction with negative sponsor fee', () => {
         expect(() =>sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed))
-            .toThrowError('tx "minSponsoredAssetFee", has wrong data: "-1". Check tx data.')
+            .toThrowError('tx "minSponsoredAssetFee", has wrong data: -1. Check tx data.')
        //const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed)
         //expect(tx.minSponsoredAssetFee).toEqual(-1)
     })
@@ -44,7 +44,7 @@ describe('setSponsorship', () => {
 
     it('Should not create sponsorship transaction with negative fee', () => {
         expect(() =>sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed))
-            .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+            .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
         //const tx = sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed)
         //expect(tx.fee).toEqual(-1)
     })
@@ -55,7 +55,7 @@ describe('serialize/deserialize sponsorship tx', () => {
 
     Object.entries(sponsorshipTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
-            checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+            checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
 
 });

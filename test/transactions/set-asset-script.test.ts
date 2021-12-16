@@ -1,7 +1,7 @@
 import { publicKey, } from '@waves/ts-lib-crypto'
 import {reissue, setAssetScript} from '../../src'
-import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
-import {setAssetScriptTx} from "./expected/set-asset-script.tx";
+import {checkProtoSerializeDeserialize, validateTxSignature} from '../../test/utils'
+import {setAssetScriptTx} from "./expected/proto/set-asset-script.tx";
 import {reissueMinimalParams} from "../minimalParams";
 
 describe('setAssetScript', () => {
@@ -69,7 +69,7 @@ describe('setAssetScript', () => {
 
   it('Should not generate correct signed setAssetScript transaction with negative fee', () => {
     expect(() =>setAssetScript({script: compiledContract, assetId: '', fee: -1 }, seed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const txParams = { script: compiledContract, assetId: '', fee: -1 }
     //const signedTx = setAssetScript(txParams, seed)
 
@@ -89,7 +89,7 @@ describe('serialize/deserialize set asset script tx', () => {
 
   Object.entries(setAssetScriptTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

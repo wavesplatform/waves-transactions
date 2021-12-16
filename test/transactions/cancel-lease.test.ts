@@ -10,8 +10,8 @@ import {
 } from '@waves/ts-lib-crypto'
 import {burn, cancelLease, ICancelLeaseParams, libs} from '../../src'
 import {burnMinimalParams, cancelLeaseMinimalParams} from '../minimalParams'
-import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {cancelLeaseTx} from "./expected/cancel-lease.tx";
+import {checkProtoSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {cancelLeaseTx} from "./expected/proto/cancel-lease.tx";
 
 
 describe('cancel-lease', () => {
@@ -72,7 +72,7 @@ describe('cancel-lease', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>cancelLease({ ...cancelLeaseMinimalParams, fee: -1}, stringSeed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: -1 }, stringSeed)
     //expect(tx.fee).toEqual(-1)
   })
@@ -83,7 +83,7 @@ describe('serialize/deserialize cancel lease tx', () => {
 
   Object.entries(cancelLeaseTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

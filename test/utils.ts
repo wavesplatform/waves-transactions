@@ -26,7 +26,7 @@ export const deleteProofsAndId = (t: any) => {
     return tx
 }
 
-export function checkSerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
+export function checkProtoSerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
     const tx = deleteProofsAndId(Json);
     const protoBytes = txToProtoBytes(tx);
     const parsed = protoBytesToTx(protoBytes);
@@ -48,5 +48,19 @@ export function checkBinarySerializeDeserialize({Json, Bytes}: { Json: any, Byte
     const expectedBytes = base16Encode(base64Decode(Bytes));
     expect(expectedBytes).toBe(actualBytes)
 
+}
+export const longMax = '9223372036854775807';
+
+export function errorMessageByTemplate(field: String, value: any) {
+    if (typeof(value) == 'number')
+        return `tx "${field}", has wrong data: ${value}. Check tx data.`
+    else
+        return `tx "${field}", has wrong data: "${value}". Check tx data.`
+}
+
+export function rndString(len: number) {
+    const chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
+    const rndStr = [...Array(len)].map(i=>chars[Math.random()*chars.length|0]).join('');
+    return rndStr
 }
 

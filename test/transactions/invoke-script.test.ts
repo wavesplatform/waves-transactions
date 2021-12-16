@@ -2,8 +2,8 @@ import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
 import {dataMinimalParams, invokeScriptMinimalParams} from '../minimalParams'
 import { invokeScript } from '../../src/transactions/invoke-script'
 import {data, IInvokeScriptParams} from '../../src'
-import {checkSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
-import {invokeScriptTx} from "./expected/invoke-script.tx";
+import {checkProtoSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {invokeScriptTx} from "./expected/proto/invoke-script.tx";
 
 describe('invokeScript', () => {
 
@@ -129,7 +129,7 @@ describe('invokeScript', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>invokeScript({ ...invokeScriptMinimalParams, fee: -1}, stringSeed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const tx = invokeScript({ ...invokeScriptMinimalParams, fee: -1 }, stringSeed)
     //expect(tx.fee).toEqual(-1)
   })
@@ -156,7 +156,7 @@ describe('serialize/deserialize invoke tx', () => {
 
   Object.entries(invokeScriptTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

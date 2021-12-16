@@ -1,8 +1,8 @@
 import { publicKey } from '@waves/ts-lib-crypto'
 import {alias, issue, lease} from '../../src'
-import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
+import {checkProtoSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {aliasMinimalParams, issueMinimalParams, leaseMinimalParams} from '../minimalParams'
-import {leaseTx} from "./expected/lease.tx";
+import {leaseTx} from "./expected/proto/lease.tx";
 
 describe('lease', () => {
 
@@ -46,7 +46,7 @@ describe('lease', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>lease({ ...leaseMinimalParams, fee: -1 }, stringSeed))
-        .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
     //const tx = lease({ ...leaseMinimalParams, fee: -1 }, stringSeed)
     //expect(tx.fee).toEqual(-1)
   })
@@ -74,7 +74,7 @@ describe('lease', () => {
 
   it('Should not create with negative amount', () => {
     expect(() =>lease({ ...leaseMinimalParams, amount: -1 }, stringSeed))
-        .toThrowError('tx "amount", has wrong data: "-1". Check tx data.')
+        .toThrowError('tx "amount", has wrong data: -1. Check tx data.')
     //const tx = lease({ ...leaseMinimalParams, amount: -1 }, stringSeed)
     //expect(tx.amount).toEqual(-1)
   })
@@ -114,7 +114,7 @@ describe('serialize/deserialize lease tx', () => {
 
   Object.entries(leaseTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

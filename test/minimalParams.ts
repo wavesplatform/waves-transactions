@@ -103,7 +103,7 @@ export const reissueMinimalParams: IReissueParams = {
 export const issueMinimalParams: IIssueParams = {
   quantity: 10000,
   name: 'test',
-  description: 'tratata',
+  description: '',
 }
 
 export const transferMinimalParams: ITransferParams = {
@@ -127,7 +127,7 @@ export const sponsorshipMinimalParams: ISponsorshipParams = {
 
 export const updateAssetInfoMinimalParams: IUpdateAssetInfoParams = {
   name: "xxxx",
-  description: "xxxxXXXXxxxx",
+  description: "",
   assetId: "syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ"
  // chainId: 84
 }

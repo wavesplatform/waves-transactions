@@ -1,11 +1,11 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {broadcast, cancelLease, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
-import {checkSerializeDeserialize, validateTxSignature} from '../../test/utils'
+import {checkProtoSerializeDeserialize, validateTxSignature} from '../../test/utils'
 import {cancelLeaseMinimalParams, dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
 import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
-import {dataTx} from "./expected/data.tx";
+import {dataTx} from "./expected/proto/data.tx";
 
 
 describe('data', () => {
@@ -206,7 +206,7 @@ describe('data', () => {
 
     it('Should not create data with negative fee', () => {
         expect(() =>data({ ...dataMinimalParams, fee: -1}, senderPk))
-            .toThrowError('tx "fee", has wrong data: "-1". Check tx data.')
+            .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
         //const tx = data({...dataMinimalParams, fee: -1}, senderPk)
         //expect(tx.fee).toEqual(-1)
     })
@@ -305,7 +305,7 @@ describe('serialize/deserialize data tx', () => {
 
     Object.entries(dataTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
-            checkSerializeDeserialize({Json: Json, Bytes: Bytes});
+            checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
 
 });
