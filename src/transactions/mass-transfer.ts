@@ -31,7 +31,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): MassTransferTr
 
     if (!Array.isArray(paramsOrTx.transfers) || paramsOrTx.transfers.length === 0) throw new Error('Should contain at least one transfer')
 
-    const tx: MassTransferTransaction & WithId & WithProofs= {
+    const tx: MassTransferTransaction & WithId & WithProofs = {
         type,
         version,
         senderPublicKey,

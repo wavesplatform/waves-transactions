@@ -15,7 +15,7 @@ describe('massTransfer', () => {
 
   it('Should throw on transfers not being array', () => {
     const tx = () => massTransfer({ ...massTransferMinimalParams, transfers: null } as any, stringSeed)
-    expect(tx).toThrow( "Should contain at least one transfer")
+    expect(tx).toThrow( 'Should contain at least one transfer')
   })
 
   it('Should get correct signature', () => {

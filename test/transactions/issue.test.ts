@@ -55,7 +55,7 @@ describe('issue', () => {
     const tx = issue({
       ...issueMinimalParams,
       quantity: 1,
-      decimals: 0
+      decimals: 0,
     }, stringSeed)
 
     expect(validateTxSignature(tx, protoBytesMinVersion)).toBeTruthy()    

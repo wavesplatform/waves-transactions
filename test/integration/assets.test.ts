@@ -265,7 +265,7 @@ describe('Assets', () => {
         timestamp: Date.now(),
         proofs: [],
         fee: 300000,
-        senderPublicKey: publicKey(account1)
+        senderPublicKey: publicKey(account1),
       }, account1)
 
       const resp = await broadcast(exchangeTx, API_BASE)

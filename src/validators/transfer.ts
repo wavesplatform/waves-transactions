@@ -9,7 +9,7 @@ import {
     isArray,
     getError,
     validateByShema,
-    ifElse, defaultValue, isPublicKey
+    ifElse, defaultValue, isPublicKey, isNaturalNumberOrZeroLike
 } from './validators'
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 
@@ -23,10 +23,10 @@ const transferScheme = {
     recipient: isRecipient,
     amount: isNumberLike,
     attachment: isAttachment,
-    fee: isNumberLike,
+    fee: isNaturalNumberOrZeroLike,
     timestamp: isNumber,
-    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ]))
- };
+    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
+ }
 
 
 export const transferValidator = validateByShema(transferScheme, getError)

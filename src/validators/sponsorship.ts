@@ -10,7 +10,7 @@ import {
   ifElse,
   defaultValue,
   isAssetId,
-  isPublicKey
+  isPublicKey, isNaturalNumberOrZeroLike
 } from './validators'
 
 const sponsorshipScheme = {
@@ -19,7 +19,7 @@ const sponsorshipScheme = {
   version: orEq([undefined, 0, 1, 2]),
   assetId: isAssetId,
   minSponsoredAssetFee: isNumberLike,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

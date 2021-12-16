@@ -8,7 +8,7 @@ import {
   isArray,
   getError,
   validateByShema,
-  ifElse, defaultValue, isPublicKey
+  ifElse, defaultValue, isPublicKey, isNaturalNumberOrZeroLike
 } from './validators'
 
 
@@ -18,7 +18,7 @@ const leaseScheme = {
   senderPublicKey: isPublicKey,
   recipient: isRecipient,
   amount: isNumberLike,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

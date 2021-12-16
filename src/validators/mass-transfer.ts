@@ -17,7 +17,7 @@ import {
   pipe,
   prop,
   gte,
-  isRequired
+  isRequired, isNaturalNumberOrZeroLike
 } from './validators'
 
 
@@ -38,7 +38,7 @@ const massTransferScheme = {
   ),
   assetId: isAssetId,
   attachment: isAttachment,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

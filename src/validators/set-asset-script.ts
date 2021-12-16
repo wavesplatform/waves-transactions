@@ -11,7 +11,7 @@ import {
   defaultValue,
   isAssetId,
   isPublicKey,
-  isBase64
+  isBase64, isNaturalNumberOrZeroLike
 } from './validators'
 
 const setAssetScriptScheme = {
@@ -20,7 +20,7 @@ const setAssetScriptScheme = {
   version: orEq([undefined, 0, 1, 2]),
   assetId: isAssetId,
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   script: isBase64,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
