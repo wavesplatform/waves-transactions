@@ -10,7 +10,7 @@ import {
   ifElse,
   defaultValue,
   isAssetId,
-  isPublicKey
+  isPublicKey, isNaturalNumberOrZeroLike
 } from './validators'
 
 const cancelLeaseScheme = {
@@ -19,7 +19,7 @@ const cancelLeaseScheme = {
   version: orEq([undefined, 2, 3]),
   leaseId: isAssetId,
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

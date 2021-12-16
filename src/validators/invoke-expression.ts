@@ -2,6 +2,7 @@ import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
     isEq,
     orEq,
+    isAssetId,
     isNumber,
     isNumberLike,
     isArray,
@@ -9,20 +10,22 @@ import {
     validateByShema,
     ifElse,
     defaultValue,
-    isAssetId,
-    isPublicKey, isNaturalNumberOrZeroLike
+    isPublicKey,
+    isBase64, isNaturalNumberOrZeroLike
 } from './validators'
 
-const burnScheme = {
-    type: isEq(TRANSACTION_TYPE.BURN),
+
+const invokeScheme = {
+    type: isEq(TRANSACTION_TYPE.INVOKE_EXPRESSION),
     senderPublicKey: isPublicKey,
-    version: orEq([undefined, 2, 3]),
-    assetId: isAssetId,
-    amount: isNumberLike,
-    chainId: isNumber,
+    version: isEq(1),
+    expression: isBase64,
     fee: isNaturalNumberOrZeroLike,
+    feeAssetId: isAssetId,
+    chainId: isNumber,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
- }
+}
 
-export const burnValidator = validateByShema(burnScheme, getError)
+
+export const invokeExpressionValidator = validateByShema(invokeScheme, getError)

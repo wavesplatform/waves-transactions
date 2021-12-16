@@ -10,7 +10,7 @@ import {
   ifElse,
   defaultValue,
   isAssetId,
-  isPublicKey, isBoolean
+  isPublicKey, isBoolean, isNaturalNumberOrZeroLike
 } from './validators'
 
 const reissueScheme = {
@@ -21,7 +21,7 @@ const reissueScheme = {
   quantity: isNumberLike,
   reissuable: isBoolean,
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

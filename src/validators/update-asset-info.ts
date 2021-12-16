@@ -8,7 +8,7 @@ import {
   isArray,
   getError,
   validateByShema,
-  ifElse, defaultValue, isPublicKey, isValidAssetName, isValidAssetDescription
+  ifElse, defaultValue, isPublicKey, isValidAssetName, isValidAssetDescription, isNaturalNumberOrZeroLike
 } from './validators'
 
 
@@ -20,7 +20,7 @@ const updateAssetInfoScheme = {
   version: orEq([1]),
   assetId: isAssetId,
   feeAssetId: isAssetId,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

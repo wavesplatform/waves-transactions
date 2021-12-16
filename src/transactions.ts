@@ -7,7 +7,7 @@ import {
     Transaction,
     TRANSACTION_TYPE,
     TransactionType
-} from '@waves/ts-types'
+} from '@waves/ts-types/src'
 import {InvokeScriptCallArgument} from '@waves/ts-types/src/parts'
 
 export interface WithId {
@@ -79,6 +79,7 @@ export type TTxParams<LONG = string | number> =
     | ISponsorshipParams<LONG>
     | ITransferParams<LONG>
     | IUpdateAssetInfoParams<LONG>
+    | IInvokeExpressionParams<LONG>
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
@@ -330,6 +331,14 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
      * New asset description
      */
     description: string
+}
+
+/**
+ * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
+export interface IInvokeExpressionParams<LONG = string | number> extends IBasicParams<LONG> {
+    feeAssetId?: string | null
+    expression: string,
 }
 
 export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction>

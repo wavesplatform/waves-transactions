@@ -12,7 +12,7 @@ import { TPrivateKey } from '../types'
 export const serializeAuthData = (auth: {host: string, data: string}) => concat(
     LEN(SHORT)(STRING)('WavesWalletAuthentication'),
     LEN(SHORT)(STRING)(auth.host || ''),
-    LEN(SHORT)(STRING)(auth.data || ''),
+    LEN(SHORT)(STRING)(auth.data || '')
 )
 
 export function auth(params: IAuthParams, seed?: string | TPrivateKey, chainId?: string|number): IAuth {
@@ -28,7 +28,7 @@ export function auth(params: IAuthParams, seed?: string | TPrivateKey, chainId?:
     host: params.host,
     data: params.data,
     publicKey,
-    address: address({ publicKey }, chainId)
+    address: address({ publicKey }, chainId),
   }
 
   const bytes = serializeAuthData(rx)

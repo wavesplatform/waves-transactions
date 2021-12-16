@@ -8,7 +8,7 @@ import {
     isArray,
     getError,
     validateByShema,
-    ifElse, defaultValue, isPublicKey, validatePipe, isRequired
+    ifElse, defaultValue, isPublicKey, validatePipe, isRequired, isNaturalNumberOrZeroLike
 } from './validators'
 
 
@@ -28,9 +28,9 @@ const exchangeScheme = {
     price: isNumberLike,
     buyMatcherFee: isNumberLike,
     sellMatcherFee: isNumberLike,
-    fee: isNumberLike,
+    fee: isNaturalNumberOrZeroLike,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
 export const exchangeValidator = validateByShema(exchangeScheme, getError)

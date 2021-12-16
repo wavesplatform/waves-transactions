@@ -12,7 +12,7 @@ import {
   isPublicKey,
   isValidAssetName,
   isValidAssetDescription,
-  isBoolean, isBase64, isRequired
+  isBoolean, isBase64, isRequired, isNaturalNumberOrZeroLike
 } from './validators'
 
 const issueScheme = {
@@ -30,7 +30,7 @@ const issueScheme = {
       defaultValue(true)
   ),
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

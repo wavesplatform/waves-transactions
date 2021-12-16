@@ -11,7 +11,7 @@ import {
   defaultValue,
   isPublicKey,
   isValidData,
-  isValidDeleteRequest,
+  isValidDeleteRequest, isNaturalNumberOrZeroLike,
 } from './validators'
 
 
@@ -23,7 +23,7 @@ const dataScheme = {
   data: (data: Array<unknown> ) =>
       isArray(data) &&
       data.every(item => isValidData(item) || isValidDeleteRequest),
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

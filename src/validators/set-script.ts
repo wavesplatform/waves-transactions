@@ -10,7 +10,7 @@ import {
   ifElse,
   defaultValue,
   isPublicKey,
-  isBase64
+  isBase64, isNaturalNumberOrZeroLike
 } from './validators'
 
 const setScriptScheme = {
@@ -18,7 +18,7 @@ const setScriptScheme = {
   senderPublicKey: isPublicKey,
   version: orEq([undefined, 0, 1, 2]),
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   script: ifElse(isEq(null), defaultValue(true), isBase64),
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
