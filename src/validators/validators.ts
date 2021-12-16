@@ -67,7 +67,7 @@ export const isNumber = (value: unknown) => (typeof value === 'number' || value 
 
 export const isNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && !!(value || value === 0)
 
-export const isNaturalNumberOrZeroLike = (value: unknown) => value != null && !isNaN(Number(value)) && !!(value)
+export const isNaturalNumberOrZeroLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) >= 0
 
 export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean)
 
