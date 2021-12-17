@@ -1,14 +1,18 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isAssetId,
-  isNumber,
-  isNumberLike,
-  isArray,
+  defaultValue,
   getError,
-  validateByShema,
-  ifElse, defaultValue, isPublicKey, isValidAssetName, isValidAssetDescription, isNaturalNumberOrZeroLike
+  ifElse,
+  isArray,
+  isAssetId,
+  isEq,
+  isNaturalNumberOrZeroLike,
+  isNumber,
+  isPublicKey,
+  isValidAssetDescription,
+  isValidAssetName,
+  orEq,
+  validateByShema
 } from './validators'
 
 
@@ -19,11 +23,10 @@ const updateAssetInfoScheme = {
   description: isValidAssetDescription,
   version: orEq([1]),
   assetId: isAssetId,
-  feeAssetId: isAssetId,
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-}
+};
 
 
-export const updateAssetInfoValidator = validateByShema(updateAssetInfoScheme, getError)
+export const updateAssetInfoValidator = validateByShema(updateAssetInfoScheme, getError);

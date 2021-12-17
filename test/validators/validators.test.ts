@@ -223,9 +223,9 @@ describe('Validators', () => {
         })
 
         it('Validate assetId', () => {
-            expect(validators.isAssetId('474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu')).toBe(true)
-            expect(validators.isAssetId(null)).toBe(true)
-            expect(validators.isAssetId('WAVES')).toBe(true)
+            expect(validators.isWavesOrAssetId('474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu')).toBe(true)
+            expect(validators.isWavesOrAssetId(null)).toBe(true)
+            expect(validators.isWavesOrAssetId('WAVES')).toBe(true)
         })
 
         it('Validate by schema', () => {

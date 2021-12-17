@@ -1,18 +1,18 @@
-import {publicKey, verifySignature} from '@waves/ts-lib-crypto'
-import {invokeScript, issue, updateAssetInfo} from '../../src'
+import {publicKey} from '@waves/ts-lib-crypto'
+import {issue} from '../../src'
 import {
     checkProtoSerializeDeserialize,
     errorMessageByTemplate,
     longMax,
     rndString,
     validateTxSignature
-} from '../../test/utils'
-import {invokeScriptMinimalParams, issueMinimalParams, updateAssetInfoMinimalParams} from '../minimalParams'
+} from '../utils'
+import {issueMinimalParams} from '../minimalParams'
 import {issueTx} from "./expected/proto/issue.tx";
 
 describe('issue', () => {
 
-    const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
+    const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8';
     const protoBytesMinVersion = 2;
 
     it('should build from minimal set of params', () => {
@@ -50,13 +50,13 @@ describe('issue', () => {
 
     it('should not create with  max name length > 16', () => {
         expect(() => issue({...issueMinimalParams, name: 'this_is_17_bytes_'}, stringSeed))
-            .toThrowError(errorMessageByTemplate('this_is_17_bytes_', 'this_is_17_bytes_'))
+            .toThrowError(errorMessageByTemplate('name', 'this_is_17_bytes_'))
     });
 
     it('should not create with description length > 1000', () => {
-        const descr = rndString(1001)
+        const descr = rndString(1001);
         expect(() => issue({...issueMinimalParams, description: descr}, stringSeed))
-            .toThrowError(errorMessageByTemplate('name', descr))
+            .toThrowError(errorMessageByTemplate('description', descr))
     });
 
     it('should create from minimal set of params with maximal quantity', () => {
@@ -117,7 +117,7 @@ describe('issue', () => {
     it('should create correctly with zero fee', () => {
         const tx = issue({...issueMinimalParams, fee: 0}, stringSeed);
         expect(tx.fee).toEqual(0)
-    })
+    });
 
     it('should not create correctly with negative fee', () => {
         expect(() => issue({...issueMinimalParams, fee: -1}, stringSeed))

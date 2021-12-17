@@ -43,16 +43,21 @@ describe('updateAssetInfo', () => {
     });
 
     it('Should create update asset info transaction with max description', () => {
-        const descr = rndString(1000) + "z";
+        const descr = rndString(1000);
         const tx = updateAssetInfo({...updateAssetInfoMinimalParams, description: descr}, stringSeed);
         expect(tx.description).toEqual(descr);
     });
 
-    it('Should not create update asset info transaction with description lenght > 1000', () => {
-        const descr = rndString(1000) + "z";
+    it('Should not create update asset info transaction with description length > 1000', () => {
+        const descr = rndString(1001);
 
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, description: descr}, stringSeed))
             .toThrowError(errorMessageByTemplate('description', descr))
+    })
+
+    it('Should not create UpdateAssetInfo tx with empty assetId', () => {
+        expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, assetId: ""}, stringSeed))
+            .toThrowError(errorMessageByTemplate('assetId', ""))
     })
 
 });

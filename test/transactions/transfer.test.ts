@@ -1,6 +1,11 @@
 import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
 import {sponsorship, transfer} from '../../src'
-import {checkProtoSerializeDeserialize, deleteProofsAndId, validateTxSignature} from '../../test/utils'
+import {
+  checkProtoSerializeDeserialize,
+  deleteProofsAndId,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../../test/utils'
 import {sponsorshipMinimalParams, transferMinimalParams} from '../minimalParams'
 import {transferTx} from "./expected/proto/transfer.tx";
 
@@ -64,9 +69,7 @@ describe('transfer', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>transfer({ ...transferMinimalParams, fee: -1 }, stringSeed))
-        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
-    //const tx = transfer({ ...transferMinimalParams, fee: -1 } , stringSeed)
-    //expect(tx.fee).toEqual(-1)
+         .toThrowError(errorMessageByTemplate('fee', -1))
   })
 
   it('Should create with minimal fee', () => {

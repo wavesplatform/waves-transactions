@@ -1,27 +1,28 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isNumber,
-  isNumberLike,
-  isArray,
-  getError,
-  validateByShema,
-  ifElse,
   defaultValue,
+  getError,
+  ifElse,
+  isArray,
   isAssetId,
-  isPublicKey, isNaturalNumberOrZeroLike
+  isEq,
+  isNaturalNumberLike,
+  isNaturalNumberOrZeroLike,
+  isNumber,
+  isPublicKey,
+  orEq,
+  validateByShema
 } from './validators'
 
 const sponsorshipScheme = {
   type: isEq(TRANSACTION_TYPE.SPONSORSHIP),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 1, 2]),
   assetId: isAssetId,
-  minSponsoredAssetFee: isNumberLike,
+  minSponsoredAssetFee: isNaturalNumberLike,
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-}
+};
 
-export const sponsorshipValidator = validateByShema(sponsorshipScheme, getError)
+export const sponsorshipValidator = validateByShema(sponsorshipScheme, getError);

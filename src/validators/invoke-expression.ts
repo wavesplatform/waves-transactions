@@ -2,7 +2,7 @@ import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
     isEq,
     orEq,
-    isAssetId,
+    isWavesOrAssetId,
     isNumber,
     isNumberLike,
     isArray,
@@ -21,7 +21,7 @@ const invokeScheme = {
     version: isEq(1),
     expression: isBase64,
     fee: isNaturalNumberOrZeroLike,
-    feeAssetId: isAssetId,
+    feeAssetId: isWavesOrAssetId,
     chainId: isNumber,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),

@@ -1,13 +1,7 @@
-import {base16Encode, base64Decode, publicKey} from '@waves/ts-lib-crypto'
-import { alias } from '../../src'
-import { aliasMinimalParams } from '../minimalParams'
-import { protoBytesToTx, txToProtoBytes } from '../../src/proto-serialize'
-import {
-  checkProtoSerializeDeserialize,
-  deleteProofsAndId,
-  errorMessageByTemplate,
-  validateTxSignature
-} from '../../test/utils'
+import {publicKey} from '@waves/ts-lib-crypto'
+import {alias} from '../../src'
+import {aliasMinimalParams} from '../minimalParams'
+import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../utils'
 import {aliasTx} from "./expected/proto/alias.tx";
 import {aliasBinaryTx} from "./expected/binary/alias.tx";
 
@@ -34,7 +28,7 @@ describe('alias', () => {
   });
 
   it('Should sign already signed', () => {
-    let tx = alias({ ...aliasMinimalParams }, stringSeed)
+    let tx = alias({ ...aliasMinimalParams }, stringSeed);
     tx = alias(tx, stringSeed);
     expect(validateTxSignature(tx, 2, 1)).toBeTruthy()
   });
@@ -52,7 +46,7 @@ describe('alias', () => {
   });
 
   it('Should build from minimal set of params and correct fee', () => {
-    const tx = alias({ ...aliasMinimalParams }, stringSeed)
+    const tx = alias({ ...aliasMinimalParams }, stringSeed);
     expect(tx.fee).toEqual(100000)
   });
 
@@ -64,7 +58,7 @@ describe('alias', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>alias({ ...aliasMinimalParams, fee: -1}, stringSeed))
-        .toThrowError('tx "fee", has wrong data: -1. Check tx data.')
+         .toThrowError(errorMessageByTemplate('fee', -1))
   });
 
   it('Should create with minimal alias name', () => {

@@ -19,7 +19,7 @@ export const burnMinimalParams: IBurnParams = {
 
 export const leaseMinimalParams: ILeaseParams = {
   recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
-  amount: 10000,
+  amount: 1,
 }
 
 export const cancelLeaseMinimalParams: ICancelLeaseParams = {
@@ -56,14 +56,10 @@ export const massTransferMinimalParams: IMassTransferParams = {
   transfers: [
     {
       recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
-      amount: 10000,
-    },
-    {
-      recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
-      amount: 10000,
+      amount: 0,
     },
   ],
-}
+};
 
 export const orderMinimalParams: IOrderParams = {
   matcherPublicKey: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
@@ -72,11 +68,11 @@ export const orderMinimalParams: IOrderParams = {
   price: 10000,
   amount: 1233,
   orderType: 'buy',
-}
+};
 
 export const cancelOrderMinimalParams: ICancelOrderParams = {
   orderId: '47YGqHdHtNPjcjE69E9EX9aD9bpC8PRKr4kp5AcZKHFq',
-}
+};
 
 export const dataMinimalParams: IDataParams = {
   data: [
@@ -92,36 +88,36 @@ export const dataMinimalParams: IDataParams = {
       value: true,
     },
   ],
-} as any
+} as any;
 
 export const reissueMinimalParams: IReissueParams = {
   assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
-  quantity: 10000,
+  quantity: 1,
   reissuable: false,
-}
+};
 
 export const issueMinimalParams: IIssueParams = {
-  quantity: 10000,
+  quantity: 1,
   name: 'test',
   description: '',
-}
+};
 
 export const transferMinimalParams: ITransferParams = {
   recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
-  amount: 10000,
-}
+  amount: 1,
+};
 
 export const setScriptMinimalParams: ISetScriptParams = {
   script: 'AQa3b8tH',
-}
+};
 
 export const setAssetScriptMinimalParams: ISetAssetScriptParams = {
-  script: 'AQa3b8tH',
-  assetId: '',
+  script: 'base64:AQa3b8tH',
+  assetId: 'syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ',
 }
 
 export const sponsorshipMinimalParams: ISponsorshipParams = {
-  assetId: "",
+  assetId: "syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ",
   minSponsoredAssetFee: 100
 }
 
@@ -129,7 +125,6 @@ export const updateAssetInfoMinimalParams: IUpdateAssetInfoParams = {
   name: "xxxx",
   description: "",
   assetId: "syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ"
- // chainId: 84
 }
 
 export const minimalParams = {

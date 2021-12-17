@@ -1,16 +1,16 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isNumber,
-  isNumberLike,
-  isArray,
-  getError,
-  validateByShema,
-  ifElse,
   defaultValue,
+  getError,
+  ifElse,
+  isArray,
   isAssetId,
-  isPublicKey, isNaturalNumberOrZeroLike
+  isEq,
+  isNaturalNumberOrZeroLike,
+  isNumber,
+  isPublicKey,
+  orEq,
+  validateByShema
 } from './validators'
 
 const cancelLeaseScheme = {
@@ -24,4 +24,4 @@ const cancelLeaseScheme = {
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
 
-export const cancelLeaseValidator = validateByShema(cancelLeaseScheme, getError)
+export const cancelLeaseValidator = validateByShema(cancelLeaseScheme, getError);

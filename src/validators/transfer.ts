@@ -1,7 +1,7 @@
 import {
     isEq,
     orEq,
-    isAssetId,
+    isWavesOrAssetId,
     isRecipient,
     isNumber,
     isNumberLike,
@@ -18,15 +18,15 @@ const transferScheme = {
     type: isEq(TRANSACTION_TYPE.TRANSFER),
     senderPublicKey: isPublicKey,
     version: orEq([undefined, 2, 3]),
-    assetId: isAssetId,
-    feeAssetId: isAssetId,
+    assetId: isWavesOrAssetId,
+    feeAssetId: isWavesOrAssetId,
     recipient: isRecipient,
     amount: isNumberLike,
     attachment: isAttachment,
     fee: isNaturalNumberOrZeroLike,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
- }
+ };
 
 
-export const transferValidator = validateByShema(transferScheme, getError)
+export const transferValidator = validateByShema(transferScheme, getError);
