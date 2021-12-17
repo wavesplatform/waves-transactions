@@ -252,7 +252,7 @@ export const isValidAssetName = validatePipe(
     )
 )
 
-export const isValidAssetDescription = ifElse(
+export const isValidAssetDescription = validatePipe(
     isRequired(false),
     defaultValue(true),
     pipe(
