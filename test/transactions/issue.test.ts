@@ -17,13 +17,7 @@ describe('issue', () => {
 
     it('should build from minimal set of params', () => {
         const tx = issue({...issueMinimalParams}, stringSeed);
-        expect(tx).toMatchObject({...issueMinimalParams})
-    });
-
-    it('should build from minimal set of params with quantity 1', () => {
-        const tx = issue({...issueMinimalParams, quantity: 1}, stringSeed);
-        expect(tx.quantity).toEqual(1);
-        expect(tx.fee).toEqual(100000000)
+        expect(tx).toMatchObject({...issueMinimalParams, decimals: 8, fee: 100000000, chainId:87, reissuable: false})
     });
 
     it('should create issue tx with max name length = 16 and max description length = 1000', () => {
@@ -43,12 +37,12 @@ describe('issue', () => {
             .toThrowError(errorMessageByTemplate('quantity', -1))
     });
 
-    it('should not create with name length less then 4', () => {
+    it('should not create with name length < 4', () => {
         expect(() => issue({...issueMinimalParams, name: 'xxx'}, stringSeed))
             .toThrowError(errorMessageByTemplate('name', 'xxx'))
     });
 
-    it('should not create with  max name length > 16', () => {
+    it('should not create with max name length > 16', () => {
         expect(() => issue({...issueMinimalParams, name: 'this_is_17_bytes_'}, stringSeed))
             .toThrowError(errorMessageByTemplate('name', 'this_is_17_bytes_'))
     });
@@ -110,8 +104,8 @@ describe('issue', () => {
     });
 
     it('should create correctly with custom fee', () => {
-        const tx = issue({...issueMinimalParams, fee: 100000}, stringSeed);
-        expect(tx.fee).toEqual(100000)
+        const tx = issue({...issueMinimalParams, fee: 500000}, stringSeed);
+        expect(tx.fee).toEqual(500000)
     });
 
     it('should create correctly with zero fee', () => {
@@ -123,7 +117,6 @@ describe('issue', () => {
         expect(() => issue({...issueMinimalParams, fee: -1}, stringSeed))
             .toThrowError(errorMessageByTemplate('fee', -1))
     })
-
 });
 
 describe('serialize/deserialize issue tx', () => {

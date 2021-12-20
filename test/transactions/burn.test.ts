@@ -37,6 +37,12 @@ describe('burn', () => {
     expect(tx.amount).toEqual(0)
   });
 
+  it('Should create with custom amount', () => {
+    const tx = burn({ ...burnMinimalParams, amount: 50000 }, stringSeed)
+    expect(tx.amount).toEqual(50000)
+  });
+
+
   it('Should not create with negative amount', () => {
     expect(() =>burn({ ...burnMinimalParams, amount: -1}, stringSeed))
         .toThrowError(errorMessageByTemplate('amount', -1))
@@ -55,6 +61,11 @@ describe('burn', () => {
   it('Should not create with negative fee', () => {
     expect(() =>burn({ ...burnMinimalParams, fee: -1}, stringSeed))
         .toThrowError(errorMessageByTemplate('fee', -1))
+  })
+
+  it('Should not create with empty assetid', () => {
+    expect(() =>burn({ ...burnMinimalParams, assetId: ''}, stringSeed))
+        .toThrowError(errorMessageByTemplate('assetId', ''))
   })
 
 });

@@ -13,12 +13,7 @@ describe('alias', () => {
 
   it('should build from minimal set of params', () => {
     const tx = alias({ ...aliasMinimalParams }, stringSeed);
-    expect(tx).toMatchObject({ ...aliasMinimalParams })
-  });
-
-  it('should build from minimal set of params with additional properties', () => {
-    const tx = alias({ ...aliasMinimalParams, a: 10000 } as any, stringSeed);
-    expect(tx).toMatchObject({ ...aliasMinimalParams })
+    expect(tx).toMatchObject({ ...aliasMinimalParams, fee: 100000, chainId: 87 })
   });
 
 
@@ -45,9 +40,9 @@ describe('alias', () => {
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   });
 
-  it('Should build from minimal set of params and correct fee', () => {
-    const tx = alias({ ...aliasMinimalParams }, stringSeed);
-    expect(tx.fee).toEqual(100000)
+  it('Should build from minimal set of params and custom fee', () => {
+    const tx = alias({ ...aliasMinimalParams, fee: 12345 }, stringSeed);
+    expect(tx.fee).toEqual(12345)
   });
 
   it('Should create with zero fee', () => {
@@ -61,17 +56,17 @@ describe('alias', () => {
          .toThrowError(errorMessageByTemplate('fee', -1))
   });
 
-  it('Should create with minimal alias name', () => {
+  it('Should create with minimal alias name = 4', () => {
     const tx = alias({ ...aliasMinimalParams, alias: "west"}, stringSeed);
     expect(tx.alias).toEqual("west")
   });
 
-  it('Should not create with extra minimal alias name', () => {
+  it('Should not create with alias name <4', () => {
     expect(() =>alias({ ...aliasMinimalParams, alias: "abc"}, stringSeed))
-        .toThrowError('tx "alias", has wrong data: "abc". Check tx data.')
-  });
+        .toThrowError(errorMessageByTemplate('alias','abc'))
+   });
 
-  it('Should build with maximal alias name', () => {
+  it('Should build with maximal alias name = 30', () => {
     const tx = alias({ ...aliasMinimalParams, alias: 'this.is_30@symbols-alias_12345'}, stringSeed);
     expect(tx.alias).toEqual("this.is_30@symbols-alias_12345")
   });

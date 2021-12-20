@@ -141,7 +141,7 @@ describe('data', () => {
         expect(tx.type).toEqual(12)
     })
 
-    it('should test data', async () => {
+ /*   it('should test data', async () => {
         const stringSeed = "Abra Shvabra Kadabra1";
         const API = 'https://nodes-stagenet.wavesnodes.com/';
         const d = [
@@ -191,7 +191,7 @@ describe('data', () => {
 
         await broadcast(tx, API)
 
-    });
+    }); */
 
     it('Should create data with minimal fee', () => {
         const tx = data({...dataMinimalParams, fee: 100000}, senderPk)

@@ -11,7 +11,7 @@ describe('cancel-lease', () => {
 
   it('should build from minimal set of params', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams } as any, stringSeed);
-    expect(tx).toMatchObject({ ...cancelLeaseMinimalParams, version: 3, fee: 100000})
+    expect(tx).toMatchObject({ ...cancelLeaseMinimalParams, version: 3, fee: 100000, chainId: 87})
   })
 
 
@@ -35,12 +35,7 @@ describe('cancel-lease', () => {
   });
 
 
-  it('Should build from minimal set of params check fee', () => {
-    const tx = cancelLease({ ...cancelLeaseMinimalParams }, stringSeed);
-    expect(tx.fee).toEqual(100000)
-  })
-
-  it('Should build from minimal params set fee', () => {
+  it('Should build from minimal params set with custom fee', () => {
     const tx = cancelLease({ ...cancelLeaseMinimalParams, fee: 500000 }, stringSeed);
     expect(tx.fee).toEqual(500000)
   })
@@ -54,6 +49,12 @@ describe('cancel-lease', () => {
     expect(() =>cancelLease({ ...cancelLeaseMinimalParams, fee: -1}, stringSeed))
          .toThrowError(errorMessageByTemplate('fee', -1))
   })
+
+  it('Should not create with empty leaseId', () => {
+    expect(() =>cancelLease({ ...cancelLeaseMinimalParams, leaseId: ""}, stringSeed))
+        .toThrowError(errorMessageByTemplate('leaseId', ""))
+  })
+
 
 });
 

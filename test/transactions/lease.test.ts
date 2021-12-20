@@ -10,7 +10,7 @@ describe('lease', () => {
 
     it('should build from minimal set of params', () => {
         const tx = lease({...leaseMinimalParams}, stringSeed);
-        expect(tx).toMatchObject({...leaseMinimalParams, version: 3, fee: 100000})
+        expect(tx).toMatchObject({...leaseMinimalParams, version: 3, fee: 100000, chainId: 87})
     });
 
 
@@ -33,9 +33,9 @@ describe('lease', () => {
         expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
     });
 
-    it('Should create with correct fee', () => {
-        const tx = lease({...leaseMinimalParams}, stringSeed);
-        expect(tx.fee).toEqual(100000)
+    it('Should create with custom fee', () => {
+        const tx = lease({...leaseMinimalParams, fee: 500500}, stringSeed);
+        expect(tx.fee).toEqual(500500)
     });
 
     it('Should create with zero fee', () => {
@@ -48,19 +48,9 @@ describe('lease', () => {
             .toThrowError(errorMessageByTemplate('fee', -1))
     });
 
-    it('Should create with set fee', () => {
-        const tx = lease({...leaseMinimalParams, fee: 500000}, stringSeed);
-        expect(tx.fee).toEqual(500000)
-    });
-
-    it('Should create with set amount', () => {
-        const tx = lease({...leaseMinimalParams, amount: 500000}, stringSeed);
-        expect(tx.amount).toEqual(500000)
-    });
-
-    it('Should create with minimal amount', () => {
-        const tx = lease({...leaseMinimalParams, amount: 1}, stringSeed);
-        expect(tx.amount).toEqual(1)
+    it('Should create with custom amount', () => {
+        const tx = lease({...leaseMinimalParams, amount: 500500}, stringSeed);
+        expect(tx.amount).toEqual(500500)
     });
 
     it('Should create with zero amount', () => {
@@ -70,20 +60,12 @@ describe('lease', () => {
 
     it('Should not create with negative amount', () => {
         expect(() => lease({...leaseMinimalParams, amount: -1}, stringSeed))
-            .toThrowError('tx "amount", has wrong data: -1. Check tx data.')
-    });
+            .toThrowError(errorMessageByTemplate('amount', -1))
+     });
 
-
-    it('Should build with maximal amount and fee', () => {
-        const tx = lease({...leaseMinimalParams, amount: longMax, fee: longMax}, stringSeed);
-        expect(tx.amount).toEqual(longMax);
-        expect(tx.fee).toEqual(longMax)
-    });
-
-    it('Should build with minimal amount and fee', () => {
-        const tx = lease({...leaseMinimalParams, amount: 1, fee: 100000}, stringSeed);
-        expect(tx.amount).toEqual(1);
-        expect(tx.fee).toEqual(100000)
+    it('Should not create with empty recepient', () => {
+        expect(() => lease({...leaseMinimalParams, recipient: ''}, stringSeed))
+            .toThrowError(errorMessageByTemplate('recipient',''))
     });
 
     it('Should build with alias', () => {
