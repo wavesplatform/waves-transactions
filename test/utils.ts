@@ -1,7 +1,7 @@
 import {base16Encode, base64Decode, verifySignature} from '@waves/ts-lib-crypto'
 import {binary} from '@waves/marshall'
 
-import {TTx} from '../src'
+import {makeTx, TTx} from '../src'
 
 import {protoBytesToTx, txToProtoBytes} from '../src/proto-serialize'
 
@@ -27,10 +27,11 @@ export const deleteProofsAndId = (t: any) => {
 }
 
 export function checkProtoSerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
-    const tx = deleteProofsAndId(Json);
-    const protoBytes = txToProtoBytes(tx);
+    const txJson = deleteProofsAndId(Json);
+    const txObject = makeTx(txJson);
+    const protoBytes = txToProtoBytes(txObject);
     const parsed = protoBytesToTx(protoBytes);
-    expect(parsed).toMatchObject(tx);
+    expect(parsed).toMatchObject(txJson);
 
     const actualBytes = base16Encode(protoBytes);
     const expectedBytes = base16Encode(base64Decode(Bytes));
