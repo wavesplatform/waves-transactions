@@ -141,57 +141,6 @@ describe('data', () => {
         expect(tx.type).toEqual(12)
     })
 
- /*   it('should test data', async () => {
-        const stringSeed = "Abra Shvabra Kadabra1";
-        const API = 'https://nodes-stagenet.wavesnodes.com/';
-        const d = [
-            {key: 'bi1', value: Array(5000).fill(1)},
-            {key: 'bi2', value: Array(5000).fill(1)},
-            {key: 'bi3', value: Array(5000).fill(1)},
-            {key: 'bi4', value: Array(5000).fill(1)},
-            {key: 'bi5', value: Array(5000).fill(1)},
-            {key: 'bi6', value: Array(5000).fill(1)},
-            {key: 'bi7', value: Array(5000).fill(1)},
-            {key: 'bi8', value: Array(5000).fill(1)},
-            {key: 'bi9', value: Array(5000).fill(1)},
-            {key: 'bi0', value: Array(5000).fill(1)},
-            {key: 'bj1', value: Array(5000).fill(1)},
-            {key: 'bj2', value: Array(5000).fill(1)},
-            {key: 'bj3', value: Array(5000).fill(1)},
-            {key: 'bj4', value: Array(5000).fill(1)},
-            {key: 'bj5', value: Array(5000).fill(1)},
-            {key: 'bj6', value: Array(5000).fill(1)},
-            {key: 'bj7', value: Array(5000).fill(1)},
-            {key: 'bj8', value: Array(5000).fill(1)},
-            {key: 'bj9', value: Array(5000).fill(1)},
-            {key: 'bj0', value: Array(5000).fill(1)},
-            {key: 'bk1', value: Array(5000).fill(1)},
-            {key: 'bk2', value: Array(5000).fill(1)},
-            {key: 'bk3', value: Array(5000).fill(1)},
-            {key: 'bk4', value: Array(5000).fill(1)},
-            {key: 'bk5', value: Array(5000).fill(1)},
-            {key: 'bk6', value: Array(5000).fill(1)},
-            {key: 'bk7', value: Array(5000).fill(1)},
-            {key: 'bk8', value: Array(5000).fill(1)},
-            {key: 'bk9', value: Array(5000).fill(1)},
-            {key: 'bk0', value: Array(5000).fill(1)},
-            {key: 'bl1', value: Array(5000).fill(1)},
-            {key: 'bl2', value: Array(5000).fill(1)},
-            {key: 'bl3', value: Array(5000).fill(1)},
-            {key: 'bl4', value: Array(517).fill(1)},
-            ];
-
-        const tx = data({
-            data: d,
-            chainId: 83,
-            fee: 90000000,
-            version:2,
-
-        } as any, stringSeed);
-
-        await broadcast(tx, API)
-
-    }); */
 
     it('Should create data with minimal fee', () => {
         const tx = data({...dataMinimalParams, fee: 100000}, senderPk)

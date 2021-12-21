@@ -42,11 +42,6 @@ describe('invokeScript', () => {
     })
   });
 
-  it('should build from minimal set of params with additional properties', () => {
-    const tx = invokeScript({ ...invokeScriptMinimalParams, a: 10000 } as any, stringSeed);
-    expect(tx).toMatchObject({ ...invokeScriptMinimalParams })
-  })
-
   it('Should get correct signature', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams }, stringSeed);
     expect(validateTxSignature(tx, 1)).toBeTruthy()
@@ -68,8 +63,6 @@ describe('invokeScript', () => {
     expect(validateTxSignature(tx, 1, 1, publicKey(stringSeed))).toBeTruthy()
     expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
   });
-
-
 
   it('Should create with custom fee', () => {
     const tx = invokeScript({ ...invokeScriptMinimalParams, fee: 100000 }, stringSeed)

@@ -7,22 +7,22 @@ describe('updateAssetInfo', () => {
 
     const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8';
 
-    it('Should create update asset info transaction', () => {
+    it('Should create update asset info transaction with minimal params', () => {
         const tx = updateAssetInfo({...updateAssetInfoMinimalParams}, stringSeed);
-        expect(tx).toMatchObject({...updateAssetInfoMinimalParams})
+        expect(tx).toMatchObject({...updateAssetInfoMinimalParams, fee: 100000, chainId: 87})
     });
 
-    it('Should create update asset info transaction with extra minimal name', () => {
+    it('Should not create update asset info transaction with name <3', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, name: "yyy"}, stringSeed))
             .toThrowError(errorMessageByTemplate('name', 'yyy'))
     });
 
-    it('Should create update asset info transaction with maximal name', () => {
+    it('Should create update asset info transaction with maximal name = 16', () => {
         const tx = updateAssetInfo({...updateAssetInfoMinimalParams, name: "this_is_16_bytes"}, stringSeed);
         expect(tx.name).toEqual("this_is_16_bytes")
     });
 
-    it('Should create update asset info transaction with extra maximal name', () => {
+    it('Should not create update asset info transaction with name >16', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, name: "this_is_17_bytes_"}, stringSeed))
             .toThrowError(errorMessageByTemplate('name', 'this_is_17_bytes_'))
     });
@@ -35,11 +35,6 @@ describe('updateAssetInfo', () => {
     it('Should not create update asset info transaction with negative fee', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, fee: -1}, stringSeed))
             .toThrowError(errorMessageByTemplate('fee', -1))
-    });
-
-    it('Should create update asset info transaction with minimal fee', () => {
-        const tx = updateAssetInfo({...updateAssetInfoMinimalParams}, stringSeed);
-        expect(tx.fee).toEqual(100000)
     });
 
     it('Should create update asset info transaction with max description', () => {
