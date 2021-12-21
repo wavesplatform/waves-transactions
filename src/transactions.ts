@@ -9,6 +9,7 @@ import {
     TransactionType
 } from '@waves/ts-types/src'
 import {InvokeScriptCallArgument} from '@waves/ts-types/src/parts'
+import {EthereumTransaction} from '@waves/ts-types'
 
 export interface WithId {
     /**
@@ -341,9 +342,9 @@ export interface IInvokeExpressionParams<LONG = string | number> extends IBasicP
     expression: string,
 }
 
-export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction>
+export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction | EthereumTransaction>
 
-export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2>
+export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2 | 19>
 
 export type WithChainId = { chainId: number }
 
