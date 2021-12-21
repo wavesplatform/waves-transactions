@@ -52,7 +52,8 @@ describe('setScript', () => {
 
   it('Should throw on undefined script', () => {
     const txParams = {};
-    expect(() => setScript(txParams as any, seed)).toThrow('Script field cannot be undefined. Use null explicitly to remove script')
+    expect(() => setScript(txParams as any, seed))
+        .toThrow('Script field cannot be undefined. Use null explicitly to remove script')
   })
 
   it('Should handle incorrect keys in seedObject', () => {
@@ -69,6 +70,7 @@ describe('setScript', () => {
     const signedTx = setScript(txParams, seed);
 
     expect(signedTx.fee).toEqual(1000000)
+    expect(signedTx.chainId).toEqual(87)
   })
 
   it('Should generate correct signed setScript transaction with zero fee', () => {

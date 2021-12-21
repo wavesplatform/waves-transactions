@@ -73,11 +73,11 @@ describe('setAssetScript', () => {
          .toThrowError(errorMessageByTemplate('fee', -1))
   });
 
-  it('Should create setAssetScript transaction with minimal fee', () => {
+  it('Should create setAssetScript transaction with minimal params', () => {
     const txParams = { ...setAssetScriptMinimalParams };
     const signedTx = setAssetScript(txParams, seed)
 
-    expect(signedTx.fee).toEqual(100000000)
+    expect(signedTx).toMatchObject({...setAssetScriptMinimalParams, fee: 100000000, chainId: 87})
   })
 
   it('Should add base64 prefix for script when create setAssetScript tz', () => {

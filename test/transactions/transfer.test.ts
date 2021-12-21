@@ -14,9 +14,10 @@ describe('transfer', () => {
   const stringSeed = 'df3dd6d884714288a39af0bd973a1771c9f00f168cf040d6abb6a50dd5e055d8'
 
   const privateKey = {privateKey: 'YkoCJDT4eLtCv5ynNAc4gmZo8ELM9bEbBXsEtGTWrCc'}
+
   it('should build from minimal set of params', () => {
     const tx = transfer({ ...transferMinimalParams } , stringSeed)
-    expect(tx).toMatchObject({ ...transferMinimalParams })
+    expect(tx).toMatchObject({ ...transferMinimalParams, fee: 100000 })
   })
 
 
@@ -38,9 +39,9 @@ describe('transfer', () => {
     expect(validateTxSignature(tx, 2, 3, publicKey(stringSeed2))).toBeTruthy()
   })
 
-  it('Should build with correct fee', () => {
-    const tx = transfer({ ...transferMinimalParams } , stringSeed)
-     expect(tx.fee).toEqual(100000)
+  it('Should build with custom fee and amount', () => {
+    const tx = transfer({ ...transferMinimalParams, fee: 12345, amount: 666 } , stringSeed)
+     expect(tx).toMatchObject({ ...transferMinimalParams, fee: 12345, amount: 666 })
   })
 
   it('Should build with correct feeAssetId', () => {
@@ -72,9 +73,9 @@ describe('transfer', () => {
          .toThrowError(errorMessageByTemplate('fee', -1))
   })
 
-  it('Should create with minimal fee', () => {
-    const tx = transfer({ ...transferMinimalParams} , stringSeed)
-    expect(tx.fee).toEqual(100000)
+  it('Should not create with negative amount', () => {
+    expect(() =>transfer({ ...transferMinimalParams, amount: -1 }, stringSeed))
+      .toThrowError(errorMessageByTemplate('amount', -1))
   })
 
 });
