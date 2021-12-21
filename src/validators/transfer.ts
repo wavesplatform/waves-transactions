@@ -21,12 +21,12 @@ const transferScheme = {
     assetId: isWavesOrAssetId,
     feeAssetId: isWavesOrAssetId,
     recipient: isRecipient,
-    amount: isNumberLike,
+    amount: isNaturalNumberOrZeroLike,
     attachment: isAttachment,
     fee: isNaturalNumberOrZeroLike,
-    timestamp: isNumber,
-    proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
- };
+    timestamp: isNaturalNumberOrZeroLike,
+    proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),
+};
 
 
 export const transferValidator = validateByShema(transferScheme, getError);
