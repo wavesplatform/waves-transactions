@@ -1,6 +1,7 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {issue} from '../../src'
 import {
+    checkBinarySerializeDeserialize,
     checkProtoSerializeDeserialize,
     errorMessageByTemplate,
     longMax,
@@ -9,6 +10,7 @@ import {
 } from '../utils'
 import {issueMinimalParams} from '../minimalParams'
 import {issueTx} from "./expected/proto/issue.tx";
+import {issueBinaryTx} from "./expected/binary/issue.tx";
 
 describe('issue', () => {
 
@@ -124,6 +126,15 @@ describe('serialize/deserialize issue tx', () => {
     Object.entries(issueTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
             checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});
+
+describe('serialize/deserialize binary issue tx', () => {
+
+    Object.entries(issueBinaryTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
 
 });

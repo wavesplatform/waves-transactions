@@ -1,8 +1,14 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {cancelLease} from '../../src'
 import {cancelLeaseMinimalParams} from '../minimalParams'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../../test/utils'
 import {cancelLeaseTx} from "./expected/proto/cancel-lease.tx";
+import {cancelLeaseBinaryTx} from "./expected/binary/cancel-lease.tx";
 
 
 describe('cancel-lease', () => {
@@ -63,6 +69,15 @@ describe('serialize/deserialize cancel lease tx', () => {
   Object.entries(cancelLeaseTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
         checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+
+describe('serialize/deserialize binary cancel lease tx', () => {
+
+  Object.entries(cancelLeaseBinaryTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

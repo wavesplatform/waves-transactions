@@ -1,36 +1,34 @@
 export const cancelLeaseBinaryTx = {
-    'Cancel Lease TX (type 9 v3) max fee': {
-        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgoQ//////////9/ILHZkL2mLygD6gYiCiCe+fMMzlYhQXls5wGSZq+PaavsNCSexQH8Pe9VkvPcqQ==',
+    'Cancel Lease TX (type 9 v2) max fee': {
+        'Bytes': 'CQJTjY+yjcB1fArFRi26YEYA7BeLB3tUgJK6I9GKMWhjN3R//////////wAAAX3iH0lznvnzDM5WIUF5bOcBkmavj2mr7DQknsUB/D3vVZLz3Kk=',
         'Json': {
-            'id': '5ERaApUbL9o7oX1Vg9yoXJgRsRnMp37yDTtbcaD4csLN',
+            'id': 'DeGjB1FgRbw5g3nukYLmCNhDu24pxrAERSG4GbeEbrRz',
             'type': 9,
-            'version': 3,
-            'chainId': 84,
-            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
-            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
+            'version': 2,
+            'chainId': 83,
+            'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
+            'sender': '3MUBYCv4iHmmCA16zZ8GzKTSc3Fj1umn8Jb',
             'leaseId': 'BhaURR89tjeVWq1xnt4qLjQvYAGnmmocDmvnb1hooR1z',
             'fee': '9223372036854775807',
             'feeAssetId': null,
-            'timestamp': 1625236450481,
-            'proofs': ['a63AFSP1oxMNrkRPXfiTcVRFeB3vYjJyKzTqQdHrK8rdh34397rnbQtXFExgsqvniFCmvXFKqcpeXirLJEyPoYw'],
+            'timestamp': 1640176241011,
+            'proofs': ['2uCNTLKZZihNSiN7FSdpM8ZwFdbYnzsMXWGiMnEsEhivGDvbGPw1RnJCzMK5fAy7doQyuu1tzkLvWJ4tkxG2NEHQ']
         },
     },
-    'Cancel Lease TX (type 9 v3) min fee': {
-        'Bytes': 'CFMSII2Pso3AdXwKxUYtumBGAOwXiwd7VICSuiPRijFoYzd0GgQQoI0GIMz3zt3WLygD6gYiCiCe+fMMzlYhQXls5wGSZq+PaavsNCSexQH8Pe9VkvPcqQ==',
+    'Cancel Lease TX (type 9 v2) case 2 min fee': {
+        'Bytes': 'CQJTjY+yjcB1fArFRi26YEYA7BeLB3tUgJK6I9GKMWhjN3QAAAAAAAGGoAAAAX3iHAy3nvnzDM5WIUF5bOcBkmavj2mr7DQknsUB/D3vVZLz3Kk=',
         'Json': {
-            'id': 'ExpyLASKUEsWYcaAj6aZ6jk2nthfvZX2VPbFKoBX3eC',
+            'id': '8bhf4AuDJeG7gBPqZADw6qUFkUpbPV41dSG3XmTSjnsv',
             'type': 9,
-            'version': 3,
+            'version': 2,
             'chainId': 83,
             'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
             'sender': '3MUBYCv4iHmmCA16zZ8GzKTSc3Fj1umn8Jb',
             'leaseId': 'BhaURR89tjeVWq1xnt4qLjQvYAGnmmocDmvnb1hooR1z',
             'fee': 100000,
             'feeAssetId': null,
-            'timestamp': 1638189480908,
-            'proofs': [
-                '2riRWtSQ19pxJ8PYptanybXnNY772oRpDRjqU4zRSrnCjwu82uj5qRM7WNyUeozUvC5enq8EN1NqocTd3nNvXtgb'
-            ]
+            'timestamp': 1640176028855,
+            'proofs': ['4Pdz3uDkgUrAzhMiSdsyvv7XWBNzcb41RaYKvnKAVLELEetfLLWXBsuRKStrR9Ek8rBk4rc6R49LkqHxXnrNmpyp']
         },
     },
 
