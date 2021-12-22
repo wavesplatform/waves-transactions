@@ -1,7 +1,12 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {alias} from '../../src'
 import {aliasMinimalParams} from '../minimalParams'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../utils'
 import {aliasTx} from "./expected/proto/alias.tx";
 import {aliasBinaryTx} from "./expected/binary/alias.tx";
 
@@ -90,7 +95,7 @@ describe('serialize/deserialize alias binary tx', () => {
 
   Object.entries(aliasBinaryTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

@@ -42,7 +42,7 @@ describe('massTransfer', () => {
     const transfersList = []
     const t = {recipient: "", amount: 0}
     transfersList.push(t)
-    expect(() => massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed))
+    expect(() => massTransfer({ transfers: transfersList}, stringSeed))
         .toThrowError("tx \"transfers\", has wrong data: [{\"recipient\":\"\",\"amount\":0}]. Check tx data.")
   })
 

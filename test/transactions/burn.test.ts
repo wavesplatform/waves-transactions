@@ -1,7 +1,12 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {burn} from '../../src'
 import {burnMinimalParams} from '../minimalParams'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../../test/utils'
 import {burnTx} from "./expected/proto/burn.tx";
 import {burnBinaryTx} from "./expected/binary/burn.tx";
 
@@ -84,7 +89,7 @@ describe('serialize/deserialize binary burn tx', () => {
 
   Object.entries(burnBinaryTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

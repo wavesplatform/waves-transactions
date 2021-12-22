@@ -18,7 +18,7 @@ import {
 const reissueScheme = {
   type: isEq(TRANSACTION_TYPE.REISSUE),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 1, 2, 3]),
+  version: orEq([undefined, 2, 3]),
   assetId: isAssetId,
   quantity: isNaturalNumberLike,
   reissuable: isBoolean,

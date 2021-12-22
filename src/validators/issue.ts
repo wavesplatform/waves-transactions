@@ -20,7 +20,7 @@ import {
 
 const issueScheme = {
   type: isEq(TRANSACTION_TYPE.ISSUE),
-  version: orEq([undefined, 1, 2, 3]),
+  version: orEq([undefined, 2, 3]),
   senderPublicKey: isPublicKey,
   name: isValidAssetName,
   description: isValidAssetDescription,

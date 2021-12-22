@@ -12,7 +12,7 @@ import {
     isPublicKey,
     isRecipient,
     isRequired,
-    isWavesOrAssetId,
+    isWavesOrAssetId, lte,
     orEq,
     pipe,
     prop,
@@ -28,6 +28,7 @@ const massTransferScheme = {
   transfers: validatePipe(
       isArray,
       pipe(prop('length'), gte(0)),
+      pipe(prop('length'), lte(100)),
       (data: Array<unknown>) => data.every(
           validatePipe(
               isRequired(true),

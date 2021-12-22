@@ -26,7 +26,7 @@ import {
 const invokeScheme = {
   type: isEq(TRANSACTION_TYPE.INVOKE_SCRIPT),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 1, 2]),
   dApp: isRecipient,
 
   call: ifElse(

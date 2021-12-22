@@ -4,7 +4,7 @@ export const burnBinaryTx = {
         'Json': {
             'id': '44EbcnKe2Urk8mg6sNSEfdTzXS9w6ieFNDyKCLrRmHnH',
             'type': 6,
-            '"version': 2,
+            'version': 2,
             'chainId': 84,
             'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
             'sender': '3MsX9C2MzzxE4ySF5aYcJoaiPfkyxZMg4cW',
