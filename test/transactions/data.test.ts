@@ -1,7 +1,7 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {broadcast, cancelLease, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
+import {checkProtoSerializeDeserialize, errorMessageByTemplate, rndString, validateTxSignature} from '../../test/utils'
 import {cancelLeaseMinimalParams, dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
 import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
@@ -157,8 +157,8 @@ describe('data', () => {
              .toThrowError(errorMessageByTemplate('fee', -1))
     })
 
-    const maxKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678"
-    const extraMaxKey = maxKey + "A"
+    const maxKey = rndString(400)
+    const extraMaxKey = rndString(401)
     const testMaxKeyParams = [
             {
                 key: maxKey,
@@ -209,9 +209,14 @@ describe('data', () => {
         expect(tx.data[3].value).toEqual("Test Test123 Test321")
     })
 
-    it('Should not create data with extra max key', () => {
-        expect(() =>data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk))
-            .toThrowError('tx "key", has wrong data: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678A". Check tx data.')
+    it('Should not create data with key > 400', () => {
+        const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
+        expect(tx.data[1].value).toEqual(false)
+        expect(tx.data[2].value).toEqual(223322)
+        expect(tx.data[3].value).toEqual("Test Test123 Test321 TEST")
+
+        /*expect(() =>data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk))
+            .toThrowError(     'tx "key", has wrong data: ' + extraMaxKey + '. Check tx data.') */
     })
 
     const testMaxValueParams = {
