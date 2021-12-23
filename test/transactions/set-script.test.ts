@@ -1,7 +1,13 @@
 import {publicKey,} from '@waves/ts-lib-crypto'
 import {setScript} from '../../src'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../utils'
 import {setScriptTx} from "./expected/proto/set-script.tx";
+import {setScriptBinaryTx} from "./expected/binary/set-script.tx";
 
 describe('setScript', () => {
 
@@ -92,6 +98,15 @@ describe('serialize/deserialize set script tx', () => {
   Object.entries(setScriptTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
         checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+
+describe('serialize/deserialize set script binary tx', () => {
+
+  Object.entries(setScriptBinaryTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

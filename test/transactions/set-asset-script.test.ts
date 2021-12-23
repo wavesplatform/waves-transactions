@@ -1,8 +1,14 @@
 import {publicKey,} from '@waves/ts-lib-crypto'
 import {setAssetScript} from '../../src'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../../test/utils'
 import {setAssetScriptTx} from "./expected/proto/set-asset-script.tx";
 import {setAssetScriptMinimalParams} from "../minimalParams";
+import {setAssetScriptBinaryTx} from "./expected/binary/set-asset_script.tx";
 
 describe('setAssetScript', () => {
 
@@ -89,11 +95,18 @@ describe('setAssetScript', () => {
 
 });
 
-describe('serialize/deserialize SetAssetScript proto  tx', () => {
+describe('serialize/deserialize SetAssetScript proto tx', () => {
 
   Object.entries(setAssetScriptTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
         checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
+});
 
+describe('serialize/deserialize SetAssetScript binary tx', () => {
+
+  Object.entries(setAssetScriptBinaryTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
 });

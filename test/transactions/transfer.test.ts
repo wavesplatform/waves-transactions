@@ -1,6 +1,7 @@
 import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
 import {sponsorship, transfer} from '../../src'
 import {
+  checkBinarySerializeDeserialize,
   checkProtoSerializeDeserialize,
   deleteProofsAndId,
   errorMessageByTemplate,
@@ -8,6 +9,7 @@ import {
 } from '../../test/utils'
 import {sponsorshipMinimalParams, transferMinimalParams} from '../minimalParams'
 import {transferTx} from "./expected/proto/transfer.tx";
+import {transferBinaryTx} from "./expected/binary/transfer.tx";
 
 describe('transfer', () => {
 
@@ -85,6 +87,15 @@ describe('serialize/deserialize transfer tx', () => {
   Object.entries(transferTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
         checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+
+describe('serialize/deserialize transfer binary tx', () => {
+
+  Object.entries(transferBinaryTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });

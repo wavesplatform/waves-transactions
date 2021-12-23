@@ -1,6 +1,11 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {reissue} from '../../src'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
+import {
+    checkBinarySerializeDeserialize,
+    checkProtoSerializeDeserialize,
+    errorMessageByTemplate,
+    validateTxSignature
+} from '../../test/utils'
 import {reissueMinimalParams} from '../minimalParams'
 import {reissueTx} from "./expected/proto/reissue.tx";
 import {reissueBinaryTx} from "./expected/binary/reissue.tx";
@@ -72,7 +77,7 @@ describe('serialize/deserialize reissue binary proto tx', () => {
 
     Object.entries(reissueBinaryTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
-            checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
 
 });

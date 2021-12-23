@@ -1,7 +1,8 @@
-import {checkProtoSerializeDeserialize, errorMessageByTemplate} from '../../test/utils'
+import {checkBinarySerializeDeserialize, checkProtoSerializeDeserialize, errorMessageByTemplate} from '../../test/utils'
 import {sponsorshipMinimalParams} from "../minimalParams";
 import {sponsorship} from "../../src/transactions/sponsorship";
 import {sponsorshipTx} from "./expected/proto/sponsorship.tx";
+import {sponsorshipBinaryTx} from "./expected/binary/sponsorship.tx";
 
 describe('setSponsorship', () => {
 
@@ -53,6 +54,15 @@ describe('serialize/deserialize sponsorship tx', () => {
     Object.entries(sponsorshipTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
             checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});
+
+describe('serialize/deserialize sponsorship binary tx', () => {
+
+    Object.entries(sponsorshipBinaryTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
 
 });

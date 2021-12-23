@@ -1,8 +1,15 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {lease} from '../../src'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, longMax, validateTxSignature} from '../utils'
+import {
+    checkBinarySerializeDeserialize,
+    checkProtoSerializeDeserialize,
+    errorMessageByTemplate,
+    longMax,
+    validateTxSignature
+} from '../utils'
 import {leaseMinimalParams} from '../minimalParams'
 import {leaseTx} from "./expected/proto/lease.tx";
+import {leaseBinaryTx} from "./expected/binary/lease.tx";
 
 describe('lease', () => {
 
@@ -84,3 +91,11 @@ describe('serialize/deserialize lease tx', () => {
 
 });
 
+describe('serialize/deserialize lease tx', () => {
+
+    Object.entries(leaseBinaryTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});
