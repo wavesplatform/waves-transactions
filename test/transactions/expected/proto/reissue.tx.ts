@@ -18,21 +18,21 @@ export const reissueTx = {
         },
     },
     'Reissue TX (type 5 v3)  case 2': {
-        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoI0GIOrskL2mLygDygYmCiIKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfTEAE=',
+        'Bytes': 'CFQSII2Pso3AdXwKxUYtumBGAOwXiwd7VICSuiPRijFoYzd0GgQQoI0GIMbZtbTeLygDygYoCiQKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfTEAEQAQ==',
         'Json': {
-            'id': 'pzXgBkiL4uSuUgcvF3dy7vcXDYxVeRRLFUKdEMvnPEQ',
+            'id': '3Rit3uoVw2GJPLGGeDE3WNZxBEyQD8hDgJyp1Sre8h3B',
             'type': 5,
             'version': 3,
             'chainId': 84,
-            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
-            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
+            'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
+            'sender': '3MsX9C2MzzxE4ySF5aYcJoaiPfkyxZMg4cW',
             'assetId': 'DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv',
-            'quantity': 0,
+            'quantity': 1,
             'reissuable': true,
             'fee': 100000,
             'feeAssetId': null,
-            'timestamp': 1625236452970,
-            'proofs': ['28FGxpaUG8jCxhZtwKc6tsFgLA3tkRAvjLZMKJR8HK6KfpmYTK2AnJF66BAvRdMYhgDYzFdsobn3JqDySMRLuwvd'],
+            'timestamp': 1640250567878,
+            'proofs': ['598f263oUWWjMuZccigSkXKtRAChENcAaZ9PfZK5Z3yrqcDzbtCfJfMdhRFUZFfiB9BUUqke8iKe23E2bVptKPcd']
         },
     },
 }

@@ -3,6 +3,7 @@ import {reissue} from '../../src'
 import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
 import {reissueMinimalParams} from '../minimalParams'
 import {reissueTx} from "./expected/proto/reissue.tx";
+import {reissueBinaryTx} from "./expected/binary/reissue.tx";
 
 describe('reissue', () => {
 
@@ -61,6 +62,15 @@ describe('reissue', () => {
 describe('serialize/deserialize reissue proto tx', () => {
 
     Object.entries(reissueTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});
+
+describe('serialize/deserialize reissue binary proto tx', () => {
+
+    Object.entries(reissueBinaryTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
             checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
