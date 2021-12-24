@@ -1,8 +1,14 @@
 import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
 import {massTransfer, reissue} from '../../src'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../../test/utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../../test/utils'
 import {massTransferMinimalParams, reissueMinimalParams} from '../minimalParams'
 import {massTransferTx} from "./expected/proto/mass-transfer.tx";
+import {massTransferBinaryTx} from "./expected/binary/mass-transfer.tx";
 
 describe('massTransfer', () => {
 
@@ -31,7 +37,7 @@ describe('massTransfer', () => {
   })
 
   it('Should throw on transfers with minimal quantity of receivers', () => {
-    const transfersList = []
+    let transfersList = []
     const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: 1}
     transfersList.push(t)
     const tx =  massTransfer({ transfers: transfersList}, stringSeed)
@@ -39,7 +45,7 @@ describe('massTransfer', () => {
   })
 
   it('Should throw on transfers with zero quantity of receivers', () => {
-    const transfersList = []
+    let transfersList = []
     const t = {recipient: "", amount: 0}
     transfersList.push(t)
     expect(() => massTransfer({ transfers: transfersList}, stringSeed))
@@ -47,7 +53,7 @@ describe('massTransfer', () => {
   })
 
   it('Should throw on transfers with maximal quantity of receivers', () => {
-    const transfersList = []
+    let transfersList = []
     for (let i = 0; i < 100; i++) {
       const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: i+1}
       transfersList.push(t)
@@ -57,7 +63,7 @@ describe('massTransfer', () => {
   })
 
   it('Should throw on transfers with extra maximal quantity of receivers', () => {
-    const transfersList = []
+    let transfersList = []
     for (let i = 0; i < 101; i++) {
       const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: i+1}
       transfersList.push(t)
@@ -70,7 +76,7 @@ describe('massTransfer', () => {
   })
 
   it('Should throw on transfers with zero amount', () => {
-    const transfersList = []
+    let transfersList = []
     const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: 0}
     transfersList.push(t)
     const tx =  massTransfer({ transfers: transfersList}, stringSeed)
@@ -79,7 +85,7 @@ describe('massTransfer', () => {
 
   // fixme?
   it('Should throw on transfers with negative amount', () => {
-    const transfersList = []
+    let transfersList = []
     const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: -1}
     transfersList.push(t)
     expect(() => massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed))
@@ -97,3 +103,11 @@ describe('serialize/deserialize mass transfer tx', () => {
 
 });
 
+describe('serialize/deserialize mass transfer binary tx', () => {
+
+  Object.entries(massTransferBinaryTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});

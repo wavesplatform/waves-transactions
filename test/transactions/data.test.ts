@@ -1,11 +1,18 @@
 import {publicKey} from '@waves/ts-lib-crypto'
 import {broadcast, cancelLease, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, rndString, validateTxSignature} from '../../test/utils'
+import {
+    checkBinarySerializeDeserialize,
+    checkProtoSerializeDeserialize,
+    errorMessageByTemplate,
+    rndString,
+    validateTxSignature
+} from '../../test/utils'
 import {cancelLeaseMinimalParams, dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
 import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
 import {dataTx} from "./expected/proto/data.tx";
+import {dataBinaryTx} from "./expected/binary/data.tx";
 
 
 describe('data', () => {
@@ -252,6 +259,15 @@ describe('serialize/deserialize data tx', () => {
     Object.entries(dataTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
             checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        }))
+
+});
+
+describe('serialize/deserialize data binary tx', () => {
+
+    Object.entries(dataBinaryTx).forEach(([name, {Bytes, Json}]) =>
+        it(name, () => {
+            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
         }))
 
 });
