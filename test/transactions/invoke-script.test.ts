@@ -2,8 +2,14 @@ import {publicKey} from '@waves/ts-lib-crypto'
 import {invokeScriptMinimalParams} from '../minimalParams'
 import {invokeScript} from '../../src'
 import {IInvokeScriptParams} from '../../src'
-import {checkProtoSerializeDeserialize, errorMessageByTemplate, validateTxSignature} from '../utils'
+import {
+  checkBinarySerializeDeserialize,
+  checkProtoSerializeDeserialize,
+  errorMessageByTemplate,
+  validateTxSignature
+} from '../utils'
 import {invokeScriptTx} from "./expected/proto/invoke-script.tx";
+import {invokeScriptBinaryTx} from "./expected/binary/invoke-script.tx";
 
 describe('invokeScript', () => {
 
@@ -143,6 +149,15 @@ describe('serialize/deserialize invoke tx', () => {
   Object.entries(invokeScriptTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
         checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+      }))
+
+});
+
+describe('serialize/deserialize invoke binary tx', () => {
+
+  Object.entries(invokeScriptBinaryTx).forEach(([name, {Bytes, Json}]) =>
+      it(name, () => {
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
 
 });
