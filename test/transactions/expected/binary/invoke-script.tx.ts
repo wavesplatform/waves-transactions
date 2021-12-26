@@ -8,6 +8,7 @@ export const invokeScriptBinaryTx = {
             'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
             'sender': '3MsX9C2MzzxE4ySF5aYcJoaiPfkyxZMg4cW',
             'dApp': '3N7U8EVrPNXRp4rQ6LNebhmjqzA4gPY641Q',
+            'chainId': 84,
             'payment': [],
             'fee': '9223372036854775807',
             'feeAssetId': null,
@@ -21,6 +22,7 @@ export const invokeScriptBinaryTx = {
             'id': 'GgCva2bMstqoBqNPc45oVagFavwvgXm2e4ek5T7qmDAG',
             'type': 16,
             'version': 1,
+            'chainId': 84,
             'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
             'sender': '3MsX9C2MzzxE4ySF5aYcJoaiPfkyxZMg4cW',
             'dApp': '3N7U8EVrPNXRp4rQ6LNebhmjqzA4gPY641Q',
@@ -39,6 +41,7 @@ export const invokeScriptBinaryTx = {
         'Json': {
             'id': 'GMVTgVwH99LcxCWQhh8NgaWaXMrg8rm5RLeBxRsEFnzx',
             'type': 16,
+            'chainId': 84,
             'version': 1,
             'senderPublicKey': 'AXbaBkJNocyrVpwqTzD4TpUY8fQ6eeRto9k1m2bNCzXV',
             'sender': '3MsX9C2MzzxE4ySF5aYcJoaiPfkyxZMg4cW',
