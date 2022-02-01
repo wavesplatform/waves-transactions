@@ -53,6 +53,7 @@ export {
   WithSender,
   WithProofs,
   WithTxType,
+  TTxOrTxArray
 } from './transactions'
 
 export { INodeRequestOptions, IStateChangeResponse } from './nodeInteraction'

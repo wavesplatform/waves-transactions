@@ -8,7 +8,8 @@ import {
     TRANSACTION_TYPE,
     TransactionType
 } from '@waves/ts-types/src'
-import {InvokeScriptCallArgument} from '@waves/ts-types/src/parts'
+import {InvokeScriptCallArgument} from '@waves/ts-types'
+import {ExchangeTransactionOrder} from '@waves/ts-types'
 
 export interface WithId {
     /**
@@ -36,21 +37,6 @@ export interface WithProofs {
      */
     proofs: string[]
 }
-
-// export interface IOrderV1<LONG = string | number> extends IOrder<LONG> {
-//   version: 1 | undefined
-// }
-//
-// export interface IOrderV2<LONG = string | number> extends IOrder<LONG> {
-//   version: 2
-// }
-//
-// export interface IOrderV3<LONG = string | number> extends IOrder<LONG> {
-//   version: 3
-//   matcherFeeAssetId?: string | null
-// }
-//
-// export type TOrder = IOrderV1 | IOrderV2 | IOrderV3
 
 /**
  * CancelOrder object. When this object is sent to matcher, order with 'orderId' will be canceled
@@ -348,3 +334,7 @@ export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRAN
 export type WithChainId = { chainId: number }
 
 export type TTx = SignedTransaction<TTransaction>
+
+export type TTxOrTxArray = TTx | TTx[]
+
+export type TOrder = ExchangeTransactionOrder
