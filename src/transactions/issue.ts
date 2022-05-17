@@ -48,5 +48,5 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & Wi
 }
 
 const checkForNFT = (paramsOrTx: any) => {
-  return paramsOrTx.quantity === 1 && paramsOrTx.reisuable === false && paramsOrTx.decimals === 0
+  return paramsOrTx.quantity === 1 && paramsOrTx.reissuable === false && paramsOrTx.decimals === 0
 }
