@@ -30,7 +30,7 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & Wi
     script: paramsOrTx.script == null ? null : base64Prefix(paramsOrTx.script)!,
     decimals: paramsOrTx.decimals == null ? 8 : paramsOrTx.decimals,
     reissuable: paramsOrTx.reissuable || false,
-    fee: checkForNFT(paramsOrTx) ? fee(paramsOrTx, 1000000) : fee(paramsOrTx, 100000000),
+    fee: checkForNFT(paramsOrTx) ? fee(paramsOrTx, 100000) : fee(paramsOrTx, 100000000),
     timestamp: paramsOrTx.timestamp || Date.now(),
     chainId: networkByte(paramsOrTx.chainId, 87),
     proofs: paramsOrTx.proofs || [],
@@ -48,5 +48,5 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & Wi
 }
 
 const checkForNFT = (paramsOrTx: any) => {
-  return paramsOrTx.quantity === 1 && paramsOrTx.reissuable === false && paramsOrTx.decimals === 0
+  return paramsOrTx.quantity === 1 && paramsOrTx.reissuable == false && paramsOrTx.decimals == 0
 }
