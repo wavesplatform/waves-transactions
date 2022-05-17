@@ -4,7 +4,7 @@ import {broadcast} from '../src/nodeInteraction'
 import {address, randomSeed} from '@waves/ts-lib-crypto'
 import {CHAIN_ID} from './integration/config'
 
-const chainId = 'T'
+const chainId = '84'
 const apiBase = 'https://nodes-testnet.wavesnodes.com/'
 
 describe('Node interaction utility functions', () => {

@@ -93,7 +93,7 @@ describe('exchange', () => {
         // @ts-ignore
         //console.log(
         const tx = exchange({...txOk}, seed1)
-        expect(tx).toMatchObject({...txOk})
+        expect(tx).toMatchObject({...txOk, chainId: txOk.chainId.charCodeAt()})
     })
 
 
