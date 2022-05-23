@@ -53,6 +53,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
     if (!Array.isArray(paramsOrTx.data)) throw new Error('["data should be array"]')
+    if (paramsOrTx.data.some((x: any) => x.value === null) && paramsOrTx.version === 1) throw new Error('The value of the "value" field can only be null in a version greater than 1.')
 
     const _timestamp = paramsOrTx.timestamp || Date.now()
 

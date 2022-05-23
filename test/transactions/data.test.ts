@@ -11,8 +11,8 @@ import {
 import {cancelLeaseMinimalParams, dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
 import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
-import {dataTx} from "./expected/proto/data.tx";
-import {dataBinaryTx} from "./expected/binary/data.tx";
+import {dataTx} from './expected/proto/data.tx'
+import {dataBinaryTx} from './expected/binary/data.tx'
 
 
 describe('data', () => {
@@ -88,8 +88,8 @@ describe('data', () => {
         [[{key: 'bin', value: Array(1000).fill(1)}], 2, 100000],
         [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000],
         [[{key: 'bin', value: Array(10000).fill(1)}], 2, 1000000],
-        [[{key: 'bin', type:'binary', value: libs.crypto.base64Encode(Array(10000).fill(1))}], 1, 1000000],
-        [[{key: 'bin', type:'binary', value: Array(10000).fill(1)}], 1, 1000000],
+        [[{key: 'bin', type: 'binary', value: libs.crypto.base64Encode(Array(10000).fill(1))}], 1, 1000000],
+        [[{key: 'bin', type: 'binary', value: Array(10000).fill(1)}], 1, 1000000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 9800000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 9800000],
         [Array(15).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 14700000],
@@ -108,7 +108,10 @@ describe('data', () => {
         [null, 1, '["data should be array"]'],
         [undefined, 1, '["data should be array"]'],
         [{key: 'str', value: 'string'}, 2, '["data should be array"]'],
-        [[{key: 'bin', value: null}], 1, 'Cannot read property'],
+        [[{
+            key: 'bin',
+            value: null
+        }], 1, 'The value of the "value" field can only be null in a version greater than 1.'],
     ])('should throw on invalid data', (dataEntries, version, expectedError) => {
         const tx = () => data({
             data: dataEntries,
@@ -119,32 +122,32 @@ describe('data', () => {
         expect(tx).toThrow(expectedError)
     })
 
-    let sMax ="1234567";
-    const smenc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let sMax = "1234567"
+    const smenc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-    for(let i=0;i<630;i++) {
-        sMax+=smenc;
+    for (let i = 0; i < 630; i++) {
+        sMax += smenc
     }
 
     it('should get correct signature', () => {
-        const tx = data({...dataMinimalParams}, senderPk);
+        const tx = data({...dataMinimalParams}, senderPk)
         expect(validateTxSignature(tx, 1)).toBeTruthy()
     })
 
     it('should get correct multiSignature', () => {
-        const stringSeed2 = 'example seed 2';
-        const tx = data({...dataMinimalParams}, [null, senderPk, null, stringSeed2]);
-        expect(validateTxSignature(tx, 1, 1, publicKey(senderPk))).toBeTruthy();
+        const stringSeed2 = 'example seed 2'
+        const tx = data({...dataMinimalParams}, [null, senderPk, null, stringSeed2])
+        expect(validateTxSignature(tx, 1, 1, publicKey(senderPk))).toBeTruthy()
         expect(validateTxSignature(tx, 1, 3, publicKey(stringSeed2))).toBeTruthy()
     })
 
     it('should get correct default values', () => {
-        const expectedTimestamp = new Date().getTime();
-        const tx = data({...dataMinimalParams} as any, senderPk);
+        const expectedTimestamp = new Date().getTime()
+        const tx = data({...dataMinimalParams} as any, senderPk)
 
-        expect(tx.data.length).toEqual(3);
-        expect(tx.version).toEqual(2);
-        expect(tx.timestamp - expectedTimestamp).toBeLessThan(100);
+        expect(tx.data.length).toEqual(3)
+        expect(tx.version).toEqual(2)
+        expect(tx.timestamp - expectedTimestamp).toBeLessThan(100)
         expect(tx.type).toEqual(12)
     })
 
@@ -160,64 +163,64 @@ describe('data', () => {
     })
 
     it('Should not create data with negative fee', () => {
-        expect(() =>data({ ...dataMinimalParams, fee: -1}, senderPk))
-             .toThrowError(errorMessageByTemplate('fee', -1))
+        expect(() => data({...dataMinimalParams, fee: -1}, senderPk))
+            .toThrowError(errorMessageByTemplate('fee', -1))
     })
 
     const maxKey = rndString(400)
     const extraMaxKey = rndString(401)
     const testMaxKeyParams = [
-            {
-                key: maxKey,
-                type: 'binary',
-                value: 'base64:YXNkYQ==',
-            }, {
-                key: maxKey,
-                type: 'boolean',
-                value: true,
-            }, {
-                key: maxKey,
-                type: 'integer',
-                value: 1234567890,
-            }, {
-                key: maxKey,
-                type: 'string',
-                value: "Test Test123 Test321",
-            }
-    ];
+        {
+            key: maxKey,
+            type: 'binary',
+            value: 'base64:YXNkYQ==',
+        }, {
+            key: maxKey,
+            type: 'boolean',
+            value: true,
+        }, {
+            key: maxKey,
+            type: 'integer',
+            value: 1234567890,
+        }, {
+            key: maxKey,
+            type: 'string',
+            value: "Test Test123 Test321",
+        }
+    ]
 
 
     const testExtraMaxKeyParams = [
-            {
-                key: extraMaxKey,
-                type: 'binary',
-                value: 'base16:52696465',
-            }, {
-                key: extraMaxKey,
-                type: 'boolean',
-                value: false,
-            }, {
-                key: extraMaxKey,
-                type: 'integer',
-                value: 223322,
-            }, {
-                key: extraMaxKey,
-                type: 'string',
-                value: "Test Test123 Test321 TEST",
-            }
-    ];
+        {
+            key: extraMaxKey,
+            type: 'binary',
+            value: 'base16:52696465',
+        }, {
+            key: extraMaxKey,
+            type: 'boolean',
+            value: false,
+        }, {
+            key: extraMaxKey,
+            type: 'integer',
+            value: 223322,
+        }, {
+            key: extraMaxKey,
+            type: 'string',
+            value: "Test Test123 Test321 TEST",
+        }
+    ]
 
 
     it('Should create data with max key', () => {
-        const tx = data({data: testMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
-            //expect(tx).toMatchObject({...testMaxKeyParams})
+        const tx = data({data: testMaxKeyParams, chainId: 83, fee: 1000000, version: 2} as any, senderPk)
+        //expect(tx).toMatchObject({...testMaxKeyParams})
         expect(tx.data[1].value).toEqual(true)
         expect(tx.data[2].value).toEqual(1234567890)
         expect(tx.data[3].value).toEqual("Test Test123 Test321")
     })
 
     it('Should not create data with key > 400', () => {
-        const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
+        const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2} as any, senderPk)
         expect(tx.data[1].value).toEqual(false)
         expect(tx.data[2].value).toEqual(223322)
         expect(tx.data[3].value).toEqual("Test Test123 Test321 TEST")
@@ -226,48 +229,46 @@ describe('data', () => {
             .toThrowError(     'tx "key", has wrong data: ' + extraMaxKey + '. Check tx data.') */
     })
 
-    const testMaxValueParams = {
-        data: [
-            {
-                key: maxKey,
-                type: 'string',
-                value: sMax,
-            }, {
-                key: extraMaxKey,
-                type: 'boolean',
-                value: false,
-            }, {
-                key: extraMaxKey,
-                type: 'integer',
-                value: 223322,
-            }, {
-                key: extraMaxKey,
-                type: 'string',
-                value: "Test Test123 Test321 TEST",
-            }
-        ],
-    }
+    const testMaxValueParams = [
+        {
+            key: maxKey,
+            type: 'string',
+            value: sMax,
+        }, {
+            key: extraMaxKey,
+            type: 'boolean',
+            value: false,
+        }, {
+            key: extraMaxKey,
+            type: 'integer',
+            value: 223322,
+        }, {
+            key: extraMaxKey,
+            type: 'string',
+            value: "Test Test123 Test321 TEST",
+        }
+    ]
 
     it('Should get data with max value', () => {
-        const tx = data({data:testMaxValueParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk)
+        const tx = data({data: testMaxValueParams, chainId: 83, fee: 1000000, version: 2} as any, senderPk)
         expect(tx.data[0].value).toEqual(sMax)
     })
-});
+})
 
 describe('serialize/deserialize data tx', () => {
 
     Object.entries(dataTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
-            checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+            checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes})
         }))
 
-});
+})
 
 describe('serialize/deserialize data binary tx', () => {
 
     Object.entries(dataBinaryTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
-            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
+            checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes})
         }))
 
-});
+})
