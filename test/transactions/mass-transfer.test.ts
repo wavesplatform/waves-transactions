@@ -69,7 +69,7 @@ describe('massTransfer', () => {
       transfersList.push(t)
     }
     expect(() => massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed))
-        .toThrowError("tx \"transfers\", has wrong data: [{\"recipient\":\"\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1",\"amount\":101}]. Check tx data.")
+        .toThrowError('tx \"transfers\", has wrong data: [{\"recipient\":\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1\"')
 
 //    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
 //    expect(tx.transfers).toMatchObject({ ...transfersList })
@@ -83,13 +83,12 @@ describe('massTransfer', () => {
     expect(tx.transfers).toMatchObject({ ...transfersList })
   })
 
-  // fixme?
   it('Should throw on transfers with negative amount', () => {
     let transfersList = []
     const t = {recipient: "3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1", amount: -1}
     transfersList.push(t)
     expect(() => massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed))
-        .toThrowError("tx \"transfers\", has wrong data: [{\"recipient\":\"\",\"amount\":0}]. Check tx data.")
+        .toThrowError('tx \"transfers\", has wrong data: [{\"recipient\":\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1\",\"amount\":-1}]. Check tx data.')
   })
 
 });
