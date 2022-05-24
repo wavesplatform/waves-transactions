@@ -80,7 +80,7 @@ export type TTxParams<LONG = string | number> =
     | ISponsorshipParams<LONG>
     | ITransferParams<LONG>
     | IUpdateAssetInfoParams<LONG>
-    | IInvokeExpressionParams<LONG>
+    // | IInvokeExpressionParams<LONG>
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
@@ -275,7 +275,7 @@ export interface ISponsorshipParams<LONG = string | number> extends IBasicParams
     /**
      * Minimal fee amount in sponsored asset. To disable sponsorship set it to 0
      */
-    minSponsoredAssetFee: LONG
+    minSponsoredAssetFee: LONG | null
 }
 
 /**

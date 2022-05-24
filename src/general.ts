@@ -27,7 +27,8 @@ import {
     CancelLeaseTransaction,
     DataTransaction,
     ExchangeTransaction,
-    ExchangeTransactionOrder, InvokeExpressionTransaction,
+    ExchangeTransactionOrder,
+    // InvokeExpressionTransaction,
     InvokeScriptTransaction,
     IssueTransaction,
     LeaseTransaction,
@@ -43,7 +44,7 @@ import {
 } from '@waves/ts-types'
 import {IAuthParams, ICancelOrder, TTransaction, TTxParams, WithProofs, WithSender, WithTxType} from './transactions'
 import {updateAssetInfo} from './transactions/update-asset-info'
-import {invokeExpression} from './transactions/invoke-expression'
+// import {invokeExpression} from './transactions/invoke-expression'
 
 type TLong = string | number
 
@@ -63,7 +64,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: Transaction<TLong> | TTxP
     [TRANSACTION_TYPE.EXCHANGE]: {sign: (x, seed) => exchange(x as ExchangeTransaction & WithProofs, seed)},
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: {sign: (x, seed) => invokeScript(x as InvokeScriptTransaction, seed)},
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: {sign: (x, seed) => updateAssetInfo(x as UpdateAssetInfoTransaction, seed)},
-    [TRANSACTION_TYPE.INVOKE_EXPRESSION]: {sign: (x, seed) => invokeExpression(x as InvokeExpressionTransaction, seed)},
+    // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: {sign: (x, seed) => invokeExpression(x as InvokeExpressionTransaction, seed)},
 }
 
 /**
