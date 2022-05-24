@@ -15,7 +15,7 @@ import { leaseValidator as lease } from './lease'
 import { invokeValidator as invokeScript } from './invoke-script'
 import { exchangeValidator as exchange } from './exchange'
 import { updateAssetInfoValidator as updateAssetInfo } from './update-asset-info'
-import { invokeExpressionValidator as invokeExpression } from './invoke-expression'
+// import { invokeExpressionValidator as invokeExpression } from './invoke-expression'
 
 import { orderValidator as order } from './order'
 import { cancelOrderValidator as cancelOrder } from './cancel-order'
@@ -40,7 +40,7 @@ export const validate = {
     invokeScript,
     exchange,
     updateAssetInfo,
-    invokeExpression,
+    // invokeExpression,
     cancelOrder,
     customData,
     order,

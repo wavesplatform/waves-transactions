@@ -334,17 +334,17 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
     description: string
 }
 
-/**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
- */
-export interface IInvokeExpressionParams<LONG = string | number> extends IBasicParams<LONG> {
-    feeAssetId?: string | null
-    expression: string,
-}
+// /**
+//  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+//  */
+// export interface IInvokeExpressionParams<LONG = string | number> extends IBasicParams<LONG> {
+//     feeAssetId?: string | null
+//     expression: string,
+// }
 
 export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction | EthereumTransaction>
 
-export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2 | 19>
+export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2 | 18>
 
 export type WithChainId = { chainId: number }
 

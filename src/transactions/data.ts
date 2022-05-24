@@ -33,7 +33,7 @@ const typeMap: any = {
     _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T, type: string | undefined): [DataFiledType, number, (value: T) => Uint8Array] => {
+const mapType = <T>(value: T, type: string | undefined | null): [DataFiledType, number, (value: T) => Uint8Array] => {
     return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
 }
 

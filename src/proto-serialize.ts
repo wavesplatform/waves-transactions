@@ -70,7 +70,7 @@ export function signedTxToProtoBytes(obj: TTx): Uint8Array {
 
 export function protoBytesToSignedTx(bytes: Uint8Array): TTx {
     const txData = wavesProto.waves.SignedTransaction.decode(bytes)
-    const tx: TTransaction = protoTxDataToTx(txData.transaction as wavesProto.waves.Transaction)
+    const tx: TTransaction = protoTxDataToTx(txData.transaction as never as wavesProto.waves.Transaction)
 
     const signedTx: TTx = {
         ...tx,
@@ -221,9 +221,9 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             res.name = t.updateAssetInfo!.name
             res.description = t.updateAssetInfo!.description
             break
-        case 'invokeExpression':
-            res.expression = t.invokeExpression?.expression == null ? null : base64Prefix(base64Encode(t.invokeExpression?.expression))
-            break
+        // case 'invokeExpression':
+        //     res.expression = t.invokeExpression?.expression == null ? null : base64Prefix(base64Encode(t.invokeExpression?.expression))
+        //     break
         default:
             throw new Error(`Unsupported tx type ${t.data}`)
     }
@@ -421,12 +421,12 @@ export const txToProto = (t: Exclude<TTransaction, GenesisTransaction>): wavesPr
 }
 
 
-export const signedTxToProto = (t: Exclude<TTx, GenesisTransaction>): wavesProto.waves.ISignedTransaction => {
+export const signedTxToProto = (t: TTx): wavesProto.waves.ISignedTransaction => {
     const common = getCommonSignedFields(t)
     const txData = getTxData(t)
 
     return {
-        transaction: {
+        wavesTransaction: {
             ...common,
             [common.data]: txData,
         },
