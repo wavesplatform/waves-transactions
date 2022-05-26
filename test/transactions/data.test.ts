@@ -265,10 +265,8 @@ describe('serialize/deserialize data tx', () => {
 })
 
 describe('serialize/deserialize data binary tx', () => {
-
     Object.entries(dataBinaryTx).forEach(([name, {Bytes, Json}]) =>
         it(name, () => {
             checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes})
         }))
-
 })

@@ -1,4 +1,4 @@
-import {publicKey} from '@waves/ts-lib-crypto'
+import {base16Decode, base16Encode, base64Decode, base64Encode, publicKey} from '@waves/ts-lib-crypto'
 import {alias} from '../../src'
 import {aliasMinimalParams} from '../minimalParams'
 import {
@@ -9,6 +9,7 @@ import {
 } from '../utils'
 import {aliasTx} from "./expected/proto/alias.tx";
 import {aliasBinaryTx} from "./expected/binary/alias.tx";
+import {binary} from '@waves/marshall'
 
 
 describe('alias', () => {
@@ -97,5 +98,4 @@ describe('serialize/deserialize alias binary tx', () => {
       it(name, () => {
         checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
       }))
-
 });

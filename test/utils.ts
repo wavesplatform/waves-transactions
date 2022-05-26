@@ -20,9 +20,9 @@ export {
  * @param t
  */
 export const deleteProofsAndId = (t: any) => {
-    const tx: any = t;
-    delete tx.id;
-    delete tx.proofs;
+    const tx: any = t
+    delete tx.id
+    delete tx.proofs
     return tx
 }
 
@@ -45,7 +45,6 @@ export function checkBinarySerializeDeserialize({Json, Bytes}: { Json: any, Byte
     const actualBytes = base16Encode(binaryBytes);
     const expectedBytes = base16Encode(base64Decode(Bytes));
     expect(expectedBytes).toBe(actualBytes)
-
 }
 export const longMax = '9223372036854775807';
 

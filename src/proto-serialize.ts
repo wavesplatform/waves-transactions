@@ -196,7 +196,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             })
             break
         case 'setScript':
-            res.script = (t.setScript!.hasOwnProperty("script")) ? base64Prefix(base64Encode(t.setScript!.script!)) : null
+            res.script = (t.setScript!.hasOwnProperty('script')) ? base64Prefix(base64Encode(t.setScript!.script!)) : null
             break
         case 'sponsorFee':
             res.minSponsoredAssetFee = convertNumber(t.sponsorFee!.minFee!.amount!)
@@ -490,8 +490,8 @@ export const dataEntryToProto = (de: DataTransactionEntry): wavesProto.waves.Dat
     binaryValue: de.type === 'binary' ? base64Decode((de.value.startsWith('base64:') ? de.value.slice(7) : de.value)) : undefined,
     stringValue: de.type === 'string' ? de.value : undefined,
 })
-const scriptToProto = (s: string): Uint8Array => {
-    return base64Decode(s.startsWith('base64:') ? s.slice(7) : s)
+export const scriptToProto = (s: string): Uint8Array | null => {
+    return s ? base64Decode(s.toString().startsWith('base64:') ? s.slice(7) : s) : null
 }
 
 const nameByType = {

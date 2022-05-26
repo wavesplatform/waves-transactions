@@ -14,7 +14,11 @@ describe('setSponsorship', () => {
     });
 
     it('Should not create sponsorship transaction with zero sponsor fee', () => {
-        expect(() =>sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: 0 }, stringSeed))
+        expect(() => {
+            const spTx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: 0 }, stringSeed)
+            console.log(spTx)
+            return spTx
+        })
             .toThrowError(errorMessageByTemplate('minSponsoredAssetFee', 0))
     });
 

@@ -49,10 +49,10 @@ describe('Assets', () => {
       }
 
       const tx = issue(txParams, account1)
-      const resp = await broadcast(tx, API_BASE)
-      expect(resp.type).toEqual(3)
       assetId = tx.id
+      const resp = await broadcast(tx, API_BASE)
       await waitForTx(assetId, { apiBase: API_BASE, timeout: TIMEOUT })
+      expect(resp.type).toEqual(3)
     }, TIMEOUT)
 
     it('Should ReIssue token', async () => {
