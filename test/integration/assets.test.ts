@@ -15,24 +15,26 @@ import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './con
 import { issueMinimalParams } from '../minimalParams'
 
 describe('Assets', () => {
-  let account1: string, account2: string
   const wvs = 10 ** 8
 
+  const account1 = 'jungle property method used observe any mirror dial road famous wonder satisfy curve pledge piece'
+  const account2 = 'torch walk scout grocery drum infant antique fatal boil key salute ribbon trick bean object'
+
+  const address1 = address(account1, CHAIN_ID)
+  const address2 = address(account2, CHAIN_ID)
+
   beforeAll(async () => {
-    const nonce = randomHexString(6)
     jest.setTimeout(60000)
 
-    account1 = 'account1' + nonce
-    account2 = 'account2' + nonce
     const mtt = massTransfer({
       transfers: [
-        { recipient: address(account1, CHAIN_ID), amount: 6 * wvs },
-        { recipient: address(account2, CHAIN_ID), amount: 1 * wvs },
+        { recipient: address(account1, CHAIN_ID), amount: 5.016 * wvs },
+        { recipient: address(account2, CHAIN_ID), amount: 0.1 * wvs },
       ],
     }, MASTER_SEED)
     await broadcast(mtt, API_BASE)
     await waitForTx(mtt.id, {apiBase: API_BASE, timeout: TIMEOUT})
-    console.log('Assets test setup successful\n Accounts nonce = ' + nonce)
+    // console.log('Assets test setup successful\n Accounts nonce = ' + nonce)
   }, TIMEOUT)
 
   describe('Ordinary assets', () => {
@@ -43,6 +45,7 @@ describe('Assets', () => {
         name: 'Test token',
         description: 'no description',
         decimals: 3,
+        additionalFee: 400000,
         quantity: 1000,
         chainId: CHAIN_ID,
         reissuable: true,
@@ -82,7 +85,7 @@ describe('Assets', () => {
       const transferParams: ITransferParams = {
         amount: '500',
         assetId,
-        recipient: address(account2, CHAIN_ID),
+        recipient: address2,
         attachment: '3MyAGEBuZGDKZDzYn6sbh2noqk9uYHy4kjw',
       }
 
@@ -97,11 +100,11 @@ describe('Assets', () => {
         assetId,
         transfers: [
           {
-            recipient: address(account2, CHAIN_ID),
+            recipient: address1,
             amount: '100',
           },
           {
-            recipient: address(account2, CHAIN_ID),
+            recipient: address2,
             amount: '100',
           },
         ],
@@ -235,7 +238,7 @@ describe('Assets', () => {
         amountAsset: assetId,
         priceAsset: null,
         amount: 1,
-        price: 100000000,
+        price: 10000,
       }, account2)
 
       const order2 = order({
@@ -246,7 +249,7 @@ describe('Assets', () => {
         amountAsset: assetId,
         priceAsset: null,
         amount: 1,
-        price: 100000000,
+        price: 10000,
       }, account1)
 
       //await submitOrder(order1, matcherUrl)
@@ -258,7 +261,7 @@ describe('Assets', () => {
         version: 2,
         order1,
         order2,
-        price: 100000000,
+        price: 10000,
         amount: 1,
         buyMatcherFee: order1.matcherFee,
         sellMatcherFee: order2.matcherFee,

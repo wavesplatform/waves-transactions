@@ -75,7 +75,7 @@ describe('setScript', () => {
     const txParams = { script: compiledContract};
     const signedTx = setScript(txParams, seed);
 
-    expect(signedTx.fee).toEqual(1000000)
+    expect(signedTx.fee).toEqual(100000)
     expect(signedTx.chainId).toEqual(87)
   })
 

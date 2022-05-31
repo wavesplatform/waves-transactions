@@ -18,7 +18,7 @@ describe('Smart features', () => {
     account2 = 'account2' + nonce
     const mtt = massTransfer({
       transfers: [
-        { recipient: address(account1, CHAIN_ID), amount: 1 * wvs },
+        { recipient: address(account1, CHAIN_ID), amount: 0.1 * wvs },
         { recipient: address(account2, CHAIN_ID), amount: 1100000 },
       ],
     }, MASTER_SEED)

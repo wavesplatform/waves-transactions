@@ -73,10 +73,10 @@
   },
   "dependencies": {
     "@waves/marshall": "^0.15.0-beta.1",
-    "@waves/node-api-js": "^1.2.3",
+    "@waves/node-api-js": "^1.2.5-beta.19",
     "@waves/protobuf-serialization": "1.4.1-beta.1",
     "@waves/ts-lib-crypto": "1.4.3",
-    "@waves/ts-types": "1.0.8-beta.2",
+    "@waves/ts-types": "1.0.9",
     "axios": "^0.19.0",
     "long": "^4.0.0"
   }

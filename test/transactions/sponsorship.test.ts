@@ -23,8 +23,8 @@ describe('setSponsorship', () => {
     });
 
     it('Should create sponsorship transaction with null sponsor fee', () => {
-        const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: ''}, stringSeed)
-        expect(tx).toMatchObject({...sponsorshipMinimalParams, minSponsoredAssetFee: ''})
+        const tx = sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: null}, stringSeed)
+        expect(tx).toMatchObject({...sponsorshipMinimalParams, minSponsoredAssetFee: null})
 
  //       expect(() =>sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: null }, stringSeed))
   //          .toThrowError(errorMessageByTemplate('minSponsoredAssetFee', 0))

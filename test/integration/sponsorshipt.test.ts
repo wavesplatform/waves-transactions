@@ -4,32 +4,33 @@ import {address} from '@waves/ts-lib-crypto'
 import {validate} from '../../src/validators'
 
 describe('Sponsorship', () => {
-    let assetId = 'J5UR2HN7KZjj8HsJ6zuQKVjayjdroBqRGdoEYmR9aKMt'
+    let assetId: string;
 
     it('Issue asset for sponsorship', async () => {
         const issueTx = issue({
             decimals: 8,
             name: 'testAsset',
             description: '',
-            quantity: '9000000000000000000',
+            quantity: '9000000000000',
             reissuable: true,
             chainId: CHAIN_ID,
         }, MASTER_SEED)
         assetId = issueTx.id
         await broadcast(issueTx, API_BASE)
+
+        await waitForTx(issueTx.id, {apiBase: API_BASE, timeout: 10000})
     }, TIMEOUT)
 
     it('Should set sponsorship', async () => {
-        const sponTx = sponsorship({assetId, minSponsoredAssetFee: '1000000000000000000', chainId: CHAIN_ID}, MASTER_SEED)
+        const sponTx = sponsorship({assetId, minSponsoredAssetFee: '100000', chainId: CHAIN_ID}, MASTER_SEED)
         await broadcast(sponTx, API_BASE)
         await waitForTx(sponTx.id, {timeout: TIMEOUT, apiBase: API_BASE})
-
-        console.log(sponTx)
 
         const ttx = transfer({
             recipient: address(MASTER_SEED, CHAIN_ID),
             amount: '100',
             feeAssetId: assetId,
+            fee: '100000',
             chainId: CHAIN_ID
         }, MASTER_SEED)
         await broadcast(ttx, API_BASE)

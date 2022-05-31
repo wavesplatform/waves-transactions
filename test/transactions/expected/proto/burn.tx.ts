@@ -16,21 +16,4 @@ export const burnTx = {
             'proofs': ['2jRDTypn5WVgrdxAQw4tF1VCbUidkuyumKMAM3y6wwYEiS75539tmhGiu18oDpAe2Sw5Gh7UeXW1bYbHr9aPi2sc'],
         },
     },
-    'Burn TX (type 6 v3)  min value': {
-        'Bytes': 'CFQSIJL4Cg7m8oV+sUn/3SQWcJnIDvBjXYh3TIjvckIJrSwvGgQQoI0GINrUkL2mLygD0gYkCiIKILsM+xG+LXXAXKBEMaDQbxxmLmjFSL3h7wTdpTfz+YfT',
-        'Json': {
-            'id': 'Ea2ZTwwNmtnYuWwP26L8NrXxY23aTobYNpvSWFoHg5XN',
-            'type': 6,
-            'version': 3,
-            'chainId': 84,
-            'senderPublicKey': 'Athtgb7Zm9V6ExyAzAJM1mP57qNAW1A76TmzXdDZDjbt',
-            'sender': '3N3kDDPYNbb3vzZRAPkgiR1R7YnLVtSrsiZ',
-            'assetId': 'DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv',
-            'amount': 0,
-            'fee': 100000,
-            'feeAssetId': null,
-            'timestamp': 1625236449882,
-            'proofs': ['2ew2iYLyyPf4B5n3i8guCxzGNrQimerLc4CLQGJPEqgZjNsA25E9CXJ5SmTum3uNBoV6u8br8t1FJ5mnRzT6Yr14'],
-        },
-    },
 }
