@@ -34,7 +34,6 @@ describe('Assets', () => {
     }, MASTER_SEED)
     await broadcast(mtt, API_BASE)
     await waitForTx(mtt.id, {apiBase: API_BASE, timeout: TIMEOUT})
-    // console.log('Assets test setup successful\n Accounts nonce = ' + nonce)
   }, TIMEOUT)
 
   describe('Ordinary assets', () => {
