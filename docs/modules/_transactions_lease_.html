@@ -88,9 +88,53 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/819b252/src/transactions/lease.ts#L16">src/transactions/lease.ts:16</a></li>
+									<li>Defined in build/tmp/src/transactions/lease.ts:59</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates and signs [[ILeaseTransaction]].</p>
+								</div>
+								<p>If no senderPublicKey is set, it will be derived from seed.
+								In case sender and signer are different, you need to pass senderPublicKey explicitly.</p>
+								<p>You can use this function with multiple seeds. In this case it will sign transaction accordingly and will add one proof per seed.
+								Also you can use already formed [[ILeaseTransaction]] instead of params.</p>
+								<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+									<h3>Usage</h3>
+								</a>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> { lease } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>)
+
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">&#x27;example seed phrase&#x27;</span>
+
+<span class="hljs-keyword">const</span> params = {
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">100</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs&#x27;</span>,
+  <span class="hljs-comment">//senderPublicKey: &#x27;by default derived from seed&#x27;,</span>
+  <span class="hljs-comment">//timestamp: Date.now(),</span>
+  <span class="hljs-comment">//fee: 100000,</span>
+}
+
+<span class="hljs-keyword">const</span> signedLeaseTx = lease(params, seed)
+</code></pre>
+								<a href="#output" id="output" style="color: inherit; text-decoration: none;">
+									<h3>Output</h3>
+								</a>
+								<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;CNgtoroh5xVLHsnyvqWAD8DCCQsXTzYwwaVeea2AvQVV&quot;</span>,
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-number">8</span>,
+  <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-number">3</span>,
+  <span class="hljs-attr">&quot;senderPublicKey&quot;</span>: <span class="hljs-string">&quot;3SU7zKraQF8tQAF8Ho75MSVCBfirgaQviFXnseEw4PYg&quot;</span>,
+  <span class="hljs-attr">&quot;amount&quot;</span>: <span class="hljs-number">100</span>,
+  <span class="hljs-attr">&quot;recipient&quot;</span>: <span class="hljs-string">&quot;3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs&quot;</span>,
+  <span class="hljs-attr">&quot;fee&quot;</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">&quot;timestamp&quot;</span>: <span class="hljs-number">1653981031115</span>,
+  <span class="hljs-attr">&quot;proofs&quot;</span>: [
+    <span class="hljs-string">&quot;371zijGTk6UVqwa4k23PUe2E5er22WoDwNUrR3uENq2VHipx7cMCetmjBsMQK7g3sLoEwmJFVRuK8KisnAEjy6Rc&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;chainId&quot;</span>: <span class="hljs-number">87</span>
+}
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -105,7 +149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/819b252/src/transactions/lease.ts#L17">src/transactions/lease.ts:17</a></li>
+									<li>Defined in build/tmp/src/transactions/lease.ts:60</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

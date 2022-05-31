@@ -1,4 +1,4 @@
-import {publicKey} from '@waves/ts-lib-crypto'
+import {base64Encode, publicKey} from '@waves/ts-lib-crypto'
 import {broadcast, cancelLease, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {
@@ -75,21 +75,19 @@ describe('data', () => {
             version: version,
             fee: fee,
         } as any, senderPk)
-        console.log(makeTxBytes(tx).join(','))
-        console.log(makeTxBytes(tx).length)
         const bytes = tx.version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)
         expect(bytes).toEqual(expectedBytes)
     })
 
     test.each([
-        [[{key: 'bin', value: Array(100).fill(1)}], 1, 100000],
-        [[{key: 'bin', value: Array(100).fill(1)}], 2, 100000],
-        [[{key: 'bin', value: Array(1000).fill(1)}], 1, 200000],
-        [[{key: 'bin', value: Array(1000).fill(1)}], 2, 100000],
-        [[{key: 'bin', value: Array(10000).fill(1)}], 1, 1000000],
-        [[{key: 'bin', value: Array(10000).fill(1)}], 2, 1000000],
-        [[{key: 'bin', type: 'binary', value: libs.crypto.base64Encode(Array(10000).fill(1))}], 1, 1000000],
-        [[{key: 'bin', type: 'binary', value: Array(10000).fill(1)}], 1, 1000000],
+        [[{key: 'bin1', value: Array(100).fill(1)}], 1, 100000],
+        [[{key: 'bin2', value: Array(100).fill(1)}], 2, 100000],
+        [[{key: 'bin3', value: Array(1000).fill(1)}], 1, 200000],
+        [[{key: 'bin4', value: Array(1000).fill(1)}], 2, 100000],
+        [[{key: 'bin5', value: Array(10000).fill(1)}], 1, 1000000],
+        [[{key: 'bin6', value: Array(10000).fill(1)}], 2, 1000000],
+        [[{key: 'bin7', type: 'binary', value: base64Encode(Array(10000).fill(1))}], 1, 1000000],
+        [[{key: 'bin8', type: 'binary', value: base64Encode(Array(10000).fill(1))}], 1, 1000000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 9800000],
         [Array(10).fill({key: 'bin', value: Array(10000).fill(1)}), 2, 9800000],
         [Array(15).fill({key: 'bin', value: Array(10000).fill(1)}), 1, 14700000],
@@ -112,6 +110,16 @@ describe('data', () => {
             key: 'bin',
             value: null
         }], 1, 'The value of the "value" field can only be null in a version greater than 1.'],
+        [[{
+            key: 'main',
+            type: 'integer',
+            value: '3PAZv9tgK1PX7dKR7b4kchq5qdpUS3G5sYT|3PJ6iR5X1PT2rZcNmbqByKuh7k8mtj5wVGw|3P3NVrhiyHBc4oUWNhtZRnJA5uLX9n39TK9|3PCobfdpn4djVBG1Z3Ubek79kKcEiWYjrDv'
+        }], 1, ''],
+        [[{
+            key: 'bin',
+            value: 'false',
+            type: 'boolean',
+        }], 1, "type \"boolean\" does not match value \"false\"(string)"],
     ])('should throw on invalid data', (dataEntries, version, expectedError) => {
         const tx = () => data({
             data: dataEntries,

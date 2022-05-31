@@ -236,6 +236,7 @@ export const isValidDataPair = (data: { type: keyof typeof validateType, value: 
 export const isValidData = validatePipe(
     isRequired(true),
     pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+
     isValidDataPair
 )
 export const isValidDeleteRequest = validatePipe(

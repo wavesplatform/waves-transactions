@@ -5,7 +5,7 @@ import { massTransferValidator as massTransfer } from './mass-transfer'
 import { aliasValidator as alias } from './alias'
 import { burnValidator as burn} from './burn'
 import { cancelLeaseValidator as cancelLease } from './cancel-lease'
-import { dataValidator as data } from './data'
+import { dataFieldValidator, dataValidator as data } from './data'
 import { sponsorshipValidator as sponsorship } from './sponsorship'
 import { setAssetScriptValidator as setAssetScript } from './set-asset-script'
 import { setScriptValidator as setScript } from './set-script'
@@ -35,6 +35,7 @@ export const validate = {
     setAssetScript,
     cancelLease,
     data,
+    dataFieldValidator,
     lease,
     setScript,
     invokeScript,
