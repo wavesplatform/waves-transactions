@@ -8,7 +8,7 @@ import {
     validateByShema,
     ifElse,
     isValidAliasName,
-    defaultValue, isPublicKey
+    defaultValue, isPublicKey, isNaturalNumberOrZeroLike
 } from './validators'
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 
@@ -18,7 +18,7 @@ const aliasScheme = {
     version: orEq([undefined, 2, 3]),
     senderPublicKey: isPublicKey,
     alias: isValidAliasName,
-    fee: isNumberLike,
+    fee: isNaturalNumberOrZeroLike,
     chainId: isNumber,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),

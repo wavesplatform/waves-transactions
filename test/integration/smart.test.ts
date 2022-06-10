@@ -18,7 +18,7 @@ describe('Smart features', () => {
     account2 = 'account2' + nonce
     const mtt = massTransfer({
       transfers: [
-        { recipient: address(account1, CHAIN_ID), amount: 1 * wvs },
+        { recipient: address(account1, CHAIN_ID), amount: 0.1 * wvs },
         { recipient: address(account2, CHAIN_ID), amount: 1100000 },
       ],
     }, MASTER_SEED)
@@ -126,7 +126,6 @@ describe('Smart features', () => {
           script,
         }
         const tx = setScript(txParams, account2)
-        console.log(libs.crypto.base64Encode(txToProtoBytes(tx)))
         await broadcast(tx, API_BASE)
         await waitForTx(tx.id, { timeout: TIMEOUT, apiBase: API_BASE })
         console.log('dApp account script has been set')
@@ -145,6 +144,7 @@ describe('Smart features', () => {
           call: {
             function: 'foo', args: [{ type: 'integer', value: 10000 }],
           },
+          fee: 900000
         },
         account1)
 

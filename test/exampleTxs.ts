@@ -148,7 +148,7 @@ export const setAssetScriptTx = {
     ['4ffQFcfv9NG8GtNB5c1yamFvEFoixvgYBHPmfwSAkZeVRiCwZvB2HWWiMcbiujGhWGxXnho37bWqELnQ6DBPCaj4'],
   id: '4ERUXALAziaWJ1Acsmpnfjgtv1ixHSWXRp5dBR837o4e',
   script: 'base64:AQa3b8tH',
-  assetId: '',
+  assetId: "Cei6h7evZcdR5qdbdjAABWdnuyHrp43Yb6MxN6ZViqFR",
 }
 
 export const invokeScriptTx = {

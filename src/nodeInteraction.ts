@@ -16,7 +16,7 @@ const delay = (timeout: number): CancellablePromise<{}> => {
 
   const p = new Promise((resolve, _) => {
     t.resolve = resolve
-    t.id = setTimeout(() => resolve(), timeout)
+    t.id = setTimeout(resolve, timeout)
   }) as any
 
   (<any>p).cancel = () => {

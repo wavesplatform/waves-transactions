@@ -75,6 +75,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#protobytestosignedtx" class="tsd-kind-icon">proto<wbr>Bytes<wbr>ToSigned<wbr>Tx</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#protobytestotx" class="tsd-kind-icon">proto<wbr>Bytes<wbr>ToTx</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#prototxdatatotx" class="tsd-kind-icon">proto<wbr>TxData<wbr>ToTx</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#scripttoproto" class="tsd-kind-icon">script<wbr>ToProto</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#signedtxtoproto" class="tsd-kind-icon">signed<wbr>TxTo<wbr>Proto</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#signedtxtoprotobytes" class="tsd-kind-icon">signed<wbr>TxTo<wbr>Proto<wbr>Bytes</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_proto_serialize_.html#txtoproto" class="tsd-kind-icon">tx<wbr>ToProto</a></li>
@@ -96,7 +97,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L469">src/proto-serialize.ts:469</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:486</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -119,7 +120,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L226">src/proto-serialize.ts:226</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:243</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -142,7 +143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L230">src/proto-serialize.ts:230</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:247</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -165,7 +166,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L61">src/proto-serialize.ts:61</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:71</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,7 +189,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L73">src/proto-serialize.ts:73</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:83</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -211,7 +212,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L80">src/proto-serialize.ts:80</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:90</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -225,22 +226,45 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="signedtxtoproto" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> signed<wbr>TxTo<wbr>Proto</h3>
+					<a name="scripttoproto" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> script<wbr>ToProto</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">signed<wbr>TxTo<wbr>Proto<span class="tsd-signature-symbol">(</span>t<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><a href="_transactions_.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">GenesisTransaction</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISignedTransaction</span></li>
+						<li class="tsd-signature tsd-kind-icon">script<wbr>ToProto<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L407">src/proto-serialize.ts:407</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:493</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>t: <span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><a href="_transactions_.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">GenesisTransaction</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>s: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="signedtxtoproto" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> signed<wbr>TxTo<wbr>Proto</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">signed<wbr>TxTo<wbr>Proto<span class="tsd-signature-symbol">(</span>t<span class="tsd-signature-symbol">: </span><a href="_transactions_.html#ttx" class="tsd-signature-type">TTx</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISignedTransaction</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in build/tmp/src/proto-serialize.ts:424</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>t: <a href="_transactions_.html#ttx" class="tsd-signature-type">TTx</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ISignedTransaction</span></h4>
@@ -257,7 +281,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L57">src/proto-serialize.ts:57</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:67</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -280,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L396">src/proto-serialize.ts:396</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:413</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -303,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wavesplatform/waves-transactions/blob/0072220/src/proto-serialize.ts#L53">src/proto-serialize.ts:53</a></li>
+									<li>Defined in build/tmp/src/proto-serialize.ts:63</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -348,6 +372,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_proto_serialize_.html#prototxdatatotx" class="tsd-kind-icon">proto<wbr>TxData<wbr>ToTx</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_proto_serialize_.html#scripttoproto" class="tsd-kind-icon">script<wbr>ToProto</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_proto_serialize_.html#signedtxtoproto" class="tsd-kind-icon">signed<wbr>TxTo<wbr>Proto</a>

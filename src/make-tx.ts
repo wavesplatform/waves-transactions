@@ -39,7 +39,7 @@ import {
     CancelLeaseTransaction,
     DataTransaction,
     ExchangeTransaction,
-    InvokeExpressionTransaction,
+    // InvokeExpressionTransaction,
     InvokeScriptTransaction,
     IssueTransaction,
     LeaseTransaction,
@@ -71,7 +71,7 @@ export type TxTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: InvokeScriptTransaction
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
-    [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
+    // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
 }
 export type TTxParamsWithType<T extends TTransactionType> = TxParamsTypeMap[T] & { type: T }
 
@@ -91,7 +91,7 @@ export type TxParamsTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: IInvokeScriptParams
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
-    [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
+    // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
 }
 
 /**
@@ -129,8 +129,8 @@ export function makeTx<T extends TTransactionType>(params: TTxParamsWithType<T> 
             return invokeScript(params as any) as any
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             return updateAssetInfo(params as any) as any
-        case TRANSACTION_TYPE.INVOKE_EXPRESSION:
-            return txToProtoBytes(params as any) as any
+        // case TRANSACTION_TYPE.INVOKE_EXPRESSION:
+        //     return txToProtoBytes(params as any) as any
         default:
             throw new Error(`Unknown tx type: ${params.type}`)
     }
@@ -171,8 +171,8 @@ export function makeTxBytes<T extends TTransactionType>(tx: TTxParamsWithType<T>
             return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx)
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             return txToProtoBytes(tx as any)
-        case TRANSACTION_TYPE.INVOKE_EXPRESSION:
-            return txToProtoBytes(tx as any)
+        // case TRANSACTION_TYPE.INVOKE_EXPRESSION:
+        //     return txToProtoBytes(tx as any)
         default:
             throw new Error(`Unknown tx type: ${tx.type}`)
     }

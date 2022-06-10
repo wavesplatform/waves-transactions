@@ -14,7 +14,6 @@ import {
   convertToPairs,
   networkByte,
   fee,
-  normalizeAssetId
 } from '../generic'
 import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
@@ -34,14 +33,13 @@ export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): SetAssetScri
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
   if (paramsOrTx.script == null) throw new Error('Asset script cannot be empty')
 
-  const tx: SetAssetScriptTransaction & WithId & WithProofs & {feeAssetId: string | null}= {
+  const tx: SetAssetScriptTransaction & WithId & WithProofs = {
     type,
     version,
     senderPublicKey,
     assetId: paramsOrTx.assetId,
     chainId: networkByte(paramsOrTx.chainId, 87),
     fee: fee(paramsOrTx, 100000000),
-    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',

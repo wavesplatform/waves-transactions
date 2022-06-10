@@ -1,18 +1,21 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isNumber,
-  isNumberLike,
-  isArray,
-  getError,
-  validateByShema,
-  ifElse,
   defaultValue,
+  getError,
+  ifElse,
+  isArray,
+  isBase64,
+  isBoolean,
+  isEq,
+  isNaturalNumberLike,
+  isNaturalNumberOrZeroLike,
+  isNumber,
   isPublicKey,
-  isValidAssetName,
+  isRequired,
   isValidAssetDescription,
-  isBoolean, isBase64, isRequired
+  isValidAssetName,
+  orEq,
+  validateByShema
 } from './validators'
 
 const issueScheme = {
@@ -21,7 +24,7 @@ const issueScheme = {
   senderPublicKey: isPublicKey,
   name: isValidAssetName,
   description: isValidAssetDescription,
-  quantity: isNumberLike,
+  quantity: isNaturalNumberLike,
   decimals: isNumber,
   reissuable: isBoolean,
   script: ifElse(
@@ -30,9 +33,9 @@ const issueScheme = {
       defaultValue(true)
   ),
   chainId: isNumber,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-}
+};
 
-export const issueValidator = validateByShema(issueScheme, getError)
+export const issueValidator = validateByShema(issueScheme, getError);

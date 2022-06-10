@@ -31,14 +31,13 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): MassTransferTr
 
     if (!Array.isArray(paramsOrTx.transfers) || paramsOrTx.transfers.length === 0) throw new Error('Should contain at least one transfer')
 
-    const tx: MassTransferTransaction & WithId & WithProofs & {feeAssetId: string | null}= {
+    const tx: MassTransferTransaction & WithId & WithProofs = {
         type,
         version,
         senderPublicKey,
         assetId: normalizeAssetId(paramsOrTx.assetId),
         transfers: paramsOrTx.transfers,
         fee: fee(paramsOrTx, 100000 + Math.ceil(0.5 * paramsOrTx.transfers.length) * 100000),
-        feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
         timestamp: paramsOrTx.timestamp || Date.now(),
         attachment: paramsOrTx.attachment || '',
         proofs: paramsOrTx.proofs || [],

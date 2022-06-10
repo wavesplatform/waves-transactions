@@ -21,7 +21,7 @@ export function burn(paramsOrTx: any, seed?: TSeedTypes): BurnTransaction & With
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
 
-  const tx: BurnTransaction & WithId & WithProofs & {feeAssetId: string | null}= {
+  const tx: BurnTransaction & WithId & WithProofs = {
     type,
     version,
     senderPublicKey,
@@ -29,7 +29,6 @@ export function burn(paramsOrTx: any, seed?: TSeedTypes): BurnTransaction & With
     amount: paramsOrTx.amount,
     chainId: networkByte(paramsOrTx.chainId, 87),
     fee: fee(paramsOrTx, 100000),
-    feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
     timestamp: paramsOrTx.timestamp || Date.now(),
     proofs: paramsOrTx.proofs || [],
     id: '',

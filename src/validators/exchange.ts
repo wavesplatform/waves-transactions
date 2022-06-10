@@ -8,14 +8,14 @@ import {
     isArray,
     getError,
     validateByShema,
-    ifElse, defaultValue, isPublicKey, validatePipe, isRequired
+    ifElse, defaultValue, isPublicKey, validatePipe, isRequired, isNaturalNumberOrZeroLike
 } from './validators'
 
 
 const exchangeScheme = {
     type: isEq(TRANSACTION_TYPE.EXCHANGE),
     senderPublicKey: isPublicKey,
-    version: orEq([undefined, 0, 1, 2, 3]),
+    version: orEq([undefined, 1, 2, 3]),
     order1: validatePipe(
         isRequired(true),
         orderValidator
@@ -28,7 +28,7 @@ const exchangeScheme = {
     price: isNumberLike,
     buyMatcherFee: isNumberLike,
     sellMatcherFee: isNumberLike,
-    fee: isNumberLike,
+    fee: isNaturalNumberOrZeroLike,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }

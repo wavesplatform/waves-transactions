@@ -57,17 +57,23 @@ export const isEq = <T>(reference: T) => (value: unknown) => {
     }
 }
 
-export const orEq = (referencesList: Array<unknown>) => (value: unknown) => referencesList.some(isEq(value))
+export const orEq = (referencesList: Array<unknown>) => (value: unknown) => referencesList.some(isEq(value));
 
-export const isRequired = (required: boolean) => (value: unknown) => !required || value != null
+export const isRequired = (required: boolean) => (value: unknown) => !required || value != null;
 
-export const isString = (value: unknown) => typeof value === 'string' || value instanceof String
+export const isString = (value: unknown) => typeof value === 'string' || value instanceof String;
 
-export const isNumber = (value: unknown) => (typeof value === 'number' || value instanceof Number) && !isNaN(Number(value))
+export const isNumber = (value: unknown) => (typeof value === 'number' || value instanceof Number) && !isNaN(Number(value));
 
 export const isNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && !!(value || value === 0)
 
-export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean)
+export const isNaturalNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) > 0;
+
+export const isNaturalNumberOrZeroLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) >= 0;
+
+export const isNaturalNumberOrNullLike = (value: unknown) => (!isNaN(Number(value)) && Number(value) > 0) || value === null;
+
+export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean);
 
 export const isByteArray = (value: unknown) => {
     if (!value) {
@@ -175,16 +181,18 @@ export const isHash = validatePipe(
         (value: string) => base58Decode(value),
         bytesLength(32)
     )
-)
+);
 
-export const isPublicKey = isHash
+export const isPublicKey = isHash;
 
 
-export const isAssetId = ifElse(
+export const isWavesOrAssetId = ifElse(
     orEq(['', null, undefined, 'WAVES']),
     defaultValue(true),
     isHash
-)
+);
+
+export const isAssetId = isHash;
 
 export const isAttachment = ifElse(
     orEq([null, undefined]),
@@ -228,6 +236,7 @@ export const isValidDataPair = (data: { type: keyof typeof validateType, value: 
 export const isValidData = validatePipe(
     isRequired(true),
     pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+
     isValidDataPair
 )
 export const isValidDeleteRequest = validatePipe(
@@ -250,7 +259,7 @@ export const isValidAssetName = validatePipe(
     )
 )
 
-export const isValidAssetDescription = ifElse(
+export const isValidAssetDescription = validatePipe(
     isRequired(false),
     defaultValue(true),
     pipe(

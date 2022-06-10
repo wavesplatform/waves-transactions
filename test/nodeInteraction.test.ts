@@ -107,7 +107,6 @@ describe('Node interaction utility functions', () => {
 
     it('Should get account script meta', async () => {
         const data = await utilityF.scriptMeta('3N749utyWVhhnCqWh6hbqsq5zMvqVSanamR', apiBase)
-        console.log(data)
         expect(data).toMatchObject({address: '3N749utyWVhhnCqWh6hbqsq5zMvqVSanamR'})
     }, 5000)
 

@@ -11,7 +11,7 @@ import {
   defaultValue,
   isPublicKey,
   isValidData,
-  isValidDeleteRequest,
+  isValidDeleteRequest, isNaturalNumberOrZeroLike,
 } from './validators'
 
 
@@ -19,13 +19,15 @@ import {
 const dataScheme = {
   type: isEq(TRANSACTION_TYPE.DATA),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 1, 2]),
   data: (data: Array<unknown> ) =>
       isArray(data) &&
-      data.every(item => isValidData(item) || isValidDeleteRequest),
-  fee: isNumberLike,
+      data.every(item => isValidData(item) || isValidDeleteRequest(item)),
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
+
+export const dataFieldValidator = (item: unknown ) => isValidData(item) || isValidDeleteRequest(item)
 
 export const dataValidator = validateByShema(dataScheme, getError)
