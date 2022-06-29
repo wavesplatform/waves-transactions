@@ -1,46 +1,47 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isAssetId,
-  isRecipient,
-  isNumber,
-  isNumberLike,
-  isAttachment,
-  isArray,
-  getError,
-  validateByShema,
-  ifElse,
-  defaultValue,
-  isPublicKey,
-  validatePipe,
-  pipe,
-  prop,
-  gte,
-  isRequired
+    defaultValue,
+    getError,
+    gte,
+    ifElse,
+    isArray,
+    isAttachment,
+    isEq,
+    isNaturalNumberOrZeroLike,
+    isNumber,
+    isPublicKey,
+    isRecipient,
+    isRequired,
+    isWavesOrAssetId, lte,
+    orEq,
+    pipe,
+    prop,
+    validateByShema,
+    validatePipe
 } from './validators'
 
 
 const massTransferScheme = {
   type: isEq(TRANSACTION_TYPE.MASS_TRANSFER),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 1, 2]),
   transfers: validatePipe(
       isArray,
       pipe(prop('length'), gte(0)),
+      pipe(prop('length'), lte(100)),
       (data: Array<unknown>) => data.every(
           validatePipe(
               isRequired(true),
               pipe(prop('recipient'), isRecipient),
-              pipe(prop('amount'), isNumberLike)
+              pipe(prop('amount'), isNaturalNumberOrZeroLike)
           )
       )
   ),
-  assetId: isAssetId,
+  assetId: isWavesOrAssetId,
   attachment: isAttachment,
-  fee: isNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
 
-export const massTransferValidator = validateByShema(massTransferScheme, getError)
+export const massTransferValidator = validateByShema(massTransferScheme, getError);

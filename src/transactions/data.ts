@@ -33,7 +33,7 @@ const typeMap: any = {
     _: ['binary', 2, LEN(SHORT)(BYTES)],
 }
 
-const mapType = <T>(value: T, type: string | undefined): [DataFiledType, number, (value: T) => Uint8Array] => {
+const mapType = <T>(value: T, type: string | undefined | null): [DataFiledType, number, (value: T) => Uint8Array] => {
     return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
 }
 
@@ -54,23 +54,25 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
 
     if (!Array.isArray(paramsOrTx.data)) throw new Error('["data should be array"]')
 
+    if (paramsOrTx.data.some((x: any) => x.value === null) && paramsOrTx.version === 1) throw new Error('The value of the "value" field can only be null in a version greater than 1.')
+
     const _timestamp = paramsOrTx.timestamp || Date.now()
 
     const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: DataTransactionEntry) => {
-
+        console.log(x)
         if (x.value == null) return x
         if ((<any>x).type) {
+            if(validate.dataFieldValidator(x)) {
             return {
                 ...x,
                 value: convertValue(x.type, x.value, 'defined'),
-            }
+            }} else throw new Error(`type "${x.type}" does not match value "${x.value}"(${typeof x.value})`)
         } else {
             const type = mapType(x.value, x.type)[0]
 
             return {
                 type,
                 key: x.key,
-                // @ts-ignore
                 value: convertValue(type, x.value, 'not defined'),
             }
         }

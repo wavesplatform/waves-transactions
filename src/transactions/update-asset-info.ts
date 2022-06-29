@@ -3,7 +3,7 @@
  */
 import {IUpdateAssetInfoParams, WithId, WithProofs, WithSender} from '../transactions'
 import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
-import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte, normalizeAssetId} from '../generic'
+import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {validate} from '../validators'
 import {TSeedTypes} from '../types'
 import {txToProtoBytes} from '../proto-serialize'
@@ -27,7 +27,6 @@ export function updateAssetInfo(paramsOrTx: any, seed?: TSeedTypes): UpdateAsset
         description: paramsOrTx.description,
         assetId: paramsOrTx.assetId,
         fee: fee(paramsOrTx, 100000),
-        feeAssetId: normalizeAssetId(paramsOrTx.feeAssetId),
         timestamp: paramsOrTx.timestamp || Date.now(),
         proofs: paramsOrTx.proofs || [],
         chainId: networkByte(paramsOrTx.chainId, 87),

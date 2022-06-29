@@ -1,31 +1,32 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isAssetId,
-  isRecipient,
-  isNumber,
-  isNumberLike,
-  prop,
-  isArray,
-  getError,
-  validateByShema,
-  ifElse,
   defaultValue,
-  isPublicKey,
-  isRequired,
-  validatePipe,
-  pipe,
-  isString,
+  getError,
   gte,
-  isValidDataPair
+  ifElse,
+  isArray,
+  isEq,
+  isNaturalNumberLike,
+  isNaturalNumberOrZeroLike,
+  isNumberLike,
+  isPublicKey,
+  isRecipient,
+  isRequired,
+  isString,
+  isValidDataPair,
+  isWavesOrAssetId,
+  orEq,
+  pipe,
+  prop,
+  validateByShema,
+  validatePipe
 } from './validators'
 
 
 const invokeScheme = {
   type: isEq(TRANSACTION_TYPE.INVOKE_SCRIPT),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
+  version: orEq([undefined, 1, 2]),
   dApp: isRecipient,
 
   call: ifElse(
@@ -48,16 +49,16 @@ const invokeScheme = {
       (data: Array<unknown>) => data.every(
           validatePipe(
               pipe(prop('amount'), isNumberLike),
-              pipe(prop('assetId'), isAssetId),
+              pipe(prop('assetId'), isWavesOrAssetId)
           )
       )
   ),
-  fee: isNumberLike,
-  feeAssetId: isAssetId,
-  chainId: isNumber,
-  timestamp: isNumber,
+  fee: isNaturalNumberOrZeroLike,
+  feeAssetId: isWavesOrAssetId,
+  chainId: isNaturalNumberLike,
+  timestamp: isNaturalNumberLike,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-}
+};
 
 
-export const invokeValidator = validateByShema(invokeScheme, getError)
+export const invokeValidator = validateByShema(invokeScheme, getError);

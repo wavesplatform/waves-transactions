@@ -26,6 +26,7 @@ export { updateAssetInfo } from './transactions/update-asset-info'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 export { makeTx, makeTxBytes } from './make-tx'
+// export { invokeExpression } from './transactions/invoke-expression'
 
 // Export interfaces
 export {
