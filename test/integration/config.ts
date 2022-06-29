@@ -18,4 +18,5 @@ export const MATCHER_URL = 'https://matcher-testnet.waves.exchange/'
 
 export const TIMEOUT = 60000
 
+// @ts-ignore
 export const randomHexString = (l: number) => [...randomBytes(l)].map(n => n.toString(16)).join('')

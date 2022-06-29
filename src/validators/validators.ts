@@ -1,4 +1,4 @@
-import { base58Decode, base64Decode, keccak, blake2b, stringToBytes } from '@waves/ts-lib-crypto'
+import {base58Decode, base64Decode, keccak, blake2b, stringToBytes} from '@waves/ts-lib-crypto'
 
 
 const TX_DEFAULTS = {
@@ -57,23 +57,23 @@ export const isEq = <T>(reference: T) => (value: unknown) => {
     }
 }
 
-export const orEq = (referencesList: Array<unknown>) => (value: unknown) => referencesList.some(isEq(value));
+export const orEq = (referencesList: Array<unknown>) => (value: unknown) => referencesList.some(isEq(value))
 
-export const isRequired = (required: boolean) => (value: unknown) => !required || value != null;
+export const isRequired = (required: boolean) => (value: unknown) => !required || value != null
 
-export const isString = (value: unknown) => typeof value === 'string' || value instanceof String;
+export const isString = (value: unknown) => typeof value === 'string' || value instanceof String
 
-export const isNumber = (value: unknown) => (typeof value === 'number' || value instanceof Number) && !isNaN(Number(value));
+export const isNumber = (value: unknown) => (typeof value === 'number' || value instanceof Number) && !isNaN(Number(value))
 
 export const isNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && !!(value || value === 0)
 
-export const isNaturalNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) > 0;
+export const isNaturalNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) > 0
 
-export const isNaturalNumberOrZeroLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) >= 0;
+export const isNaturalNumberOrZeroLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) >= 0
 
-export const isNaturalNumberOrNullLike = (value: unknown) => (!isNaN(Number(value)) && Number(value) > 0) || value === null;
+export const isNaturalNumberOrNullLike = (value: unknown) => (!isNaN(Number(value)) && Number(value) > 0) || value === null
 
-export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean);
+export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean)
 
 export const isByteArray = (value: unknown) => {
     if (!value) {
@@ -106,7 +106,7 @@ export const isBase58 = (value: unknown) => {
 
 export const isBase64 = (value: unknown) => {
     try {
-        value = (value as string).replace(/^base64:/,'')
+        value = (value as string).replace(/^base64:/, '')
         base64Decode(value as string)
     } catch (e) {
         return false
@@ -181,44 +181,43 @@ export const isHash = validatePipe(
         (value: string) => base58Decode(value),
         bytesLength(32)
     )
-);
+)
 
-export const isPublicKey = isHash;
+export const isPublicKey = isHash
 
 
 export const isWavesOrAssetId = ifElse(
     orEq(['', null, undefined, 'WAVES']),
     defaultValue(true),
     isHash
-);
+)
 
-export const isAssetId = isHash;
+export const isAssetId = isHash
 
 export const isAttachment = ifElse(
     orEq([null, undefined]),
     defaultValue(true),
     ifElse(
-      // if valid Data Pair
-      validatePipe(isArray, (data: any[]) => data.every(isValidDataPair)),
-      defaultValue(true),
-      // else if valid base58 or bytearray
-      pipe(
-        ifElse(
-          isBase58,
-          base58Decode,
-          nope
-        ),
-        ifElse(
-          isByteArray,
-          pipe(
-            prop('length'),
-            lte(TX_DEFAULTS.MAX_ATTACHMENT)
-          ),
-          defaultValue(false)
+        // if valid Data Pair
+        validatePipe(isArray, (data: any[]) => data.every(isValidDataPair)),
+        defaultValue(true),
+        // else if valid base58 or bytearray
+        pipe(
+            ifElse(
+                isBase58,
+                base58Decode,
+                nope
+            ),
+            ifElse(
+                isByteArray,
+                pipe(
+                    prop('length'),
+                    lte(TX_DEFAULTS.MAX_ATTACHMENT)
+                ),
+                defaultValue(false)
+            )
         )
-      )
     )
-
 )
 
 
@@ -240,9 +239,9 @@ export const isValidData = validatePipe(
     isValidDataPair
 )
 export const isValidDeleteRequest = validatePipe(
-  isRequired(true),
-  pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
-  ({type, value}: any) => type ==null && value == null
+    isRequired(true),
+    pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+    ({type, value}: any) => type == null && value == null
 )
 
 export const isValidAssetName = validatePipe(
