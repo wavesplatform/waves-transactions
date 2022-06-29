@@ -26,7 +26,7 @@ export function cancelOrder(params: ICancelOrderParams, seed?: string | TPrivate
     sender: senderPublicKey,
     orderId: params.orderId,
     signature,
-    hash
+    hash,
   }
 
   validate.cancelOrder(cancelOrderBody)

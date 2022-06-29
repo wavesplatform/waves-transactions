@@ -1,27 +1,28 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isNumber,
-  isNumberLike,
-  isArray,
-  getError,
-  validateByShema,
-  ifElse,
   defaultValue,
+  getError,
+  ifElse,
+  isArray,
+  isBase64,
+  isEq,
+  isNaturalNumberLike,
+  isNaturalNumberOrZeroLike,
+  isNumber,
   isPublicKey,
-  isBase64
+  orEq,
+  validateByShema
 } from './validators'
 
 const setScriptScheme = {
   type: isEq(TRANSACTION_TYPE.SET_SCRIPT),
   senderPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2]),
-  chainId: isNumber,
-  fee: isNumberLike,
+  version: orEq([undefined, 1, 2]),
+  chainId: isNaturalNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   script: ifElse(isEq(null), defaultValue(true), isBase64),
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
 
-export const setScriptValidator = validateByShema(setScriptScheme, getError)
+export const setScriptValidator = validateByShema(setScriptScheme, getError);

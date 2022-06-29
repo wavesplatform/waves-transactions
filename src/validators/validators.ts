@@ -1,4 +1,4 @@
-import { base58Decode, base64Decode, keccak, blake2b, stringToBytes } from '@waves/ts-lib-crypto'
+import {base58Decode, base64Decode, keccak, blake2b, stringToBytes} from '@waves/ts-lib-crypto'
 
 
 const TX_DEFAULTS = {
@@ -67,6 +67,12 @@ export const isNumber = (value: unknown) => (typeof value === 'number' || value 
 
 export const isNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && !!(value || value === 0)
 
+export const isNaturalNumberLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) > 0
+
+export const isNaturalNumberOrZeroLike = (value: unknown) => value != null && !isNaN(Number(value)) && Number(value) >= 0
+
+export const isNaturalNumberOrNullLike = (value: unknown) => (!isNaN(Number(value)) && Number(value) > 0) || value === null
+
 export const isBoolean = (value: unknown) => value != null && (typeof value === 'boolean' || value instanceof Boolean)
 
 export const isByteArray = (value: unknown) => {
@@ -94,15 +100,15 @@ export const isBase58 = (value: unknown) => {
     try {
         base58Decode(value as string)
     } catch (e) {
-        return false;
+        return false
     }
 
-    return true;
+    return true
 }
 
 export const isBase64 = (value: unknown) => {
     try {
-        value = (value as string).replace(/^base64:/,'')
+        value = (value as string).replace(/^base64:/, '')
         base64Decode(value as string)
     } catch (e) {
         return false
@@ -182,37 +188,38 @@ export const isHash = validatePipe(
 export const isPublicKey = isHash
 
 
-export const isAssetId = ifElse(
+export const isWavesOrAssetId = ifElse(
     orEq(['', null, undefined, 'WAVES']),
     defaultValue(true),
     isHash
-);
+)
+
+export const isAssetId = isHash
 
 export const isAttachment = ifElse(
     orEq([null, undefined]),
     defaultValue(true),
     ifElse(
-      // if valid Data Pair
-      validatePipe(isArray, (data: any[]) => data.every(isValidDataPair)),
-      defaultValue(true),
-      // else if valid base58 or bytearray
-      pipe(
-        ifElse(
-          isBase58,
-          base58Decode,
-          nope
-        ),
-        ifElse(
-          isByteArray,
-          pipe(
-            prop('length'),
-            lte(TX_DEFAULTS.MAX_ATTACHMENT)
-          ),
-          defaultValue(false)
+        // if valid Data Pair
+        validatePipe(isArray, (data: any[]) => data.every(isValidDataPair)),
+        defaultValue(true),
+        // else if valid base58 or bytearray
+        pipe(
+            ifElse(
+                isBase58,
+                base58Decode,
+                nope
+            ),
+            ifElse(
+                isByteArray,
+                pipe(
+                    prop('length'),
+                    lte(TX_DEFAULTS.MAX_ATTACHMENT)
+                ),
+                defaultValue(false)
+            )
         )
-      )
     )
-
 )
 
 
@@ -221,8 +228,8 @@ const validateType = {
     boolean: isBoolean,
     string: isString,
     binary: isBase64,
-    list: isArray
-};
+    list: isArray,
+}
 
 export const isValidDataPair = (data: { type: keyof typeof validateType, value: unknown }) =>
     !!(validateType[data.type] && validateType[data.type](data.value))
@@ -230,12 +237,13 @@ export const isValidDataPair = (data: { type: keyof typeof validateType, value: 
 export const isValidData = validatePipe(
     isRequired(true),
     pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+
     isValidDataPair
 )
 export const isValidDeleteRequest = validatePipe(
-  isRequired(true),
-  pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
-  ({type, value}: any) => type ==null && value == null
+    isRequired(true),
+    pipe(prop('key'), validatePipe(isString, (key: string) => !!key)),
+    ({type, value}: any) => type == null && value == null
 )
 
 export const isValidAssetName = validatePipe(
@@ -252,7 +260,7 @@ export const isValidAssetName = validatePipe(
     )
 )
 
-export const isValidAssetDescription = ifElse(
+export const isValidAssetDescription = validatePipe(
     isRequired(false),
     defaultValue(true),
     pipe(
@@ -282,5 +290,5 @@ export const validateByShema = (shema: Record<string, Function>, errorTpl: (key:
 }
 
 export const getError = (key: string, value: any) => {
-    return `tx "${key}", has wrong data: ${JSON.stringify(value)}. Check tx data.`;
+    return `tx "${key}", has wrong data: ${JSON.stringify(value)}. Check tx data.`
 }

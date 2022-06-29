@@ -1,14 +1,17 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 import {
-  isEq,
-  orEq,
-  isRecipient,
-  isNumber,
-  isNumberLike,
-  isArray,
+  defaultValue,
   getError,
-  validateByShema,
-  ifElse, defaultValue, isPublicKey
+  ifElse,
+  isArray,
+  isEq,
+  isNaturalNumberLike,
+  isNaturalNumberOrZeroLike,
+  isNumber,
+  isPublicKey,
+  isRecipient,
+  orEq,
+  validateByShema
 } from './validators'
 
 
@@ -17,10 +20,10 @@ const leaseScheme = {
   version: orEq([undefined, 2, 3]),
   senderPublicKey: isPublicKey,
   recipient: isRecipient,
-  amount: isNumberLike,
-  fee: isNumberLike,
+  amount: isNaturalNumberLike,
+  fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-}
+};
 
-export const leaseValidator = validateByShema(leaseScheme, getError)
+export const leaseValidator = validateByShema(leaseScheme, getError);

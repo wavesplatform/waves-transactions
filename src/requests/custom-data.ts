@@ -67,6 +67,7 @@ export function serializeCustomData(d: TCustomData){
     const ser = binary.serializerFromSchema(schemas.txFields.data[1])
     return concat([255, 255, 255, 2], ser(d.data))
   } else {
+    //@ts-ignore
     throw new Error(`Invalid CustomData version: ${d!.version}`)
   }
 }

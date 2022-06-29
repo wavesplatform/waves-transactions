@@ -8,6 +8,7 @@ import { TSeedTypes } from '../types'
 import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import {ExchangeTransactionOrder, SignedIExchangeTransactionOrder} from '@waves/ts-types'
+import {orderToProtoBytes} from '../proto-serialize'
 
 
 /**
@@ -94,7 +95,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
     ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
   }
 
-  const bytes = binary.serializeOrder(ord)
+  const bytes = ord.version > 3 ? orderToProtoBytes(ord) : binary.serializeOrder(ord)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
 

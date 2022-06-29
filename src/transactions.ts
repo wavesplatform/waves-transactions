@@ -7,8 +7,9 @@ import {
     Transaction,
     TRANSACTION_TYPE,
     TransactionType
-} from '@waves/ts-types'
+} from '@waves/ts-types/src'
 import {InvokeScriptCallArgument} from '@waves/ts-types/src/parts'
+import {EthereumTransaction} from '@waves/ts-types'
 
 export interface WithId {
     /**
@@ -79,6 +80,7 @@ export type TTxParams<LONG = string | number> =
     | ISponsorshipParams<LONG>
     | ITransferParams<LONG>
     | IUpdateAssetInfoParams<LONG>
+    // | IInvokeExpressionParams<LONG>
 
 /**
  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
@@ -273,7 +275,7 @@ export interface ISponsorshipParams<LONG = string | number> extends IBasicParams
     /**
      * Minimal fee amount in sponsored asset. To disable sponsorship set it to 0
      */
-    minSponsoredAssetFee: LONG
+    minSponsoredAssetFee: LONG | null
 }
 
 /**
@@ -307,7 +309,7 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
     call?: {
         function: string
         args?: Array<InvokeScriptCallArgument<LONG>>
-    },
+    } | null,
     payment?: {
         assetId?: string | null
         amount: LONG
@@ -332,9 +334,17 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
     description: string
 }
 
-export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction>
+// /**
+//  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+//  */
+// export interface IInvokeExpressionParams<LONG = string | number> extends IBasicParams<LONG> {
+//     feeAssetId?: string | null
+//     expression: string,
+// }
 
-export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2>
+export type TTransaction = Exclude<Transaction, GenesisTransaction | PaymentTransaction | EthereumTransaction>
+
+export type TTransactionType = Exclude<typeof TRANSACTION_TYPE[keyof typeof TRANSACTION_TYPE], 1 | 2 | 18>
 
 export type WithChainId = { chainId: number }
 

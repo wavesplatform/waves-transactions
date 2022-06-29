@@ -1,7 +1,7 @@
 import {
   isEq,
   orEq,
-  isAssetId,
+  isWavesOrAssetId,
   isNumber,
   isNumberLike,
   isArray,
@@ -21,11 +21,11 @@ const orderScheme = {
   orderType: orEq(['sell', 'buy']),
   senderPublicKey: isPublicKey,
   matcherPublicKey: isPublicKey,
-  version: orEq([undefined, 0, 1, 2, 3]),
+  version: orEq([undefined, 1, 2, 3, 4]),
   assetPair: validatePipe(
       isRequired(true),
-      pipe(prop('amountAsset'), isAssetId),
-      pipe(prop('priceAsset'), isAssetId)
+      pipe(prop('amountAsset'), isWavesOrAssetId),
+      pipe(prop('priceAsset'), isWavesOrAssetId)
   ),
   price: isNumberLike,
   amount: isNumberLike,
@@ -40,7 +40,7 @@ const v1_2_OrderScheme = {
 }
 
 const v3_OrderScheme = {
-  matcherFeeAssetId: isAssetId,
+  matcherFeeAssetId: isWavesOrAssetId,
 }
 
 const validateOrder = validateByShema(orderScheme, getError)
@@ -50,7 +50,7 @@ const validateOrderV3 = validateByShema(v3_OrderScheme, getError)
 export const orderValidator = validatePipe(
     validateOrder,
     ifElse(
-        pipe(prop('version'), isEq(3)),
+        pipe(prop('version'), (v: number) => v >= 3),
         validateOrderV3,
         validateOrderV2
     )
