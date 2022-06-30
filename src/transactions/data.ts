@@ -59,7 +59,6 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     const _timestamp = paramsOrTx.timestamp || Date.now()
 
     const dataEntriesWithTypes = (paramsOrTx.data as any ?? []).map((x: DataTransactionEntry) => {
-        console.log(x)
         if (x.value == null) return x
         if ((<any>x).type) {
             if(validate.dataFieldValidator(x)) {
