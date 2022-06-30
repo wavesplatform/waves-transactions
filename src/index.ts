@@ -75,13 +75,13 @@ const libs = {
 import * as seedUtils from './seedUtils'
 import * as nodeInteraction from './nodeInteraction'
 import * as validators from './validators'
-import * as protoPerialize from './proto-serialize'
+import * as protoSerialize from './proto-serialize'
 
 export {
   libs,
   seedUtils,
   nodeInteraction,
   validators,
-  protoPerialize
+  protoSerialize
 }
 
