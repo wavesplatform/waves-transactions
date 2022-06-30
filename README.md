@@ -326,7 +326,7 @@ const seed = 'some example seed phrase'
 const signedTranserTx = transfer({ 
   amount: 1,
   recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
-  //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
+  //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any optional params yourself. go check full docs
   timestamp: 1536917842558 
 }, seed)
 
