@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "4.2.7",
+  "version": "4.2.8",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "@waves/marshall": "^0.15.0-beta.1",
-    "@waves/node-api-js": "^1.2.8",
+    "@waves/node-api-js": "^1.2.10",
     "@waves/protobuf-serialization": "1.4.3",
     "@waves/ts-lib-crypto": "1.4.3",
     "@waves/ts-types": "1.0.9",
