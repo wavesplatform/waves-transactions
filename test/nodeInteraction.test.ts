@@ -67,6 +67,10 @@ describe('Node interaction utility functions', () => {
         await expect(utilityF.assetBalance('3xdf6GESKGNP1oUyT8QXDgzTE11yi1sJGyVmjt7HHNEU', '3MtXzccPrCAoKans9TD9sp3qoFHiajPA4Uu', apiBase)).resolves.not.toBeFalsy()
     }, 5000)
 
+    it('Should get NFT balance', async () => {
+        await expect(utilityF.assetBalance('2HgvJjAJFug1QriGTJPLK1AM2Yv3GqYnDLpUjQprf1Ut', '3Ms5T2C6pvqiZbMASjiJvPh9u57bQpcVLLp', apiBase)).resolves.toEqual(1)
+    }, 5000)
+
     it('Should return correct error on invalid address for asset balance', async () => {
         const resp = utilityF.assetBalance('invalidAddress', 'bad address', apiBase)
         await expect(resp).rejects.toMatchObject({error: 199})

@@ -172,9 +172,8 @@ export async function balanceDetails(address: string, nodeUrl: string, requestOp
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
 export async function assetBalance(assetId: string, address: string, nodeUrl: string, requestOptions?: RequestInit) {
-  return assets_route.fetchAssetsBalance(nodeUrl, address, requestOptions)
-    .then(x => x.balances.filter(bal => bal.assetId === assetId))
-    .then(filtered => filtered[0]?.balance)
+  return assets_route.fetchBalanceAddressAssetId(nodeUrl, address, assetId, requestOptions)
+    .then(x => x.balance)
 }
 
 export interface IAccountDataRequestOptions {
