@@ -450,6 +450,7 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => ({
     matcherFee: amountToProto(o.matcherFee, null),
     version: o.version,
     proofs: o.proofs.map(base58Decode),
+    priceMode: o.priceMode
 })
 
 const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithChainId => ({
@@ -469,6 +470,7 @@ const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransaction
     expiration: po.expiration!.toNumber(),
     matcherFee: convertNumber(po.matcherFee!.amount!),
     matcherFeeAssetId: po.matcherFee!.assetId == null ? null : base58Encode(po.matcherFee!.assetId),
+    priceMode: po.priceMode
 })
 
 const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({

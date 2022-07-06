@@ -95,6 +95,11 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
     ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
   }
 
+  if (ord.version === 4) {
+    // @ts-ignore
+    ord.priceMode = paramsOrOrder.priceMode || 'FIXED_DECIMALS'
+  }
+
   const bytes = ord.version > 3 ? orderToProtoBytes(ord) : binary.serializeOrder(ord)
 
   seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
