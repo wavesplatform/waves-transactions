@@ -48,12 +48,12 @@ describe('Matcher requests', () => {
 
         const ord = order(oParams, MASTER_SEED)
         console.log('ord', JSON.stringify(ord, undefined, ' '))
-        const submitResp = await submitOrder(ord, MATCHER_URL)
-        expect(submitResp.status).toEqual('OrderAccepted')
-
-        const co = cancelOrder({orderId: ord.id}, MASTER_SEED)
-        const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
-        expect(cancelResp.status).toEqual('OrderCanceled')
+        // const submitResp = await submitOrder(ord, MATCHER_URL)
+        // expect(submitResp.status).toEqual('OrderAccepted')
+        //
+        // const co = cancelOrder({orderId: ord.id}, MASTER_SEED)
+        // const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
+        // expect(cancelResp.status).toEqual('OrderCanceled')
     }, TIMEOUT)
 
     it('should submit and cancel market order', async () => {

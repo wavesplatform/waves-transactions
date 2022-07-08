@@ -1,6 +1,7 @@
 //const seed1 = 'alter bar cycle pioneer library eye calm soft swing motion limit taste supreme afford caution' //complex account
 
 import {burn, exchange, order} from '../../src'
+import {base16Decode, base58Decode} from '@waves/ts-lib-crypto'
 
 const seed1 = 'shoe used festival regular fancy electric powder symptom stool physical cabbage need accuse silly ring' //plain acc
 
@@ -95,7 +96,6 @@ describe('exchange', () => {
         const tx = exchange({...txOk}, seed1)
         expect(tx).toMatchObject({...txOk, chainId: txOk.chainId.charCodeAt()})
     })
-
 
 
     it('Should build exchange tx ver2-1-1', () => {
@@ -611,6 +611,67 @@ describe('exchange', () => {
         // @ts-ignore
         //console.log(
         const tx = exchange({...txOk}, seed1)
+        expect(tx).toMatchObject({...txOk})
+    })
+
+    it('Should build exchange tx with eth order', () => {
+        const order1 = {
+            version: 4,
+            orderType: "buy",
+            assetPair: {
+                amountAsset: "WAVES",
+                priceAsset: "49y6xCWJJdNhCG88oPktziUuqiTGmd4d62AYGZ84ecTR"
+            },
+            matcherPublicKey: "Hs9CHtitSJHmKqa9euDxBtjD1HrRJMVBqPDVcAEjZesz",
+            senderPublicKey: "Bra4LL9m1sDXqg6XMJxRGKBZwLVbgE77kurgduBhRFew",
+            matcherFeeAssetId: "49y6xCWJJdNhCG88oPktziUuqiTGmd4d62AYGZ84ecTR",
+            amount: 1000000,
+            price: 5267200,
+            matcherFee: 100000,
+            timestamp: 1657106983249,
+            expiration: 1657193383249,
+            eip712Signature: '0x9b2dc19109b2ab57c5ac9468c43c8648457d981b159f1428bf02ea56a5f6438260d4cfda0e29a59bc5e7bead4485ac4b239818accc509d4d4efc6c530627473c1c',
+            id: ''
+        }
+
+        const order2 = {
+            orderType: "sell",
+            version: 3,
+            assetPair: {
+                "amountAsset": "WAVES",
+                "priceAsset": "49y6xCWJJdNhCG88oPktziUuqiTGmd4d62AYGZ84ecTR"
+            },
+            price: 5267200,
+            amount: 1000000,
+            timestamp: 1657106991124,
+            expiration: 1657193391124,
+            matcherFee: 100000,
+            matcherPublicKey: "Hs9CHtitSJHmKqa9euDxBtjD1HrRJMVBqPDVcAEjZesz",
+            senderPublicKey: "Hs9CHtitSJHmKqa9euDxBtjD1HrRJMVBqPDVcAEjZesz",
+            proofs: [
+                "5E9Un2fmTLFMXfRTJNkEeSnP8zSJVB4Va5z9qh2FX89rYnw5bvcKBzmZkSNpeWnJgX2CGk6Wt5iuUK7HTR14dQiz"
+            ],
+            matcherFeeAssetId: null,
+            id: "8GA6YUtAyS3HZTFk3JVq3PD5bCaJXmAYSu5hai25Nm64"
+        }
+
+
+        const txOk = {
+            order1,
+            order2,
+            price: 500000000,
+            amount: 100,
+            buyMatcherFee: 100,
+            sellMatcherFee: 100,
+            chainId: 84,
+            fee: 700000,
+            version: 3
+        }
+
+        // @ts-ignore
+        //console.log(
+        const tx = exchange({...txOk}, seed1)
+        console.log('tx', tx)
         expect(tx).toMatchObject({...txOk})
     })
 

@@ -1,6 +1,6 @@
 import * as wavesProto from '@waves/protobuf-serialization'
 import {
-    address,
+    address, base16Decode,
     base58Decode,
     base58Encode,
     base64Decode,
@@ -231,7 +231,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
     if (res.hasOwnProperty('chainId')) {
         res.sender = address({publicKey: t.senderPublicKey}, t.chainId)
     } else {
-        let recipient = res.recipient || res.dApp || (res.transfers && res.transfers[0] && res.transfers[0].recipient);
+        let recipient = res.recipient || res.dApp || (res.transfers && res.transfers[0] && res.transfers[0].recipient)
         if (recipient) {
             res.sender = address({publicKey: t.senderPublicKey}, chainIdFromRecipient(recipient))
         }
@@ -434,24 +434,28 @@ export const signedTxToProto = (t: TTx): wavesProto.waves.ISignedTransaction => 
     }
 }
 
-const orderToProto = (o: any): wavesProto.waves.IOrder => ({
-    chainId: o.chainId,
-    senderPublicKey: base58Decode(o.senderPublicKey),
-    matcherPublicKey: base58Decode(o.matcherPublicKey),
-    assetPair: {
-        amountAssetId: o.assetPair.amountAsset == null ? null : base58Decode(o.assetPair.amountAsset),
-        priceAssetId: o.assetPair.priceAsset == null ? null : base58Decode(o.assetPair.priceAsset),
-    },
-    orderSide: o.orderType === 'buy' ? undefined : wavesProto.waves.Order.Side.SELL,
-    amount: Long.fromValue(o.amount),
-    price: Long.fromValue(o.price),
-    timestamp: Long.fromValue(o.timestamp),
-    expiration: Long.fromValue(o.expiration),
-    matcherFee: amountToProto(o.matcherFee, null),
-    version: o.version,
-    proofs: o.proofs.map(base58Decode),
-    priceMode: o.priceMode
-})
+const orderToProto = (o: any): wavesProto.waves.IOrder => {
+    console.log(o)
+    return ({
+        chainId: o.chainId,
+        senderPublicKey: base58Decode(o.senderPublicKey),
+        matcherPublicKey: base58Decode(o.matcherPublicKey),
+        assetPair: {
+            amountAssetId: o.assetPair.amountAsset == null ? null : base58Decode(o.assetPair.amountAsset),
+            priceAssetId: o.assetPair.priceAsset == null ? null : base58Decode(o.assetPair.priceAsset),
+        },
+        orderSide: o.orderType === 'buy' ? undefined : wavesProto.waves.Order.Side.SELL,
+        amount: Long.fromValue(o.amount),
+        price: Long.fromValue(o.price),
+        timestamp: Long.fromValue(o.timestamp),
+        expiration: Long.fromValue(o.expiration),
+        matcherFee: amountToProto(o.matcherFee, null),
+        version: o.version,
+        proofs: o.proofs?.map(base58Decode),
+        eip712Signature: o.eip712Signature && base16Decode(o.eip712Signature),
+        priceMode: o.priceMode
+    })
+}
 
 const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithChainId => ({
     version: po.version! as 1 | 2 | 3 | 4,
@@ -470,7 +474,8 @@ const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransaction
     expiration: po.expiration!.toNumber(),
     matcherFee: convertNumber(po.matcherFee!.amount!),
     matcherFeeAssetId: po.matcherFee!.assetId == null ? null : base58Encode(po.matcherFee!.assetId),
-    priceMode: po.priceMode
+    priceMode: po.priceMode,
+    eip712Signature: po.eip712Signature
 })
 
 const recipientToProto = (r: string): wavesProto.waves.IRecipient => ({
