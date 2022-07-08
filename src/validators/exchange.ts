@@ -8,13 +8,13 @@ import {
     isArray,
     getError,
     validateByShema,
-    ifElse, defaultValue, isPublicKey, validatePipe, isRequired, isNaturalNumberOrZeroLike
+    ifElse, defaultValue, isPublicKey, validatePipe, isRequired, isNaturalNumberOrZeroLike, isPublicKeyForEthSuppTx
 } from './validators'
 
 
 const exchangeScheme = {
     type: isEq(TRANSACTION_TYPE.EXCHANGE),
-    senderPublicKey: isPublicKey,
+    senderPublicKey: isPublicKeyForEthSuppTx,
     version: orEq([undefined, 1, 2, 3]),
     order1: validatePipe(
         isRequired(true),

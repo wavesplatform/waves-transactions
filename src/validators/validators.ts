@@ -185,6 +185,14 @@ export const isHash = validatePipe(
 
 export const isPublicKey = isHash
 
+export const isPublicKeyForEthSuppTx = validatePipe(
+    isRequired(false),
+    isBase58,
+    pipe(
+        (value: string) => base58Decode(value),
+        bytesLength(32)
+    )
+)
 
 export const isWavesOrAssetId = ifElse(
     orEq(['', null, undefined, 'WAVES']),

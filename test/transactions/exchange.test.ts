@@ -622,8 +622,8 @@ describe('exchange', () => {
                 amountAsset: "WAVES",
                 priceAsset: "49y6xCWJJdNhCG88oPktziUuqiTGmd4d62AYGZ84ecTR"
             },
+            senderPublicKey: null,
             matcherPublicKey: "Hs9CHtitSJHmKqa9euDxBtjD1HrRJMVBqPDVcAEjZesz",
-            senderPublicKey: "Bra4LL9m1sDXqg6XMJxRGKBZwLVbgE77kurgduBhRFew",
             matcherFeeAssetId: "49y6xCWJJdNhCG88oPktziUuqiTGmd4d62AYGZ84ecTR",
             amount: 1000000,
             price: 5267200,
