@@ -185,12 +185,18 @@ export const isHash = validatePipe(
 
 export const isPublicKey = isHash
 
-export const isPublicKeyForEthSuppTx = validatePipe(
-    isRequired(false),
-    isBase58,
+export const isPublicKeyForEthSuppTx = ifElse(
+    orEq(['', null, undefined]),
+    defaultValue(true),
     pipe(
         (value: string) => base58Decode(value),
-        bytesLength(32)
+        (value: Uint8Array) => {
+            try {
+                return Uint8Array.from(value).length === 32 || Uint8Array.from(value).length === 64
+            } catch (e) {
+                return false
+            }
+        }
     )
 )
 

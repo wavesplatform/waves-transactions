@@ -97,7 +97,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
 
     if (ord.version === 4) {
         // @ts-ignore
-        ord.priceMode = paramsOrOrder.priceMode || 'FIXED_DECIMALS'
+        ord.priceMode = paramsOrOrder.priceMode || 'fixedDecimals'
         // @ts-ignore
         if (paramsOrOrder.eip712Signature) ord.eip712Signature = paramsOrOrder.eip712Signature
     }
