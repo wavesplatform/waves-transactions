@@ -11,7 +11,7 @@ export const API_BASE = 'https://nodes-testnet.wavesnodes.com' //3MxhTY7cuPFJibG
 
 export const MASTER_SEED = 'test acc 3'
 // export const MASTER_SEED = 'next one puppy history bag vanish conduct lion royal dentist reject usual story invite leader'
-export const MATCHER_PUBLIC_KEY = '2eEUvypDSivnzPiLrbYEW39SM8yMZ1aq4eJuiKfs4sEY'
+export const MATCHER_PUBLIC_KEY = '8QUAqtTckM5B8gvcuP7mMswat9SjKUuafJMusEoSn1Gy'
 export const MATCHER_URL = 'https://matcher-testnet.waves.exchange/'
 
 

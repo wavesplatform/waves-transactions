@@ -1,12 +1,12 @@
 /**
  * @module index
  */
-import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
-import { addProof, getSenderPublicKey, convertToPairs, isOrder } from '../generic'
+import {signBytes, blake2b, base58Encode} from '@waves/ts-lib-crypto'
+import {addProof, getSenderPublicKey, convertToPairs, isOrder} from '../generic'
 import {IOrderParams, WithId, WithProofs, WithSender} from '../transactions'
-import { TSeedTypes } from '../types'
-import { binary } from '@waves/marshall'
-import { validate } from '../validators'
+import {TSeedTypes} from '../types'
+import {binary} from '@waves/marshall'
+import {validate} from '../validators'
 import {ExchangeTransactionOrder, SignedIExchangeTransactionOrder} from '@waves/ts-types'
 import {orderToProtoBytes} from '../proto-serialize'
 
@@ -56,58 +56,64 @@ import {orderToProtoBytes} from '../proto-serialize'
  * ```
  *
  */
-export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
-export function order(paramsOrOrder: IOrderParams & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
+export function order(paramsOrOrder: ExchangeTransactionOrder, seed: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
+export function order(paramsOrOrder: ExchangeTransactionOrder & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
 export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId {
 
-  const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
-  const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
-  const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : []
+    const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
+    const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
+    const proofs = isOrder(paramsOrOrder) ? paramsOrOrder.proofs : []
 
-  const { matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp } = paramsOrOrder
-  const t = timestamp || Date.now()
+    const {matcherFee, matcherPublicKey, price, amount, orderType, expiration, timestamp} = paramsOrOrder
+    const t = timestamp || Date.now()
 
-  const seedsAndIndexes = convertToPairs(seed)
-  const senderPublicKey = paramsOrOrder.senderPublicKey || getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
+    const seedsAndIndexes = convertToPairs(seed)
+    const senderPublicKey = paramsOrOrder.senderPublicKey || getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
 
-  // Use old versionless order only if it is set to null explicitly
-  const version = paramsOrOrder.version === null ? undefined : (paramsOrOrder.version || 2)
-  const ord: SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithId & WithProofs= {
-    orderType,
-    version,
-    assetPair: {
-      amountAsset,
-      priceAsset,
-    },
-    price,
-    amount,
-    timestamp: t,
-    expiration: expiration || t + 29 * 24 * 60 * 60 * 1000,
-    matcherFee: matcherFee || 300000,
-    matcherPublicKey,
-    senderPublicKey,
-    proofs,
-    matcherFeeAssetId: null,
-    id: '',
-  }
+    // Use old versionless order only if it is set to null explicitly
+    const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version
+    const ord: SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithId & WithProofs = {
+        orderType,
+        version,
+        assetPair: {
+            amountAsset,
+            priceAsset,
+        },
+        price,
+        amount,
+        timestamp: t,
+        expiration: expiration || t + 29 * 24 * 60 * 60 * 1000,
+        matcherFee: matcherFee || 300000,
+        matcherPublicKey,
+        senderPublicKey,
+        proofs,
+        matcherFeeAssetId: null,
+        id: '',
+        priceMode: paramsOrOrder.priceMode,
+    }
 
-  if (ord.version === 3 || ord.version === 4) {
-    ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
-  }
+    if (ord.version >= 3) {
+        ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
+    }
 
-  const bytes = ord.version > 3 ? orderToProtoBytes(ord) : binary.serializeOrder(ord)
+    if (ord.version === 4) {
+        ord.priceMode = paramsOrOrder.priceMode || 'fixedDecimals'
+        if (paramsOrOrder.eip712Signature) ord.eip712Signature = paramsOrOrder.eip712Signature
+    }
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
+    const bytes = ord.version > 3 ? orderToProtoBytes(ord) : binary.serializeOrder(ord)
 
-  validate.order(ord)
+    seedsAndIndexes.forEach(([s, i]) => addProof(ord, signBytes(s, bytes), i))
 
-  ord.id = base58Encode(blake2b(bytes))
+    validate.order(ord)
 
-  // OrderV1 uses signature instead of proofs
-  // @ts-ignore
-  if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs && ord.proofs[0]
+    ord.id = base58Encode(blake2b(bytes))
 
-  return ord
+    // OrderV1 uses signature instead of proofs
+    // @ts-ignore
+    if (ord.version === undefined || ord.version === 1) (ord as any).signature = ord.proofs && ord.proofs[0]
+
+    return ord
 }
 
 

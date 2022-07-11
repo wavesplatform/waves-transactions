@@ -1,6 +1,19 @@
 //const seed1 = 'alter bar cycle pioneer library eye calm soft swing motion limit taste supreme afford caution' //complex account
 
 import {burn, exchange, order} from '../../src'
+import {
+    base16Decode,
+    base58Decode,
+    base58Encode,
+    base64Decode,
+    base64Encode,
+    decryptSeed,
+    privateKey
+} from '@waves/ts-lib-crypto'
+
+var fs = require("fs")
+import {protoBytesToSignedTx, protoBytesToTx, txToProtoBytes} from '../../src/proto-serialize'
+import {broadcast} from '@waves/node-api-js/es/api-node/transactions'
 
 const seed1 = 'shoe used festival regular fancy electric powder symptom stool physical cabbage need accuse silly ring' //plain acc
 
@@ -95,7 +108,6 @@ describe('exchange', () => {
         const tx = exchange({...txOk}, seed1)
         expect(tx).toMatchObject({...txOk, chainId: txOk.chainId.charCodeAt()})
     })
-
 
 
     it('Should build exchange tx ver2-1-1', () => {
@@ -609,9 +621,7 @@ describe('exchange', () => {
         }
 
         // @ts-ignore
-        //console.log(
         const tx = exchange({...txOk}, seed1)
         expect(tx).toMatchObject({...txOk})
     })
-
 })
