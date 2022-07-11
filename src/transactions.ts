@@ -198,6 +198,7 @@ export interface IOrderParams<LONG = string | number> {
     timestamp?: number
     expiration?: number
     matcherFeeAssetId?: string | null
+    priceMode?: 'fixedDecimals' | 'assetDecimals'
 }
 
 export interface ICancelOrderParams {

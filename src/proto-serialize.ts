@@ -436,11 +436,14 @@ export const signedTxToProto = (t: TTx): wavesProto.waves.ISignedTransaction => 
 
 const orderToProto = (o: any): wavesProto.waves.IOrder => {
     let priceMode
-    if (o.version === 4 && o.priceMode) {
-        o.priceMode === 'fixedDecimals'
-            ? priceMode = wavesProto.waves.Order.PriceMode.FIXED_DECIMALS
-            : priceMode = wavesProto.waves.Order.PriceMode.ASSET_DECIMALS
-    } else priceMode = wavesProto.waves.Order.PriceMode.DEFAULT
+    if (o.version === 4 && 'priceMode' in o) {
+        if (o.priceMode === 0 || o.priceMode === 'default') {
+            o.priceMode = wavesProto.waves.Order.PriceMode.DEFAULT
+        }
+        o.priceMode === 'assetDecimals'
+            ? priceMode = wavesProto.waves.Order.PriceMode.ASSET_DECIMALS
+            : priceMode = wavesProto.waves.Order.PriceMode.FIXED_DECIMALS
+    } else priceMode = undefined
 
     return ({
         chainId: o.chainId,
@@ -459,7 +462,7 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => {
         version: o.version,
         proofs: o.proofs?.map(base58Decode),
         eip712Signature: o.eip712Signature ? base16Decode(o.eip712Signature.slice(2)) : undefined,
-        priceMode: priceMode
+        priceMode: priceMode,
     })
 }
 
