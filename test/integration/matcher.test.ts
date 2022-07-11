@@ -92,7 +92,7 @@ describe('Matcher requests', () => {
             matcherPublicKey: MATCHER_PUBLIC_KEY,
             //matcherPublicKey: publicKey(seed),
             orderType: 'sell',
-            matcherFee: 700000,
+            matcherFee: 1000000,
             amountAsset: assetId,
             priceAsset: null,
             amount: 1,

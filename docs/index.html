@@ -1,0 +1,614 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>waves-transactions</title>
+	<meta name="description" content="Documentation for waves-transactions">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">waves-transactions</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>waves-transactions</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#waves-transactions--" id="waves-transactions--" style="color: inherit; text-decoration: none;">
+					<h1>waves-transactions  <a href="https://badge.fury.io/js/%40waves%2Fwaves-transactions"><img src="https://badge.fury.io/js/%40waves%2Fwaves-transactions.svg" alt="npm version"></a></h1>
+				</a>
+				<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/npm/l/make-coverage-badge.svg" alt="License"></a></p>
+				<p>Using this library you can easily create and sign transactions for Waves blockchain.
+				It also allows you to multi-sign existing transactions or create them without signature at all.</p>
+				<ul>
+					<li><a href="#Transactions">Transactions</a> <ul>
+							<li><a href="#Creation">Creation</a></li>
+							<li><a href="#Signing">Signing</a></li>
+							<li><a href="#Params">Params</a></li>
+						</ul>
+					</li>
+					<li><a href="#Orders">Orders</a></li>
+					<li><a href="#Broadcast">Broadcast</a></li>
+					<li><a href="#Dependencies">Dependencies</a>
+						<a href="#transactions" id="transactions" style="color: inherit; text-decoration: none;">
+							<h2>Transactions</h2>
+						</a>
+					</li>
+				</ul>
+				<a href="#creation" id="creation" style="color: inherit; text-decoration: none;">
+					<h3>Creation</h3>
+				</a>
+				<p>Transactions are created via transaction creating functions. There are 15 of them:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> {
+ alias, burn, cancelLease, data, exchange,
+ invokeScript, issue, lease, massTransfer, reissue,
+ setAssetScript, setScript, sponsorship, transfer, updateAssetInfo
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>)
+</code></pre>
+				<p>Example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> issueTx = issue({
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;foo&#x27;</span>,
+  <span class="hljs-attr">description</span>: <span class="hljs-string">&#x27;bar&#x27;</span>,
+  <span class="hljs-attr">quantity</span>: <span class="hljs-number">10000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">&#x27;GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom&#x27;</span>,
+  <span class="hljs-attr">chainId</span>: <span class="hljs-string">&#x27;T&#x27;</span>
+})
+<span class="hljs-keyword">const</span> burnTx = burn({
+  <span class="hljs-attr">assetId</span>: <span class="hljs-string">&#x27;6toKooURvF3CpRQV8hzhNbHjK3Rb3L9Krd7TFnzcoe8L&#x27;</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">&#x27;GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom&#x27;</span>,
+  <span class="hljs-attr">chainId</span>: <span class="hljs-string">&#x27;T&#x27;</span>
+})
+</code></pre>
+				<a href="#signing" id="signing" style="color: inherit; text-decoration: none;">
+					<h3>Signing</h3>
+				</a>
+				<p>You can provide seed or private key to transaction creating function to sign it. If you do, senderPublicKey can be omitted.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> signedTranfer = transfer({
+    <span class="hljs-attr">recipient</span>:<span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
+    <span class="hljs-attr">amount</span>: <span class="hljs-number">100000</span>}, <span class="hljs-string">&#x27;secret seed phraze&#x27;</span>
+)
+<span class="hljs-keyword">const</span> signedTranferViaPrivateKey = transfer({
+    <span class="hljs-attr">recipient</span>:<span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
+    <span class="hljs-attr">amount</span>: <span class="hljs-number">100000</span>}, {<span class="hljs-attr">privateKey</span>: <span class="hljs-string">&#x27;GucCLYU7aqzcVUwVXX4nosceDisky9UpbmpFK39tVYom&#x27;</span>}
+)
+</code></pre>
+				<a href="#params" id="params" style="color: inherit; text-decoration: none;">
+					<h3>Params</h3>
+				</a>
+				<p>Type LONG represents string or number. Strings are allowed since max js int is 2**53</p>
+				<a href="#common-params" id="common-params" style="color: inherit; text-decoration: none;">
+					<h4>Common params:</h4>
+				</a>
+				<p>Present in all transactions</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">interface</span> IBasicParams&lt;LONG = string | number&gt; {
+  <span class="hljs-comment">/**
+   * Transaction fee. If not set, fee will be calculated automatically
+   */</span>
+  fee?: LONG
+  <span class="hljs-comment">/**
+   * If fee is not set, this value will be added to automatically calculated fee. E.x.:
+   * Account is scripted and 400000 fee more is required.
+   */</span>
+  additionalFee?: <span class="hljs-built_in">number</span>
+  <span class="hljs-comment">/**
+   * If not set, public key will be derived from seed phrase. You should provide senderPublicKey in two cases:
+   * 1. Account, from which this tx should be sent, differs from tx signer. E.g., we have smart account that requires 2 signatures.
+   * 2. You to create tx without proof. Therefore no seed is provided.
+   */</span>
+  senderPublicKey?: <span class="hljs-built_in">string</span>
+  <span class="hljs-comment">/**
+   * Transaction timestamp. If not set current timestamp will be used. Date.now()
+   */</span>
+  timestamp?: <span class="hljs-built_in">number</span>
+  <span class="hljs-comment">/**
+   * Network byte. Could be set as number or as char.
+   * If set as char(string), charCodeAt(0) will be used. E.g.,
+   * &#x27;W&#x27; will be converted to &#x27;87&#x27;
+   * If not set, 87 will be used as default
+   */</span>
+  chainId?: <span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span>
+}
+</code></pre>
+				<a href="#issue-transaction-type-3" id="issue-transaction-type-3" style="color: inherit; text-decoration: none;">
+					<h4>Issue transaction. Type 3</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IIssueParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">quantity</span>: LONG
+  decimals?: <span class="hljs-built_in">number</span>
+  reissuable?: <span class="hljs-built_in">boolean</span>
+  script?: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+				<a href="#transfer-transaction-type-4" id="transfer-transaction-type-4" style="color: inherit; text-decoration: none;">
+					<h4>Transfer transaction. Type 4</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ITransferParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-comment">/**
+   * Can be either address(base58 encoded 24 byte address) or alias.
+   * Alias should be used like &#x27;alias:{chainId}:{alias}&gt;&#x27;. E.g.:
+   * If we have alias &#x27;foo&#x27;, and we want TESTNET transaction, recipient should be &#x27;alias:T:foo&#x27;
+   */</span>
+  <span class="hljs-attr">recipient</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">amount</span>: LONG
+  assetId?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-comment">/**
+   * Fee can be paid in custom token if sponsorship has been set for this token
+   */</span>
+  feeAssetId?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-comment">/**
+   * Bytearray encoded as base58 string
+   */</span>
+  attachment?: <span class="hljs-built_in">string</span> | TTypedData
+}
+</code></pre>
+				<a href="#reissue-transaction-type-5" id="reissue-transaction-type-5" style="color: inherit; text-decoration: none;">
+					<h4>Reissue transaction. Type 5</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IReissueParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">assetId</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">quantity</span>: LONG
+  <span class="hljs-attr">reissuable</span>: <span class="hljs-built_in">boolean</span>
+}
+</code></pre>
+				<a href="#burn-transaction-type-6" id="burn-transaction-type-6" style="color: inherit; text-decoration: none;">
+					<h4>Burn transaction. Type 6</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IBurnParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">assetId</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">quantity</span>: LONG
+}
+</code></pre>
+				<a href="#exchange-transaction-type-7" id="exchange-transaction-type-7" style="color: inherit; text-decoration: none;">
+					<h4>Exchange transaction. Type 7</h4>
+				</a>
+				<p>Exchange transactions are used by DEX mather. If you want to create your own exchange transaction,
+				there is no params. You need to construct it by hand(see interface below, IOrder is described in Order section) </p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IExchangeTransaction&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> ITransaction&lt;LONG&gt; {
+  <span class="hljs-attr">type</span>: <span class="hljs-number">7</span>
+  <span class="hljs-attr">order1</span>: IOrder
+  <span class="hljs-attr">order2</span>: IOrder
+  <span class="hljs-attr">price</span>: LONG
+  <span class="hljs-attr">amount</span>: LONG
+  <span class="hljs-attr">buyMatcherFee</span>: LONG
+  <span class="hljs-attr">sellMatcherFee</span>: LONG
+}
+</code></pre>
+				<a href="#lease-transaction-type-8" id="lease-transaction-type-8" style="color: inherit; text-decoration: none;">
+					<h4>Lease transaction. Type 8</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ILeaseParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">recipient</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">amount</span>: LONG
+}
+</code></pre>
+				<a href="#cancellease-transaction-type-9" id="cancellease-transaction-type-9" style="color: inherit; text-decoration: none;">
+					<h4>CancelLease transaction. Type 9</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ICancelLeaseParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">leaseId</span>: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+				<a href="#alias-transaction-type-10" id="alias-transaction-type-10" style="color: inherit; text-decoration: none;">
+					<h4>Alias transaction. Type 10</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IAliasParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">alias</span>: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+				<a href="#masstransfer-transaction-type-11" id="masstransfer-transaction-type-11" style="color: inherit; text-decoration: none;">
+					<h4>MassTransfer transaction. Type 11</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IMassTransferParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">transfers</span>: IMassTransferItem[]
+  <span class="hljs-comment">/**
+   * Bytearray encoded as base string
+   */</span>
+  attachment?: <span class="hljs-built_in">string</span> | TTypedData
+  assetId?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IMassTransferItem&lt;LONG = string | number&gt; {
+  <span class="hljs-attr">recipient</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">amount</span>: LONG
+}
+</code></pre>
+				<a href="#data-transaction-type-12" id="data-transaction-type-12" style="color: inherit; text-decoration: none;">
+					<h4>Data transaction. Type 12</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IDataParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">data</span>: <span class="hljs-built_in">Array</span>&lt;IBooleanData | IIntegerData | IStringData | IBinaryData| TDeleteRequest&gt;
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> TDeleteRequest = {
+  <span class="hljs-keyword">type</span>?: <span class="hljs-literal">null</span>
+  value?: <span class="hljs-literal">null</span>
+  <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IBooleanData {
+  <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;boolean&#x27;</span>
+  <span class="hljs-attr">value</span>: <span class="hljs-built_in">boolean</span>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IIntegerData&lt;LONG = string | number&gt; {
+  <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;integer&#x27;</span>
+  <span class="hljs-attr">value</span>: LONG
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IStringData {
+  <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;string&#x27;</span>
+  <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IBinaryData {
+  <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;binary&#x27;</span>
+  <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span>
+}
+
+</code></pre>
+				<a href="#setscript-transaction-type-13" id="setscript-transaction-type-13" style="color: inherit; text-decoration: none;">
+					<h4>SetScript transaction. Type 13</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ISetScriptParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-comment">/**
+   * Compiled script encoded as base64 string
+   */</span>
+  <span class="hljs-attr">script</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+}
+</code></pre>
+				<a href="#sponsorship-transaction-type-14" id="sponsorship-transaction-type-14" style="color: inherit; text-decoration: none;">
+					<h4>Sponsorship transaction. Type 14</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ISponsorshipParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-comment">/**
+   * AssetID of sponsored token
+   */</span>
+  <span class="hljs-attr">assetId</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-comment">/**
+   * Minimal fee amount in sponsored asset. To disable sponsorship set it to 0
+   */</span>
+  <span class="hljs-attr">minSponsoredAssetFee</span>: LONG
+}
+</code></pre>
+				<a href="#setassetscript-transaction-type-15" id="setassetscript-transaction-type-15" style="color: inherit; text-decoration: none;">
+					<h4>SetAssetScript transaction. Type 15</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ISetAssetScriptParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-comment">/**
+   * Compiled script encoded as base64 string
+   */</span>
+  <span class="hljs-attr">script</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">assetId</span>: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+				<a href="#invokescript-transaction-type-16" id="invokescript-transaction-type-16" style="color: inherit; text-decoration: none;">
+					<h4>InvokeScript transaction. Type 16</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IInvokeScriptParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-attr">dApp</span>: <span class="hljs-built_in">string</span>
+  feeAssetId?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  call?: {
+    <span class="hljs-attr">function</span>: <span class="hljs-built_in">string</span>
+    args?: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;binary&#x27;</span> | <span class="hljs-string">&#x27;integer&#x27;</span> | <span class="hljs-string">&#x27;boolean&#x27;</span> | <span class="hljs-string">&#x27;string&#x27;</span>,
+      <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span> | LONG | <span class="hljs-built_in">boolean</span>
+    }[]
+  },
+  payment?: {
+    assetId?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+    <span class="hljs-attr">amount</span>: LONG
+  }[]
+}
+</code></pre>
+				<a href="#updateassetinfo-transaction-type-17" id="updateassetinfo-transaction-type-17" style="color: inherit; text-decoration: none;">
+					<h4>UpdateAssetInfo transaction. Type 17</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IUpdateAssetInfoParams&lt;LONG = string | number&gt; <span class="hljs-keyword">extends</span> IBasicParams&lt;LONG&gt; {
+  <span class="hljs-comment">/**
+   * Id of previously issued asset
+   */</span>
+  <span class="hljs-attr">assetId</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-comment">/**
+   * New asset name
+   */</span>
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-comment">/**
+   * New asset description
+   */</span>
+  <span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+				<p>If you want to create  the minimum you need to provide is <strong>amount</strong> and <strong>recipient</strong> as defined in Transfer params:</p>
+				<pre><code class="language-js">
+<span class="hljs-keyword">const</span> { transfer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>)
+<span class="hljs-keyword">const</span> seed = <span class="hljs-string">&#x27;some example seed phrase&#x27;</span>
+<span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
+  <span class="hljs-comment">//Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs</span>
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span> 
+}, seed)
+
+<span class="hljs-comment">// or using alias</span>
+
+<span class="hljs-keyword">const</span> signedTranserTx = transfer({ 
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;alias:W:aliasForMyAddress&#x27;</span>
+}, seed)
+</code></pre>
+				<p>Output will be a signed transfer transaction:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq&#x27;</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
+  <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">&#x27;6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq&#x27;</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>,
+  <span class="hljs-attr">proofs</span>: [
+    <span class="hljs-string">&#x27;25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE&#x27;</span>
+  ]
+}
+</code></pre>
+				<p>You can also create transaction, but not sign it:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> unsignedTransferTx = transfer({
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
+  <span class="hljs-comment">//senderPublicKey is required if you omit seed</span>
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">&#x27;6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq&#x27;</span> 
+})
+</code></pre>
+				<p>Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> otherPartySeed = <span class="hljs-string">&#x27;other party seed phrase&#x27;</span>
+<span class="hljs-keyword">const</span> transferSignedWithTwoParties = transfer(signedTranserTx, seed)
+</code></pre>
+				<p>So now there are two proofs:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq&#x27;</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-number">4</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">recipient</span>: <span class="hljs-string">&#x27;3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE&#x27;</span>,
+  <span class="hljs-attr">attachment</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">feeAssetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">assetId</span>: <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">amount</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">fee</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">senderPublicKey</span>: <span class="hljs-string">&#x27;6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq&#x27;</span>,
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-number">1536917842558</span>,
+  <span class="hljs-attr">proofs</span>: [
+    <span class="hljs-string">&#x27;25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE&#x27;</span>,
+    <span class="hljs-string">&#x27;CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z&#x27;</span>
+  ]
+}
+</code></pre>
+				<a href="#orders" id="orders" style="color: inherit; text-decoration: none;">
+					<h3>Orders</h3>
+				</a>
+				<p>Order is created the same way as transaction</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> { order } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>)
+<span class="hljs-keyword">const</span> params = {
+    <span class="hljs-attr">amount</span>: <span class="hljs-number">100000000</span>, <span class="hljs-comment">//1 waves</span>
+    <span class="hljs-attr">price</span>: <span class="hljs-number">10</span>, <span class="hljs-comment">//for 0.00000010 BTC</span>
+    <span class="hljs-attr">priceAsset</span>: <span class="hljs-string">&#x27;8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&#x27;</span>,
+    <span class="hljs-attr">matcherPublicKey</span>: <span class="hljs-string">&#x27;7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy&#x27;</span>,
+    <span class="hljs-attr">orderType</span>: <span class="hljs-string">&#x27;buy&#x27;</span>
+}
+  
+<span class="hljs-keyword">const</span> signedOrder = order(params, <span class="hljs-string">&#x27;Some seed &#x27;</span>)
+</code></pre>
+				<a href="#broadcast" id="broadcast" style="color: inherit; text-decoration: none;">
+					<h3>Broadcast</h3>
+				</a>
+				<p>To send transaction you can use either node <a href="https://nodes.wavesplatform.com/api-docs/index.html#!/transactions/broadcast">REST API</a> or <a href="https://wavesplatform.github.io/waves-transactions/globals.html#broadcast">broadcast</a> helper function:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> {broadcast} =  <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>);
+<span class="hljs-keyword">const</span> nodeUrl = <span class="hljs-string">&#x27;https://nodes.wavesplatform.com&#x27;</span>;
+
+broadcast(signedTx, nodeUrl).then(<span class="hljs-function"><span class="hljs-params">resp</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(resp))
+</code></pre>
+				<p>You can send tx to any waves node you like:. E.g.:</p>
+				<ul>
+					<li><a href="https://nodes-testnet.wavesnodes.com">https://nodes-testnet.wavesnodes.com</a> - waves TESTNET nodes hosted by Wavesplatform</li>
+					<li><a href="https://nodes.wavesplatform.com">https://nodes.wavesplatform.com</a> - waves MAINNET nodes hosted by Wavesplatform
+						<a href="#important" id="important" style="color: inherit; text-decoration: none;">
+							<h4>Important!!!</h4>
+						</a>
+					Most transactions require chainId as parameter, e.g: <a href="https://wavesplatform.github.io/waves-transactions/interfaces/_transactions_.iburnparams.html">IBurnParams</a>. By default chainId is &#39;W&#39;, which means MAINNET. To make transaction in TESTNET be sure to pass chainId if it is present in params interface and then send it to TESTNET node</li>
+				</ul>
+				<a href="#dependencies" id="dependencies" style="color: inherit; text-decoration: none;">
+					<h3>Dependencies</h3>
+				</a>
+				<p>This library uses <code>@waves/ts-lib-crypto</code> for cryptography and <code>@waves/node-api-js</code> for interacting with node.
+				You can access them this way:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> libCrypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>).libs.crypto
+<span class="hljs-keyword">const</span> libApi = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@waves/waves-transactions&#x27;</span>).libs.nodeApiJs
+</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_defaultversions_.html">&quot;default<wbr>Versions&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_general_.html">&quot;general&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_generic_.html">&quot;generic&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_make_tx_.html">&quot;make-<wbr>tx&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_nodeinteraction_.html">&quot;node<wbr>Interaction&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_proto_serialize_.html">&quot;proto-<wbr>serialize&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_requests_auth_.html">&quot;requests/auth&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_requests_cancel_order_.html">&quot;requests/cancel-<wbr>order&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_requests_custom_data_.html">&quot;requests/custom-<wbr>data&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_requests_order_.html">&quot;requests/order&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_requests_wavesauth_.html">&quot;requests/waves<wbr>Auth&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_seedutils_index_.html">&quot;seed<wbr>Utils/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_.html">&quot;transactions&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_alias_.html">&quot;transactions/alias&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_burn_.html">&quot;transactions/burn&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_cancel_lease_.html">&quot;transactions/cancel-<wbr>lease&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_data_.html">&quot;transactions/data&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_exchange_.html">&quot;transactions/exchange&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_invoke_expression_.html">&quot;transactions/invoke-<wbr>expression&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_invoke_script_.html">&quot;transactions/invoke-<wbr>script&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_issue_.html">&quot;transactions/issue&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_lease_.html">&quot;transactions/lease&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_mass_transfer_.html">&quot;transactions/mass-<wbr>transfer&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_reissue_.html">&quot;transactions/reissue&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_set_asset_script_.html">&quot;transactions/set-<wbr>asset-<wbr>script&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_set_script_.html">&quot;transactions/set-<wbr>script&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_sponsorship_.html">&quot;transactions/sponsorship&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_transfer_.html">&quot;transactions/transfer&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_transactions_update_asset_info_.html">&quot;transactions/update-<wbr>asset-<wbr>info&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_types_.html">&quot;types&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

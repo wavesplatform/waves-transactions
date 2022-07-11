@@ -89,7 +89,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
         proofs,
         matcherFeeAssetId: null,
         id: '',
-        priceMode: paramsOrOrder.priceMode
+        priceMode: paramsOrOrder.priceMode,
     }
 
     if (ord.version >= 3) {
