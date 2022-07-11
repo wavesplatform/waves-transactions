@@ -62,7 +62,7 @@ describe('Matcher requests', () => {
             matcherPublicKey: MATCHER_PUBLIC_KEY,
             price: 100000000,
             amount: 10,
-            matcherFee: 700000,
+            matcherFee: 1000000,
             priceAsset: null,
             amountAsset: assetId,
         }
@@ -81,7 +81,7 @@ describe('Matcher requests', () => {
             matcherPublicKey: MATCHER_PUBLIC_KEY,
             //matcherPublicKey: publicKey(seed),
             orderType: 'buy',
-            matcherFee: 700000,
+            matcherFee: 1000000,
             amountAsset: assetId,
             priceAsset: null,
             amount: 1,

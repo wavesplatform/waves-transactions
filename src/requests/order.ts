@@ -56,8 +56,8 @@ import {orderToProtoBytes} from '../proto-serialize'
  * ```
  *
  */
-export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
-export function order(paramsOrOrder: IOrderParams & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
+export function order(paramsOrOrder: ExchangeTransactionOrder, seed: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
+export function order(paramsOrOrder: ExchangeTransactionOrder & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
 export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId {
 
     const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
@@ -71,7 +71,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
     const senderPublicKey = paramsOrOrder.senderPublicKey || getSenderPublicKey(seedsAndIndexes, paramsOrOrder)
 
     // Use old versionless order only if it is set to null explicitly
-    const version = paramsOrOrder.version === null ? undefined : (paramsOrOrder.version || 2)
+    const version = paramsOrOrder.version === null ? undefined : paramsOrOrder.version
     const ord: SignedIExchangeTransactionOrder<ExchangeTransactionOrder> & WithId & WithProofs = {
         orderType,
         version,
@@ -89,16 +89,15 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
         proofs,
         matcherFeeAssetId: null,
         id: '',
+        priceMode: paramsOrOrder.priceMode
     }
 
-    if (ord.version === 3 || ord.version === 4) {
+    if (ord.version >= 3) {
         ord.matcherFeeAssetId = paramsOrOrder.matcherFeeAssetId === 'WAVES' ? null : paramsOrOrder.matcherFeeAssetId
     }
 
     if (ord.version === 4) {
-        // @ts-ignore
         ord.priceMode = paramsOrOrder.priceMode || 'fixedDecimals'
-        // @ts-ignore
         if (paramsOrOrder.eip712Signature) ord.eip712Signature = paramsOrOrder.eip712Signature
     }
 

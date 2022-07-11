@@ -491,6 +491,7 @@ const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransaction
         expiration: po.expiration!.toNumber(),
         matcherFee: convertNumber(po.matcherFee!.amount!),
         matcherFeeAssetId: po.matcherFee!.assetId == null ? null : base58Encode(po.matcherFee!.assetId),
+        // @ts-ignore
         priceMode: priceMode,
         eip712Signature: po.eip712Signature?.length ? `0x${base16Encode(po.eip712Signature)}` : undefined
     }
