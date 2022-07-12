@@ -438,20 +438,21 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => {
     let priceMode
     if (o.version === 4 && 'priceMode' in o) {
         if (o.priceMode === 0 || o.priceMode === 'default') {
-            o.priceMode = wavesProto.waves.Order.PriceMode.DEFAULT
+            priceMode = undefined
         }
         o.priceMode === 'assetDecimals'
             ? priceMode = wavesProto.waves.Order.PriceMode.ASSET_DECIMALS
             : priceMode = wavesProto.waves.Order.PriceMode.FIXED_DECIMALS
     } else priceMode = undefined
 
+    const isNullOrWaves = (asset: string | null) => asset == null || asset.toLowerCase() == 'waves'
     return ({
         chainId: o.chainId,
         senderPublicKey: o.senderPublicKey ? base58Decode(o.senderPublicKey) : null,
         matcherPublicKey: base58Decode(o.matcherPublicKey),
         assetPair: {
-            amountAssetId: o.assetPair.amountAsset == null ? null : base58Decode(o.assetPair.amountAsset),
-            priceAssetId: o.assetPair.priceAsset == null ? null : base58Decode(o.assetPair.priceAsset),
+            amountAssetId: isNullOrWaves(o.assetPair.amountAsset) ? null : base58Decode(o.assetPair.amountAsset),
+            priceAssetId: isNullOrWaves(o.assetPair.priceAsset) ? null : base58Decode(o.assetPair.priceAsset),
         },
         orderSide: o.orderType === 'buy' ? undefined : wavesProto.waves.Order.Side.SELL,
         amount: Long.fromValue(o.amount),
