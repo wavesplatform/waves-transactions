@@ -1,7 +1,11 @@
 //const seed1 = 'alter bar cycle pioneer library eye calm soft swing motion limit taste supreme afford caution' //complex account
 
+<<<<<<< HEAD
 import {burn, exchange, IOrderParams, order, waitForTx} from '../../src'
 import {Seed} from "../../src/seedUtils"
+=======
+import {burn, exchange, order} from '../../src'
+>>>>>>> master
 import {
     base16Decode,
     base58Decode,
@@ -9,13 +13,21 @@ import {
     base64Decode,
     base64Encode,
     decryptSeed,
+<<<<<<< HEAD
     privateKey, publicKey
+=======
+    privateKey
+>>>>>>> master
 } from '@waves/ts-lib-crypto'
 
 var fs = require("fs")
 import {protoBytesToSignedTx, protoBytesToTx, txToProtoBytes} from '../../src/proto-serialize'
+<<<<<<< HEAD
 import {broadcast} from '../../src'
 import {API_BASE, TIMEOUT} from '../integration/config'
+=======
+import {broadcast} from '@waves/node-api-js/es/api-node/transactions'
+>>>>>>> master
 
 const seed1 = 'shoe used festival regular fancy electric powder symptom stool physical cabbage need accuse silly ring' //plain acc
 
@@ -626,6 +638,7 @@ describe('exchange', () => {
         const tx = exchange({...txOk}, seed1)
         expect(tx).toMatchObject({...txOk})
     })
+<<<<<<< HEAD
 
     it('', async () => {
         const nodeUrl = 'https://nodes-testnet.wavesnodes.com/'
@@ -755,4 +768,6 @@ describe('exchange', () => {
 // });
         }, 60000
     )
+=======
+>>>>>>> master
 })
