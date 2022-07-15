@@ -77,7 +77,7 @@
     "@waves/protobuf-serialization": "1.4.3",
     "@waves/ts-lib-crypto": "1.4.3",
     "@waves/ts-types": "1.1.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.2",
     "long": "^4.0.0"
   }
 }
