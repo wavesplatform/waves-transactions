@@ -2,7 +2,7 @@
  * @module index
  */
 import {signBytes, blake2b, base58Encode} from '@waves/ts-lib-crypto'
-import {addProof, getSenderPublicKey, convertToPairs, isOrder} from '../generic'
+import {addProof, getSenderPublicKey, convertToPairs, isOrder, networkByte} from '../generic'
 import {IOrderParams, WithId, WithProofs, WithSender} from '../transactions'
 import {TSeedTypes} from '../types'
 import {binary} from '@waves/marshall'
@@ -56,9 +56,9 @@ import {orderToProtoBytes} from '../proto-serialize'
  * ```
  *
  */
-export function order(paramsOrOrder: ExchangeTransactionOrder, seed: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
-export function order(paramsOrOrder: ExchangeTransactionOrder & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId
-export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactionOrder & WithProofs & WithSender & WithId {
+export function order(paramsOrOrder: IOrderParams, seed: TSeedTypes): SignedIExchangeTransactionOrder<ExchangeTransactionOrder>
+export function order(paramsOrOrder: IOrderParams & WithSender | ExchangeTransactionOrder & WithProofs & WithSender, seed?: TSeedTypes): SignedIExchangeTransactionOrder<ExchangeTransactionOrder>
+export function order(paramsOrOrder: any, seed?: TSeedTypes): SignedIExchangeTransactionOrder<ExchangeTransactionOrder> {
 
     const amountAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.amountAsset : paramsOrOrder.amountAsset
     const priceAsset = isOrder(paramsOrOrder) ? paramsOrOrder.assetPair.priceAsset : paramsOrOrder.priceAsset
@@ -98,6 +98,8 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): ExchangeTransactio
 
     if (ord.version === 4) {
         ord.priceMode = paramsOrOrder.priceMode || 'fixedDecimals'
+        // @ts-ignore
+        ord.chainId = networkByte(paramsOrOrder.chainId, 87)
         if (paramsOrOrder.eip712Signature) ord.eip712Signature = paramsOrOrder.eip712Signature
     }
 
