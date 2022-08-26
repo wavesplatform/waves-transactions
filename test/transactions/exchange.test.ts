@@ -1,6 +1,6 @@
 //const seed1 = 'alter bar cycle pioneer library eye calm soft swing motion limit taste supreme afford caution' //complex account
 
-import {burn, exchange, order} from '../../src'
+import {broadcast, burn, exchange, order} from '../../src'
 
 const seed1 = 'shoe used festival regular fancy electric powder symptom stool physical cabbage need accuse silly ring' //plain acc
 
@@ -52,6 +52,53 @@ describe('exchange', () => {
         // @ts-ignore
         console.log(exchange({...txOk}, seed1))
     })
+
+    const stringSeed1 = 'dynamic gospel umbrella luxury reason blade float federal congress ice slush recall always volume cloud'
+
+    it('Should send specific tx',  async () => {
+        const order1 = {
+            version: 4,
+            amount: 100,
+            price: 500000000,
+            matcherFee: 100,
+            amountAsset: "3JmaWyFqWo8YSA8x3DXCBUW7veesxacvKx19dMv7wTMg",
+            priceAsset: null,
+            matcherPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+            orderType: 'buy' as 'buy',
+        }
+
+        const order2 = {
+            version: 4,
+            matcherFee: 100,
+            matcherFeeAssetId: 'DvXjujyWbi7ARdExyayN42gcfBKGTBRgYYyPWMxy5grK',
+            amount: 100,
+            price: 500000000,
+            amountAsset: "3JmaWyFqWo8YSA8x3DXCBUW7veesxacvKx19dMv7wTMg",
+            priceAsset: null,
+            matcherPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+            orderType: 'sell' as 'sell',
+        }
+
+
+        const txOk1 = {
+            order1: order(order1, seed1),
+            order2: order(order2, seed2),
+            price: 500000000,
+            amount: 100,
+            buyMatcherFee: 100,
+            sellMatcherFee: 100,
+            chainId: '83',
+            fee: 700000,
+            version: 3,
+            proofs: [],
+        }
+
+        // @ts-ignore
+        const  nodeUrl = 'https://nodes-stagenet.wavesnodes.com'
+        const tx = exchange(txOk1, stringSeed1)
+        await broadcast(tx, nodeUrl);
+    })
+
 
     it('Should build exchange tx ver1-1-1', () => {
         const order1 = {

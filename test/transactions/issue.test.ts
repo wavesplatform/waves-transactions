@@ -1,5 +1,5 @@
 import {publicKey} from '@waves/ts-lib-crypto'
-import {issue} from '../../src'
+import {broadcast, issue} from '../../src'
 import {
     checkBinarySerializeDeserialize,
     checkProtoSerializeDeserialize,
@@ -9,8 +9,9 @@ import {
     validateTxSignature
 } from '../utils'
 import {issueMinimalParams} from '../minimalParams'
-import {issueTx} from "./expected/proto/issue.tx";
+import {issueTx} from './expected/proto/issue.tx';
 import {issueBinaryTx} from "./expected/binary/issue.tx";
+//import {broadcast} from '@waves/node-api-js/es/api-node/transactions'
 
 describe('issue', () => {
 
@@ -20,6 +21,21 @@ describe('issue', () => {
     it('should build from minimal set of params', () => {
         const tx = issue({...issueMinimalParams}, stringSeed);
         expect(tx).toMatchObject({...issueMinimalParams, decimals: 8, fee: 100000000, chainId:87, reissuable: false})
+    });
+
+    const stringSeed1 = 'dynamic gospel umbrella luxury reason blade float federal congress ice slush recall always volume cloud'
+    const richSeed = 'waves private node seed with waves tokens'
+    const stringSeedCustom1 ='my account 01'
+    it('should build specific asset', async () => {
+        const tx = issue({quantity:5, fee:100400000, name: 'test_asset_01',
+            decimals:8, chainId:82, description: '', reissuable: true}, stringSeedCustom1);
+        console.log(tx);
+
+        //const  nodeUrl = 'https://nodes-stagenet.wavesnodes.com';
+        const  nodeUrl = 'http://localhost:6869';
+        expect(tx).toMatchObject({quantity:5, decimals:8, chainId:82, reissuable: true);
+        await broadcast(tx, nodeUrl);
+
     });
 
     it('should create issue tx with max name length = 16 and max description length = 1000', () => {
