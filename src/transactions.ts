@@ -9,7 +9,7 @@ import {
     TransactionType
 } from '@waves/ts-types/src'
 import {InvokeScriptCallArgument} from '@waves/ts-types/src/parts'
-import {EthereumTransaction} from '@waves/ts-types'
+import {EthereumTransaction, ExchangeTransactionOrderType} from '@waves/ts-types'
 
 export interface WithId {
     /**
@@ -190,7 +190,7 @@ export interface IOrderParams<LONG = string | number> {
     matcherPublicKey: string
     price: LONG
     amount: LONG
-    orderType: 'buy' | 'sell',
+    orderType: ExchangeTransactionOrderType,
     amountAsset: string | null
     priceAsset: string | null
     senderPublicKey?: string

@@ -1,4 +1,4 @@
-import {base64Decode, base64Encode, publicKey} from '@waves/ts-lib-crypto'
+import {publicKey} from '@waves/ts-lib-crypto'
 import {burn} from '../../src'
 import {burnMinimalParams} from '../minimalParams'
 import {
@@ -6,10 +6,9 @@ import {
     checkProtoSerializeDeserialize,
     errorMessageByTemplate,
     validateTxSignature
-} from '../../test/utils'
-import {burnTx} from "./expected/proto/burn.tx"
-import {burnBinaryTx} from "./expected/binary/burn.tx"
-import {binary} from '@waves/marshall'
+} from '../utils'
+import {burnTx} from './expected/proto/burn.tx'
+import {burnBinaryTx} from './expected/binary/burn.tx'
 
 
 describe('burn', () => {
@@ -42,7 +41,7 @@ describe('burn', () => {
     it('Should not create with zero amount', () => {
         expect(() => burn({
             ...burnMinimalParams,
-            amount: 0
+            amount: 0,
         }, stringSeed)).toThrowError('tx "amount", has wrong data: 0. Check tx data.')
     })
 

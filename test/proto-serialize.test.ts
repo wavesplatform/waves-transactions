@@ -1,26 +1,29 @@
-import { exampleTxs } from './exampleTxs'
-import {broadcast, libs, waitForTx, WithId} from '../src'
-import { protoBytesToTx, txToProtoBytes } from '../src/proto-serialize'
-import { transfer } from '../src/transactions/transfer'
-import { issue } from '../src/transactions/issue'
-import { reissue } from '../src/transactions/reissue'
-import { alias } from '../src/transactions/alias'
-import { burn } from '../src/transactions/burn'
-import { data } from '../src/transactions/data'
-import { lease } from '../src/transactions/lease'
-import { cancelLease } from '../src/transactions/cancel-lease'
-import { setScript } from '../src/transactions/set-script'
-import { setAssetScript } from '../src/transactions/set-asset-script'
-import { invokeScript } from '../src/transactions/invoke-script'
-import { sponsorship } from '../src/transactions/sponsorship'
-import { txs } from './example-proto-tx'
-import { massTransfer } from '../src/transactions/mass-transfer'
-import { updateAssetInfo } from '../src/transactions/update-asset-info'
+import {exampleTxs} from './exampleTxs'
+import {
+  alias,
+  broadcast,
+  burn,
+  cancelLease,
+  data,
+  invokeScript,
+  issue,
+  lease,
+  libs,
+  massTransfer,
+  reissue,
+  setAssetScript,
+  setScript,
+  sponsorship,
+  transfer,
+  updateAssetInfo,
+  waitForTx
+} from '../src'
+import {protoBytesToTx, txToProtoBytes} from '../src/proto-serialize'
+import {txs} from './example-proto-tx'
 import {randomHexString, TIMEOUT} from './integration/config'
 import {address} from '@waves/ts-lib-crypto'
 import {issueMinimalParams} from './minimalParams'
-import {deleteProofsAndId} from "./utils";
-
+import {deleteProofsAndId} from './utils'
 
 
 const nodeUrl = 'http://localhost:6869/'
@@ -42,15 +45,15 @@ describe('serialize/deserialize', () => {
     it('type: ' + tx.type, () => {
       // deleteProofsAndId(tx)
       //const parsed = protoBytesToTx(txToProtoBytes(tx))
-      const txWithoutProofAndId = deleteProofsAndId(tx);
-      const protoBytes = txToProtoBytes(txWithoutProofAndId);
-      const parsed = protoBytesToTx(protoBytes);
-      expect(parsed).toMatchObject(txWithoutProofAndId);
+      const txWithoutProofAndId = deleteProofsAndId(tx)
+      const protoBytes = txToProtoBytes(txWithoutProofAndId)
+      const parsed = protoBytesToTx(protoBytes)
+      expect(parsed).toMatchObject(txWithoutProofAndId)
     })
   })
 
   it('correctly serialized transactions', () => {
-    Object.entries(txs).forEach(([name, { Bytes, Json }]) => {
+    Object.entries(txs).forEach(([, { Bytes, Json }]) => {
       const actualBytes = libs.crypto.base16Encode(txToProtoBytes(Json as any))
       const expectedBytes = libs.crypto.base16Encode(libs.crypto.base64Decode(Bytes))
       expect(expectedBytes).toBe(actualBytes)
