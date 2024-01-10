@@ -590,10 +590,10 @@ describe('exchange', () => {
             priceAsset: '2jwWMYV12tVeAhMyKy8HphyaMAgQHJL2fWzZgYNCHkNk',
             amountAsset: null,
             matcherPublicKey: publicKey(matcher_seed),
-            orderType: 'buy',
+            orderType: 'buy' as 'buy',
             matcherFee: 300000,
             matcherFeeAssetId: null,
-            priceMode: 'fixedDecimals',
+            priceMode: 'fixedDecimals' as 'fixedDecimals',
             attachment: 'base64:dGVzdA==',
         }
 
@@ -605,7 +605,7 @@ describe('exchange', () => {
             priceAsset: '2jwWMYV12tVeAhMyKy8HphyaMAgQHJL2fWzZgYNCHkNk',
             amountAsset: null,
             matcherPublicKey: publicKey(matcher_seed),
-            orderType: 'sell',
+            orderType: 'sell' as 'sell',
             matcherFee: 300000,
             matcherFeeAssetId: null,
           //  priceMode: 'fixedDecimals',
@@ -656,10 +656,10 @@ describe('exchange', () => {
                 priceAsset: '25FEqEjRkqK6yCkiT7Lz6SAYz7gUFCtxfCChnrVFD5AT',
                 amountAsset: null,
                 matcherPublicKey: publicKey(matcher_seed),
-                orderType: 'buy',
+                orderType: 'buy' as 'buy',
                 matcherFee: 300000,
                 matcherFeeAssetId: null,
-                priceMode: 'fixedDecimals',
+                priceMode: 'fixedDecimals' as 'fixedDecimals',
             }
 
             const sell_params = {
@@ -670,18 +670,16 @@ describe('exchange', () => {
                 priceAsset: '25FEqEjRkqK6yCkiT7Lz6SAYz7gUFCtxfCChnrVFD5AT',
                 amountAsset: null,
                 matcherPublicKey: publicKey(matcher_seed),
-                orderType: 'sell',
+                orderType: 'sell' as 'sell',
                 matcherFee: 300000,
                 timestamp: t,
                 expiration: t + 29 * 24 * 60 * 60 * 1000,
-                priceMode: 'fixedDecimals',
+                priceMode: 'fixedDecimals' as 'fixedDecimals',
             }
 
 
             const sellOrder = order(sell_params, sell_seed)
-            // console.log('sellOrder', sellOrder)
             const buyOrder = order(buy_params, buy_seed)
-            // console.log('buyOrder', buyOrder)
 
             const exchange_params = {
                 chainId: 84,
@@ -700,9 +698,9 @@ describe('exchange', () => {
         console.log(exchangeTx)
             await broadcast(exchangeTx, nodeUrl)//.then(resp => console.log(resp)).catch(rej => console.log(rej))
 
-            const txbytes = txToProtoBytes(exchangeTx)
-// fs.writeFile('bytes.txt', txbytes, function(err, result){
-// 	if(err) console.log('error', err);
+//      const txbytes = txToProtoBytes(exchangeTx)
+//      fs.writeFile('bytes.txt', txbytes, function(err, result){
+// 	    if(err) console.log('error', err);
 // });
         }, 60000
     )
