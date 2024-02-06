@@ -101,6 +101,7 @@ export function order(paramsOrOrder: any, seed?: TSeedTypes): SignedIExchangeTra
         // @ts-ignore
         ord.chainId = networkByte(paramsOrOrder.chainId, 87)
         if (paramsOrOrder.eip712Signature) ord.eip712Signature = paramsOrOrder.eip712Signature
+        if (paramsOrOrder.attachment) ord.attachment = paramsOrOrder.attachment
     }
 
     const bytes = ord.version > 3 ? orderToProtoBytes(ord) : binary.serializeOrder(ord)

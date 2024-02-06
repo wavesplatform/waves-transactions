@@ -82,9 +82,7 @@ export function protoBytesToSignedTx(bytes: Uint8Array): TTx {
 
 export function protoBytesToTx(bytes: Uint8Array): TTransaction {
     const t = wavesProto.waves.Transaction.decode(bytes)
-    const res = protoTxDataToTx(t)
-
-    return res
+    return protoTxDataToTx(t)
 }
 
 export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
@@ -189,7 +187,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
                 if (de.hasOwnProperty('intValue')) return {
                     key: de.key,
                     type: 'integer',
-                    value: convertNumber(de.intValue!)
+                    value: convertNumber(de.intValue!),
                 }
                 if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue}
                 return {key: de.key, value: null}
@@ -213,7 +211,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             }
             res.payment = t.invokeScript!.payments!.map(p => ({
                 amount: convertNumber(p.amount!),
-                assetId: p.hasOwnProperty('assetId') ? base58Encode(p.assetId!) : null
+                assetId: p.hasOwnProperty('assetId') ? base58Encode(p.assetId!) : null,
             }))
             break
         case 'updateAssetInfo':
@@ -436,6 +434,7 @@ export const signedTxToProto = (t: TTx): wavesProto.waves.ISignedTransaction => 
 
 const orderToProto = (o: any): wavesProto.waves.IOrder => {
     let priceMode
+    let attachment
     if (o.version === 4 && 'priceMode' in o) {
         if (o.priceMode === 0 || o.priceMode === 'default') {
             priceMode = undefined
@@ -444,6 +443,10 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => {
             ? priceMode = wavesProto.waves.Order.PriceMode.ASSET_DECIMALS
             : priceMode = wavesProto.waves.Order.PriceMode.FIXED_DECIMALS
     } else priceMode = undefined
+
+    if (o.version === 4 && 'attachment' in o) {
+       attachment = base64Decode(o.attachment.startsWith('base64:') ? o.attachment.slice(7) : o.attachment)
+    } else attachment = undefined
 
     const isNullOrWaves = (asset: string | null) => asset == null || asset.toLowerCase() == 'waves'
     return ({
@@ -464,6 +467,7 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => {
         proofs: o.proofs?.map(base58Decode),
         eip712Signature: o.eip712Signature ? base16Decode(o.eip712Signature.slice(2)) : undefined,
         priceMode: priceMode,
+        attachment: attachment,
     })
 }
 
@@ -473,7 +477,7 @@ const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransaction
         po.priceMode === 1
             ? priceMode = 'fixedDecimals'
             : priceMode = 'assetDecimals'
-    }
+    } else priceMode = undefined
 
     return {
         version: po.version! as 1 | 2 | 3 | 4,
@@ -492,9 +496,10 @@ const orderFromProto = (po: wavesProto.waves.IOrder): SignedIExchangeTransaction
         expiration: po.expiration!.toNumber(),
         matcherFee: convertNumber(po.matcherFee!.amount!),
         matcherFeeAssetId: po.matcherFee!.assetId == null ? null : base58Encode(po.matcherFee!.assetId),
+        attachment: po.attachment?.length ? base64Encode(po.attachment) : undefined,
         // @ts-ignore
         priceMode: priceMode,
-        eip712Signature: po.eip712Signature?.length ? `0x${base16Encode(po.eip712Signature)}` : undefined
+        eip712Signature: po.eip712Signature?.length ? `0x${base16Encode(po.eip712Signature)}` : undefined,
     }
 }
 
@@ -510,7 +515,7 @@ const massTransferItemToProto = (mti: MassTransferItem): wavesProto.waves.MassTr
     recipient: recipientToProto(mti.recipient),
     amount: mti.amount == 0 ? null : Long.fromValue(mti.amount),
 })
-export const dataEntryToProto = (de: DataTransactionEntry): wavesProto.waves.DataTransactionData.IDataEntry => ({
+export const dataEntryToProto = (de: DataTransactionEntry): wavesProto.waves.IDataEntry => ({
     key: de.key,
     intValue: de.type === 'integer' ? Long.fromValue(de.value) : undefined,
     boolValue: de.type === 'boolean' ? de.value : undefined,
