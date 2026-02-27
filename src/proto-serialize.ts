@@ -1,6 +1,8 @@
 import * as wavesProto from '@waves/protobuf-serialization'
 import {
-    address, base16Decode, base16Encode,
+    address,
+    base16Decode,
+    base16Encode,
     base58Decode,
     base58Encode,
     base64Decode,
@@ -14,9 +16,11 @@ import {
     AliasTransaction,
     BurnTransaction,
     CancelLeaseTransaction,
+    CommitToGeneractionTransaction,
     DataTransaction,
     DataTransactionEntry,
     ExchangeTransactionOrder,
+    GenesisTransaction,
     InvokeScriptTransaction,
     IssueTransaction,
     LeaseTransaction,
@@ -31,13 +35,11 @@ import {
     TransactionType,
     TransferTransaction,
     UpdateAssetInfoTransaction,
-    GenesisTransaction,
-    // InvokeExpressionTransaction
 } from '@waves/ts-types'
 import {base64Prefix, chainIdFromRecipient} from './generic'
 import Long from 'long'
 import {lease} from './transactions/lease'
-import {TTx, TTransaction, WithChainId} from './transactions'
+import {TTransaction, TTx, WithChainId} from './transactions'
 
 const invokeScriptCallSchema = {
     ...schemas.txFields.functionCall[1],
@@ -72,12 +74,10 @@ export function protoBytesToSignedTx(bytes: Uint8Array): TTx {
     const txData = wavesProto.waves.SignedTransaction.decode(bytes)
     const tx: TTransaction = protoTxDataToTx(txData.transaction as never as wavesProto.waves.Transaction)
 
-    const signedTx: TTx = {
+    return {
         ...tx,
         proofs: (txData.proofs || []).map(uint8Array2proof),
     }
-
-    return signedTx
 }
 
 export function protoBytesToTx(bytes: Uint8Array): TTransaction {
@@ -104,6 +104,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
         | 'setAssetScript'
         | 'invokeScript'
         | 'updateAssetInfo'
+        | 'commitToGeneration'
     // | 'invokeExpression'
 
     let res: any = {
@@ -218,6 +219,15 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             res.assetId = base58Encode(t.updateAssetInfo!.assetId!)
             res.name = t.updateAssetInfo!.name
             res.description = t.updateAssetInfo!.description
+            break
+        case 'commitToGeneration':
+            res.generationPeriodStart = t.commitToGeneration!.generationPeriodStart
+            res.endorserPublicKey = t.commitToGeneration!.endorserPublicKey == null || t.commitToGeneration!.endorserPublicKey.length === 0
+                ? null
+                : base58Encode(t.commitToGeneration!.endorserPublicKey)
+            res.commitmentSignature = t.commitToGeneration!.commitmentSignature == null || t.commitToGeneration!.commitmentSignature.length === 0
+                ? null
+                : base58Encode(t.commitToGeneration!.commitmentSignature)
             break
         // case 'invokeExpression':
         //     res.expression = t.invokeExpression?.expression == null ? null : base64Prefix(base64Encode(t.invokeExpression?.expression))
@@ -345,6 +355,16 @@ const getUpdateAssetInfoData = (t: UpdateAssetInfoTransaction): wavesProto.waves
     }
 }
 
+const getCommitToGenerationData = (t: CommitToGeneractionTransaction): wavesProto.waves.ICommitToGenerationTransactionData => {
+    const tx = t as CommitToGeneractionTransaction & { endorserPublicKey?: string; commitmentSignature?: string }
+
+    return {
+        generationPeriodStart: t.generationPeriodStart,
+        endorserPublicKey: tx.endorserPublicKey == null ? undefined : base58Decode(tx.endorserPublicKey),
+        commitmentSignature: tx.commitmentSignature == null ? undefined : base58Decode(tx.commitmentSignature),
+    }
+}
+
 // const getInvokeExpressionData = (t: InvokeExpressionTransaction): wavesProto.waves.IInvokeExpressionTransactionData => {
 //     return {
 //         expression: t.expression == null ? null : scriptToProto(t.expression),
@@ -399,6 +419,9 @@ const getTxData = (t: Exclude<TTransaction, GenesisTransaction>): any /*wavesPro
             break
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             txData = getUpdateAssetInfoData(t)
+            break
+        case TRANSACTION_TYPE.COMMIT_TO_GENERATION:
+            txData = getCommitToGenerationData(t)
             break
         // case TRANSACTION_TYPE.INVOKE_EXPRESSION:
         //     txData = getInvokeExpressionData(t)
@@ -544,7 +567,7 @@ const nameByType = {
     15: 'setAssetScript' as 'setAssetScript',
     16: 'invokeScript' as 'invokeScript',
     17: 'updateAssetInfo' as 'updateAssetInfo',
-    // 18: 'invokeExpression' as 'invokeExpression',
+    19: 'commitToGeneration' as 'commitToGeneration',
 }
 const typeByName = {
     'genesis': 1 as 1,
@@ -564,7 +587,7 @@ const typeByName = {
     'setAssetScript': 15 as 15,
     'invokeScript': 16 as 16,
     'updateAssetInfo': 17 as 17,
-    // 'invokeExpression': 18 as 18,
+    'commitToGeneration': 19 as 19,
 }
 
 const proof2Uint8Array = (proof: string): Uint8Array => {

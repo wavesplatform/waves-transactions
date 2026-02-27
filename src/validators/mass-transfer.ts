@@ -44,4 +44,4 @@ const massTransferScheme = {
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
 
-export const massTransferValidator = validateByShema(massTransferScheme, getError);
+export const massTransferValidator = validateByShema(massTransferScheme, getError)

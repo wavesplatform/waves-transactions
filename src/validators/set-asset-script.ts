@@ -23,6 +23,6 @@ const setAssetScriptScheme = {
     timestamp: isNumber,
     script: isBase64,
     proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),
-};
+}
 
-export const setAssetScriptValidator = validateByShema(setAssetScriptScheme, getError);
+export const setAssetScriptValidator = validateByShema(setAssetScriptScheme, getError)

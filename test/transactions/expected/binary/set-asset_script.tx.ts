@@ -13,7 +13,7 @@ export const setAssetScriptBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640255368191,
-            'proofs': ['jwwWgjTXzXCFPwQkhjeiPVPs54NKN6eFRup58zLzQbjLoATSrXdABebNMXC78cvCLAvcjjHdaSZMKw51CayKAGq']
+            'proofs': ['jwwWgjTXzXCFPwQkhjeiPVPs54NKN6eFRup58zLzQbjLoATSrXdABebNMXC78cvCLAvcjjHdaSZMKw51CayKAGq'],
         },
     },
     'SetAssetScriptTx (type 15 v1)  case 2': {
@@ -30,7 +30,7 @@ export const setAssetScriptBinaryTx = {
             'fee': 100000000,
             'feeAssetId': null,
             'timestamp': 1640255592939,
-            'proofs': ['4srGbiJ9ddvCtA8u2UVMd7N3SaidEt9xDeuwx43ohnE5PVDw1GRg2gnC9ETBuADMTo9uuDap6t98RiuDoBQBcCgs']
+            'proofs': ['4srGbiJ9ddvCtA8u2UVMd7N3SaidEt9xDeuwx43ohnE5PVDw1GRg2gnC9ETBuADMTo9uuDap6t98RiuDoBQBcCgs'],
         },
     },
 }

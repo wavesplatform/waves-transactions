@@ -37,11 +37,11 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & Wi
     id: '',
   }
 
-  validate.issue(tx);
+  validate.issue(tx)
 
-  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx);
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i));
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))
 
   return tx

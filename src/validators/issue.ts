@@ -36,6 +36,6 @@ const issueScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
-export const issueValidator = validateByShema(issueScheme, getError);
+export const issueValidator = validateByShema(issueScheme, getError)

@@ -32,7 +32,7 @@ export const reissueTx = {
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1640250567878,
-            'proofs': ['598f263oUWWjMuZccigSkXKtRAChENcAaZ9PfZK5Z3yrqcDzbtCfJfMdhRFUZFfiB9BUUqke8iKe23E2bVptKPcd']
+            'proofs': ['598f263oUWWjMuZccigSkXKtRAChENcAaZ9PfZK5Z3yrqcDzbtCfJfMdhRFUZFfiB9BUUqke8iKe23E2bVptKPcd'],
         },
     },
 }

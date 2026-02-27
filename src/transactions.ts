@@ -80,10 +80,11 @@ export type TTxParams<LONG = string | number> =
     | ISponsorshipParams<LONG>
     | ITransferParams<LONG>
     | IUpdateAssetInfoParams<LONG>
+    | ICommitToGeneractionParams<LONG>
     // | IInvokeExpressionParams<LONG>
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IBasicParams<LONG = string | number> {
     /**
@@ -112,18 +113,19 @@ export interface IBasicParams<LONG = string | number> {
      * If not set, 87 will be used as default
      */
     chainId?: string | number
+    version?: number
 }
 
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IAliasParams<LONG = string | number> extends IBasicParams<LONG> {
     alias: string
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG> {
     assetId: string
@@ -131,21 +133,21 @@ export interface IBurnParams<LONG = string | number> extends IBasicParams<LONG> 
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ICancelLeaseParams<LONG = string | number> extends IBasicParams<LONG> {
     leaseId: string
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IDataParams<LONG = string | number> extends IBasicParams<LONG> {
     data: Array<DataTransactionEntry | { type?: undefined; value?: undefined; key: string; }> //todo separate type for delete entry
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG> {
     /**
@@ -164,7 +166,7 @@ export interface IIssueParams<LONG = string | number> extends IBasicParams<LONG>
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ILeaseParams<LONG = string | number> extends IBasicParams<LONG> {
     recipient: string
@@ -172,7 +174,7 @@ export interface ILeaseParams<LONG = string | number> extends IBasicParams<LONG>
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IMassTransferParams<LONG = string | number> extends IBasicParams<LONG> {
     transfers: Array<MassTransferItem<LONG>>
@@ -184,7 +186,7 @@ export interface IMassTransferParams<LONG = string | number> extends IBasicParam
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IOrderParams<LONG = string | number> {
     matcherPublicKey: string
@@ -236,7 +238,7 @@ export interface IAuth {
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IReissueParams<LONG = string | number> extends IBasicParams<LONG> {
     assetId: string
@@ -245,7 +247,7 @@ export interface IReissueParams<LONG = string | number> extends IBasicParams<LON
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ISetAssetScriptParams<LONG = string | number> extends IBasicParams<LONG> {
     /**
@@ -256,7 +258,7 @@ export interface ISetAssetScriptParams<LONG = string | number> extends IBasicPar
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ISetScriptParams<LONG = string | number> extends IBasicParams<LONG> {
     /**
@@ -266,7 +268,7 @@ export interface ISetScriptParams<LONG = string | number> extends IBasicParams<L
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ISponsorshipParams<LONG = string | number> extends IBasicParams<LONG> {
     /**
@@ -280,7 +282,7 @@ export interface ISponsorshipParams<LONG = string | number> extends IBasicParams
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface ITransferParams<LONG = string | number> extends IBasicParams<LONG> {
     /**
@@ -302,7 +304,7 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IInvokeScriptParams<LONG = string | number> extends IBasicParams<LONG> {
     dApp: string
@@ -318,7 +320,7 @@ export interface IInvokeScriptParams<LONG = string | number> extends IBasicParam
 }
 
 /**
- * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
 export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicParams<LONG> {
     /**
@@ -335,8 +337,17 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
     description: string
 }
 
+/**
+ * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+ */
+export interface ICommitToGeneractionParams<LONG = string | number> extends IBasicParams<LONG> {
+    generationPeriodStart: number
+    endorserPublicKey?: string
+    commitmentSignature?: string
+}
+
 // /**
-//  * @typeparam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
+//  * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
 //  */
 // export interface IInvokeExpressionParams<LONG = string | number> extends IBasicParams<LONG> {
 //     feeAssetId?: string | null

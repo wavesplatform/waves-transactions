@@ -26,6 +26,6 @@ const reissueScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
-export const reissueValidator = validateByShema(reissueScheme, getError);
+export const reissueValidator = validateByShema(reissueScheme, getError)

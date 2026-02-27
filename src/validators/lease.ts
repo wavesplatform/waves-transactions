@@ -24,6 +24,6 @@ const leaseScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
-export const leaseValidator = validateByShema(leaseScheme, getError);
+export const leaseValidator = validateByShema(leaseScheme, getError)

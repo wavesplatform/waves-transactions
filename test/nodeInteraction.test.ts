@@ -1,8 +1,7 @@
 import * as utilityF from '../src/nodeInteraction'
-import {data} from '../src'
-import {broadcast} from '../src/nodeInteraction'
+import {broadcast} from '../src'
+import {data, IDataParams} from '../src'
 import {address, randomSeed} from '@waves/ts-lib-crypto'
-import {CHAIN_ID} from './integration/config'
 
 const chainId = 'T'
 const apiBase = 'https://nodes-testnet.wavesnodes.com/'
@@ -29,7 +28,7 @@ describe('Node interaction utility functions', () => {
             timestamp: 100000,
             chainId: chainId,
         }
-        const result = data(dataParams, 'seed seed')
+        const result = data(dataParams as unknown as IDataParams, 'seed seed')
 
         await expect(broadcast(result, apiBase)).rejects.toMatchObject({'error': 303})
     })

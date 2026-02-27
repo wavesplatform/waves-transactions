@@ -12,7 +12,7 @@ export const setScriptBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640259093614,
-            'proofs': ['qJCLGE1whXzX7iJysFGTSZboENaUfzwPtJHsGMqqz99LaVpxBgv3yQq9X7SQ4nraTZd9extWyqkea8Lo4QXUMsi']
+            'proofs': ['qJCLGE1whXzX7iJysFGTSZboENaUfzwPtJHsGMqqz99LaVpxBgv3yQq9X7SQ4nraTZd9extWyqkea8Lo4QXUMsi'],
         },
     },
     'SetScript TX (type 13 v1)  case 2': {
@@ -28,7 +28,7 @@ export const setScriptBinaryTx = {
             'fee': 1000000,
             'feeAssetId': null,
             'timestamp': 1640259809919,
-            'proofs': ['2uuF61B82iUWF4mq2dYXD8i5B93PWbXv5rE5ngqMCabd7LCVgGGWvZuMLB57DJeKtcgh5GYjk7rUKgCB8gvkVsh4']
+            'proofs': ['2uuF61B82iUWF4mq2dYXD8i5B93PWbXv5rE5ngqMCabd7LCVgGGWvZuMLB57DJeKtcgh5GYjk7rUKgCB8gvkVsh4'],
         },
     },
 }

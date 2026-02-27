@@ -1,11 +1,11 @@
 import {cancelOrder, cancelSubmittedOrder, order, submitOrder} from '../../src'
-import {MATCHER_PUBLIC_KEY, MATCHER_URL, MASTER_SEED, TIMEOUT, randomHexString} from './config'
+import {MASTER_SEED, MATCHER_PUBLIC_KEY, MATCHER_URL, TIMEOUT} from './config'
 
 describe('Matcher requests', () => {
     let assetId = '7SGJvTYmBKJEz2G1h2WVfAKYrg1G5FYfPpwUqFmircG'
 
     beforeAll(async () => {
-        const nonce = randomHexString(6)
+        //const nonce = randomHexString(6)
         jest.setTimeout(60000)
 
         console.log('Assets setup successful ' + assetId)
@@ -25,11 +25,11 @@ describe('Matcher requests', () => {
 
         const ord = order(oParams, MASTER_SEED)
         console.log('ord', JSON.stringify(ord, undefined, ' '))
-        const submitResp = await submitOrder(ord, MATCHER_URL)
+        const submitResp = await submitOrder(ord as any, MATCHER_URL)
         expect(submitResp.status).toEqual('OrderAccepted')
 
-        const co = cancelOrder({orderId: ord.id}, MASTER_SEED)
-        const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
+        const co = cancelOrder({orderId: (ord as any).id}, MASTER_SEED)
+        const cancelResp: any = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
         expect(cancelResp.status).toEqual('OrderCanceled')
     }, TIMEOUT)
 
@@ -43,7 +43,7 @@ describe('Matcher requests', () => {
             matcherFee: 1000000,
             priceAsset: null,
             amountAsset: assetId,
-            version: 4
+            version: 4,
         }
 
         const ord = order(oParams, MASTER_SEED)
@@ -68,11 +68,11 @@ describe('Matcher requests', () => {
         }
 
         const ord = order(oParams, MASTER_SEED)
-        const submitResp = await submitOrder(ord, {market: false, matcherUrl: MATCHER_URL})
+        const submitResp = await submitOrder(ord as any, {market: false, matcherUrl: MATCHER_URL})
         expect(submitResp.status).toEqual('OrderAccepted')
 
-        const co = cancelOrder({orderId: ord.id}, MASTER_SEED)
-        const cancelResp = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
+        const co = cancelOrder({orderId: (ord as any).id}, MASTER_SEED)
+        const cancelResp: any = await cancelSubmittedOrder(co, ord.assetPair.amountAsset, ord.assetPair.priceAsset, MATCHER_URL)
         expect(cancelResp.status).toEqual('OrderCanceled')
     }, TIMEOUT)
 
@@ -99,8 +99,8 @@ describe('Matcher requests', () => {
             price: 100000000,
         }, MASTER_SEED)
 
-        await submitOrder(order1, MATCHER_URL)
-        await submitOrder(order2, MATCHER_URL)
+        await submitOrder(order1 as any, MATCHER_URL)
+        await submitOrder(order2 as any, MATCHER_URL)
 
     }, TIMEOUT)
 })

@@ -1,10 +1,9 @@
-import { broadcast, issue, sponsorship, transfer, waitForTx} from '../../src'
+import {broadcast, issue, sponsorship, transfer, waitForTx} from '../../src'
 import {API_BASE, CHAIN_ID, MASTER_SEED, TIMEOUT} from './config'
 import {address} from '@waves/ts-lib-crypto'
-import {validate} from '../../src/validators'
 
 describe('Sponsorship', () => {
-    let assetId: string;
+    let assetId: string
 
     it('Issue asset for sponsorship', async () => {
         const issueTx = issue({
@@ -31,7 +30,7 @@ describe('Sponsorship', () => {
             amount: '100',
             feeAssetId: assetId,
             fee: '100000',
-            chainId: CHAIN_ID
+            chainId: CHAIN_ID,
         }, MASTER_SEED)
         await broadcast(ttx, API_BASE)
     }, TIMEOUT)
@@ -43,7 +42,7 @@ describe('Sponsorship', () => {
         const ttx = transfer({
             recipient: address(MASTER_SEED, CHAIN_ID),
             amount: 1000,
-            feeAssetId: assetId
+            feeAssetId: assetId,
         }, MASTER_SEED)
         await expect(broadcast(ttx, API_BASE)).rejects
     }, TIMEOUT)

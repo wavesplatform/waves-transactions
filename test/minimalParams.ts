@@ -1,11 +1,21 @@
 import {
   IAliasParams,
   IBurnParams,
-  ICancelLeaseParams, IInvokeScriptParams, IDataParams, IIssueParams,
+  ICancelLeaseParams,
+  ICancelOrderParams,
+  IDataParams,
+  IInvokeScriptParams,
+  IIssueParams,
   ILeaseParams,
-  IMassTransferParams, IOrderParams, IReissueParams, ISetAssetScriptParams, ISetScriptParams, ITransferParams,
-  ICancelOrderParams, ISponsorshipParams, IUpdateAssetInfoParams,
-} from '../src/transactions'
+  IMassTransferParams,
+  IOrderParams,
+  IReissueParams,
+  ISetAssetScriptParams,
+  ISetScriptParams,
+  ISponsorshipParams,
+  ITransferParams,
+  IUpdateAssetInfoParams,
+} from '../src'
 import {TRANSACTION_TYPE} from '@waves/ts-types'
 
 export const aliasMinimalParams: IAliasParams = {
@@ -59,7 +69,7 @@ export const massTransferMinimalParams: IMassTransferParams = {
       amount: 0,
     },
   ],
-};
+}
 
 export const orderMinimalParams: IOrderParams = {
   matcherPublicKey: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
@@ -68,11 +78,11 @@ export const orderMinimalParams: IOrderParams = {
   price: 10000,
   amount: 1233,
   orderType: 'buy',
-};
+}
 
 export const cancelOrderMinimalParams: ICancelOrderParams = {
   orderId: '47YGqHdHtNPjcjE69E9EX9aD9bpC8PRKr4kp5AcZKHFq',
-};
+}
 
 export const dataMinimalParams: IDataParams = {
   data: [
@@ -88,28 +98,28 @@ export const dataMinimalParams: IDataParams = {
       value: true,
     },
   ],
-} as any;
+} as any
 
 export const reissueMinimalParams: IReissueParams = {
   assetId: 'DT5bC1S6XfpH7s4hcQQkLj897xnnXQPNgYbohX7zZKcr',
   quantity: 1,
   reissuable: false,
-};
+}
 
 export const issueMinimalParams: IIssueParams = {
   quantity: 1,
   name: 'test',
   description: '',
-};
+}
 
 export const transferMinimalParams: ITransferParams = {
   recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
   amount: 1,
-};
+}
 
 export const setScriptMinimalParams: ISetScriptParams = {
   script: 'AQa3b8tH',
-};
+}
 
 export const setAssetScriptMinimalParams: ISetAssetScriptParams = {
   script: 'base64:AQa3b8tH',
@@ -117,14 +127,14 @@ export const setAssetScriptMinimalParams: ISetAssetScriptParams = {
 }
 
 export const sponsorshipMinimalParams: ISponsorshipParams = {
-  assetId: "syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ",
-  minSponsoredAssetFee: 100
+  assetId: 'syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ',
+  minSponsoredAssetFee: 100,
 }
 
 export const updateAssetInfoMinimalParams: IUpdateAssetInfoParams = {
-  name: "xxxx",
-  description: "",
-  assetId: "syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ"
+  name: 'xxxx',
+  description: '',
+  assetId: 'syXBywr2HVY7wxqkaci1jKY73KMpoLh46cp1peJAZNJ',
 }
 
 export const minimalParams = {

@@ -12,7 +12,7 @@ export const leaseBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640252792217,
-            'proofs': ['4uGftiAryoCeaXoZ3QLGAYFGQd6AQFcGZFrhT8qS5JJR5LuSrKWk4aqY2VqidaRXF6C9TvrzG6wLw2ThwYBDwAPK']
+            'proofs': ['4uGftiAryoCeaXoZ3QLGAYFGQd6AQFcGZFrhT8qS5JJR5LuSrKWk4aqY2VqidaRXF6C9TvrzG6wLw2ThwYBDwAPK'],
         },
     },
     'Lease TX (type 8 v2) case 2 minimal values': {
@@ -28,7 +28,7 @@ export const leaseBinaryTx = {
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1640253005359,
-            'proofs': ['3gxYRkbY6efsaPYwUPB8ngySEranJoDMybJ5NtirWfrGPeGvriDiANLmwhcxCYLteFM5dM4VtQz8omknmFvMsrE9']
+            'proofs': ['3gxYRkbY6efsaPYwUPB8ngySEranJoDMybJ5NtirWfrGPeGvriDiANLmwhcxCYLteFM5dM4VtQz8omknmFvMsrE9'],
         },
     },
 }

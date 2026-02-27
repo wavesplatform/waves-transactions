@@ -15,6 +15,7 @@ import { leaseValidator as lease } from './lease'
 import { invokeValidator as invokeScript } from './invoke-script'
 import { exchangeValidator as exchange } from './exchange'
 import { updateAssetInfoValidator as updateAssetInfo } from './update-asset-info'
+import { commitToGeneractionValidator as commitToGeneraction } from './commit-to-generaction'
 // import { invokeExpressionValidator as invokeExpression } from './invoke-expression'
 
 import { orderValidator as order } from './order'
@@ -41,6 +42,7 @@ export const validate = {
     invokeScript,
     exchange,
     updateAssetInfo,
+    commitToGeneraction,
     // invokeExpression,
     cancelOrder,
     customData,

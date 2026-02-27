@@ -12,7 +12,7 @@ export const cancelLeaseBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640176241011,
-            'proofs': ['2uCNTLKZZihNSiN7FSdpM8ZwFdbYnzsMXWGiMnEsEhivGDvbGPw1RnJCzMK5fAy7doQyuu1tzkLvWJ4tkxG2NEHQ']
+            'proofs': ['2uCNTLKZZihNSiN7FSdpM8ZwFdbYnzsMXWGiMnEsEhivGDvbGPw1RnJCzMK5fAy7doQyuu1tzkLvWJ4tkxG2NEHQ'],
         },
     },
     'Cancel Lease TX (type 9 v2) case 2 min fee': {
@@ -28,7 +28,7 @@ export const cancelLeaseBinaryTx = {
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1640176028855,
-            'proofs': ['4Pdz3uDkgUrAzhMiSdsyvv7XWBNzcb41RaYKvnKAVLELEetfLLWXBsuRKStrR9Ek8rBk4rc6R49LkqHxXnrNmpyp']
+            'proofs': ['4Pdz3uDkgUrAzhMiSdsyvv7XWBNzcb41RaYKvnKAVLELEetfLLWXBsuRKStrR9Ek8rBk4rc6R49LkqHxXnrNmpyp'],
         },
     },
 

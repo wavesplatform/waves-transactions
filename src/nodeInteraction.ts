@@ -6,7 +6,7 @@ import * as assets_route from '@waves/node-api-js/cjs/api-node/assets'
 import * as rewards_route from '@waves/node-api-js/cjs/api-node/rewards'
 import * as debug_route from '@waves/node-api-js/cjs/api-node/debug'
 import { RequestInit } from '@waves/node-api-js/cjs/tools/request'
-import {DataTransactionEntry, SignedTransaction, Transaction, WithApiMixin} from '@waves/ts-types'
+import {DataTransactionEntry, SignedTransaction, Transaction, TransactionFromNode, WithApiMixin} from '@waves/ts-types'
 import {TLong} from '@waves/node-api-js/cjs/interface'
 
 export type CancellablePromise<T> = Promise<T> & { cancel: () => void }
@@ -66,11 +66,9 @@ export async function waitForHeight(height: number, options: INodeRequestOptions
   return promise()
 }
 
-type PropApplicationStatus = {
+export type TxStatus = TransactionFromNode & {
   applicationStatus?: 'succeeded' | 'script_execution_failed'
 }
-
-type TxStatus = Transaction & PropApplicationStatus
 
 /**
  * Resolves when specified txId is mined into block
@@ -143,7 +141,7 @@ export async function waitNBlocks(blocksCount: number, options: INodeRequestOpti
  * @param txId - transaction ID as base58 string
  * @param nodeUrl - node address to ask balance from. E.g. https://nodes.wavesplatform.com/
  */
-export async function transactionById(txId: string, nodeUrl: string, requestOptions?: RequestInit): Promise<Transaction & WithId & { height: number }> {
+export async function transactionById(txId: string, nodeUrl: string, requestOptions?: RequestInit): Promise<TransactionFromNode & WithId & { height: number }> {
   return tx_route.fetchInfo(nodeUrl, txId, requestOptions) as any //todo: fix types
 }
 

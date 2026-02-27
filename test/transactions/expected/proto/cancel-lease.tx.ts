@@ -29,8 +29,8 @@ export const cancelLeaseTx = {
             'feeAssetId': null,
             'timestamp': 1638189480908,
             'proofs': [
-                '2riRWtSQ19pxJ8PYptanybXnNY772oRpDRjqU4zRSrnCjwu82uj5qRM7WNyUeozUvC5enq8EN1NqocTd3nNvXtgb'
-            ]
+                '2riRWtSQ19pxJ8PYptanybXnNY772oRpDRjqU4zRSrnCjwu82uj5qRM7WNyUeozUvC5enq8EN1NqocTd3nNvXtgb',
+            ],
         },
     },
 

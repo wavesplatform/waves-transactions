@@ -1,9 +1,7 @@
-import { publicKey, verifySignature } from '@waves/ts-lib-crypto'
-import {reissue, signTx, data, burn, broadcast, IDataParams} from '../src'
-import { serialize, verify } from '../src/general'
-import { reissueMinimalParams, burnMinimalParams, orderMinimalParams } from './minimalParams'
-import { exampleTxs } from './exampleTxs'
-import { order } from '../src/requests/order'
+import {publicKey, verifySignature} from '@waves/ts-lib-crypto'
+import {broadcast, burn, data, IDataParams, order, reissue, serialize, signTx, verify} from '../src'
+import {burnMinimalParams, orderMinimalParams, reissueMinimalParams} from './minimalParams'
+import {exampleTxs} from './exampleTxs'
 import {API_BASE} from './integration/config'
 import {Transaction} from '@waves/ts-types'
 

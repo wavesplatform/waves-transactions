@@ -23,6 +23,7 @@ export { auth } from './requests/auth'
 export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
 export { updateAssetInfo } from './transactions/update-asset-info'
+export { commitToGeneraction } from './transactions/commit-to-generaction'
 export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { waitForTx, broadcast } from './nodeInteraction'
 export { makeTx, makeTxBytes } from './make-tx'
@@ -46,6 +47,7 @@ export {
   ISetAssetScriptParams,
   IInvokeScriptParams,
   IUpdateAssetInfoParams,
+  ICommitToGeneractionParams,
   IOrderParams,
   ICancelOrder,
   ICancelOrderParams,

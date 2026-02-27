@@ -1,10 +1,15 @@
-import { broadcast, ISetScriptParams, libs, massTransfer, setScript, waitForTx } from '../../src'
-import { address, publicKey } from '@waves/ts-lib-crypto'
-import { MASTER_SEED, CHAIN_ID, TIMEOUT, API_BASE, randomHexString } from './config'
-import { data, invokeScript } from '../../src'
-
-import { txToProtoBytes } from '../../src/proto-serialize'
-import {DATA_FIELD_TYPE} from '@waves/ts-types'
+import {
+  broadcast,
+  data,
+  IDataParams,
+  invokeScript,
+  ISetScriptParams,
+  massTransfer,
+  setScript,
+  waitForTx
+} from '../../src'
+import {address, publicKey} from '@waves/ts-lib-crypto'
+import {API_BASE, CHAIN_ID, MASTER_SEED, randomHexString, TIMEOUT} from './config'
 
 describe('Smart features', () => {
   let account1: string, account2: string
@@ -45,10 +50,10 @@ describe('Smart features', () => {
           value: Uint8Array.from([1, 2, 3]),
         }, {
           key: 'binary_value_as_base64',
-          type: DATA_FIELD_TYPE.BINARY,
+          type: 'binary',
           value: 'AwZd0cYf',
         }],
-      }, account1)
+      } as unknown as IDataParams, account1)
 
       await broadcast(dataTx, API_BASE)
       await waitForTx(dataTx.id, { apiBase: API_BASE, timeout: TIMEOUT })
@@ -144,7 +149,7 @@ describe('Smart features', () => {
           call: {
             function: 'foo', args: [{ type: 'integer', value: 10000 }],
           },
-          fee: 900000
+          fee: 900000,
         },
         account1)
 

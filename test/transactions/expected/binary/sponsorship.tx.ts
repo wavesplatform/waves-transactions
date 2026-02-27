@@ -12,7 +12,7 @@ export const sponsorshipBinaryTx = {
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1640263794025,
-            'proofs': ['2sTmbbjKVizGWwGtcJKn7zVSjGjCPKqcnrjYP9J6YWjW5oxDruTLo9WkutpZxsFnq9oBEzyuALLrG1aj3skSj5Vc']
+            'proofs': ['2sTmbbjKVizGWwGtcJKn7zVSjGjCPKqcnrjYP9J6YWjW5oxDruTLo9WkutpZxsFnq9oBEzyuALLrG1aj3skSj5Vc'],
         },
     },
     'SponsorFee TX (type 14 v1)  case 2': {
@@ -28,7 +28,7 @@ export const sponsorshipBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640263647183,
-            'proofs': ['jAvrJCueV7rqmDgH3YzTx6YZKNQXqUdMWZqDoRxLLPcToPWr8HKoDuGuMdXeBpfDxGKGNLMeSaJpgyNwQ3ZrzXP']
+            'proofs': ['jAvrJCueV7rqmDgH3YzTx6YZKNQXqUdMWZqDoRxLLPcToPWr8HKoDuGuMdXeBpfDxGKGNLMeSaJpgyNwQ3ZrzXP'],
         },
     },
 }

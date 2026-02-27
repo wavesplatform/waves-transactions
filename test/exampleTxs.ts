@@ -148,7 +148,7 @@ export const setAssetScriptTx = {
     ['4ffQFcfv9NG8GtNB5c1yamFvEFoixvgYBHPmfwSAkZeVRiCwZvB2HWWiMcbiujGhWGxXnho37bWqELnQ6DBPCaj4'],
   id: '4ERUXALAziaWJ1Acsmpnfjgtv1ixHSWXRp5dBR837o4e',
   script: 'base64:AQa3b8tH',
-  assetId: "Cei6h7evZcdR5qdbdjAABWdnuyHrp43Yb6MxN6ZViqFR",
+  assetId: 'Cei6h7evZcdR5qdbdjAABWdnuyHrp43Yb6MxN6ZViqFR',
 }
 
 export const invokeScriptTx = {
@@ -179,6 +179,24 @@ export const invokeScriptTx = {
   'id': 'E1fPNBHLTRrd1k1iZbnxjc2CjTcwYpuoBf5rBAVB6TMN',
   'timestamp': 1573141438273,
 }
+
+export const commitToGenerationTx = {
+  type: 19,
+  version: 1,
+  chainId: 68,
+  senderPublicKey: 'Bn21Eg8HbwZWZQMHXnTFnb64MhVjgH2HygDekQDbjjMq',
+  sender: '3FmjX4FAeDXE4ZdDj2JKxzE4QtbxaioXzxM',
+  generationPeriodStart: 2941,
+  endorserPublicKey: '5t9zL1oqXW6kL3YUAuF8r4rKUaPwohPVrpMWR8Y1bAJtSMipP3TQJYZvpBFB7GWZwo',
+  commitmentSignature: 'u9CTxLENQWyd5egnHrnbnnDKy7mvtrWJfR1AuCL4e4e7uuRTobzxVy1SQBz7ayoY5mRfiTG3PR8niJPT3fdVfsD97EkagBha8ehrLAzdutWSLbiQF2VDwPfi7uvTcp5csMC',
+  proofs: [
+    '2H7TeCFEBSq6gb325Up2iZPr1jbZk99XugFijYTLbvgH2Ts8NQyCusG5p84FxKySEsVz7RUqsmQQJcCGU3xx75jt',
+  ],
+  fee: 10000000,
+  feeAssetId: null,
+  timestamp: 1766488084192,
+}
+
 export const exampleTxs = {
   3: issueTx,
   4: transferTx,
@@ -192,4 +210,5 @@ export const exampleTxs = {
   13: setScriptTx,
   15: setAssetScriptTx,
   16: invokeScriptTx,
+  19: commitToGenerationTx,
 }

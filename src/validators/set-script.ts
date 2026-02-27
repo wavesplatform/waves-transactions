@@ -25,4 +25,4 @@ const setScriptScheme = {
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
 
-export const setScriptValidator = validateByShema(setScriptScheme, getError);
+export const setScriptValidator = validateByShema(setScriptScheme, getError)

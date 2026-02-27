@@ -30,7 +30,7 @@ export const sponsorshipTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640263208527,
-            'proofs': ['3x3AjsuqLaF52NRBcnCUBhh3MBE97GkLQ6EYTrKxLAY7ccwHhH4na6VzWqWJmEQCjJUVLbwdmyfEBpBmtJiAw8rK']
+            'proofs': ['3x3AjsuqLaF52NRBcnCUBhh3MBE97GkLQ6EYTrKxLAY7ccwHhH4na6VzWqWJmEQCjJUVLbwdmyfEBpBmtJiAw8rK'],
         },
     },
 }

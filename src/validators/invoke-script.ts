@@ -58,7 +58,7 @@ const invokeScheme = {
   chainId: isNaturalNumberLike,
   timestamp: isNaturalNumberLike,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
 
-export const invokeValidator = validateByShema(invokeScheme, getError);
+export const invokeValidator = validateByShema(invokeScheme, getError)

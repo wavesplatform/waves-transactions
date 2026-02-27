@@ -23,6 +23,6 @@ const sponsorshipScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
-export const sponsorshipValidator = validateByShema(sponsorshipScheme, getError);
+export const sponsorshipValidator = validateByShema(sponsorshipScheme, getError)

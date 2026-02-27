@@ -27,26 +27,26 @@ export const deleteProofsAndId = (t: any) => {
 }
 
 export function checkProtoSerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
-    const txJson = deleteProofsAndId(Json);
-    const txObject = makeTx(txJson);
-    const protoBytes = txToProtoBytes(txObject);
-    const parsed = protoBytesToTx(protoBytes);
-    expect(parsed).toMatchObject(txJson);
+    const txJson = deleteProofsAndId(Json)
+    const txObject = makeTx(txJson)
+    const protoBytes = txToProtoBytes(txObject)
+    const parsed = protoBytesToTx(protoBytes)
+    expect(parsed).toMatchObject(txJson)
 
-    const actualBytes = base16Encode(protoBytes);
-    const expectedBytes = base16Encode(base64Decode(Bytes));
+    const actualBytes = base16Encode(protoBytes)
+    const expectedBytes = base16Encode(base64Decode(Bytes))
     expect(expectedBytes).toBe(actualBytes)
 
 }
 
 export function checkBinarySerializeDeserialize({Json, Bytes}: { Json: any, Bytes: string }) {
-    const txJson = deleteProofsAndId(Json);
-    const binaryBytes = binary.serializeTx(makeTx(txJson));
-    const actualBytes = base16Encode(binaryBytes);
-    const expectedBytes = base16Encode(base64Decode(Bytes));
+    const txJson = deleteProofsAndId(Json)
+    const binaryBytes = binary.serializeTx(makeTx(txJson))
+    const actualBytes = base16Encode(binaryBytes)
+    const expectedBytes = base16Encode(base64Decode(Bytes))
     expect(expectedBytes).toBe(actualBytes)
 }
-export const longMax = '9223372036854775807';
+export const longMax = '9223372036854775807'
 
 export function errorMessageByTemplate(field: String, value: any) {
     if (typeof(value) == 'number')
@@ -56,8 +56,7 @@ export function errorMessageByTemplate(field: String, value: any) {
 }
 
 export function rndString(len: number) {
-    const chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
-    const rndStr = [...Array(len)].map(i=>chars[Math.random()*chars.length|0]).join('');
-    return rndStr
+    const chars = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789']
+    return [...Array(len)].map(() => chars[Math.random() * chars.length | 0]).join('')
 }
 
