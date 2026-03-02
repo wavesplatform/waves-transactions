@@ -3,7 +3,7 @@ import {
     IBurnParams,
     ICancelLeaseParams,
     IDataParams,
-    ICommitToGeneractionParams,
+    ICommitToGenerationParams,
     IInvokeScriptParams,
     IIssueParams,
     ILeaseParams,
@@ -33,14 +33,14 @@ import {sponsorship} from './transactions/sponsorship'
 import {exchange} from './transactions/exchange'
 import {invokeScript} from './transactions/invoke-script'
 import {updateAssetInfo} from './transactions/update-asset-info'
-import {commitToGeneraction} from './transactions/commit-to-generaction'
+import {commitToGeneration} from './transactions/commit-to-generation'
 import {txToProtoBytes} from './proto-serialize'
 import {binary} from '@waves/marshall'
 import {
     AliasTransaction,
     BurnTransaction,
     CancelLeaseTransaction,
-    CommitToGeneractionTransaction,
+    CommitToGenerationTransaction,
     DataTransaction,
     ExchangeTransaction,
     // InvokeExpressionTransaction,
@@ -75,7 +75,7 @@ export type TxTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: InvokeScriptTransaction
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
-    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: CommitToGeneractionTransaction
+    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: CommitToGenerationTransaction
 }
 export type TTxParamsWithType<T extends TTransactionType> = TxParamsTypeMap[T] & { type: T }
 
@@ -95,7 +95,7 @@ export type TxParamsTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: IInvokeScriptParams
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: IUpdateAssetInfoParams
-    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: ICommitToGeneractionParams
+    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: ICommitToGenerationParams
 }
 
 /**
@@ -134,7 +134,7 @@ export function makeTx<T extends TTransactionType>(params: TTxParamsWithType<T> 
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             return updateAssetInfo(params as any) as any
         case TRANSACTION_TYPE.COMMIT_TO_GENERATION:
-            return commitToGeneraction(params as any) as any
+            return commitToGeneration(params as any) as any
         // case TRANSACTION_TYPE.INVOKE_EXPRESSION:
         //     return txToProtoBytes(params as any) as any
         default:

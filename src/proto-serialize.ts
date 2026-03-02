@@ -16,7 +16,7 @@ import {
     AliasTransaction,
     BurnTransaction,
     CancelLeaseTransaction,
-    CommitToGeneractionTransaction,
+    CommitToGenerationTransaction,
     DataTransaction,
     DataTransactionEntry,
     ExchangeTransactionOrder,
@@ -355,8 +355,8 @@ const getUpdateAssetInfoData = (t: UpdateAssetInfoTransaction): wavesProto.waves
     }
 }
 
-const getCommitToGenerationData = (t: CommitToGeneractionTransaction): wavesProto.waves.ICommitToGenerationTransactionData => {
-    const tx = t as CommitToGeneractionTransaction & { endorserPublicKey?: string; commitmentSignature?: string }
+const getCommitToGenerationData = (t: CommitToGenerationTransaction): wavesProto.waves.ICommitToGenerationTransactionData => {
+    const tx = t as CommitToGenerationTransaction & { endorserPublicKey?: string; commitmentSignature?: string }
 
     return {
         generationPeriodStart: t.generationPeriodStart,

@@ -80,7 +80,7 @@ export type TTxParams<LONG = string | number> =
     | ISponsorshipParams<LONG>
     | ITransferParams<LONG>
     | IUpdateAssetInfoParams<LONG>
-    | ICommitToGeneractionParams<LONG>
+    | ICommitToGenerationParams<LONG>
     // | IInvokeExpressionParams<LONG>
 
 /**
@@ -340,7 +340,7 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
 /**
  * @typeParam LONG Generic type representing LONG type. Default to string | number. Since javascript number more than 2 ** 53 -1 cannot be precisely represented, generic type is used
  */
-export interface ICommitToGeneractionParams<LONG = string | number> extends IBasicParams<LONG> {
+export interface ICommitToGenerationParams<LONG = string | number> extends IBasicParams<LONG> {
     generationPeriodStart: number
     endorserPublicKey?: string
     commitmentSignature?: string

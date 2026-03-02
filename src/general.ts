@@ -21,12 +21,12 @@ import {invokeScript} from './transactions/invoke-script'
 import {serializeCustomData, TSignedData} from './requests/custom-data'
 import {serializeAuthData} from './requests/auth'
 import {serializeWavesAuthData} from './requests/wavesAuth'
-import {commitToGeneraction} from './transactions/commit-to-generaction'
+import {commitToGeneration} from './transactions/commit-to-generation'
 import {
     AliasTransaction,
     BurnTransaction,
     CancelLeaseTransaction,
-    CommitToGeneractionTransaction,
+    CommitToGenerationTransaction,
     DataTransaction,
     ExchangeTransaction,
     ExchangeTransactionOrder,
@@ -65,7 +65,7 @@ export const txTypeMap: { [type: number]: { sign: (tx: Transaction<Long> | TTxPa
     [TRANSACTION_TYPE.EXCHANGE]: {sign: (x, seed) => exchange(x as ExchangeTransaction & WithProofs, seed)},
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: {sign: (x, seed) => invokeScript(x as InvokeScriptTransaction, seed)},
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: {sign: (x, seed) => updateAssetInfo(x as UpdateAssetInfoTransaction, seed)},
-    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: {sign: (x, seed) => commitToGeneraction(x as CommitToGeneractionTransaction, seed)},
+    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: {sign: (x, seed) => commitToGeneration(x as CommitToGenerationTransaction, seed)},
     // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: {sign: (x, seed) => invokeExpression(x as InvokeExpressionTransaction, seed)},
 }
 

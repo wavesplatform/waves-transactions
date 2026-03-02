@@ -14,7 +14,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "preversion": "npm run build",
+    "prepare": "npm run build",
     "postversion": "npm publish",
     "build-docs": "typedoc --options typedoc.config.cjs --entryPointStrategy resolve ./src/index.ts --out docs && touch docs/.nojekyll",
     "postpublish": "git push origin head",
@@ -73,9 +73,9 @@
   },
   "dependencies": {
     "@waves/marshall": "^0.15.0-beta.1",
-    "@waves/node-api-js": "^1.3.10",
-    "@waves/ts-lib-crypto": "file:../ts-lib-crypto",
-    "@waves/ts-types": "file:../ts-types",
+    "@waves/node-api-js": "file:../node-api-js",
+    "@waves/ts-lib-crypto": "^1.5.1-snapshot.2",
+    "@waves/ts-types": "^1.3.1-snapshot.1",
     "protobufjs": "7.5.4",
     "@waves/protobuf-serialization": "1.6.1-snapshot.1",
     "axios": "^1.13.5",

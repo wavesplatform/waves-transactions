@@ -1,14 +1,14 @@
 /**
  * @module index
  */
-import {ICommitToGeneractionParams, WithId, WithProofs, WithSender} from '../transactions'
+import {ICommitToGenerationParams, WithId, WithProofs, WithSender} from '../transactions'
 import {base58Decode, base58Encode, blake2b,  concat, crypto, signBytes} from '@waves/ts-lib-crypto'
 import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {validate} from '../validators'
 import {TSeedTypes} from '../types'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {CommitToGeneractionTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+import {CommitToGenerationTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 const wavesCrypto = crypto({output: 'Bytes'})
 
@@ -24,9 +24,9 @@ const int32ToBigEndianBytes = (value: number): Uint8Array => {
 }
 
 /* @echo DOCS */
-export function commitToGeneraction(params: ICommitToGeneractionParams, seed: TSeedTypes): CommitToGeneractionTransaction & WithId & WithProofs
-export function commitToGeneraction(paramsOrTx: ICommitToGeneractionParams & WithSender | CommitToGeneractionTransaction, seed?: TSeedTypes): CommitToGeneractionTransaction & WithId & WithProofs
-export function commitToGeneraction(paramsOrTx: any, seed?: TSeedTypes): CommitToGeneractionTransaction & WithId & WithProofs {
+export function commitToGeneration(params: ICommitToGenerationParams, seed: TSeedTypes): CommitToGenerationTransaction & WithId & WithProofs
+export function commitToGeneration(paramsOrTx: ICommitToGenerationParams & WithSender | CommitToGenerationTransaction, seed?: TSeedTypes): CommitToGenerationTransaction & WithId & WithProofs
+export function commitToGeneration(paramsOrTx: any, seed?: TSeedTypes): CommitToGenerationTransaction & WithId & WithProofs {
     const type = TRANSACTION_TYPE.COMMIT_TO_GENERATION
     const version = paramsOrTx.version || DEFAULT_VERSIONS.COMMIT_TO_GENERATION
     const seedsAndIndexes = convertToPairs(seed)
@@ -60,7 +60,7 @@ export function commitToGeneraction(paramsOrTx: any, seed?: TSeedTypes): CommitT
         throw new Error('Please provide either seed or commitmentSignature for CommitToGeneractionTransaction')
     }
 
-    const tx: CommitToGeneractionTransaction & WithId & WithProofs = {
+    const tx: CommitToGenerationTransaction & WithId & WithProofs = {
         type,
         version,
         senderPublicKey,
@@ -81,5 +81,5 @@ export function commitToGeneraction(paramsOrTx: any, seed?: TSeedTypes): CommitT
     seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
     tx.id = base58Encode(blake2b(bytes))
 
-    return tx as CommitToGeneractionTransaction & WithId & WithProofs
+    return tx as CommitToGenerationTransaction & WithId & WithProofs
 }
