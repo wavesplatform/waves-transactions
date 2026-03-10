@@ -171,7 +171,7 @@ describe('data', () => {
 
     it('Should not create data with negative fee', () => {
         expect(() => data({...dataMinimalParams, fee: -1}, senderPk))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 
     const maxKey = rndString(400)
@@ -233,7 +233,7 @@ describe('data', () => {
         expect(tx.data[3].value).toEqual('Test Test123 Test321 TEST')
 
         /*expect(() =>data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk))
-            .toThrowError(     'tx "key", has wrong data: ' + extraMaxKey + '. Check tx data.') */
+            .toThrow(     'tx "key", has wrong data: ' + extraMaxKey + '. Check tx data.') */
     })
 
     const testMaxValueParams = [

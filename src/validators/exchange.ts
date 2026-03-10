@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import { orderValidator } from './order'
 import {
     isEq,

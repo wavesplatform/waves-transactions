@@ -42,7 +42,7 @@ describe('burn', () => {
         expect(() => burn({
             ...burnMinimalParams,
             amount: 0,
-        }, stringSeed)).toThrowError('tx "amount", has wrong data: 0. Check tx data.')
+        }, stringSeed)).toThrow('tx "amount", has wrong data: 0. Check tx data.')
     })
 
     it('Should create with custom amount', () => {
@@ -53,7 +53,7 @@ describe('burn', () => {
 
     it('Should not create with negative amount', () => {
         expect(() => burn({...burnMinimalParams, amount: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('amount', -1))
+            .toThrow(errorMessageByTemplate('amount', -1))
     })
 
     it('Should create with custom fee', () => {
@@ -68,12 +68,12 @@ describe('burn', () => {
 
     it('Should not create with negative fee', () => {
         expect(() => burn({...burnMinimalParams, fee: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 
     it('Should not create with empty assetid', () => {
         expect(() => burn({...burnMinimalParams, assetId: ''}, stringSeed))
-            .toThrowError(errorMessageByTemplate('assetId', ''))
+            .toThrow(errorMessageByTemplate('assetId', ''))
     })
 
 })

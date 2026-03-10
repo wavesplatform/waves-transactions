@@ -1,3 +1,5 @@
+import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
     defaultValue,
     getError,
@@ -12,7 +14,6 @@ import {
     orEq,
     validateByShema
 } from './validators'
-import {TRANSACTION_TYPE} from '@waves/ts-types'
 
 
 const transferScheme = {

@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
     defaultValue,
     getError,
@@ -16,10 +17,10 @@ import {
 const commitToGeneractionScheme = {
     type: isEq(TRANSACTION_TYPE.COMMIT_TO_GENERATION),
     senderPublicKey: isPublicKey,
-    generationPeriodStart: isNaturalNumberOrZeroLike,
-    endorserPublicKey: ifElse(orEq([undefined, null]), defaultValue(true), isBase58),
-    commitmentSignature: ifElse(orEq([undefined, null]), defaultValue(true), isBase58),
     version: orEq([1]),
+    generationPeriodStart: isNumber,
+    endorserPublicKey: isBase58,
+    commitmentSignature: isBase58,
     fee: isNaturalNumberOrZeroLike,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),

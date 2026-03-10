@@ -88,7 +88,7 @@ describe('setScript', () => {
 
   it('Should not create correct signed setScript transaction with negative fee', () => {
     expect(() =>setScript({script: compiledContract, fee: -1 }, seed))
-         .toThrowError(errorMessageByTemplate('fee', -1))
+         .toThrow(errorMessageByTemplate('fee', -1))
   })
 
 })

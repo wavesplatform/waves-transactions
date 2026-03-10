@@ -53,12 +53,12 @@ describe('cancel-lease', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>cancelLease({ ...cancelLeaseMinimalParams, fee: -1}, stringSeed))
-         .toThrowError(errorMessageByTemplate('fee', -1))
+         .toThrow(errorMessageByTemplate('fee', -1))
   })
 
   it('Should not create with empty leaseId', () => {
     expect(() =>cancelLease({ ...cancelLeaseMinimalParams, leaseId: ''}, stringSeed))
-        .toThrowError(errorMessageByTemplate('leaseId', ''))
+        .toThrow(errorMessageByTemplate('leaseId', ''))
   })
 
 

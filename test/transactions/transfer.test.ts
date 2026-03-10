@@ -71,12 +71,12 @@ describe('transfer', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>transfer({ ...transferMinimalParams, fee: -1 }, stringSeed))
-         .toThrowError(errorMessageByTemplate('fee', -1))
+         .toThrow(errorMessageByTemplate('fee', -1))
   })
 
   it('Should not create with negative amount', () => {
     expect(() =>transfer({ ...transferMinimalParams, amount: -1 }, stringSeed))
-      .toThrowError(errorMessageByTemplate('amount', -1))
+      .toThrow(errorMessageByTemplate('amount', -1))
   })
 
 })

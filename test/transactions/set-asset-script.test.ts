@@ -76,7 +76,7 @@ describe('setAssetScript', () => {
 
   it('Should not generate correct signed setAssetScript transaction with negative fee', () => {
     expect(() =>setAssetScript({...setAssetScriptMinimalParams, fee: -1 }, seed))
-         .toThrowError(errorMessageByTemplate('fee', -1))
+         .toThrow(errorMessageByTemplate('fee', -1))
   })
 
   it('Should create setAssetScript transaction with minimal params', () => {

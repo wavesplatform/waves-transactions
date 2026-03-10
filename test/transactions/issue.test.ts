@@ -31,28 +31,28 @@ describe('issue', () => {
 
     it('should not create from minimal set of params with zero quantity', () => {
         expect(() => issue({...issueMinimalParams, quantity: 0}, stringSeed))
-            .toThrowError(errorMessageByTemplate('quantity', 0))
+            .toThrow(errorMessageByTemplate('quantity', 0))
     })
 
     it('should not create from minimal set of params with negative quantity', () => {
         expect(() => issue({...issueMinimalParams, quantity: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('quantity', -1))
+            .toThrow(errorMessageByTemplate('quantity', -1))
     })
 
     it('should not create with name length < 4', () => {
         expect(() => issue({...issueMinimalParams, name: 'xxx'}, stringSeed))
-            .toThrowError(errorMessageByTemplate('name', 'xxx'))
+            .toThrow(errorMessageByTemplate('name', 'xxx'))
     })
 
     it('should not create with max name length > 16', () => {
         expect(() => issue({...issueMinimalParams, name: 'this_is_17_bytes_'}, stringSeed))
-            .toThrowError(errorMessageByTemplate('name', 'this_is_17_bytes_'))
+            .toThrow(errorMessageByTemplate('name', 'this_is_17_bytes_'))
     })
 
     it('should not create with description length > 1000', () => {
         const descr = rndString(1001)
         expect(() => issue({...issueMinimalParams, description: descr}, stringSeed))
-            .toThrowError(errorMessageByTemplate('description', descr))
+            .toThrow(errorMessageByTemplate('description', descr))
     })
 
     it('should create from minimal set of params with maximal quantity', () => {
@@ -117,7 +117,7 @@ describe('issue', () => {
 
     it('should not create correctly with negative fee', () => {
         expect(() => issue({...issueMinimalParams, fee: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 })
 

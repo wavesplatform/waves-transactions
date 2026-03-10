@@ -3,14 +3,15 @@
  */
 import * as wavesProto from '@waves/protobuf-serialization'
 import {binary, serializePrimitives} from '@waves/marshall'
-import {base58Encode, blake2b, concat, signBytes} from '@waves/ts-lib-crypto'
+import {base58Encode, base64Encode, blake2b, concat, signBytes} from '@waves/ts-lib-crypto'
+import {DataFiledType, DataTransaction, DataTransactionEntry, TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {IDataParams, WithId, WithProofs, WithSender} from '../transactions'
 import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {TSeedTypes} from '../types'
 import {validate} from '../validators'
 import {dataEntryToProto, txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {DataFiledType, DataTransaction, DataTransactionEntry, TRANSACTION_TYPE} from '@waves/ts-types'
 
 const {
     BASE58_STRING,
@@ -34,12 +35,12 @@ const typeMap: any = {
 }
 
 const mapType = <T>(value: T, type: string | undefined | null): [DataFiledType, number, (value: T) => Uint8Array] => {
-    return !!type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
+    return type ? typeMap[type] : typeMap[typeof value] || typeMap['_']
 }
 
 const convertValue = (type: 'integer' | 'string' | 'binary' | 'boolean', value: Uint8Array | string | number | boolean, opt: string) => {
-    return type === 'binary' && (Uint8Array.prototype.isPrototypeOf(value) || Array.isArray(value))
-        ? 'base64:' + Buffer.from(value as unknown as any[]).toString('base64')
+    return type === 'binary' && (value instanceof Uint8Array || Array.isArray(value))
+        ? 'base64:' + base64Encode(Uint8Array.from(value as unknown as number[]))
         : value
 }
 
@@ -82,6 +83,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     }
 
     let computedFee
+
     if (version < 2) {
         let bytes = concat(
             BYTE(TRANSACTION_TYPE.DATA),
@@ -95,6 +97,7 @@ export function data(paramsOrTx: any, seed?: TSeedTypes): DataTransaction & With
     } else {
         let protoEntries = dataEntriesWithTypes.map(dataEntryToProto)
         let dataBytes = wavesProto.waves.DataTransactionData.encode({data: protoEntries}).finish()
+
         computedFee = (Math.ceil(dataBytes.length / 1024) * 100000)
     }
 

@@ -51,7 +51,7 @@ describe('lease', () => {
 
     it('Should not create with negative fee', () => {
         expect(() => lease({...leaseMinimalParams, fee: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 
     it('Should create with custom amount', () => {
@@ -61,17 +61,17 @@ describe('lease', () => {
 
     it('Should create with zero amount', () => {
         expect(() => lease({...leaseMinimalParams, amount: 0}, stringSeed))
-            .toThrowError(errorMessageByTemplate('amount', 0))
+            .toThrow(errorMessageByTemplate('amount', 0))
     })
 
     it('Should not create with negative amount', () => {
         expect(() => lease({...leaseMinimalParams, amount: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('amount', -1))
+            .toThrow(errorMessageByTemplate('amount', -1))
      })
 
     it('Should not create with empty recepient', () => {
         expect(() => lease({...leaseMinimalParams, recipient: ''}, stringSeed))
-            .toThrowError(errorMessageByTemplate('recipient',''))
+            .toThrow(errorMessageByTemplate('recipient',''))
     })
 
     it('Should build with alias', () => {

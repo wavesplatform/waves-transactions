@@ -14,7 +14,7 @@ describe('updateAssetInfo', () => {
 
     it('Should not create update asset info transaction with name <3', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, name: 'yyy'}, stringSeed))
-            .toThrowError(errorMessageByTemplate('name', 'yyy'))
+            .toThrow(errorMessageByTemplate('name', 'yyy'))
     })
 
     it('Should create update asset info transaction with maximal name = 16', () => {
@@ -24,7 +24,7 @@ describe('updateAssetInfo', () => {
 
     it('Should not create update asset info transaction with name >16', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, name: 'this_is_17_bytes_'}, stringSeed))
-            .toThrowError(errorMessageByTemplate('name', 'this_is_17_bytes_'))
+            .toThrow(errorMessageByTemplate('name', 'this_is_17_bytes_'))
     })
 
     it('Should create update asset info transaction with zero fee', () => {
@@ -34,7 +34,7 @@ describe('updateAssetInfo', () => {
 
     it('Should not create update asset info transaction with negative fee', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, fee: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 
     it('Should create update asset info transaction with max description', () => {
@@ -47,12 +47,12 @@ describe('updateAssetInfo', () => {
         const descr = rndString(1001)
 
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, description: descr}, stringSeed))
-            .toThrowError(errorMessageByTemplate('description', descr))
+            .toThrow(errorMessageByTemplate('description', descr))
     })
 
     it('Should not create UpdateAssetInfo tx with empty assetId', () => {
         expect(() => updateAssetInfo({...updateAssetInfoMinimalParams, assetId: ''}, stringSeed))
-            .toThrowError(errorMessageByTemplate('assetId', ''))
+            .toThrow(errorMessageByTemplate('assetId', ''))
     })
 
 })

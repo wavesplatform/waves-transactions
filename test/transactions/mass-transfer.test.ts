@@ -44,7 +44,7 @@ describe('massTransfer', () => {
     const t = {recipient: '', amount: 0}
     transfersList.push(t)
     expect(() => massTransfer({ transfers: transfersList}, stringSeed))
-        .toThrowError('tx "transfers", has wrong data: [{"recipient":"","amount":0}]. Check tx data.')
+        .toThrow('tx "transfers", has wrong data: [{"recipient":"","amount":0}]. Check tx data.')
   })
 
   it('Should throw on transfers with maximal quantity of receivers', () => {
@@ -64,7 +64,7 @@ describe('massTransfer', () => {
       transfersList.push(t)
     }
     expect(() => massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed))
-        .toThrowError('tx \"transfers\", has wrong data: [{\"recipient\":\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1\"')
+        .toThrow('tx \"transfers\", has wrong data: [{\"recipient\":\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1\"')
 
 //    const tx =  massTransfer({ transfers: transfersList}, stringSeed)
 //    expect(tx.transfers).toMatchObject({ ...transfersList })
@@ -83,7 +83,7 @@ describe('massTransfer', () => {
     const t = {recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1', amount: -1}
     transfersList.push(t)
     expect(() => massTransfer({ ...massTransferMinimalParams, transfers: transfersList}, stringSeed))
-        .toThrowError('tx \"transfers\", has wrong data: [{\"recipient\":\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1\",\"amount\":-1}]. Check tx data.')
+        .toThrow('tx \"transfers\", has wrong data: [{\"recipient\":\"3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1\",\"amount\":-1}]. Check tx data.')
   })
 
 })

@@ -1,5 +1,3 @@
-export * from './validators'
-
 import { transferValidator as transfer } from './transfer'
 import { massTransferValidator as massTransfer } from './mass-transfer'
 import { aliasValidator as alias } from './alias'
@@ -23,6 +21,8 @@ import { cancelOrderValidator as cancelOrder } from './cancel-order'
 import { customDataValidator as customData } from './custom-data'
 import { authValidator as auth } from './auth'
 import { authValidator as wavesAuth } from './wavesAuth'
+
+export * from './validators'
 
 
 export const validate = {

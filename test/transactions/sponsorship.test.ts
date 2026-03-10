@@ -19,7 +19,7 @@ describe('setSponsorship', () => {
             console.log(spTx)
             return spTx
         })
-            .toThrowError(errorMessageByTemplate('minSponsoredAssetFee', 0))
+            .toThrow(errorMessageByTemplate('minSponsoredAssetFee', 0))
     })
 
     it('Should create sponsorship transaction with null sponsor fee', () => {
@@ -27,18 +27,18 @@ describe('setSponsorship', () => {
         expect(tx).toMatchObject({...sponsorshipMinimalParams, minSponsoredAssetFee: null})
 
  //       expect(() =>sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: null }, stringSeed))
-  //          .toThrowError(errorMessageByTemplate('minSponsoredAssetFee', 0))
+  //          .toThrow(errorMessageByTemplate('minSponsoredAssetFee', 0))
     })
 
     it('Should not create sponsorship transaction with negative sponsor fee', () => {
         expect(() =>sponsorship({ ...sponsorshipMinimalParams, minSponsoredAssetFee: -1 }, stringSeed))
-            .toThrowError(errorMessageByTemplate('minSponsoredAssetFee', -1))
+            .toThrow(errorMessageByTemplate('minSponsoredAssetFee', -1))
 
     })
 
     it('Should not create sponsorship transaction empty assetId', () => {
         expect(() =>sponsorship({ ...sponsorshipMinimalParams, assetId: '' }, stringSeed))
-            .toThrowError(errorMessageByTemplate('assetId', ''))
+            .toThrow(errorMessageByTemplate('assetId', ''))
     })
 
     it('Should create sponsorship transaction with zero fee', () => {
@@ -48,7 +48,7 @@ describe('setSponsorship', () => {
 
     it('Should not create sponsorship transaction with negative fee', () => {
         expect(() =>sponsorship({ ...sponsorshipMinimalParams, fee: -1 }, stringSeed))
-             .toThrowError(errorMessageByTemplate('fee', -1))
+             .toThrow(errorMessageByTemplate('fee', -1))
     })
 
 })

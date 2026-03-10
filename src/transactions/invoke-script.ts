@@ -1,15 +1,17 @@
 /**
  * @module index
  */
-import {IInvokeScriptParams, WithId, WithProofs, WithSender} from '../transactions'
 import {base58Encode, blake2b, signBytes,} from '@waves/ts-lib-crypto'
+import {binary} from '@waves/marshall'
+import {InvokeScriptPayment, InvokeScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {IInvokeScriptParams, WithId, WithProofs, WithSender} from '../transactions'
 import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte, normalizeAssetId} from '../generic'
 import {TSeedTypes} from '../types'
-import {binary} from '@waves/marshall'
 import {validate} from '../validators'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {InvokeScriptPayment, InvokeScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 /* @echo DOCS */
 export function invokeScript(params: IInvokeScriptParams, seed: TSeedTypes): InvokeScriptTransaction & WithId & WithProofs
@@ -50,5 +52,5 @@ const mapPayment = (payments?: InvokeScriptPayment[]): InvokeScriptPayment[] => 
     : payments.map(pmt => ({...pmt, assetId: pmt.assetId === 'WAVES' ? null : pmt.assetId}))
 
 const callField = (paramsOrTx: any) => {
-    return !!paramsOrTx.call ? {args: paramsOrTx.call.args || [], ...paramsOrTx.call} : null
+    return paramsOrTx.call ? {args: paramsOrTx.call.args || [], ...paramsOrTx.call} : null
 }

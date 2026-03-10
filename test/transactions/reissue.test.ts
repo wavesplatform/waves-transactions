@@ -39,7 +39,7 @@ describe('reissue', () => {
 
     it('Should not create with negative fee', () => {
         expect(() => reissue({...reissueMinimalParams, fee: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 
     it('Should create with custom fee', () => {
@@ -49,17 +49,17 @@ describe('reissue', () => {
 
     it('Should not create with zero quantity', () => {
         expect(() => reissue({...reissueMinimalParams, quantity: 0}, stringSeed))
-            .toThrowError(errorMessageByTemplate('quantity', 0))
+            .toThrow(errorMessageByTemplate('quantity', 0))
     })
 
     it('Should not create with negative quantity', () => {
         expect(() => reissue({...reissueMinimalParams, quantity: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('quantity', -1))
+            .toThrow(errorMessageByTemplate('quantity', -1))
     })
 
     it('Should not create with empty assetId', () => {
         expect(() => reissue({...reissueMinimalParams, assetId: ''}, stringSeed))
-            .toThrowError(errorMessageByTemplate('assetId', ''))
+            .toThrow(errorMessageByTemplate('assetId', ''))
     })
 
 })

@@ -1,7 +1,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+
+// internal libraries access
+import * as crypto from '@waves/ts-lib-crypto'
+import * as marshall from '@waves/marshall'
+
 import { serializeCustomData } from './requests/custom-data'
+import * as seedUtils from './seedUtils'
+import * as validators from './validators'
+import * as protoSerialize from './proto-serialize'
 
 export { massTransfer } from './transactions/mass-transfer'
 export { reissue } from './transactions/reissue'
@@ -59,19 +67,11 @@ export {
   TSeedTypes, TOption
 } from './types'
 
-// internal libraries access
-import * as crypto from '@waves/ts-lib-crypto'
-import * as marshall from '@waves/marshall'
-
 const libs = {
   crypto,
   marshall,
   // nodeApiJs
 }
-
-import * as seedUtils from './seedUtils'
-import * as validators from './validators'
-import * as protoSerialize from './proto-serialize'
 
 export {
   libs,

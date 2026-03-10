@@ -1,27 +1,5 @@
 import {binary} from '@waves/marshall'
 import {address, verifySignature} from '@waves/ts-lib-crypto'
-import {TSeedTypes} from './types'
-import {txToProtoBytes} from './proto-serialize'
-import {DEFAULT_VERSIONS} from './defaultVersions'
-import {issue} from './transactions/issue'
-import {transfer} from './transactions/transfer'
-import {reissue} from './transactions/reissue'
-import {burn} from './transactions/burn'
-import {lease} from './transactions/lease'
-import {cancelLease} from './transactions/cancel-lease'
-import {data} from './transactions/data'
-import {massTransfer} from './transactions/mass-transfer'
-import {alias} from './transactions/alias'
-import {setScript} from './transactions/set-script'
-import {isOrder} from './generic'
-import {setAssetScript} from './transactions/set-asset-script'
-import {exchange} from './transactions/exchange'
-import {sponsorship} from './transactions/sponsorship'
-import {invokeScript} from './transactions/invoke-script'
-import {serializeCustomData, TSignedData} from './requests/custom-data'
-import {serializeAuthData} from './requests/auth'
-import {serializeWavesAuthData} from './requests/wavesAuth'
-import {commitToGeneration} from './transactions/commit-to-generation'
 import {
     AliasTransaction,
     BurnTransaction,
@@ -44,6 +22,29 @@ import {
     TRANSACTION_TYPE,
     TransferTransaction, UpdateAssetInfoTransaction,
 } from '@waves/ts-types'
+
+import {TSeedTypes} from './types'
+import {txToProtoBytes} from './proto-serialize'
+import {DEFAULT_VERSIONS} from './defaultVersions'
+import {issue} from './transactions/issue'
+import {transfer} from './transactions/transfer'
+import {reissue} from './transactions/reissue'
+import {burn} from './transactions/burn'
+import {lease} from './transactions/lease'
+import {cancelLease} from './transactions/cancel-lease'
+import {data} from './transactions/data'
+import {massTransfer} from './transactions/mass-transfer'
+import {alias} from './transactions/alias'
+import {setScript} from './transactions/set-script'
+import {isOrder} from './generic'
+import {setAssetScript} from './transactions/set-asset-script'
+import {exchange} from './transactions/exchange'
+import {sponsorship} from './transactions/sponsorship'
+import {invokeScript} from './transactions/invoke-script'
+import {serializeCustomData, TSignedData} from './requests/custom-data'
+import {serializeAuthData} from './requests/auth'
+import {serializeWavesAuthData} from './requests/wavesAuth'
+import {commitToGeneration} from './transactions/commit-to-generation'
 import {IAuthParams, TTransaction, TTxParams, WithProofs, WithTxType} from './transactions'
 import {updateAssetInfo} from './transactions/update-asset-info'
 
@@ -106,6 +107,7 @@ export function serialize(obj: Transaction | SignedIExchangeTransactionOrder<Exc
     if (isOrder(obj)) return binary.serializeOrder(obj)
 
     const tx = obj as Transaction
+
     if (latestVersionByType[tx.type] === tx.version) return txToProtoBytes(tx as any)
 
     return binary.serializeTx(obj)

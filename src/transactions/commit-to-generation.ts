@@ -1,14 +1,16 @@
 /**
  * @module index
  */
-import {ICommitToGenerationParams, WithId, WithProofs, WithSender} from '../transactions'
 import {base58Decode, base58Encode, blake2b,  concat, crypto, signBytes} from '@waves/ts-lib-crypto'
+import {CommitToGenerationTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {ICommitToGenerationParams, WithId, WithProofs, WithSender} from '../transactions'
 import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {validate} from '../validators'
 import {TSeedTypes} from '../types'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {CommitToGenerationTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 const wavesCrypto = crypto({output: 'Bytes'})
 
@@ -18,6 +20,7 @@ const int32ToBigEndianBytes = (value: number): Uint8Array => {
     }
 
     const result = new Uint8Array(4)
+
     new DataView(result.buffer).setInt32(0, value, false)
 
     return result

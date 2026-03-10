@@ -1,11 +1,12 @@
+import { publicKey, base58Decode } from '@waves/ts-lib-crypto'
+import {ExchangeTransactionOrder} from '@waves/ts-types'
+
 import {
   WithProofs,
   IBasicParams,
   WithSender
 } from './transactions'
 import { TPrivateKey, TSeedTypes } from './types'
-import { publicKey, base58Decode } from '@waves/ts-lib-crypto'
-import {ExchangeTransactionOrder} from '@waves/ts-types'
 
 export const mapObj = <T, U, K extends string>(obj: Record<K, T>, f: (v: T) => U): Record<K, U> =>
   Object.entries<T>(obj).map(([k, v]) => [k, f(v)] as [string, U])
@@ -19,11 +20,12 @@ export function getSenderPublicKey(seedsAndIndexes: [string | TPrivateKey, numbe
   }
 }
 
-export const base64Prefix = (str: string | null) => str == null || str.slice(0, 7) === 'base64:' ? str : 'base64:' + str
+export const base64Prefix = (str: string | null) => str == null || str.startsWith('base64:') ? str : 'base64:' + str
 
 export function addProof(tx: WithProofs, proof: string, index?: number) {
   if (index == null) {
     tx.proofs = [...tx.proofs, proof]
+
     return tx
   }
   if (tx.proofs != null && !!tx.proofs[index])
@@ -31,6 +33,7 @@ export function addProof(tx: WithProofs, proof: string, index?: number) {
   for (let i = tx.proofs.length; i < index; i++)
     tx.proofs.push('')
   tx.proofs[index] = proof
+
   return tx
 }
 
@@ -84,8 +87,8 @@ export function chainIdFromRecipient(recipient: string){
   }else {
     try {
       return base58Decode(recipient)[1]
-    }catch (e) {
-      throw new Error(`Invalid recipient: ${recipient}`)
+    } catch (e) {
+      throw new Error(`Invalid recipient: ${recipient}`, { cause: e })
     }
   }
 }

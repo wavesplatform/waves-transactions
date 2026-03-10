@@ -1,3 +1,25 @@
+import {binary} from '@waves/marshall'
+import {
+    AliasTransaction,
+    BurnTransaction,
+    CancelLeaseTransaction,
+    CommitToGenerationTransaction,
+    DataTransaction,
+    ExchangeTransaction,
+    // InvokeExpressionTransaction,
+    InvokeScriptTransaction,
+    IssueTransaction,
+    LeaseTransaction,
+    MassTransferTransaction,
+    ReissueTransaction,
+    SetAssetScriptTransaction,
+    SetScriptTransaction,
+    SponsorshipTransaction,
+    TRANSACTION_TYPE,
+    TransferTransaction,
+    UpdateAssetInfoTransaction
+} from '@waves/ts-types'
+
 import {
     IAliasParams,
     IBurnParams,
@@ -35,27 +57,6 @@ import {invokeScript} from './transactions/invoke-script'
 import {updateAssetInfo} from './transactions/update-asset-info'
 import {commitToGeneration} from './transactions/commit-to-generation'
 import {txToProtoBytes} from './proto-serialize'
-import {binary} from '@waves/marshall'
-import {
-    AliasTransaction,
-    BurnTransaction,
-    CancelLeaseTransaction,
-    CommitToGenerationTransaction,
-    DataTransaction,
-    ExchangeTransaction,
-    // InvokeExpressionTransaction,
-    InvokeScriptTransaction,
-    IssueTransaction,
-    LeaseTransaction,
-    MassTransferTransaction,
-    ReissueTransaction,
-    SetAssetScriptTransaction,
-    SetScriptTransaction,
-    SponsorshipTransaction,
-    TRANSACTION_TYPE,
-    TransferTransaction,
-    UpdateAssetInfoTransaction
-} from '@waves/ts-types'
 
 export type TTransaction<T extends TTransactionType> = TxTypeMap[T]
 

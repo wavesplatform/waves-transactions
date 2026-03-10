@@ -3,11 +3,13 @@
  */
 import { base58Encode, blake2b, concat, signBytes, address } from '@waves/ts-lib-crypto'
 import { serializePrimitives } from '@waves/marshall'
-const {STRING, LEN, SHORT} = serializePrimitives
+
 import { getSenderPublicKey, convertToPairs } from '../generic'
 import { IAuthParams, IAuth } from '../transactions'
 import { validate } from '../validators'
 import { TPrivateKey } from '../types'
+
+const {STRING, LEN, SHORT} = serializePrimitives
 
 export const serializeAuthData = (auth: {host: string, data: string}) => concat(
     LEN(SHORT)(STRING)('WavesWalletAuthentication'),

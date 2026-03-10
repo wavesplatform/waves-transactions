@@ -1,6 +1,10 @@
 /**
  * @module index
  */
+import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
+import {binary} from '@waves/marshall'
+import {MassTransferTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {IMassTransferParams, WithId, WithProofs, WithSender} from '../transactions'
 import {
     addProof,
@@ -12,12 +16,10 @@ import {
     normalizeAssetId
 } from '../generic'
 import {TSeedTypes} from '../types'
-import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
-import {binary} from '@waves/marshall'
 import {validate} from '../validators'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {MassTransferTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 
 /* @echo DOCS */
@@ -44,6 +46,7 @@ export function massTransfer(paramsOrTx: any, seed?: TSeedTypes): MassTransferTr
         chainId: networkByte(paramsOrTx.chainId, chainIdFromRecipient(paramsOrTx.transfers[0]?.recipient)),
         id: '',
     }
+
     validate.massTransfer(tx)
 
     const bytes = version > 1 ? txToProtoBytes(tx) : binary.serializeTx(tx)

@@ -1,27 +1,12 @@
 module.exports = {
     verbose: true,
     roots: [
-        '<rootDir>/test',
+        '<rootDir>/test'
     ],
     testRegex: '(/__tests__/.*|(\\.|/)(test))\\.tsx?$',
     transform: {
-        '^.+\\.(ts|tsx)$': ['ts-jest', { diagnostics: false }],
+        '^.+\\.tsx?$': ['ts-jest', {diagnostics: false}]
     },
-    collectCoverage: true,
-    coverageReporters: [
-        "json-summary",
-        "text",
-        "lcov"
-    ],
-    preset: 'ts-jest',
     testMatch: null,
     testEnvironment: 'node',
-    "moduleFileExtensions": [
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "node"
-    ]
 }

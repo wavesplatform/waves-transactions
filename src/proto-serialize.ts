@@ -116,13 +116,13 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
         // chainId: t.chainId
     }
 
-    if (t.fee!.hasOwnProperty('assetId')) {
+    if (Object.hasOwn(t.fee!, 'assetId')) {
         res.feeAssetId = base58Encode(t.fee!.assetId!)
     } else {
         res.feeAssetId = null
     }
 
-    if (t.hasOwnProperty('chainId')) {
+    if (Object.hasOwn(t, 'chainId')) {
         res.chainId = t.chainId
     }
     switch (t.data) {
@@ -132,13 +132,13 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             res.quantity = convertNumber(t.issue!.amount!)
             res.decimals = t.issue!.decimals
             res.reissuable = t.issue!.reissuable
-            res.script = (t.issue!.hasOwnProperty('script')) ? base64Prefix(base64Encode(t.issue!.script!)) : null
+            res.script = (Object.hasOwn(t.issue!, 'script')) ? base64Prefix(base64Encode(t.issue!.script!)) : null
             break
         case 'transfer':
             res.amount = convertNumber(t.transfer!.amount!.amount!)
             res.recipient = recipientFromProto(t.transfer!.recipient!, t.chainId)
-            res.attachment = (t.transfer!.hasOwnProperty('attachment')) ? base58Encode(t.transfer!.attachment!) : ''
-            res.assetId = (t.transfer!.amount!.hasOwnProperty('assetId')) ? base58Encode(t.transfer!.amount!.assetId!) : null
+            res.attachment = (Object.hasOwn(t.transfer!, 'attachment')) ? base58Encode(t.transfer!.attachment!) : ''
+            res.assetId = (Object.hasOwn(t.transfer!.amount!, 'assetId')) ? base58Encode(t.transfer!.amount!.assetId!) : null
             break
         case 'reissue':
             res.quantity = convertNumber(t.reissue!.assetAmount!.amount!)
@@ -169,8 +169,8 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             break
         case 'massTransfer':
 
-            res.assetId = (t.massTransfer!.hasOwnProperty('assetId')) ? base58Encode(t.massTransfer!.assetId!) : null
-            res.attachment = (t.massTransfer!.hasOwnProperty('attachment')) ? base58Encode(t.massTransfer!.attachment!) : ''
+            res.assetId = (Object.hasOwn(t.massTransfer!, 'assetId')) ? base58Encode(t.massTransfer!.assetId!) : null
+            res.attachment = (Object.hasOwn(t.massTransfer!, 'attachment')) ? base58Encode(t.massTransfer!.attachment!) : ''
 
             res.transfers = t.massTransfer!.transfers!.map(({amount, recipient}) => ({
                 amount: convertNumber(amount!),
@@ -179,23 +179,23 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             break
         case 'dataTransaction':
             res.data = t.dataTransaction!.data!.map(de => {
-                if (de.hasOwnProperty('binaryValue')) return {
+                if (Object.hasOwn(de, 'binaryValue')) return {
                     key: de.key,
                     type: 'binary',
                     value: base64Prefix(base64Encode(de.binaryValue!)),
                 }
-                if (de.hasOwnProperty('boolValue')) return {key: de.key, type: 'boolean', value: de.boolValue}
-                if (de.hasOwnProperty('intValue')) return {
+                if (Object.hasOwn(de, 'boolValue')) return {key: de.key, type: 'boolean', value: de.boolValue}
+                if (Object.hasOwn(de, 'intValue')) return {
                     key: de.key,
                     type: 'integer',
                     value: convertNumber(de.intValue!),
                 }
-                if (de.hasOwnProperty('stringValue')) return {key: de.key, type: 'string', value: de.stringValue}
+                if (Object.hasOwn(de, 'stringValue')) return {key: de.key, type: 'string', value: de.stringValue}
                 return {key: de.key, value: null}
             })
             break
         case 'setScript':
-            res.script = (t.setScript!.hasOwnProperty('script')) ? base64Prefix(base64Encode(t.setScript!.script!)) : null
+            res.script = (Object.hasOwn(t.setScript!, 'script')) ? base64Prefix(base64Encode(t.setScript!.script!)) : null
             break
         case 'sponsorFee':
             res.minSponsoredAssetFee = convertNumber(t.sponsorFee!.minFee!.amount!)
@@ -212,7 +212,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             }
             res.payment = t.invokeScript!.payments!.map(p => ({
                 amount: convertNumber(p.amount!),
-                assetId: p.hasOwnProperty('assetId') ? base58Encode(p.assetId!) : null,
+                assetId: Object.hasOwn(p, 'assetId') ? base58Encode(p.assetId!) : null,
             }))
             break
         case 'updateAssetInfo':
@@ -236,7 +236,7 @@ export function protoTxDataToTx(t: wavesProto.waves.Transaction): TTransaction {
             throw new Error(`Unsupported tx type ${t.data}`)
     }
 
-    if (res.hasOwnProperty('chainId')) {
+    if (Object.hasOwn(res, 'chainId')) {
         res.sender = address({publicKey: t.senderPublicKey}, t.chainId)
     } else {
         let recipient = res.recipient || res.dApp || (res.transfers && res.transfers[0] && res.transfers[0].recipient)
@@ -281,7 +281,7 @@ const getCommonFields = ({senderPublicKey, fee, timestamp, type, version, ...res
 const getCommonSignedFields = (tx: TTx) => {
     const fields: any = getCommonFields(tx)
 
-    if (tx.hasOwnProperty('proofs')) {
+    if (Object.hasOwn(tx, 'proofs')) {
         fields.proofs = tx.proofs
     }
 
@@ -461,10 +461,11 @@ const orderToProto = (o: any): wavesProto.waves.IOrder => {
     if (o.version === 4 && 'priceMode' in o) {
         if (o.priceMode === 0 || o.priceMode === 'default') {
             priceMode = undefined
+        } else {
+            priceMode = o.priceMode === 'assetDecimals'
+                ? wavesProto.waves.Order.PriceMode.ASSET_DECIMALS
+                : wavesProto.waves.Order.PriceMode.FIXED_DECIMALS
         }
-        o.priceMode === 'assetDecimals'
-            ? priceMode = wavesProto.waves.Order.PriceMode.ASSET_DECIMALS
-            : priceMode = wavesProto.waves.Order.PriceMode.FIXED_DECIMALS
     } else priceMode = undefined
 
     if (o.version === 4 && 'attachment' in o) {

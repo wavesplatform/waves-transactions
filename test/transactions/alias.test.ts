@@ -58,7 +58,7 @@ describe('alias', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>alias({ ...aliasMinimalParams, fee: -1}, stringSeed))
-         .toThrowError(errorMessageByTemplate('fee', -1))
+         .toThrow(errorMessageByTemplate('fee', -1))
   })
 
   it('Should create with minimal alias name = 4', () => {
@@ -68,7 +68,7 @@ describe('alias', () => {
 
   it('Should not create with alias name <4', () => {
     expect(() =>alias({ ...aliasMinimalParams, alias: 'abc'}, stringSeed))
-        .toThrowError(errorMessageByTemplate('alias','abc'))
+        .toThrow(errorMessageByTemplate('alias','abc'))
    })
 
   it('Should build with maximal alias name = 30', () => {
@@ -78,7 +78,7 @@ describe('alias', () => {
 
   it('Should not create with alias name lenght > 30', () => {
     expect(() =>alias({ ...aliasMinimalParams, alias: 'this.is_31@symbols-alias_123456'}, stringSeed))
-        .toThrowError(errorMessageByTemplate('alias', 'this.is_31@symbols-alias_123456'))
+        .toThrow(errorMessageByTemplate('alias', 'this.is_31@symbols-alias_123456'))
   })
 })
 

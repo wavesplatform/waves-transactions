@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 
@@ -40,6 +40,7 @@ export default [
         rules: {
             'max-len': 'off',
             'no-unused-vars': 'off',
+            'no-redeclare': 'off',
             'no-restricted-globals': ['error', 'Buffer'],
             'array-callback-return': 'warn',
             'default-case': ['warn', { commentPattern: '^no default$' }],

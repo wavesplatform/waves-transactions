@@ -2,12 +2,13 @@
  * @module index
  */
 import {signBytes, blake2b, base58Encode} from '@waves/ts-lib-crypto'
+import {binary} from '@waves/marshall'
+import {ExchangeTransactionOrder, SignedIExchangeTransactionOrder} from '@waves/ts-types'
+
 import {addProof, getSenderPublicKey, convertToPairs, isOrder, networkByte} from '../generic'
 import {IOrderParams, WithId, WithProofs, WithSender} from '../transactions'
 import {TSeedTypes} from '../types'
-import {binary} from '@waves/marshall'
 import {validate} from '../validators'
-import {ExchangeTransactionOrder, SignedIExchangeTransactionOrder} from '@waves/ts-types'
 import {orderToProtoBytes} from '../proto-serialize'
 
 

@@ -1,12 +1,15 @@
 /**
  * @module index
  */
+import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
+import { binary } from '@waves/marshall'
+import {SetAssetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
   ISetAssetScriptParams,
   WithId, WithProofs,
   WithSender
 } from '../transactions'
-import { signBytes, blake2b, base58Encode, } from '@waves/ts-lib-crypto'
 import {
   addProof,
   getSenderPublicKey,
@@ -16,11 +19,10 @@ import {
   fee,
 } from '../generic'
 import { TSeedTypes } from '../types'
-import { binary } from '@waves/marshall'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
 import { DEFAULT_VERSIONS } from '../defaultVersions'
-import {SetAssetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 
 /* @echo DOCS */
@@ -31,6 +33,7 @@ export function setAssetScript(paramsOrTx: any, seed?: TSeedTypes): SetAssetScri
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_ASSET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
+
   if (paramsOrTx.script == null) throw new Error('Asset script cannot be empty')
 
   const tx: SetAssetScriptTransaction & WithId & WithProofs = {

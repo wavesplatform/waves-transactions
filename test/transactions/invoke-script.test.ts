@@ -94,7 +94,7 @@ describe('invokeScript', () => {
 
     it('Should not create with negative fee', () => {
         expect(() => invokeScript({...invokeScriptMinimalParams, fee: -1}, stringSeed))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
 
     })
 

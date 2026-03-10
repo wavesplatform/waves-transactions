@@ -4,11 +4,12 @@
 import {base58Encode, blake2b, concat, signBytes, address} from '@waves/ts-lib-crypto'
 import {serializePrimitives} from '@waves/marshall'
 
-const {LONG, BASE58_STRING} = serializePrimitives
 import {getSenderPublicKey, convertToPairs} from '../generic'
 import {IWavesAuthParams, IWavesAuth} from '../transactions'
 import {validate} from '../validators'
 import {TSeedTypes} from '../types'
+
+const {LONG, BASE58_STRING} = serializePrimitives
 
 export const serializeWavesAuthData = (auth: { publicKey: string; timestamp: number }) => concat(
     BASE58_STRING(auth.publicKey),
@@ -19,6 +20,7 @@ export function wavesAuth(params: IWavesAuthParams, seed?: TSeedTypes, chainId?:
     const seedsAndIndexes = convertToPairs(seed)
     const publicKey = params.publicKey || getSenderPublicKey(seedsAndIndexes, {senderPublicKey: undefined})
     const timestamp = params.timestamp || Date.now()
+
     validate.wavesAuth({publicKey, timestamp})
 
     const rx = {
