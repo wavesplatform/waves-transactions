@@ -1,6 +1,6 @@
 {
   "name": "@waves/waves-transactions",
-  "version": "4.3.11",
+  "version": "4.4.0",
   "description": "Build and sign(multi-sign) transactions for Waves blockchain.",
   "keywords": [
     "waves",
@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build-docs": "typedoc --options typedoc.config.cjs --entryPointStrategy resolve ./src/index.ts --out docs && touch docs/.nojekyll",
-    "build": "ts-node build/build.ts",
+    "build": "tsc",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "test": "jest",
