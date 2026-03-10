@@ -4,14 +4,13 @@ on:
     branches: [ 'master' ]
   release:
     types: [ published ]
-  pull_request:
 
 jobs:
   publish:
     uses: wavesplatform/publish-to-npm/.github/workflows/publish.yml@491542dbf21513003124f7b5dec03293876a7776
     with:
       environment: NPMJS
-      event_name: push
+      event_name: ${{ github.event_name }}
       test: true
     permissions:
       id-token: write
