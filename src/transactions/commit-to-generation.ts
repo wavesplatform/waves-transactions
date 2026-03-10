@@ -32,7 +32,8 @@ export function commitToGeneration(paramsOrTx: any, seed?: TSeedTypes): CommitTo
     const seedsAndIndexes = convertToPairs(seed)
     const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
     const primarySeed = seedsAndIndexes[0]?.[0]
-    const blsKeyPair = primarySeed == null
+    const shouldComputeBls = paramsOrTx.endorserPublicKey == null || paramsOrTx.commitmentSignature == null
+    const blsKeyPair = !shouldComputeBls || primarySeed == null
         ? undefined
         : wavesCrypto.blsKeyPair(typeof primarySeed === 'string' ? primarySeed : primarySeed.privateKey)
     const blsSecret = blsKeyPair?.blsSecret

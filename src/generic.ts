@@ -46,6 +46,7 @@ export function convertToPairs(seedObj?: TSeedTypes): [string | TPrivateKey, num
     return seedObj.map((s, i) => [s, i] as [string, number]).filter(([s, _]) => s)
   } else {
     const keys = Object.keys(seedObj).map(k => parseInt(k)).filter(k => !isNaN(k)).sort()
+
     return keys.map(k => [seedObj[k], k] as [string, number])
   }
 }
@@ -67,11 +68,13 @@ export function networkByte(p: number | string | undefined, def: number): number
 export function fee(params: IBasicParams, def: number) {
   if (params.fee != null) return params.fee
   if (!params.additionalFee) return def
+
   return def + params.additionalFee
 }
 
 export function normalizeAssetId(assetId: string | null) {
   assetId = assetId || null
+
   return assetId === 'WAVES' ? null : assetId
 }
 

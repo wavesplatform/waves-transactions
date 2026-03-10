@@ -1,8 +1,8 @@
 import {binary} from '@waves/marshall'
 import {address, verifySignature} from '@waves/ts-lib-crypto'
-import request from '@waves/node-api-js/cjs/tools/request'
-import stringify from '@waves/node-api-js/cjs/tools/stringify'
 import {TSeedTypes} from './types'
+import {txToProtoBytes} from './proto-serialize'
+import {DEFAULT_VERSIONS} from './defaultVersions'
 import {issue} from './transactions/issue'
 import {transfer} from './transactions/transfer'
 import {reissue} from './transactions/reissue'
@@ -30,7 +30,6 @@ import {
     DataTransaction,
     ExchangeTransaction,
     ExchangeTransactionOrder,
-    // InvokeExpressionTransaction,
     InvokeScriptTransaction,
     IssueTransaction,
     LeaseTransaction,
@@ -45,9 +44,9 @@ import {
     TRANSACTION_TYPE,
     TransferTransaction, UpdateAssetInfoTransaction,
 } from '@waves/ts-types'
-import {IAuthParams, ICancelOrder, TTransaction, TTxParams, WithProofs, WithSender, WithTxType} from './transactions'
+import {IAuthParams, TTransaction, TTxParams, WithProofs, WithTxType} from './transactions'
 import {updateAssetInfo} from './transactions/update-asset-info'
-// import {invokeExpression} from './transactions/invoke-expression'
+
 
 export const txTypeMap: { [type: number]: { sign: (tx: Transaction<Long> | TTxParams & WithTxType, seed: TSeedTypes) => SignedTransaction<Transaction<Long>> } } = {
     [TRANSACTION_TYPE.ISSUE]: {sign: (x, seed) => issue(x as IssueTransaction<Long>, seed)},
@@ -69,6 +68,25 @@ export const txTypeMap: { [type: number]: { sign: (tx: Transaction<Long> | TTxPa
     // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: {sign: (x, seed) => invokeExpression(x as InvokeExpressionTransaction, seed)},
 }
 
+const latestVersionByType: Record<number, number> = {
+    [TRANSACTION_TYPE.ISSUE]: DEFAULT_VERSIONS.ISSUE,
+    [TRANSACTION_TYPE.TRANSFER]: DEFAULT_VERSIONS.TRANSFER,
+    [TRANSACTION_TYPE.REISSUE]: DEFAULT_VERSIONS.REISSUE,
+    [TRANSACTION_TYPE.BURN]: DEFAULT_VERSIONS.BURN,
+    [TRANSACTION_TYPE.EXCHANGE]: DEFAULT_VERSIONS.EXCHANGE,
+    [TRANSACTION_TYPE.LEASE]: DEFAULT_VERSIONS.LEASE,
+    [TRANSACTION_TYPE.CANCEL_LEASE]: DEFAULT_VERSIONS.CANCEL_LEASE,
+    [TRANSACTION_TYPE.ALIAS]: DEFAULT_VERSIONS.ALIAS,
+    [TRANSACTION_TYPE.MASS_TRANSFER]: DEFAULT_VERSIONS.MASS_TRANSFER,
+    [TRANSACTION_TYPE.DATA]: DEFAULT_VERSIONS.DATA,
+    [TRANSACTION_TYPE.SET_SCRIPT]: DEFAULT_VERSIONS.SET_SCRIPT,
+    [TRANSACTION_TYPE.SPONSORSHIP]: DEFAULT_VERSIONS.SPONSORSHIP,
+    [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: DEFAULT_VERSIONS.SET_ASSET_SCRIPT,
+    [TRANSACTION_TYPE.INVOKE_SCRIPT]: DEFAULT_VERSIONS.INVOKE_SCRIPT,
+    [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: DEFAULT_VERSIONS.UPDATE_ASSET_INFO,
+    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: DEFAULT_VERSIONS.COMMIT_TO_GENERATION,
+}
+
 /**
  * Signs arbitrary transaction. Can also create signed transaction if provided params have type field
  * @param tx
@@ -86,6 +104,10 @@ export function signTx(tx: Transaction | TTxParams & WithTxType, seed: TSeedType
  */
 export function serialize(obj: Transaction | SignedIExchangeTransactionOrder<ExchangeTransactionOrder>): Uint8Array {
     if (isOrder(obj)) return binary.serializeOrder(obj)
+
+    const tx = obj as Transaction
+    if (latestVersionByType[tx.type] === tx.version) return txToProtoBytes(tx as any)
+
     return binary.serializeTx(obj)
 }
 
@@ -99,11 +121,13 @@ export function verify(obj: TTransaction & WithProofs | SignedIExchangeTransacti
     publicKey = publicKey || obj.senderPublicKey
     const bytes = serialize(obj)
     const signature = obj.version == null ? (obj as any).signature : (obj as any).proofs[proofN]
+
     return verifySignature(publicKey, bytes, signature)
 }
 
 export function verifyCustomData(data: TSignedData): boolean {
     const bytes = serializeCustomData(data)
+
     return verifySignature(data.publicKey as string, bytes, data.signature as string)
 }
 
@@ -111,6 +135,7 @@ export function verifyAuthData(authData: { signature: string, publicKey: string,
     chainId = chainId || 'W'
     const bytes = serializeAuthData(params)
     const myAddress = address({publicKey: authData.publicKey}, chainId)
+
     return myAddress === authData.address && verifySignature(authData.publicKey, bytes, authData.signature)
 }
 
@@ -118,50 +143,7 @@ export function verifyWavesAuthData(authData: { signature: string, publicKey: st
     chainId = chainId || 'W'
     const bytes = serializeWavesAuthData(params)
     const myAddress = address({publicKey: authData.publicKey}, chainId)
+
     return myAddress === authData.address && verifySignature(authData.publicKey, bytes, authData.signature)
 }
 
-/**
- * Sends order to matcher
- * @param ord - transaction to send
- * @param options - matcher address to send order to. E.g. https://matcher.waves.exchange/. Optional 'market' flag to send market order
- */
-export function submitOrder(ord: ExchangeTransactionOrder & WithProofs & WithSender, options: { matcherUrl: string, market?: boolean }): Promise<any>
-/**
- * Sends order to matcher
- * @param ord - transaction to send
- * @param matcherUrl - matcher address to send order to. E.g. https://matcher.waves.exchange/
- */
-export function submitOrder(ord: ExchangeTransactionOrder & WithProofs & WithSender, matcherUrl: string): Promise<any>
-export function submitOrder(ord: ExchangeTransactionOrder & WithProofs & WithSender, opts: any) {
-    let endpoint, matcherUrl: string
-    if (typeof opts === 'string') {
-        matcherUrl = opts
-        endpoint = 'matcher/orderbook'
-    } else {
-        matcherUrl = opts.matcherUrl
-        endpoint = opts.market ? 'matcher/orderbook/market' : 'matcher/orderbook'
-    }
-    return request({
-        base: matcherUrl,
-        url: endpoint,
-        options: {method: 'POST', body: stringify(ord), headers: {'Content-Type': 'application/json'}},
-    })
-}
-
-/**
- * Sends cancel order command to matcher. Since matcher api requires amountAsset and priceAsset in request url,
- * this function requires them as params
- * @param co - signed cancelOrder object
- * @param amountAsset - amount asset of the order to be canceled
- * @param priceAsset - price asset of the order to be canceled
- * @param matcherUrl - matcher address to send order cancel to. E.g. https://matcher.waves.exchange/
- */
-export function cancelSubmittedOrder(co: ICancelOrder, amountAsset: string | null, priceAsset: string | null, matcherUrl: string) {
-    const endpoint = `matcher/orderbook/${amountAsset || 'WAVES'}/${priceAsset || 'WAVES'}/cancel`
-    return request({
-        base: matcherUrl,
-        url: endpoint,
-        options: {method: 'POST', body: stringify(co), headers: {'Content-Type': 'application/json'}},
-    })
-}

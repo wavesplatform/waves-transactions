@@ -1,7 +1,7 @@
 import {protoBytesToTx, txToProtoBytes} from '../../src/proto-serialize'
 import {publicKey} from '@waves/ts-lib-crypto'
 import {invokeScriptMinimalParams} from '../minimalParams'
-import {invokeScript, setScript, waitForTx} from '../../src'
+import {invokeScript, setScript} from '../../src'
 import {IInvokeScriptParams} from '../../src'
 import {
     checkBinarySerializeDeserialize,
@@ -11,8 +11,7 @@ import {
 } from '../utils'
 import {invokeScriptTx} from './expected/proto/invoke-script.tx'
 import {invokeScriptBinaryTx} from './expected/binary/invoke-script.tx'
-import {API_BASE, TIMEOUT} from '../integration/config'
-import {broadcast} from '../../src'
+
 
 describe('invokeScript', () => {
 
@@ -150,13 +149,6 @@ describe('invokeScript', () => {
         expect(tx).toMatchObject({...testInvokeScriptParams})
     })
 
-    it('Should create invoke tx for default function', async () => {
-        const tx = invokeScript({dApp: '3Mu1vW3Q63v3n3T1wiZkcnWwiwEGLWkeEpo', chainId: 84, fee: 100500000}, stringSeed)
-        expect(tx.dApp).toEqual('3Mu1vW3Q63v3n3T1wiZkcnWwiwEGLWkeEpo')
-        expect(tx.call).toBe(null)
-        await broadcast(tx, API_BASE)
-        await waitForTx(tx.id, { apiBase: API_BASE, timeout: TIMEOUT })
-    })
 })
 
 describe('serialize/deserialize invoke tx', () => {

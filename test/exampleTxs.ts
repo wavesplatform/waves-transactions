@@ -56,6 +56,66 @@ export const burnTx = {
   assetId: 'DWgwcZTMhSvnyYCoWLRUXXSH1RSkzThXLJhww9gwkqdn',
   amount: '9223372036854775807' }
 
+export const exchangeTxOrderV3V4 = {
+  type: 7,
+  version: 3,
+  senderPublicKey: '3w4kE9G98RQoaUcXGTXsjt8e7GKnXmyDTa32JJFrmDzL',
+  order1: {
+    orderType: 'buy',
+    version: 3,
+    assetPair: {
+      amountAsset: '3JmaWyFqWo8YSA8x3DXCBUW7veesxacvKx19dMv7wTMg',
+      priceAsset: null
+    },
+    price: 500000000,
+    amount: 100,
+    timestamp: 1772675796026,
+    expiration: 1775181396026,
+    matcherFee: 100,
+    matcherPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+    senderPublicKey: '3w4kE9G98RQoaUcXGTXsjt8e7GKnXmyDTa32JJFrmDzL',
+    proofs: [
+      '2SjAp9gxhJkfC22uV6C75NskQbfUwSQziJhvu7YgPJ7m9K9f2DoGT3XbxT3VfeKAFYyi8fEEWYwGN7oe9p3mfWKp'
+    ],
+    matcherFeeAssetId: undefined,
+    id: '2J4rZV5QxMAzw3ekR4SYopEPL5gkWNF317aoWiRvcQX5',
+    priceMode: undefined
+  },
+  order2: {
+    orderType: 'sell',
+    version: 4,
+    assetPair: {
+      amountAsset: '3JmaWyFqWo8YSA8x3DXCBUW7veesxacvKx19dMv7wTMg',
+      priceAsset: null
+    },
+    price: 500000000,
+    amount: 100,
+    timestamp: 1772675796103,
+    expiration: 1775181396103,
+    matcherFee: 100,
+    matcherPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+    senderPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+    proofs: [
+      'v9P5jYAVwfS7iugSie5DUUoaAFT8wqgLnAGizWrCWxz8yCQEev6ovbxuUCo4WMs2Yfzrn3mrBFaZ9gPj9m89yNr'
+    ],
+    matcherFeeAssetId: 'DvXjujyWbi7ARdExyayN42gcfBKGTBRgYYyPWMxy5grK',
+    id: 'CYEFjEhRfZJ94WyBwxtMBLrJC4yGTrjTgjTbu9EFa4Ph',
+    priceMode: 'fixedDecimals',
+    chainId: 87
+  },
+  price: 500000000,
+  amount: 100,
+  buyMatcherFee: 100,
+  sellMatcherFee: 100,
+  fee: 700000,
+  timestamp: 1772675796182,
+  proofs: [
+    '2ScxzN5dbfXRkZeY2odwdDi4Z2CS2Z2kQ31urAgsUj9dVPpMjENm1SbGUumk9vYk1F4kPdCeYwSR9824c7ZEG2HS'
+  ],
+  chainId: 84,
+  id: 'BgT5KDGV6ZacgdspJgwoyUJHfmYaKJEh7zSULtxRJKpz'
+}
+
 export const leaseTx = {
   type: 8,
   version: 2,
@@ -202,6 +262,7 @@ export const exampleTxs = {
   4: transferTx,
   5: reissueTx,
   6: burnTx,
+  7: exchangeTxOrderV3V4,
   8: leaseTx,
   9: cancelLeaseTx,
   10: aliasTx,

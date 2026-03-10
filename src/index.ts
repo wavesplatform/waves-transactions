@@ -24,10 +24,8 @@ export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
 export { updateAssetInfo } from './transactions/update-asset-info'
 export { commitToGeneration } from './transactions/commit-to-generation'
-export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
-export { waitForTx, broadcast } from './nodeInteraction'
+export { signTx, verify, serialize, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { makeTx, makeTxBytes } from './make-tx'
-// export { invokeExpression } from './transactions/invoke-expression'
 
 // Export interfaces
 export {
@@ -57,8 +55,6 @@ export {
   WithTxType,
 } from './transactions'
 
-export { INodeRequestOptions, IStateChangeResponse } from './nodeInteraction'
-
 export {
   TSeedTypes, TOption
 } from './types'
@@ -66,7 +62,6 @@ export {
 // internal libraries access
 import * as crypto from '@waves/ts-lib-crypto'
 import * as marshall from '@waves/marshall'
-// import * as nodeApiJs from '@waves/node-api-js'
 
 const libs = {
   crypto,
@@ -75,14 +70,12 @@ const libs = {
 }
 
 import * as seedUtils from './seedUtils'
-import * as nodeInteraction from './nodeInteraction'
 import * as validators from './validators'
 import * as protoSerialize from './proto-serialize'
 
 export {
   libs,
   seedUtils,
-  nodeInteraction,
   validators,
   protoSerialize
 }
