@@ -1,8 +1,31 @@
+import {binary} from '@waves/marshall'
+import {
+    AliasTransaction,
+    BurnTransaction,
+    CancelLeaseTransaction,
+    CommitToGenerationTransaction,
+    DataTransaction,
+    ExchangeTransaction,
+    // InvokeExpressionTransaction,
+    InvokeScriptTransaction,
+    IssueTransaction,
+    LeaseTransaction,
+    MassTransferTransaction,
+    ReissueTransaction,
+    SetAssetScriptTransaction,
+    SetScriptTransaction,
+    SponsorshipTransaction,
+    TRANSACTION_TYPE,
+    TransferTransaction,
+    UpdateAssetInfoTransaction
+} from '@waves/ts-types'
+
 import {
     IAliasParams,
     IBurnParams,
     ICancelLeaseParams,
     IDataParams,
+    ICommitToGenerationParams,
     IInvokeScriptParams,
     IIssueParams,
     ILeaseParams,
@@ -12,6 +35,7 @@ import {
     ISetScriptParams,
     ISponsorshipParams,
     ITransferParams,
+    IUpdateAssetInfoParams,
     TTransactionType,
     WithId,
     WithSender
@@ -31,27 +55,8 @@ import {sponsorship} from './transactions/sponsorship'
 import {exchange} from './transactions/exchange'
 import {invokeScript} from './transactions/invoke-script'
 import {updateAssetInfo} from './transactions/update-asset-info'
+import {commitToGeneration} from './transactions/commit-to-generation'
 import {txToProtoBytes} from './proto-serialize'
-import {binary} from '@waves/marshall'
-import {
-    AliasTransaction,
-    BurnTransaction,
-    CancelLeaseTransaction,
-    DataTransaction,
-    ExchangeTransaction,
-    // InvokeExpressionTransaction,
-    InvokeScriptTransaction,
-    IssueTransaction,
-    LeaseTransaction,
-    MassTransferTransaction,
-    ReissueTransaction,
-    SetAssetScriptTransaction,
-    SetScriptTransaction,
-    SponsorshipTransaction,
-    TRANSACTION_TYPE,
-    TransferTransaction,
-    UpdateAssetInfoTransaction
-} from '@waves/ts-types'
 
 export type TTransaction<T extends TTransactionType> = TxTypeMap[T]
 
@@ -71,7 +76,7 @@ export type TxTypeMap = {
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: InvokeScriptTransaction
     [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
-    // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
+    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: CommitToGenerationTransaction
 }
 export type TTxParamsWithType<T extends TTransactionType> = TxParamsTypeMap[T] & { type: T }
 
@@ -90,8 +95,8 @@ export type TxParamsTypeMap = {
     [TRANSACTION_TYPE.SPONSORSHIP]: ISponsorshipParams
     [TRANSACTION_TYPE.EXCHANGE]: ExchangeTransaction
     [TRANSACTION_TYPE.INVOKE_SCRIPT]: IInvokeScriptParams
-    [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: UpdateAssetInfoTransaction
-    // [TRANSACTION_TYPE.INVOKE_EXPRESSION]: InvokeExpressionTransaction
+    [TRANSACTION_TYPE.UPDATE_ASSET_INFO]: IUpdateAssetInfoParams
+    [TRANSACTION_TYPE.COMMIT_TO_GENERATION]: ICommitToGenerationParams
 }
 
 /**
@@ -129,6 +134,8 @@ export function makeTx<T extends TTransactionType>(params: TTxParamsWithType<T> 
             return invokeScript(params as any) as any
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
             return updateAssetInfo(params as any) as any
+        case TRANSACTION_TYPE.COMMIT_TO_GENERATION:
+            return commitToGeneration(params as any) as any
         // case TRANSACTION_TYPE.INVOKE_EXPRESSION:
         //     return txToProtoBytes(params as any) as any
         default:
@@ -170,6 +177,8 @@ export function makeTxBytes<T extends TTransactionType>(tx: TTxParamsWithType<T>
         case TRANSACTION_TYPE.INVOKE_SCRIPT:
             return tx.version > 1 ? txToProtoBytes(tx as any) : binary.serializeTx(tx)
         case TRANSACTION_TYPE.UPDATE_ASSET_INFO:
+            return txToProtoBytes(tx as any)
+        case TRANSACTION_TYPE.COMMIT_TO_GENERATION:
             return txToProtoBytes(tx as any)
         // case TRANSACTION_TYPE.INVOKE_EXPRESSION:
         //     return txToProtoBytes(tx as any)

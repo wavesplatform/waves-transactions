@@ -1,5 +1,5 @@
-import {base64Encode, publicKey} from '@waves/ts-lib-crypto'
-import {broadcast, cancelLease, data, IDataParams, libs, makeTxBytes, WithId} from '../../src'
+import {base64Decode, base64Encode, publicKey} from '@waves/ts-lib-crypto'
+import {data} from '../../src'
 import {txToProtoBytes} from '../../src/proto-serialize'
 import {
     checkBinarySerializeDeserialize,
@@ -7,10 +7,9 @@ import {
     errorMessageByTemplate,
     rndString,
     validateTxSignature
-} from '../../test/utils'
-import {cancelLeaseMinimalParams, dataMinimalParams} from '../minimalParams'
+} from '../utils'
+import {dataMinimalParams} from '../minimalParams'
 import {binary} from '@waves/marshall'
-import {base64Decode} from '@waves/ts-lib-crypto/conversions/base-xx'
 import {dataTx} from './expected/proto/data.tx'
 import {dataBinaryTx} from './expected/binary/data.tx'
 
@@ -108,18 +107,18 @@ describe('data', () => {
         [{key: 'str', value: 'string'}, 2, '["data should be array"]'],
         [[{
             key: 'bin',
-            value: null
+            value: null,
         }], 1, 'The value of the "value" field can only be null in a version greater than 1.'],
         [[{
             key: 'main',
             type: 'integer',
-            value: '3PAZv9tgK1PX7dKR7b4kchq5qdpUS3G5sYT|3PJ6iR5X1PT2rZcNmbqByKuh7k8mtj5wVGw|3P3NVrhiyHBc4oUWNhtZRnJA5uLX9n39TK9|3PCobfdpn4djVBG1Z3Ubek79kKcEiWYjrDv'
+            value: '3PAZv9tgK1PX7dKR7b4kchq5qdpUS3G5sYT|3PJ6iR5X1PT2rZcNmbqByKuh7k8mtj5wVGw|3P3NVrhiyHBc4oUWNhtZRnJA5uLX9n39TK9|3PCobfdpn4djVBG1Z3Ubek79kKcEiWYjrDv',
         }], 1, ''],
         [[{
             key: 'bin',
             value: 'false',
             type: 'boolean',
-        }], 1, "type \"boolean\" does not match value \"false\"(string)"],
+        }], 1, 'type "boolean" does not match value "false"(string)'],
     ])('should throw on invalid data', (dataEntries, version, expectedError) => {
         const tx = () => data({
             data: dataEntries,
@@ -130,8 +129,8 @@ describe('data', () => {
         expect(tx).toThrow(expectedError)
     })
 
-    let sMax = "1234567"
-    const smenc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    let sMax = '1234567'
+    const smenc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
     for (let i = 0; i < 630; i++) {
         sMax += smenc
@@ -172,7 +171,7 @@ describe('data', () => {
 
     it('Should not create data with negative fee', () => {
         expect(() => data({...dataMinimalParams, fee: -1}, senderPk))
-            .toThrowError(errorMessageByTemplate('fee', -1))
+            .toThrow(errorMessageByTemplate('fee', -1))
     })
 
     const maxKey = rndString(400)
@@ -193,8 +192,8 @@ describe('data', () => {
         }, {
             key: maxKey,
             type: 'string',
-            value: "Test Test123 Test321",
-        }
+            value: 'Test Test123 Test321',
+        },
     ]
 
 
@@ -214,8 +213,8 @@ describe('data', () => {
         }, {
             key: extraMaxKey,
             type: 'string',
-            value: "Test Test123 Test321 TEST",
-        }
+            value: 'Test Test123 Test321 TEST',
+        },
     ]
 
 
@@ -224,17 +223,17 @@ describe('data', () => {
         //expect(tx).toMatchObject({...testMaxKeyParams})
         expect(tx.data[1].value).toEqual(true)
         expect(tx.data[2].value).toEqual(1234567890)
-        expect(tx.data[3].value).toEqual("Test Test123 Test321")
+        expect(tx.data[3].value).toEqual('Test Test123 Test321')
     })
 
     it('Should not create data with key > 400', () => {
         const tx = data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2} as any, senderPk)
         expect(tx.data[1].value).toEqual(false)
         expect(tx.data[2].value).toEqual(223322)
-        expect(tx.data[3].value).toEqual("Test Test123 Test321 TEST")
+        expect(tx.data[3].value).toEqual('Test Test123 Test321 TEST')
 
         /*expect(() =>data({data: testExtraMaxKeyParams, chainId: 83, fee: 1000000, version: 2}as any, senderPk))
-            .toThrowError(     'tx "key", has wrong data: ' + extraMaxKey + '. Check tx data.') */
+            .toThrow(     'tx "key", has wrong data: ' + extraMaxKey + '. Check tx data.') */
     })
 
     const testMaxValueParams = [
@@ -253,8 +252,8 @@ describe('data', () => {
         }, {
             key: extraMaxKey,
             type: 'string',
-            value: "Test Test123 Test321 TEST",
-        }
+            value: 'Test Test123 Test321 TEST',
+        },
     ]
 
     it('Should get data with max value', () => {

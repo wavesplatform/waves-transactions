@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
     defaultValue,
     getError,
@@ -24,6 +25,6 @@ const burnScheme = {
     fee: isNaturalNumberOrZeroLike,
     timestamp: isNumber,
     proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
- };
+ }
 
-export const burnValidator = validateByShema(burnScheme, getError);
+export const burnValidator = validateByShema(burnScheme, getError)

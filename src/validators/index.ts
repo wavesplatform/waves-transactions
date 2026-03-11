@@ -1,5 +1,3 @@
-export * from './validators'
-
 import { transferValidator as transfer } from './transfer'
 import { massTransferValidator as massTransfer } from './mass-transfer'
 import { aliasValidator as alias } from './alias'
@@ -15,6 +13,7 @@ import { leaseValidator as lease } from './lease'
 import { invokeValidator as invokeScript } from './invoke-script'
 import { exchangeValidator as exchange } from './exchange'
 import { updateAssetInfoValidator as updateAssetInfo } from './update-asset-info'
+import { commitToGeneractionValidator as commitToGeneraction } from './commit-to-generaction'
 // import { invokeExpressionValidator as invokeExpression } from './invoke-expression'
 
 import { orderValidator as order } from './order'
@@ -22,6 +21,8 @@ import { cancelOrderValidator as cancelOrder } from './cancel-order'
 import { customDataValidator as customData } from './custom-data'
 import { authValidator as auth } from './auth'
 import { authValidator as wavesAuth } from './wavesAuth'
+
+export * from './validators'
 
 
 export const validate = {
@@ -41,6 +42,7 @@ export const validate = {
     invokeScript,
     exchange,
     updateAssetInfo,
+    commitToGeneraction,
     // invokeExpression,
     cancelOrder,
     customData,

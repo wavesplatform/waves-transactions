@@ -1,15 +1,17 @@
 /**
  * @module index
  */
-import {IIssueParams, WithId, WithProofs, WithSender} from '../transactions'
 import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
+import {binary} from '@waves/marshall'
+import {IssueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {IIssueParams, WithId, WithProofs, WithSender} from '../transactions'
 import {addProof, base64Prefix, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {TSeedTypes} from '../types'
-import {binary} from '@waves/marshall'
 import {validate} from '../validators'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {IssueTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 /* @echo DOCS */
 export function issue(params: IIssueParams, seed: TSeedTypes): IssueTransaction & WithId & WithProofs
@@ -37,11 +39,11 @@ export function issue(paramsOrTx: any, seed?: TSeedTypes): IssueTransaction & Wi
     id: '',
   }
 
-  validate.issue(tx);
+  validate.issue(tx)
 
-  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx);
+  const bytes = version > 2 ? txToProtoBytes(tx) : binary.serializeTx(tx)
 
-  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i));
+  seedsAndIndexes.forEach(([s, i]) => addProof(tx, signBytes(s, bytes), i))
   tx.id = base58Encode(blake2b(bytes))
 
   return tx

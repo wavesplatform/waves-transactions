@@ -1,15 +1,17 @@
 /**
  * @module index
  */
-import {ICancelLeaseParams, WithId, WithProofs, WithSender} from '../transactions'
 import { binary } from '@waves/marshall'
 import { signBytes, blake2b, base58Encode } from '@waves/ts-lib-crypto'
+import {CancelLeaseTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {ICancelLeaseParams, WithId, WithProofs, WithSender} from '../transactions'
 import {addProof, getSenderPublicKey, convertToPairs, networkByte, fee} from '../generic'
 import { TSeedTypes } from '../types'
 import { validate } from '../validators'
 import { txToProtoBytes } from '../proto-serialize'
 import { DEFAULT_VERSIONS } from '../defaultVersions'
-import {CancelLeaseTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 
 /* @echo DOCS */

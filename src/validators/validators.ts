@@ -81,6 +81,7 @@ export const isByteArray = (value: unknown) => {
     }
 
     const bytes = new Uint8Array(value as any)
+
     return bytes.length === (value as any).length && bytes.every((val, index) => isEq(val)((value as any)[index]))
 }
 
@@ -292,6 +293,7 @@ export const validateByShema = (shema: Record<string, Function>, errorTpl: (key:
     Object.entries(shema).forEach(
         ([key, cb]) => {
             const value = prop(key)(tx || {})
+
             if (!cb(value)) {
                 exception(errorTpl(key, value))
             }

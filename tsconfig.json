@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": [
-      "esnext"
-    ],
+    "target": "es2020",
+    "lib": ["es2022"],
     "sourceMap": true,
     "module": "commonjs",
     "outDir": "dist",
@@ -11,33 +9,12 @@
     "strict": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
-  },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "test"
-  ],
-  "typedocOptions": {
-    "name": "waves-transactions",
-    "mode": "modules",
-    "out": "docs",
-    "theme": "./node_modules/typedoc-clarity-theme",
-    "ignoreCompilerErrors": true,
-    "exclude": "**/validators/**",
-    "excludePrivate": true,
-    "excludeExternals": true,
-    "excludeNotExported": true,
-    "target": "ES6",
+    "skipLibCheck": true,
     "moduleResolution": "node",
-    "preserveConstEnums": true,
-    "stripInternal": true,
-    "suppressExcessPropertyErrors": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "module": "commonjs"
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   },
-  "types": ["node"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test"]
 }

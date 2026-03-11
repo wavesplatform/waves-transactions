@@ -1,17 +1,19 @@
-import {
-    isEq,
-    orEq,
-    isWavesOrAssetId,
-    isRecipient,
-    isNumber,
-    isNumberLike,
-    isAttachment,
-    isArray,
-    getError,
-    validateByShema,
-    ifElse, defaultValue, isPublicKey, isNaturalNumberOrZeroLike
-} from './validators'
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {
+    defaultValue,
+    getError,
+    ifElse,
+    isArray,
+    isAttachment,
+    isEq,
+    isNaturalNumberOrZeroLike,
+    isPublicKey,
+    isRecipient,
+    isWavesOrAssetId,
+    orEq,
+    validateByShema
+} from './validators'
 
 
 const transferScheme = {
@@ -26,7 +28,7 @@ const transferScheme = {
     fee: isNaturalNumberOrZeroLike,
     timestamp: isNaturalNumberOrZeroLike,
     proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),
-};
+}
 
 
-export const transferValidator = validateByShema(transferScheme, getError);
+export const transferValidator = validateByShema(transferScheme, getError)

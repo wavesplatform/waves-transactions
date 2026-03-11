@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
   defaultValue,
   getError,
@@ -23,6 +24,6 @@ const sponsorshipScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
-export const sponsorshipValidator = validateByShema(sponsorshipScheme, getError);
+export const sponsorshipValidator = validateByShema(sponsorshipScheme, getError)

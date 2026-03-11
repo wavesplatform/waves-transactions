@@ -1,7 +1,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+
+// internal libraries access
+import * as crypto from '@waves/ts-lib-crypto'
+import * as marshall from '@waves/marshall'
+
 import { serializeCustomData } from './requests/custom-data'
+import * as seedUtils from './seedUtils'
+import * as validators from './validators'
+import * as protoSerialize from './proto-serialize'
 
 export { massTransfer } from './transactions/mass-transfer'
 export { reissue } from './transactions/reissue'
@@ -23,10 +31,9 @@ export { auth } from './requests/auth'
 export { wavesAuth } from './requests/wavesAuth'
 export { invokeScript } from './transactions/invoke-script'
 export { updateAssetInfo } from './transactions/update-asset-info'
-export { signTx, verify, serialize, submitOrder, cancelSubmittedOrder, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
-export { waitForTx, broadcast } from './nodeInteraction'
+export { commitToGeneration } from './transactions/commit-to-generation'
+export { signTx, verify, serialize, verifyAuthData, verifyCustomData, verifyWavesAuthData } from './general'
 export { makeTx, makeTxBytes } from './make-tx'
-// export { invokeExpression } from './transactions/invoke-expression'
 
 // Export interfaces
 export {
@@ -46,6 +53,7 @@ export {
   ISetAssetScriptParams,
   IInvokeScriptParams,
   IUpdateAssetInfoParams,
+  ICommitToGenerationParams,
   IOrderParams,
   ICancelOrder,
   ICancelOrderParams,
@@ -55,16 +63,9 @@ export {
   WithTxType,
 } from './transactions'
 
-export { INodeRequestOptions, IStateChangeResponse } from './nodeInteraction'
-
 export {
   TSeedTypes, TOption
 } from './types'
-
-// internal libraries access
-import * as crypto from '@waves/ts-lib-crypto'
-import * as marshall from '@waves/marshall'
-// import * as nodeApiJs from '@waves/node-api-js'
 
 const libs = {
   crypto,
@@ -72,15 +73,9 @@ const libs = {
   // nodeApiJs
 }
 
-import * as seedUtils from './seedUtils'
-import * as nodeInteraction from './nodeInteraction'
-import * as validators from './validators'
-import * as protoSerialize from './proto-serialize'
-
 export {
   libs,
   seedUtils,
-  nodeInteraction,
   validators,
   protoSerialize
 }

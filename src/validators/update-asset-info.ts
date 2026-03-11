@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
   defaultValue,
   getError,
@@ -26,7 +27,7 @@ const updateAssetInfoScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
 
-export const updateAssetInfoValidator = validateByShema(updateAssetInfoScheme, getError);
+export const updateAssetInfoValidator = validateByShema(updateAssetInfoScheme, getError)

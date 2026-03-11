@@ -3,11 +3,13 @@
  */
 import { base58Encode, blake2b, concat, signBytes } from '@waves/ts-lib-crypto'
 import { serializePrimitives } from '@waves/marshall'
-const {BASE58_STRING} = serializePrimitives
+
 import { getSenderPublicKey, convertToPairs } from '../generic'
 import { ICancelOrderParams, ICancelOrder } from '../transactions'
 import { validate } from '../validators'
 import { TPrivateKey } from '../types'
+
+const {BASE58_STRING} = serializePrimitives
 
 export const cancelOrderParamsToBytes = (cancelOrderParams:{sender: string, orderId: string}) => concat(
     BASE58_STRING(cancelOrderParams.sender),

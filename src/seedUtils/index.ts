@@ -68,7 +68,7 @@ export class Seed {
     try {
       phrase = decryptSeed(encryptedSeedPhrase, password, encryptionRounds)
     } catch (e) {
-      throw new Error(wrongPasswordMessage)
+      throw new Error(wrongPasswordMessage, { cause: e })
     }
 
     if (phrase === '' || phrase.length < 12) {
@@ -113,8 +113,10 @@ export function generateNewSeed(length = 15) {
 export function strengthenPassword(password: string, rounds: number = 5000): string {
   while (rounds--) {
     const bytes = serializePrimitives.STRING(password)
+
     password = base16Encode(sha256(bytes))
   }
+
   return password
 }
 

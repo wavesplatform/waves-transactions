@@ -56,6 +56,66 @@ export const burnTx = {
   assetId: 'DWgwcZTMhSvnyYCoWLRUXXSH1RSkzThXLJhww9gwkqdn',
   amount: '9223372036854775807' }
 
+export const exchangeTxOrderV3V4 = {
+  type: 7,
+  version: 3,
+  senderPublicKey: '3w4kE9G98RQoaUcXGTXsjt8e7GKnXmyDTa32JJFrmDzL',
+  order1: {
+    orderType: 'buy',
+    version: 3,
+    assetPair: {
+      amountAsset: '3JmaWyFqWo8YSA8x3DXCBUW7veesxacvKx19dMv7wTMg',
+      priceAsset: null
+    },
+    price: 500000000,
+    amount: 100,
+    timestamp: 1772675796026,
+    expiration: 1775181396026,
+    matcherFee: 100,
+    matcherPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+    senderPublicKey: '3w4kE9G98RQoaUcXGTXsjt8e7GKnXmyDTa32JJFrmDzL',
+    proofs: [
+      '2SjAp9gxhJkfC22uV6C75NskQbfUwSQziJhvu7YgPJ7m9K9f2DoGT3XbxT3VfeKAFYyi8fEEWYwGN7oe9p3mfWKp'
+    ],
+    matcherFeeAssetId: undefined,
+    id: '2J4rZV5QxMAzw3ekR4SYopEPL5gkWNF317aoWiRvcQX5',
+    priceMode: undefined
+  },
+  order2: {
+    orderType: 'sell',
+    version: 4,
+    assetPair: {
+      amountAsset: '3JmaWyFqWo8YSA8x3DXCBUW7veesxacvKx19dMv7wTMg',
+      priceAsset: null
+    },
+    price: 500000000,
+    amount: 100,
+    timestamp: 1772675796103,
+    expiration: 1775181396103,
+    matcherFee: 100,
+    matcherPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+    senderPublicKey: 'BvJEWY79uQEFetuyiZAF5U4yjPioMj9J6ZrF9uTNfe3E',
+    proofs: [
+      'v9P5jYAVwfS7iugSie5DUUoaAFT8wqgLnAGizWrCWxz8yCQEev6ovbxuUCo4WMs2Yfzrn3mrBFaZ9gPj9m89yNr'
+    ],
+    matcherFeeAssetId: 'DvXjujyWbi7ARdExyayN42gcfBKGTBRgYYyPWMxy5grK',
+    id: 'CYEFjEhRfZJ94WyBwxtMBLrJC4yGTrjTgjTbu9EFa4Ph',
+    priceMode: 'fixedDecimals',
+    chainId: 87
+  },
+  price: 500000000,
+  amount: 100,
+  buyMatcherFee: 100,
+  sellMatcherFee: 100,
+  fee: 700000,
+  timestamp: 1772675796182,
+  proofs: [
+    '2ScxzN5dbfXRkZeY2odwdDi4Z2CS2Z2kQ31urAgsUj9dVPpMjENm1SbGUumk9vYk1F4kPdCeYwSR9824c7ZEG2HS'
+  ],
+  chainId: 84,
+  id: 'BgT5KDGV6ZacgdspJgwoyUJHfmYaKJEh7zSULtxRJKpz'
+}
+
 export const leaseTx = {
   type: 8,
   version: 2,
@@ -148,7 +208,7 @@ export const setAssetScriptTx = {
     ['4ffQFcfv9NG8GtNB5c1yamFvEFoixvgYBHPmfwSAkZeVRiCwZvB2HWWiMcbiujGhWGxXnho37bWqELnQ6DBPCaj4'],
   id: '4ERUXALAziaWJ1Acsmpnfjgtv1ixHSWXRp5dBR837o4e',
   script: 'base64:AQa3b8tH',
-  assetId: "Cei6h7evZcdR5qdbdjAABWdnuyHrp43Yb6MxN6ZViqFR",
+  assetId: 'Cei6h7evZcdR5qdbdjAABWdnuyHrp43Yb6MxN6ZViqFR',
 }
 
 export const invokeScriptTx = {
@@ -179,11 +239,30 @@ export const invokeScriptTx = {
   'id': 'E1fPNBHLTRrd1k1iZbnxjc2CjTcwYpuoBf5rBAVB6TMN',
   'timestamp': 1573141438273,
 }
+
+export const commitToGenerationTx = {
+  type: 19,
+  version: 1,
+  chainId: 68,
+  senderPublicKey: 'Bn21Eg8HbwZWZQMHXnTFnb64MhVjgH2HygDekQDbjjMq',
+  sender: '3FmjX4FAeDXE4ZdDj2JKxzE4QtbxaioXzxM',
+  generationPeriodStart: 2941,
+  endorserPublicKey: '5t9zL1oqXW6kL3YUAuF8r4rKUaPwohPVrpMWR8Y1bAJtSMipP3TQJYZvpBFB7GWZwo',
+  commitmentSignature: 'u9CTxLENQWyd5egnHrnbnnDKy7mvtrWJfR1AuCL4e4e7uuRTobzxVy1SQBz7ayoY5mRfiTG3PR8niJPT3fdVfsD97EkagBha8ehrLAzdutWSLbiQF2VDwPfi7uvTcp5csMC',
+  proofs: [
+    '2H7TeCFEBSq6gb325Up2iZPr1jbZk99XugFijYTLbvgH2Ts8NQyCusG5p84FxKySEsVz7RUqsmQQJcCGU3xx75jt',
+  ],
+  fee: 10000000,
+  feeAssetId: null,
+  timestamp: 1766488084192,
+}
+
 export const exampleTxs = {
   3: issueTx,
   4: transferTx,
   5: reissueTx,
   6: burnTx,
+  7: exchangeTxOrderV3V4,
   8: leaseTx,
   9: cancelLeaseTx,
   10: aliasTx,
@@ -192,4 +271,5 @@ export const exampleTxs = {
   13: setScriptTx,
   15: setAssetScriptTx,
   16: invokeScriptTx,
+  19: commitToGenerationTx,
 }

@@ -4,12 +4,13 @@
 import { signBytes, blake2b, base58Encode, publicKey, concat, TSeed } from '@waves/ts-lib-crypto'
 import { schemas, serializePrimitives } from '@waves/marshall'
 import { binary } from '@waves/marshall'
-import { validate } from '../validators'
-import { TPrivateKey } from '../types'
 import {DataFiledType, DataTransactionEntry} from '@waves/ts-types'
 import {DataTransactionDeleteRequest} from '@waves/ts-types/src/parts'
 
-export interface ICustomDataV1 {
+import { validate } from '../validators'
+import { TPrivateKey } from '../types'
+
+export type ICustomDataV1 = {
   version: 1
   /**
    * base64 encoded UInt8Array
@@ -19,7 +20,7 @@ export interface ICustomDataV1 {
   publicKey?: string
 }
 
-export interface ICustomDataV2 {
+export type ICustomDataV2 = {
   version: 2
   data: Exclude<DataTransactionEntry, DataTransactionDeleteRequest>[]
   publicKey?: string
@@ -65,6 +66,7 @@ export function serializeCustomData(d: TCustomData){
     return concat([255, 255, 255, 1], serializePrimitives.BASE64_STRING(d.binary))
   } else if (d.version === 2) {
     const ser = binary.serializerFromSchema(schemas.txFields.data[1])
+
     return concat([255, 255, 255, 2], ser(d.data))
   } else {
     //@ts-ignore

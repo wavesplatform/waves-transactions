@@ -4,7 +4,7 @@
 
 export type TOption<T> = T | undefined | null
 
-export interface IIndexSeedMap {
+export type IIndexSeedMap = {
   [key: number]: string
 }
 

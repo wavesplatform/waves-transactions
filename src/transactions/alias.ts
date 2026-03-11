@@ -1,15 +1,17 @@
 /**
  * @module index
  */
-import {IAliasParams, WithId, WithProofs, WithSender} from '../transactions'
 import {binary} from '@waves/marshall'
 import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
+import {AliasTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {IAliasParams, WithId, WithProofs, WithSender} from '../transactions'
 import {txToProtoBytes} from '../proto-serialize'
 import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {TSeedTypes} from '../types'
 import {validate} from '../validators'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {AliasTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 
 /* @echo DOCS */

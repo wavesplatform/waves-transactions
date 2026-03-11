@@ -1,15 +1,17 @@
 /**
  * @module index
  */
-import {WithId, WithProofs} from '../transactions'
 import {binary} from '@waves/marshall'
 import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
+import {ExchangeTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {WithId, WithProofs} from '../transactions'
 import {addProof, convertToPairs, fee, getSenderPublicKey, networkByte} from '../generic'
 import {TSeedTypes} from '../types'
 import {validate} from '../validators'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {ExchangeTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 /* @echo DOCS */
 export function exchange(paramsOrTx: ExchangeTransaction & WithProofs, seed?: TSeedTypes): ExchangeTransaction & WithId & WithProofs{

@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
     defaultValue,
     getError,
@@ -44,4 +45,4 @@ const massTransferScheme = {
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
 }
 
-export const massTransferValidator = validateByShema(massTransferScheme, getError);
+export const massTransferValidator = validateByShema(massTransferScheme, getError)

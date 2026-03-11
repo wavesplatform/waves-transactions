@@ -13,7 +13,7 @@ export const invokeScriptBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640363539883,
-            'proofs': ['4kcTJ3PTPEbcoa35WWkZG1vtr7qD6StsXASk3zJ1vxFFGu6qy8VNjpmi23juhCkZMrHBekyJUHKj7L3iKk46NKHn']
+            'proofs': ['4kcTJ3PTPEbcoa35WWkZG1vtr7qD6StsXASk3zJ1vxFFGu6qy8VNjpmi23juhCkZMrHBekyJUHKj7L3iKk46NKHn'],
         },
     },
      'InvokeScript TX (type 16 v1)  case 2': {
@@ -28,12 +28,12 @@ export const invokeScriptBinaryTx = {
             'dApp': '3N7U8EVrPNXRp4rQ6LNebhmjqzA4gPY641Q',
             'payment': [
                 { 'amount': 10, 'assetId': null },
-                { 'amount': '9223372036854775807', 'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ' }
+                { 'amount': '9223372036854775807', 'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ' },
             ],
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640363174584,
-            'proofs': ['4hfyReG7jzKRMi6QnXNoikrVD148xWCmfWjbSoYhKtWJAuJ9oy8Np5aeDn5Yru5P8nr3PwftonuZjjQGWcCeLUiD']
+            'proofs': ['4hfyReG7jzKRMi6QnXNoikrVD148xWCmfWjbSoYhKtWJAuJ9oy8Np5aeDn5Yru5P8nr3PwftonuZjjQGWcCeLUiD'],
         },
     },
     'InvokeScript TX (type 16 v1)  case 3': {
@@ -59,19 +59,19 @@ export const invokeScriptBinaryTx = {
                             { 'type': 'integer', 'value': 101 },
                             { 'type': 'boolean', 'value': false },
                             { 'type': 'binary', 'value': 'base64:AUSrt+cbF9ynG8qp35jiFFS61VDjH3rKYsM=' },
-                            { 'type': 'string', 'value': '3FPQgJwnVXYJ88Qnz4V4gqR89bAqRa7qNiY' }
-                        ]
-                    }
-                ]
+                            { 'type': 'string', 'value': '3FPQgJwnVXYJ88Qnz4V4gqR89bAqRa7qNiY' },
+                        ],
+                    },
+                ],
             },
             'payment': [
                 { 'amount': 10, 'assetId': null },
-                { 'amount': '9223372036854775807', 'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ' }
+                { 'amount': '9223372036854775807', 'assetId': 'EbvoPG191bVa2HfMGoRAJyeysHQbTDLDMadtSfCmSggJ' },
             ],
             'fee': 500000,
             'feeAssetId': null,
             'timestamp': 1640362432737,
-            'proofs': ['2fNW96ZxxyFQenaiewB7NiSmfv2QEqbquET2upDLWKPTuja7YZ6uSnd11yBCCQWkiCJS9iJT9nv12A9L2HvHrQgh']
+            'proofs': ['2fNW96ZxxyFQenaiewB7NiSmfv2QEqbquET2upDLWKPTuja7YZ6uSnd11yBCCQWkiCJS9iJT9nv12A9L2HvHrQgh'],
         },
     },
 }

@@ -1,8 +1,11 @@
 /**
  * @module index
  */
-import {ISetScriptParams, WithId, WithProofs, WithSender} from '../transactions'
 import {signBytes, blake2b, base58Encode} from '@waves/ts-lib-crypto'
+import {binary} from '@waves/marshall'
+import {SetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
+import {ISetScriptParams, WithId, WithProofs, WithSender} from '../transactions'
 import {
   addProof,
   getSenderPublicKey,
@@ -12,11 +15,10 @@ import {
   fee,
 } from '../generic'
 import { TSeedTypes } from '../types'
-import {binary} from '@waves/marshall'
 import { validate } from '../validators'
 import {scriptToProto, txToProtoBytes} from '../proto-serialize'
 import { DEFAULT_VERSIONS } from '../defaultVersions'
-import {SetScriptTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
+
 
 /* @echo DOCS */
 export function setScript(params: ISetScriptParams, seed: TSeedTypes): SetScriptTransaction & WithId & WithProofs
@@ -26,6 +28,7 @@ export function setScript(paramsOrTx: any, seed?: TSeedTypes): SetScriptTransact
   const version = paramsOrTx.version || DEFAULT_VERSIONS.SET_SCRIPT
   const seedsAndIndexes = convertToPairs(seed)
   const senderPublicKey = getSenderPublicKey(seedsAndIndexes, paramsOrTx)
+
   if (paramsOrTx.script === undefined) throw new Error('Script field cannot be undefined. Use null explicitly to remove script')
 
   let scriptBytes = scriptToProto(paramsOrTx.script)

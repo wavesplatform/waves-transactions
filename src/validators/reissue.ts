@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
   defaultValue,
   getError,
@@ -26,6 +27,6 @@ const reissueScheme = {
   fee: isNaturalNumberOrZeroLike,
   timestamp: isNumber,
   proofs: ifElse(isArray, defaultValue(true), orEq([ undefined ])),
-};
+}
 
-export const reissueValidator = validateByShema(reissueScheme, getError);
+export const reissueValidator = validateByShema(reissueScheme, getError)

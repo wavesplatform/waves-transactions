@@ -1,15 +1,14 @@
-import {base16Encode, base64Decode, publicKey, verifySignature} from '@waves/ts-lib-crypto'
-import {sponsorship, transfer} from '../../src'
+import {publicKey} from '@waves/ts-lib-crypto'
+import {transfer} from '../../src'
 import {
   checkBinarySerializeDeserialize,
   checkProtoSerializeDeserialize,
-  deleteProofsAndId,
   errorMessageByTemplate,
   validateTxSignature
-} from '../../test/utils'
-import {sponsorshipMinimalParams, transferMinimalParams} from '../minimalParams'
-import {transferTx} from "./expected/proto/transfer.tx";
-import {transferBinaryTx} from "./expected/binary/transfer.tx";
+} from '../utils'
+import {transferMinimalParams} from '../minimalParams'
+import {transferTx} from './expected/proto/transfer.tx'
+import {transferBinaryTx} from './expected/binary/transfer.tx'
 
 describe('transfer', () => {
 
@@ -47,19 +46,19 @@ describe('transfer', () => {
   })
 
   it('Should build with correct feeAssetId', () => {
-    const faId = "DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv"
+    const faId = 'DbAik7g5NQcqTPPTiZnr97w4c6jjuahwjeDtTB7tJuQv'
     const tx = transfer({ ...transferMinimalParams, feeAssetId: faId} , stringSeed)
     expect(tx.feeAssetId).toEqual(faId)
   })
 
   it('Should build with correct attachment', () => {
-    const att = "3vrgtyozxuY88J9RqMBBAci2UzAq9DBMFTpMWLPzMygGeSWnD7k"
+    const att = '3vrgtyozxuY88J9RqMBBAci2UzAq9DBMFTpMWLPzMygGeSWnD7k'
     const tx = transfer({ ...transferMinimalParams, attachment: att } , stringSeed)
     expect(tx.attachment).toEqual(att)
   })
 
   it('Should build with null attachment', () => {
-    const att = ""
+    const att = ''
     const tx = transfer({ ...transferMinimalParams, attachment: att } , stringSeed)
     expect(tx.attachment).toEqual(att)
   })
@@ -72,30 +71,30 @@ describe('transfer', () => {
 
   it('Should not create with negative fee', () => {
     expect(() =>transfer({ ...transferMinimalParams, fee: -1 }, stringSeed))
-         .toThrowError(errorMessageByTemplate('fee', -1))
+         .toThrow(errorMessageByTemplate('fee', -1))
   })
 
   it('Should not create with negative amount', () => {
     expect(() =>transfer({ ...transferMinimalParams, amount: -1 }, stringSeed))
-      .toThrowError(errorMessageByTemplate('amount', -1))
+      .toThrow(errorMessageByTemplate('amount', -1))
   })
 
-});
+})
 
 describe('serialize/deserialize transfer tx', () => {
 
   Object.entries(transferTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkProtoSerializeDeserialize({Json: Json, Bytes: Bytes})
       }))
 
-});
+})
 
 describe('serialize/deserialize transfer binary tx', () => {
 
   Object.entries(transferBinaryTx).forEach(([name, {Bytes, Json}]) =>
       it(name, () => {
-        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes});
+        checkBinarySerializeDeserialize({Json: Json, Bytes: Bytes})
       }))
 
-});
+})

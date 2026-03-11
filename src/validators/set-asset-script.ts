@@ -1,4 +1,5 @@
 import {TRANSACTION_TYPE} from '@waves/ts-types'
+
 import {
     defaultValue,
     getError,
@@ -23,6 +24,6 @@ const setAssetScriptScheme = {
     timestamp: isNumber,
     script: isBase64,
     proofs: ifElse(isArray, defaultValue(true), orEq([undefined])),
-};
+}
 
-export const setAssetScriptValidator = validateByShema(setAssetScriptScheme, getError);
+export const setAssetScriptValidator = validateByShema(setAssetScriptScheme, getError)

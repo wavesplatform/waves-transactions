@@ -17,7 +17,7 @@ export const issueBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640182889106,
-            'proofs': ['2WsZqtnr6Rxfbq9Ngne2Luddz79NT2r2MJYvv6t4ENZ7esUd9iMrVyiVdTytWGAjCxGJGLkiriyg3pnbwUZGwHrL']
+            'proofs': ['2WsZqtnr6Rxfbq9Ngne2Luddz79NT2r2MJYvv6t4ENZ7esUd9iMrVyiVdTytWGAjCxGJGLkiriyg3pnbwUZGwHrL'],
         },
     },
     'Issue TX (type 3 v2)  case 2 min values': {
@@ -38,7 +38,7 @@ export const issueBinaryTx = {
             'fee': 100000000,
             'feeAssetId': null,
             'timestamp': 1640184194056,
-            'proofs': ['57Ciw5gQXFapsyRb87aMm9TFs4t7rvDFZAavemxxxez9vKsCVCDhnKZZYQruDBgGUVnFGo6Njn4f858LktyZL5fh']
+            'proofs': ['57Ciw5gQXFapsyRb87aMm9TFs4t7rvDFZAavemxxxez9vKsCVCDhnKZZYQruDBgGUVnFGo6Njn4f858LktyZL5fh'],
         },
     },
     'Issue TX (type 3 v2)  case 3 NFT': {
@@ -59,7 +59,7 @@ export const issueBinaryTx = {
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1640184878758,
-            'proofs': ['3WneyM4g7gzggPAYV59yAKSkad4DqK84Q3pYECfdW45YMJ9n1XXJB8isnNE4uRfQ9RxrJUkgtWFk7rqaG2hUhQjP']
+            'proofs': ['3WneyM4g7gzggPAYV59yAKSkad4DqK84Q3pYECfdW45YMJ9n1XXJB8isnNE4uRfQ9RxrJUkgtWFk7rqaG2hUhQjP'],
         },
     },
     'Issue TX (type 3 v2)  case 4 max value with script': {
@@ -80,7 +80,7 @@ export const issueBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640186753117,
-            'proofs': ['4PqvHJ4zzcU6M8UPy4uYiMdgnWEkJzZyQhcR6QpRZi55f993iaEe5PuatLtBcCjVaJhsp1raAj7TPazoVxT8BJ1e']
+            'proofs': ['4PqvHJ4zzcU6M8UPy4uYiMdgnWEkJzZyQhcR6QpRZi55f993iaEe5PuatLtBcCjVaJhsp1raAj7TPazoVxT8BJ1e'],
         },
     },
 }

@@ -12,17 +12,17 @@ export const massTransferBinaryTx = {
             'transfers': [
                 {
                     'recipient': 'alias:S:_rich-account.with@30_symbols_',
-                    'amount': '9223372036854775807'
+                    'amount': '9223372036854775807',
                 },
                 {
                     'recipient': 'alias:S:_min',
-                    'amount': 0
-                }
+                    'amount': 0,
+                },
             ],
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640337731598,
-            'proofs': ['5w7pqvKxbajaDwfoXjfY1SZ2G7V48pWyxpswfWpJ5VqRaaXH6gTxwnDL5zmjA9mSePVNXnUzViExFQUgiZcu8Fyn']
+            'proofs': ['5w7pqvKxbajaDwfoXjfY1SZ2G7V48pWyxpswfWpJ5VqRaaXH6gTxwnDL5zmjA9mSePVNXnUzViExFQUgiZcu8Fyn'],
         },
     },
     'MassTransfer TX (type 11 v1)  case 2': {
@@ -38,17 +38,17 @@ export const massTransferBinaryTx = {
             'transfers': [
                 {
                     'recipient': 'alias:S:_rich-account.with@30_symbols_',
-                    'amount': '9223372036854775807'
+                    'amount': '9223372036854775807',
                 },
                 {
                     'recipient': 'alias:S:_rich-account.with@30_symbols_',
-                    'amount': 0
-                }
+                    'amount': 0,
+                },
             ],
             'fee': 200000,
             'feeAssetId': null,
             'timestamp': 1640338121525,
-            'proofs': ['vfLMV5tcjZek1mtxv9jGgNXxPsLNVc18nh6izy1fbGkUE3dhH2saBuWb6bnZmgfc1UpU9uGnwqovptqJPeY6H7D']
+            'proofs': ['vfLMV5tcjZek1mtxv9jGgNXxPsLNVc18nh6izy1fbGkUE3dhH2saBuWb6bnZmgfc1UpU9uGnwqovptqJPeY6H7D'],
         },
     },
     'MassTransfer TX (type 11 v2)  case 3': {
@@ -64,17 +64,17 @@ export const massTransferBinaryTx = {
             'transfers': [
                 {
                     'recipient': 'alias:S:_rich-account.with@30_symbols_',
-                    'amount': '9223372036854775807'
+                    'amount': '9223372036854775807',
                 },
                 {
                     'recipient': 'alias:S:_min',
-                    'amount': 1
-                }
+                    'amount': 1,
+                },
             ],
             'fee': 200000,
             'feeAssetId': null,
             'timestamp': 1640338449857,
-            'proofs': ['3KTmJnET2mbYRV4AdSJkJWeqhAb5nGYXgLvKyT23nKL1HQ2G7phZUNu1zpSrLkZZWTZ6pHXCzq46xoLWxdq48M9U']
+            'proofs': ['3KTmJnET2mbYRV4AdSJkJWeqhAb5nGYXgLvKyT23nKL1HQ2G7phZUNu1zpSrLkZZWTZ6pHXCzq46xoLWxdq48M9U'],
         },
     },
 }

@@ -1,8 +1,11 @@
 /**
  * @module index
  */
-import {ITransferParams, WithId, WithProofs, WithSender} from '../transactions'
 import {base58Encode, blake2b, signBytes} from '@waves/ts-lib-crypto'
+import {binary} from '@waves/marshall'
+import {TRANSACTION_TYPE, TransferTransaction} from '@waves/ts-types'
+
+import {ITransferParams, WithId, WithProofs, WithSender} from '../transactions'
 import {
     addProof,
     chainIdFromRecipient,
@@ -14,10 +17,9 @@ import {
 } from '../generic'
 import {validate} from '../validators'
 import {TSeedTypes} from '../types'
-import {binary} from '@waves/marshall'
 import {txToProtoBytes} from '../proto-serialize'
 import {DEFAULT_VERSIONS} from '../defaultVersions'
-import {TRANSACTION_TYPE, TransferTransaction} from '@waves/ts-types'
+
 
 /* @echo DOCS */
 export function transfer(params: ITransferParams, seed: TSeedTypes): TransferTransaction & WithId & WithProofs

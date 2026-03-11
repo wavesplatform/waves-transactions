@@ -14,7 +14,7 @@ export const reissueBinaryTx = {
             'fee': '9223372036854775807',
             'feeAssetId': null,
             'timestamp': 1640250901535,
-            'proofs': ['2Wi5rUe3YacAHQcdekG2Mv1gD3zLWgSzpcpx5DQpvZTkwjm4UafV8XzKH8LTuQYrGMkQqDRWE74mZeoxs6683jLk']
+            'proofs': ['2Wi5rUe3YacAHQcdekG2Mv1gD3zLWgSzpcpx5DQpvZTkwjm4UafV8XzKH8LTuQYrGMkQqDRWE74mZeoxs6683jLk'],
      },
     },
     'Reissue TX (type 5 v2)  case 2 minimal values': {
@@ -32,7 +32,7 @@ export const reissueBinaryTx = {
             'fee': 100000,
             'feeAssetId': null,
             'timestamp': 1640251102757,
-            'proofs': ['4Ho73mq9mPPq5LBxErNtcs68L42hKWM5QoCmBzPccgiJEaNisjam4oedq3ChkCofAEnsyyb714ormjJpWrLkURCi']
+            'proofs': ['4Ho73mq9mPPq5LBxErNtcs68L42hKWM5QoCmBzPccgiJEaNisjam4oedq3ChkCofAEnsyyb714ormjJpWrLkURCi'],
         },
     },
 }

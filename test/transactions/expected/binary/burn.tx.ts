@@ -12,7 +12,7 @@ export const burnBinaryTx = {
             'amount': '9223372036854775807',
             'fee': '9223372036854775807',
             'feeAssetId': null,
-            "timestamp": 1640165277180,
+            'timestamp': 1640165277180,
             'proofs': ['CtDwTE4GTAtqueuGePs9SU3Bs5kaaMswDi1SPd128rc6eM7oY1CFVgEVGtY7Ck2ZfDpaQBwRtkB9d36wm1wwLAA'],
         },
     },
