@@ -122,6 +122,84 @@ export interface ITransferParams<LONG = string | number> extends IBasicParams<LO
   attachment?: string | TTypedData
 }
 ```
+
+If you want to create  the minimum you need to provide is **amount** and **recipient** as defined in Transfer params:
+```js
+
+const { transfer } = require('@waves/waves-transactions')
+const seed = 'some example seed phrase'
+const signedTranserTx = transfer({ 
+  amount: 1,
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
+  //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
+  timestamp: 1536917842558 
+}, seed)
+
+// or using alias
+
+const signedTranserTx = transfer({ 
+  amount: 1,
+  recipient: 'alias:W:aliasForMyAddress'
+}, seed)
+```
+
+Output will be a signed transfer transaction:
+```js
+{
+  id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
+  type: 4,
+  version: 2,
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
+  attachment: undefined,
+  feeAssetId: undefined,
+  assetId: undefined,
+  amount: 1,
+  fee: 100000,
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq',
+  timestamp: 1536917842558,
+  proofs: [
+    '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'
+  ]
+}
+```
+
+You can also create transaction, but not sign it:
+```javascript
+const unsignedTransferTx = transfer({ 
+  amount: 1,
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
+  //senderPublicKey is required if you omit seed
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq' 
+})
+```
+
+Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:
+```js
+const otherPartySeed = 'other party seed phrase'
+const transferSignedWithTwoParties = transfer(signedTranserTx, seed)
+```
+
+So now there are two proofs:
+```js
+{
+  id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
+  type: 4,
+  version: 2,
+  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
+  attachment: undefined,
+  feeAssetId: undefined,
+  assetId: undefined,
+  amount: 1,
+  fee: 100000,
+  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq',
+  timestamp: 1536917842558,
+  proofs: [
+    '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE',
+    'CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z'
+  ]
+}
+```
+
 #### Reissue transaction. Type 5
 ```typescript
 export interface IReissueParams<LONG = string | number> extends IBasicParams<LONG> {
@@ -288,111 +366,13 @@ export interface IUpdateAssetInfoParams<LONG = string | number> extends IBasicPa
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-If you want to create  the minimum you need to provide is **amount** and **recipient** as defined in Transfer params:
-```js
-
-const { transfer } = require('@waves/waves-transactions')
-const seed = 'some example seed phrase'
-const signedTranserTx = transfer({ 
-  amount: 1,
-  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
-  //Timestamp is optional but it was overrided, in case timestamp is not provided it will fallback to Date.now(). You can set any oftional params yourself. go check full docs
-  timestamp: 1536917842558 
-}, seed)
-
-// or using alias
-
-const signedTranserTx = transfer({ 
-  amount: 1,
-  recipient: 'alias:W:aliasForMyAddress'
-}, seed)
-```
-
-Output will be a signed transfer transaction:
-```js
-{
-  id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
-  type: 4,
-  version: 2,
-  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
-  attachment: undefined,
-  feeAssetId: undefined,
-  assetId: undefined,
-  amount: 1,
-  fee: 100000,
-  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq',
-  timestamp: 1536917842558,
-  proofs: [
-    '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE'
-  ]
-}
-```
-
-You can also create transaction, but not sign it:
-```javascript
-const unsignedTransferTx = transfer({ 
-  amount: 1,
-  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
-  //senderPublicKey is required if you omit seed
-  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq' 
-})
-```
-
-Now you are able to POST it to Waves API or store for future purpose or you can add another signature from other party:
-```js
-const otherPartySeed = 'other party seed phrase'
-const transferSignedWithTwoParties = transfer(signedTranserTx, seed)
-```
-
-So now there are two proofs:
-```js
-{
-  id: '8NrUwgKRCMFbUbqXKQAHkGnspmWHEjKUSi5opEC6Havq',
-  type: 4,
-  version: 2,
-  recipient: '3N4mLCaHq2twRKnbUjdvAHyXjoccQE9KDRE',
-  attachment: undefined,
-  feeAssetId: undefined,
-  assetId: undefined,
-  amount: 1,
-  fee: 100000,
-  senderPublicKey: '6nR7CXVV7Zmt9ew11BsNzSvVmuyM5PF6VPbWHW9BHgPq',
-  timestamp: 1536917842558,
-  proofs: [
-    '25kyX6HGjS3rkPTJRj5NVH6LLuZe6SzCzFtoJ8GDkojY9U5oPfVrnwBgrCHXZicfsmLthPUjTrfT9TQL2ciYrPGE',
-    'CM9emPzpe6Ram7ZxcYax6s7Hkw6698wXCMPSckveFAS2Yh9vqJpy1X9nL7p4RKgU3UEa8c9RGXfUK6mFFq4dL9z'
-  ]
-}
+#### CommitToGeneration transaction. Type 19
+```typescript
+export type ICommitToGenerationParams<LONG = string | number> = {
+    generationPeriodStart: number
+    endorserPublicKey?: string
+    commitmentSignature?: string
+} & IBasicParams<LONG>
 ```
 
 ### Orders
