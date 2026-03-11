@@ -7,11 +7,12 @@ on:
 
 jobs:
   publish:
-    uses: wavesplatform/publish-to-npm/.github/workflows/publish.yml@491542dbf21513003124f7b5dec03293876a7776
+    uses: wavesplatform/publish-to-npm/.github/workflows/publish.yml@7d9462af686d83552d72097bf47a892e43d11f6e
     with:
       environment: NPMJS
       event_name: ${{ github.event_name }}
       test: true
+      version: ${{ github.event.release.tag_name }}
     permissions:
       id-token: write
       contents: read
