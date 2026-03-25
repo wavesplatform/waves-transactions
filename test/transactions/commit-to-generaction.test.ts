@@ -16,6 +16,11 @@ describe('commitToGeneration', () => {
         const tx = commitToGeneration({generationPeriodStart: 2941}, privateKey)
         expect(validateTxSignature(tx, 0)).toBeTruthy()
     })
+
+    it('Should sign correctly with seed', () => {
+        const tx = commitToGeneration({generationPeriodStart: 2941}, 'new generic seed for signing')
+        expect(validateTxSignature(tx, 0)).toBeTruthy()
+    })
 })
 
 describe('serialize/deserialize commit to generation tx', () => {

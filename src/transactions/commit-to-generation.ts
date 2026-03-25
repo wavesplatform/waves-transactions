@@ -1,7 +1,7 @@
 /**
  * @module index
  */
-import {base58Decode, base58Encode, blake2b,  concat, crypto, signBytes} from '@waves/ts-lib-crypto'
+import {base58Decode, base58Encode, blake2b,  concat, crypto, signBytes, isPrivateKey, privateKey} from '@waves/ts-lib-crypto'
 import {CommitToGenerationTransaction, TRANSACTION_TYPE} from '@waves/ts-types'
 
 import {ICommitToGenerationParams, WithId, WithProofs, WithSender} from '../transactions'
@@ -38,7 +38,9 @@ export function commitToGeneration(paramsOrTx: any, seed?: TSeedTypes): CommitTo
     const shouldComputeBls = paramsOrTx.endorserPublicKey == null || paramsOrTx.commitmentSignature == null
     const blsKeyPair = !shouldComputeBls || primarySeed == null
         ? undefined
-        : wavesCrypto.blsKeyPair(typeof primarySeed === 'string' ? primarySeed : primarySeed.privateKey)
+        : wavesCrypto.blsKeyPair(isPrivateKey(primarySeed)
+            ? primarySeed.privateKey
+            : privateKey(primarySeed))
     const blsSecret = blsKeyPair?.blsSecret
 
     const endorserPublicKey = paramsOrTx.endorserPublicKey == null
