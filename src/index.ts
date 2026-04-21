@@ -36,7 +36,7 @@ export { signTx, verify, serialize, verifyAuthData, verifyCustomData, verifyWave
 export { makeTx, makeTxBytes } from './make-tx'
 
 // Export interfaces
-export {
+export type {
   TTx,
   TTxParams,
   IAliasParams,
@@ -63,7 +63,7 @@ export {
   WithTxType,
 } from './transactions'
 
-export {
+export type {
   TSeedTypes, TOption
 } from './types'
 
